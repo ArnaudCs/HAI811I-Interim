@@ -107,6 +107,7 @@
             android:id="@+id/cvButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/gradient"
             android:onClick="onCVButtonClicked"
             android:text="@string/ChooseCV" />
 
@@ -118,6 +119,7 @@
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/gradient"
             android:onClick="onRegisterButtonClicked"
             android:text="@string/CreateAccount" />
 

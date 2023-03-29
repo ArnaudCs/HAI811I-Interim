@@ -31,4 +31,9 @@
     <string name="CreateAccount">Create your account</string>
     <string name="CityofSearch">Where do you want to work</string>
     <string name="profile">Profile page</string>
+    <string name="profileIndication">Your Profile</string>
+    <string name="mobileValidationText">To create a new account, you need to confirm your identity by entering the code received by SMS on your mobile phone. If you didn\'t receive the code, use the send new code button.</string>
+    <string name="newCodeButton">Receive new code</string>
+    <string name="validateButton">Confirm</string>
+    <string name="mobileValidationInput">Enter Code</string>
 </resources>
