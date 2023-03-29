@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Interim</string>
+    <string name="Mail">Mail</string>
+    <string name="Password">Password</string>
+    <string name="StrongIndication">Enter a strong password</string>
+    <string name="minPass">Enter minimum 8 characters</string>
+    <string name="badPass">Weak password, include minimum 1 special character</string>
+    <string name="loginBtn">Login</string>
+</resources>

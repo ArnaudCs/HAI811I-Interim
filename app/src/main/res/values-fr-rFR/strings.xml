@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Interim</string>
+    <string name="Mail">E-mail</string>
+    <string name="Password">Mot de passe</string>
+    <string name="StrongIndication">Choisissez un mot de passe complexe</string>
+    <string name="minPass">Utilisez au moins 8 caractères</string>
+    <string name="badPass">Mot de passe faible, utilisez au moins 1 caractère spécial</string>
+    <string name="loginBtn">Se connecter</string>
+</resources>
