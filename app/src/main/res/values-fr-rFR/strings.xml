@@ -23,4 +23,12 @@
     <string name="confirmPassword">Confirmer mot de passe</string>
     <string name="passwordMatching">Les mot de passe sont identiques</string>
     <string name="passwordMismatch">Les mots de passe sont différents</string>
+    <string name="Name">Nom</string>
+    <string name="Firstname">Prénom</string>
+    <string name="PhoneNumber">Numéro de téléphone</string>
+    <string name="Birthdate">Date de naissance</string>
+    <string name="ConfirmPassword">Confirmer le mot de passe</string>
+    <string name="ChooseCV">Choisir le CV</string>
+    <string name="CreateAccount">Créer votre compte</string>
+    <string name="CityofSearch">Ou voulez-vous travailler ?</string>
 </resources>
