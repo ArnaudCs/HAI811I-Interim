@@ -124,8 +124,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
         // Set up the adapter for the nationality spinner
         ArrayAdapter<String> nationalityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, nationalities);
-        Spinner nationalitySpinner = findViewById(R.id.nationalitySpinner);
-        nationalitySpinner.setAdapter(nationalityAdapter);
+        nationality.setAdapter(nationalityAdapter);
 
         // Set up the listeners for the password fields
         EditText passwordEditText = findViewById(R.id.passwordEditText);
