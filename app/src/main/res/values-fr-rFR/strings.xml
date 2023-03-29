@@ -7,4 +7,20 @@
     <string name="minPass">Utilisez au moins 8 caractères</string>
     <string name="badPass">Mot de passe faible, utilisez au moins 1 caractère spécial</string>
     <string name="loginBtn">Se connecter</string>
+    <string name="title_activity_registration">Création de compte</string>
+    <string name="createAccount">Créer un compte</string>
+    <string name="nationalNumber">Numéro National</string>
+    <string name="ContactName">Nom du contact</string>
+    <string name="contactNumber">Numéro du contact</string>
+    <string name="contactAdress">Adresse Mail du contact</string>
+    <string name="companyAdress">Adresse de l\'entreprise</string>
+    <string name="CompanyLink">Site Web ou Linkedin</string>
+    <string name="companySub">Sous département</string>
+    <string name="companyService">Département</string>
+    <string name="AddContactRegistrationAgency">Ajouter Contact 2 ou Service</string>
+    <string name="companyName">Nom de l\'entreprise</string>
+    <string name="registrationTitle">Créer un compte</string>
+    <string name="confirmPassword">Confirmer mot de passe</string>
+    <string name="passwordMatching">Les mot de passe sont identiques</string>
+    <string name="passwordMismatch">Les mots de passe sont différents</string>
 </resources>
