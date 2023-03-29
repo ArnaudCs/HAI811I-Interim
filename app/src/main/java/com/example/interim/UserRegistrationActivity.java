@@ -3,16 +3,24 @@ package com.example.interim;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
@@ -33,39 +41,82 @@ public class UserRegistrationActivity extends AppCompatActivity {
     private List<String> nationalities = Arrays.asList("French", "British", "German", "Spanish", "Italian");
 
     FirebaseFirestore db;
-
+    FirebaseAuth mAuth;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_registration);
 
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+
         Button registerButton = findViewById(R.id.registerButton);
+        EditText name = findViewById(R.id.nameEditText);
+        EditText firstName = findViewById(R.id.firstNameEditText);
+        Spinner nationality =  findViewById(R.id.nationalitySpinner);
+        EditText email = findViewById(R.id.emailEditText);
+        EditText phoneNumber = findViewById(R.id.phoneEditText);
+        EditText birthdate = findViewById(R.id.birthdateEditText);
+        AutoCompleteTextView city = findViewById(R.id.cityAutoCompleteTextView);
+        EditText password = findViewById(R.id.passwordEditText);
+        EditText confirmPassword = findViewById(R.id.passwordConfirmationEditText);
+        progressBar = findViewById(R.id.progressBar);
+
         registerButton.setOnClickListener(v -> {
-            // Get the user data from the input fields
-            String name = ((EditText) findViewById(R.id.nameEditText)).getText().toString();
-            String firstName = ((EditText) findViewById(R.id.firstNameEditText)).getText().toString();
-            String nationality = ((Spinner) findViewById(R.id.nationalitySpinner)).getSelectedItem().toString();
-            String email = ((EditText) findViewById(R.id.emailEditText)).getText().toString();
-            String phoneNumber = ((EditText) findViewById(R.id.phoneEditText)).getText().toString();
-            String birthdate = ((EditText) findViewById(R.id.birthdateEditText)).getText().toString();
-            String city = ((AutoCompleteTextView) findViewById(R.id.cityAutoCompleteTextView)).getText().toString();
-            String password = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+            progressBar.setVisibility(View.VISIBLE);
+
+            if(email.getText().toString().trim().equals("") || password.getText().toString().trim().equals("") || confirmPassword.getText().toString().trim().equals("")
+                    || name.getText().toString().trim().equals("")  || firstName.getText().toString().trim().equals("") || nationality.getSelectedItem().toString().trim().equals("")
+                    || phoneNumber.getText().toString().trim().equals("") || birthdate.getText().toString().trim().equals("")  || city.getText().toString().trim().equals("")) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(UserRegistrationActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            String emailText = email.getText().toString();
+            String passwordText = password.getText().toString();
+            String confirmPasswordText = confirmPassword.getText().toString();
+
+            if(!checkPasswords(passwordText, confirmPasswordText)) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(UserRegistrationActivity.this, "Passwords does not match !", Toast.LENGTH_SHORT).show();
+                return;
+            };
+
+            mAuth.createUserWithEmailAndPassword(emailText, passwordText)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                JobSeekerUser newUser = new JobSeekerUser(name.getText().toString(), firstName.getText().toString(), nationality.getSelectedItem().toString(), phoneNumber.getText().toString(), birthdate.getText().toString(), city.getText().toString());
+
+                                // Save the user data to Firestore
+                                db.collection("Users").document(user.getUid()).set(newUser)
+                                        .addOnSuccessListener(documentReference -> {
+                                            // User data saved successfully
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(UserRegistrationActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // Error saving user data
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(UserRegistrationActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        });
+                            }
+                            else {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(UserRegistrationActivity.this, "Failed during user registration", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
 
             // Create a new job seeker user object
-            JobSeekerUser user = new JobSeekerUser(name, firstName, nationality, email, phoneNumber, birthdate, city, password);
 
-            // Save the user data to Firestore
-            db.collection("Users").document(email).set(user)
-                    .addOnSuccessListener(documentReference -> {
-                        // User data saved successfully
-                        Toast.makeText(UserRegistrationActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                        finish(); // Close the activity
-                    })
-                    .addOnFailureListener(e -> {
-                        // Error saving user data
-                        Toast.makeText(UserRegistrationActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
         });
 
 

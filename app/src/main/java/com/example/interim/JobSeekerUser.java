@@ -4,25 +4,21 @@ public class JobSeekerUser {
     private String name;
     private String firstName;
     private String nationality;
-    private String email;
     private String phoneNumber;
     private String birthdate;
     private String city;
-    private String password;
 
     public JobSeekerUser() {
         // Default constructor required for Firestore
     }
 
-    public JobSeekerUser(String name, String firstName, String nationality, String email, String phoneNumber, String birthdate, String city, String password) {
+    public JobSeekerUser(String name, String firstName, String nationality, String phoneNumber, String birthdate, String city) {
         this.name = name;
         this.firstName = firstName;
         this.nationality = nationality;
-        this.email = email;
         this.phoneNumber = phoneNumber;
         this.birthdate = birthdate;
         this.city = city;
-        this.password = password;
     }
 
     public String getName() {
@@ -49,14 +45,6 @@ public class JobSeekerUser {
         this.nationality = nationality;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -81,11 +69,4 @@ public class JobSeekerUser {
         this.city = city;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
