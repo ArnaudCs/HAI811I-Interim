@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "795702733896",
+    "firebase_url": "https://hai811i-interim-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "hai811i-interim",
+    "storage_bucket": "hai811i-interim.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795702733896:android:e645612478215f1386fc7d",
+        "android_client_info": {
+          "package_name": "com.example.interim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795702733896-p71adqvnfgg4l988cst7e5oa8975fhde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUmzFhmxwFtC9ZfK6gDA8hKzNLma1dhZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795702733896-p71adqvnfgg4l988cst7e5oa8975fhde.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
