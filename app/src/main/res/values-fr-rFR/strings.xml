@@ -31,4 +31,5 @@
     <string name="ChooseCV">Choisir le CV</string>
     <string name="CreateAccount">Créer votre compte</string>
     <string name="CityofSearch">Ou voulez-vous travailler ?</string>
+    <string name="profile">Page de profil</string>
 </resources>

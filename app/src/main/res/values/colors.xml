@@ -11,4 +11,5 @@
     <color name="primary_red">#E5383B</color>
     <color name="secondary_red">#BA181B</color>
     <color name="unavailable">#BFBFBF</color>
+    <color name="grey">#D1D1D1</color>
 </resources>
