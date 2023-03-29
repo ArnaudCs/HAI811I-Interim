@@ -6,4 +6,12 @@
     <string name="minPass">Enter minimum 8 characters</string>
     <string name="badPass">Weak password, include minimum 1 special character</string>
     <string name="loginBtn">Login</string>
+    <string name="Name">Name</string>
+    <string name="Firstname">Firstname</string>
+    <string name="PhoneNumber">Phone number</string>
+    <string name="Birthdate">Birthdate</string>
+    <string name="ConfirmPassword">Confirm password</string>
+    <string name="ChooseCV">Choose your CV</string>
+    <string name="CreateAccount">Create your account</string>
+    <string name="CityofSearch">Where do you want to work</string>
 </resources>
