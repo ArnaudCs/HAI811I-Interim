@@ -12,4 +12,5 @@
     <color name="secondary_red">#BA181B</color>
     <color name="unavailable">#BFBFBF</color>
     <color name="grey">#D1D1D1</color>
+    <color name="cards">#F4F4F4</color>
 </resources>
