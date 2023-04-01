@@ -1,5 +1,6 @@
 package com.example.interim;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,6 +63,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
         AutoCompleteTextView city = findViewById(R.id.cityAutoCompleteTextView);
         EditText password = findViewById(R.id.passwordEditText);
         EditText confirmPassword = findViewById(R.id.passwordConfirmationEditText);
+        EditText cityForWork = findViewById(R.id.cityAutoCompleteTextView);
         progressBar = findViewById(R.id.progressBar);
 
         registerButton.setOnClickListener(v -> {
@@ -106,6 +108,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
                                             // Error saving user data
                                             progressBar.setVisibility(View.GONE);
                                             Toast.makeText(UserRegistrationActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            Intent profile = new Intent(UserRegistrationActivity.this, ProfileActivity.class);
+                                            startActivity(profile);
                                         });
                             }
                             else {

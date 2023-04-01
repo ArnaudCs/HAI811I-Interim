@@ -83,4 +83,6 @@
     <string name="adressInformationPage">Complete all the informations for the order adress</string>
     <string name="orderSummaryPage">Time to pay ! Here is your basket</string>
     <string name="useThisCard">Use card</string>
+    <string name="goRegister">Don\'t have an account ?</string>
+    <string name="goRegisterCorp">Need PRO account ?</string>
 </resources>
