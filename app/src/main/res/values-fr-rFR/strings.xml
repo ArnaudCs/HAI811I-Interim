@@ -64,4 +64,22 @@
     <string name="yearlyLabelPrice">/ an</string>
     <string name="oneTimeLabelPrice">/ achat unique</string>
     <string name="dailyLabelPrice">/ jour</string>
+    <string name="creditCardName">Nom sur la carte</string>
+    <string name="cardNumber">Numéro de la carte</string>
+    <string name="cardCVC">CVC</string>
+    <string name="cardExpiration">Date d\'expiration</string>
+    <string name="registerCardInformations">Sauvegarder cette carte</string>
+    <string name="cardInformationsPage">Complétez les informations de carte afin de continuer</string>
+    <string name="streetInputLabel">Rue, Numéro ...</string>
+    <string name="appartementInputLabel">App, Suite, Bat ...</string>
+    <string name="countryInputLabel">Pays</string>
+    <string name="stateInputLabel">Etat/Province</string>
+    <string name="postalCodeInput">Code Postal</string>
+    <string name="dafaultAdress">Définir comme adresse par défaut</string>
+    <string name="useAdressBtn">Utiliser cette adresse</string>
+    <string name="missingFieldsErroToast">Informations manquantes</string>
+    <string name="payBtn">Payer</string>
+    <string name="adressInformationPage">Complétez les informations nécessaires pour l\'adresse de facturation</string>
+    <string name="orderSummaryPage">Page de paiement, voici votre panier</string>
+    <string name="useThisCard">Utiliser cette carte</string>
 </resources>

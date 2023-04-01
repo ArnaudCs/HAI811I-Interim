@@ -63,4 +63,24 @@
     <string name="yearlyLabelPrice">190$ /year</string>
     <string name="oneTimeLabelPrice">1000$ / one time</string>
     <string name="dailyLabelPrice">10$ /day</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="creditCardName">Owner name</string>
+    <string name="cardNumber">Enter Card Number</string>
+    <string name="cardCVC">Card CVC</string>
+    <string name="cardExpiration">Expiration Date</string>
+    <string name="registerCardInformations">Remember this card</string>
+    <string name="cardInformationsPage">Complete your card informations to continue</string>
+    <string name="streetInputLabel">Street, Box ..</string>
+    <string name="appartementInputLabel">Apt, Suite, Unit ...</string>
+    <string name="countryInputLabel">Country</string>
+    <string name="stateInputLabel">State/Province</string>
+    <string name="postalCodeInput">Postal Code</string>
+    <string name="dafaultAdress">Set as default adress</string>
+    <string name="useAdressBtn">Use this adress</string>
+    <string name="missingFieldsErroToast">Missing fields, please verify informations</string>
+    <string name="payBtn">Pay</string>
+    <string name="adressInformationPage">Complete all the informations for the order adress</string>
+    <string name="orderSummaryPage">Time to pay ! Here is your basket</string>
+    <string name="useThisCard">Use card</string>
 </resources>
