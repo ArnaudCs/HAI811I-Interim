@@ -1,23 +1,29 @@
 package com.example.interim;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.interim.models.Pro;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.auth.User;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -28,11 +34,32 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
-            System.out.println(currentUser);
-            System.out.println("Login successfull : "+ mAuth.getCurrentUser());
-            finish();
-            Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
-            startActivity(profile);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Users").document(currentUser.getEmail()).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                // User is a regular user
+                                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                                startActivity(profile);
+                                finish();
+                            } else {
+                                db.collection("Pros").document(currentUser.getEmail()).get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                if (documentSnapshot.exists()) {
+                                                    // User is a Pro
+                                                    Pro pro = documentSnapshot.toObject(Pro.class);
+
+                                                    isSubscribed(pro.getEmail());
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    });
         }
 
         TextInputLayout layoutPassword = findViewById(R.id.layoutPassword);
@@ -116,4 +143,51 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+    private void isSubscribed(String userEmail) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Subscriptions")
+                .document(userEmail)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            String plan = document.getString("plan");
+                            Date endDate = document.getDate("endDate");
+                            Date startDate = document.getDate("startDate");
+                            boolean isUnlimited = plan.contains("One Time");
+
+                            if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date()))) {
+                                // User has an active subscription
+                                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                                startActivity(profile);
+                                finish();
+                            } else {
+                                // User does not have an active subscription
+                                Intent subscription = new Intent(MainActivity.this, PaymentAndSubscription.class);
+                                startActivity(subscription);
+                                finish();
+                            }
+                        } else {
+                            // User does not have a subscription
+                            Intent subscription = new Intent(MainActivity.this, PaymentAndSubscription.class);
+                            startActivity(subscription);
+                            finish();
+                        }
+                    } else {
+                        // Error retrieving subscription info
+                        Log.w(TAG, "Error getting subscription info", task.getException());
+                    }
+                });
+    }
+
+
+
+
+
+
+
 }

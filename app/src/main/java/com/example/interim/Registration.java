@@ -1,5 +1,8 @@
 package com.example.interim;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
@@ -19,11 +22,22 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.example.interim.models.Pro;
+
 
 public class Registration extends AppCompatActivity {
 
@@ -31,6 +45,10 @@ public class Registration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
         TextInputEditText textName = findViewById(R.id.text1Name);
         TextInputEditText textCompanyName = findViewById(R.id.textCompanyName);
@@ -57,12 +75,70 @@ public class Registration extends AppCompatActivity {
             registerCompanyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!TextUtils.isEmpty(textName.getText()) && !TextUtils.isEmpty(textCompanyName.getText()) && !TextUtils.isEmpty(textNationalNumber.getText())
-                            && !TextUtils.isEmpty(textMail.getText()) && !TextUtils.isEmpty(textNumber.getText()) && !TextUtils.isEmpty(textCompanyAdress.getText()) && !TextUtils.isEmpty(textWebsite.getText())
-                            && !TextUtils.isEmpty(textPassword.getText()) && !TextUtils.isEmpty(textConfirmPassword.getText())) {
+                    // Get all input values
+                    String name = textName.getText().toString();
+                    String companyName = textCompanyName.getText().toString();
+                    String nationalNumber = textNationalNumber.getText().toString();
+                    String email = textMail.getText().toString();
+                    String phoneNumber = textNumber.getText().toString();
+                    String companyAddress = textCompanyAdress.getText().toString();
+                    String website = textWebsite.getText().toString();
+                    String password = textPassword.getText().toString();
+                    String service = layoutService.getEditText().getText().toString();
+                    String subService = layoutSub.getEditText().getText().toString();
+                    String contact2Name = layoutContact2Name.getEditText().getText().toString();
+                    String contact2Email = layoutContact2MailAdress.getEditText().getText().toString();
+                    String contact2Phone = layoutContact2Number.getEditText().getText().toString();
 
-                        Intent choosePlan = new Intent(Registration.this, PaymentAndSubscription.class);
-                        startActivity(choosePlan);
+                    // Check if any fields are empty
+                    if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(companyName) && !TextUtils.isEmpty(nationalNumber)
+                            && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(companyAddress)
+                            && !TextUtils.isEmpty(website) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(service)
+                            && !TextUtils.isEmpty(subService)) {
+
+                        // Create a new instance of the Pro model with all the input values
+                        Pro pro = new Pro(name, companyName, nationalNumber, email, phoneNumber, companyAddress, website,
+                                password, service, subService, contact2Name, contact2Email, contact2Phone);
+
+                        // Add the Pro object to Firestore database
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("Pros").document(email).set(pro)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot added with ID: " + email);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
+
+                        // Create user account with Firebase Authentication
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        mAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(Registration.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Sign in success, update UI with the signed-in user's information
+                                            Log.d(TAG, "createUserWithEmail:success");
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            // Go to the next activity
+                                            finish();
+                                            Intent choosePlan = new Intent(Registration.this, PaymentAndSubscription.class);
+                                            startActivity(choosePlan);
+                                        } else {
+                                            // If sign in fails, display a message to the user.
+                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                            Toast.makeText(Registration.this, "Authentication failed.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
                     } else {
                         Toast.makeText(Registration.this, R.string.missingFieldsErroToast, Toast.LENGTH_SHORT).show();
                     }

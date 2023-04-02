@@ -1,5 +1,6 @@
 package com.example.interim;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class fragment_order_summary extends Fragment {
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
+    private String mUserEmail;
+
     public fragment_order_summary() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
+        mUserEmail = mAuth.getCurrentUser().getEmail();
     }
 
     @Override
@@ -46,7 +67,58 @@ public class fragment_order_summary extends Fragment {
             validateBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Date now = new Date();
+                    Map<String, Object> subscription = new HashMap<>();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(now);
 
+                    int durationInDays;
+                    switch (planPrice) {
+                        case "10":
+                            durationInDays = 1;
+                            break;
+                        case "20":
+                            durationInDays = 30;
+                            break;
+                        case "50":
+                            durationInDays = 90;
+                            break;
+                        case "100":
+                            durationInDays = 180;
+                            break;
+                        case "190":
+                            durationInDays = 365;
+                            break;
+                        case "1000":
+                            durationInDays = -1; // Unlimited
+                            break;
+                        default:
+                            durationInDays = 0;
+                            break;
+                    }
+
+                    calendar.add(Calendar.DATE, durationInDays);
+
+                    Date endDate = calendar.getTime();
+                    subscription.put("plan", planName);
+                    subscription.put("price", planPrice);
+                    subscription.put("startDate", now);
+                    subscription.put("endDate", endDate);
+
+                    DocumentReference docRef = mFirestore.collection("Subscriptions").document(mUserEmail);
+                    docRef.set(subscription)
+                            .addOnSuccessListener(aVoid -> {
+                                // Subscription saved successfully
+                                Toast.makeText(getContext(), "Subscription saved", Toast.LENGTH_SHORT).show();
+
+
+                            })
+                            .addOnFailureListener(e -> {
+                                // Error saving subscription
+                                Toast.makeText(getContext(), "Error saving subscription", Toast.LENGTH_SHORT).show();
+                                FragmentManager fragmentManager = getParentFragmentManager();
+                                fragmentManager.popBackStackImmediate();
+                            });
                 }
             });
         }

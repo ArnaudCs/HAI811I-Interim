@@ -1,5 +1,7 @@
 package com.example.interim;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +22,18 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CardInformations extends Fragment {
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
+    private String mUserEmail;
 
     public CardInformations() {
         // Required empty public constructor
@@ -29,6 +42,9 @@ public class CardInformations extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
+        mUserEmail = mAuth.getCurrentUser().getEmail();
     }
 
     @Override
@@ -51,6 +67,22 @@ public class CardInformations extends Fragment {
 
         CheckBox rememberCheck = view.findViewById(R.id.rememberCardCheck);
 
+        DocumentReference docRef = mFirestore.collection("Pros").document(mUserEmail);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists() && documentSnapshot.contains("card")) {
+                Map<String, Object> cardInfo = (Map<String, Object>) documentSnapshot.getData().get("card");
+                if (cardInfo != null) {
+                    cardName.setText((String) cardInfo.get("name"));
+                    cardNumber.setText((String) cardInfo.get("number"));
+                    cardCVC.setText((String) cardInfo.get("cvc"));
+                    cardExpiration.setText((String) cardInfo.get("expiration"));
+                }
+            }
+        }).addOnFailureListener(e -> {
+            // Error retrieving card information
+            Log.w(TAG, "Error getting card information", e);
+        });
+
         if (choosePlan != null) {
             choosePlan.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,6 +97,18 @@ public class CardInformations extends Fragment {
                                 .replace(R.id.paymentContainer, fragmentPaymentAdress)
                                 .addToBackStack(null)
                                 .commit();
+
+                        // Save card information to Firestore if "Remember Card" checkbox is checked
+                        if (rememberCheck.isChecked()) {
+                            Map<String, Object> cardInfo = new HashMap<>();
+                            cardInfo.put("name", cardName.getText().toString());
+                            cardInfo.put("number", cardNumber.getText().toString());
+                            cardInfo.put("cvc", cardCVC.getText().toString());
+                            cardInfo.put("expiration", cardExpiration.getText().toString());
+
+                            DocumentReference docRef = mFirestore.collection("Pros").document(mUserEmail);
+                            docRef.update("card", cardInfo);
+                        }
                     } else {
                         Toast.makeText(getContext(), R.string.missingFieldsErroToast, Toast.LENGTH_SHORT).show();
                     }
