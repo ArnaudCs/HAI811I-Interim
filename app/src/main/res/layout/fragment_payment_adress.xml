@@ -59,71 +59,86 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             android:gravity="center"
+            android:weightSum="4"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardInfoText">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutStreet"
-                android:layout_width="170dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/streetInputLabel"
-                app:boxBackgroundColor="#FFFFFF"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/primary_red"
-                app:boxStrokeErrorColor="#DC0303"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/primary_red"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/parent"
-                app:startIconDrawable="@drawable/baseline_date_range_24"
-                app:startIconTint="@color/primary_red"
-                tools:ignore="MissingConstraints">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="4dp"
+                android:layout_weight="2">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textStreet"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutStreet"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="70dp"
+                    android:hint="@string/streetInputLabel"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary_red"
+                    app:boxStrokeErrorColor="#DC0303"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/primary_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/parent"
+                    app:startIconDrawable="@drawable/baseline_date_range_24"
+                    app:startIconTint="@color/primary_red"
+                    tools:ignore="MissingConstraints">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutApt"
-                android:layout_width="170dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="16dp"
-                android:hint="@string/appartementInputLabel"
-                app:boxBackgroundColor="#FFFFFF"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/primary_red"
-                app:boxStrokeErrorColor="#DC0303"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/primary_red"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/parent"
-                app:startIconDrawable="@drawable/baseline_apartment_24"
-                app:startIconTint="@color/primary_red"
-                tools:ignore="MissingConstraints">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textStreet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textApt"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:layout_weight="2">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutApt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="70dp"
+                    android:hint="@string/appartementInputLabel"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary_red"
+                    app:boxStrokeErrorColor="#DC0303"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/primary_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/parent"
+                    app:startIconDrawable="@drawable/baseline_apartment_24"
+                    app:startIconTint="@color/primary_red"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textApt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutCardNumber"
-            android:layout_width="372dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/countryInputLabel"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -151,62 +166,77 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:weightSum="4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutCardNumber">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutExpirationDate"
-                android:layout_width="170dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/stateInputLabel"
-                app:boxBackgroundColor="#FFFFFF"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/primary_red"
-                app:boxStrokeErrorColor="#DC0303"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/primary_red"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/parent"
-                app:startIconDrawable="@drawable/baseline_emoji_transportation_24"
-                app:startIconTint="@color/primary_red"
-                tools:ignore="MissingConstraints">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="4dp"
+                android:layout_weight="2">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textState"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutExpirationDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="70dp"
+                    android:hint="@string/stateInputLabel"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary_red"
+                    app:boxStrokeErrorColor="#DC0303"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/primary_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/parent"
+                    app:startIconDrawable="@drawable/baseline_emoji_transportation_24"
+                    app:startIconTint="@color/primary_red"
+                    tools:ignore="MissingConstraints">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutCardCVC"
-                android:layout_width="170dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="16dp"
-                android:hint="@string/postalCodeInput"
-                app:boxBackgroundColor="#FFFFFF"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/primary_red"
-                app:boxStrokeErrorColor="#DC0303"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/primary_red"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/parent"
-                app:startIconDrawable="@drawable/baseline_contact_mail_24"
-                app:startIconTint="@color/primary_red"
-                tools:ignore="MissingConstraints">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textPostalCode"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:layout_weight="2">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutCardCVC"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="6" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="70dp"
+                    android:hint="@string/postalCodeInput"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary_red"
+                    app:boxStrokeErrorColor="#DC0303"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/primary_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/parent"
+                    app:startIconDrawable="@drawable/baseline_contact_mail_24"
+                    app:startIconTint="@color/primary_red"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textPostalCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="6" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

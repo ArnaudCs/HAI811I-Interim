@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent profile = new Intent(MainActivity.this, Registration.class);
+                Intent profile = new Intent(MainActivity.this, SlideActivity.class);
                 startActivity(profile);
             }
         });

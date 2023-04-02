@@ -3,7 +3,7 @@ package com.example.interim;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     TextView firstNameTextView, nameTextView, phoneNumberTextView, emailTextView;
-    ImageView edit;
+    Button decoBtn, editProfilBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +33,10 @@ public class ProfileActivity extends AppCompatActivity {
         nameTextView = findViewById(R.id.textView6);
         phoneNumberTextView = findViewById(R.id.textView8);
         emailTextView = findViewById(R.id.textView12);
-        edit = findViewById(R.id.imageView12);
+        decoBtn = findViewById(R.id.decoBtn);
+        editProfilBtn = findViewById(R.id.editProfileBtn);
 
-        edit.setOnClickListener(new View.OnClickListener() {
+        decoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();

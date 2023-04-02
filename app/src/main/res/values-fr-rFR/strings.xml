@@ -58,16 +58,16 @@
     <string name="deleteSubTimeout">Résiliation instantanée - Pas de préavis</string>
     <string name="choosePlanBtn">Choisir le plan</string>
     <string name="paymentMethod">Paiement : Carte de crédit uniquement</string>
-    <string name="monthlyLabelPrice">/ mois</string>
-    <string name="semestrialLabelPrice">/ semestre</string>
-    <string name="trimestrialLabelPrice">/ trimestre</string>
-    <string name="yearlyLabelPrice">/ an</string>
-    <string name="oneTimeLabelPrice">/ achat unique</string>
-    <string name="dailyLabelPrice">/ jour</string>
+    <string name="monthlyLabelPrice">20$ /mois</string>
+    <string name="semestrialLabelPrice">100$ /semestre</string>
+    <string name="trimestrialLabelPrice">50$ /trimestre</string>
+    <string name="yearlyLabelPrice">190$ /an</string>
+    <string name="oneTimeLabelPrice">1000$ /achat unique</string>
+    <string name="dailyLabelPrice">10$ /jour</string>
     <string name="creditCardName">Nom sur la carte</string>
     <string name="cardNumber">Numéro de la carte</string>
     <string name="cardCVC">CVC</string>
-    <string name="cardExpiration">Date d\'expiration</string>
+    <string name="cardExpiration">Expiration</string>
     <string name="registerCardInformations">Sauvegarder cette carte</string>
     <string name="cardInformationsPage">Complétez les informations de carte afin de continuer</string>
     <string name="streetInputLabel">Rue, Numéro ...</string>
@@ -93,4 +93,6 @@
     <string name="secondSlideDescription">"Commencer à poster des offres juste après le paiement (toutes les fonctions sont automatiquement activées) "</string>
     <string name="thirdSlideDescription">"Tous les outils nécessaires pour prendre un bon rendez-vous sont inclus dans chaque pack "</string>
     <string name="startSlideBtn">Go</string>
+    <string name="loginText">"Hey, Re-Bonjour ! "</string>
+    <string name="resiliationTerms">Pas de préavis requis pour une résiliation en cours d\'abonnement</string>
 </resources>

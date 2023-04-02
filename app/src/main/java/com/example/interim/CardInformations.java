@@ -1,5 +1,6 @@
 package com.example.interim;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -152,6 +153,13 @@ public class CardInformations extends Fragment {
                 cardNumber.setSelection(cardNumber.getText().length());
 
                 isFormatting = false;
+            }
+        });
+
+        backButtonCardInfos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
             }
         });
     }

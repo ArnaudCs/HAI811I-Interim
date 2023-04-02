@@ -239,14 +239,14 @@
                     android:layout_height="match_parent">
 
                     <Button
+                        android:id="@+id/dailyPlanBtn"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/gradient"
-                        android:textColor="@color/white"
                         android:padding="10dp"
-                        android:textSize="20sp"
-                        android:text="@string/choosePlanBtn">
-                    </Button>
+                        android:text="@string/choosePlanBtn"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"></Button>
 
                 </LinearLayout>
             </LinearLayout>
@@ -450,14 +450,14 @@
                     android:layout_height="match_parent">
 
                     <Button
+                        android:id="@+id/monthlyPlanBtn"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/gradient"
-                        android:textColor="@color/white"
                         android:padding="10dp"
-                        android:textSize="20sp"
-                        android:text="@string/choosePlanBtn">
-                    </Button>
+                        android:text="@string/choosePlanBtn"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"></Button>
 
                 </LinearLayout>
             </LinearLayout>
@@ -661,14 +661,14 @@
                     android:layout_height="match_parent">
 
                     <Button
+                        android:id="@+id/trimestrialPlanBtn"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/gradient"
-                        android:textColor="@color/white"
                         android:padding="10dp"
-                        android:textSize="20sp"
-                        android:text="@string/choosePlanBtn">
-                    </Button>
+                        android:text="@string/choosePlanBtn"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"></Button>
 
                 </LinearLayout>
             </LinearLayout>
@@ -872,14 +872,14 @@
                     android:layout_height="match_parent">
 
                     <Button
+                        android:id="@+id/semestrialPlanBtn"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/gradient"
-                        android:textColor="@color/white"
                         android:padding="10dp"
-                        android:textSize="20sp"
-                        android:text="@string/choosePlanBtn">
-                    </Button>
+                        android:text="@string/choosePlanBtn"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"></Button>
 
                 </LinearLayout>
             </LinearLayout>
@@ -1083,14 +1083,14 @@
                     android:layout_height="match_parent">
 
                     <Button
+                        android:id="@+id/yearlyPlanBtn"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/gradient"
-                        android:textColor="@color/white"
                         android:padding="10dp"
-                        android:textSize="20sp"
-                        android:text="@string/choosePlanBtn">
-                    </Button>
+                        android:text="@string/choosePlanBtn"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"></Button>
 
                 </LinearLayout>
             </LinearLayout>
@@ -1295,14 +1295,14 @@
                     android:layout_height="match_parent">
 
                     <Button
+                        android:id="@+id/unlimitedPlanBtn"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/gradient"
-                        android:textColor="@color/white"
                         android:padding="10dp"
-                        android:textSize="20sp"
-                        android:text="@string/choosePlanBtn">
-                    </Button>
+                        android:text="@string/choosePlanBtn"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"></Button>
 
                 </LinearLayout>
             </LinearLayout>

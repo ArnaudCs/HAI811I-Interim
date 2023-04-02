@@ -1,5 +1,6 @@
 package com.example.interim;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,7 +30,8 @@ public class fragment_third_slide extends Fragment {
             nextSlideThirdBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent registration = new Intent(getActivity(), Registration.class);
+                    startActivity(registration);
                 }
             });
         }

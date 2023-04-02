@@ -41,12 +41,12 @@
             app:srcCompat="@drawable/bottom2" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutUser"
-            android:layout_width="374dp"
+            android:id="@+id/layoutCompanyName"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="100dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/companyName"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -61,18 +61,18 @@
             app:startIconTint="@color/primary_red">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textUsername"
+                android:id="@+id/textCompanyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutRegistrationName"
-            android:layout_width="374dp"
+            android:id="@+id/layoutRegistrationNumber"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:hint="@string/nationalNumber"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -82,13 +82,13 @@
             app:endIconTint="@color/primary_red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutUser"
+            app:layout_constraintTop_toBottomOf="@id/layoutCompanyName"
             app:startIconDrawable="@drawable/baseline_room_preferences_24"
             app:startIconTint="@color/primary_red"
             tools:ignore="MissingConstraints">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/mobileConfirmationInput"
+                android:id="@+id/textNationalNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
@@ -96,10 +96,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutContact1Name"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/ContactName"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -109,7 +109,7 @@
             app:endIconTint="@color/primary_red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutRegistrationName"
+            app:layout_constraintTop_toBottomOf="@id/layoutRegistrationNumber"
             app:startIconDrawable="@drawable/baseline_person_24"
             app:startIconTint="@color/primary_red"
             tools:ignore="MissingConstraints">
@@ -123,10 +123,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutContact1MailAdress"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:hint="@string/contactAdress"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -151,10 +151,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutContact1Number"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/contactNumber"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -178,10 +178,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutCompanyAdress"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:hint="@string/companyAdress"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -205,10 +205,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutCompanyWebsite"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/CompanyLink"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -232,11 +232,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutPassword"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="40dp"
             android:hint="@string/Password"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -262,11 +262,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutConfirmPassword"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="40dp"
             android:hint="@string/confirmPassword"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -302,11 +302,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutContact2Name"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="40dp"
             android:visibility="gone"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/ContactName"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -330,11 +330,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutContact2MailAdress"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
             android:visibility="gone"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             android:hint="@string/contactAdress"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -358,11 +358,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutContact2Number"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
             android:visibility="gone"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:hint="@string/contactNumber"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -386,11 +386,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutService"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
             android:visibility="gone"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/companyService"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -414,11 +414,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutSubService"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
             android:visibility="gone"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/companySub"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"

@@ -55,11 +55,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutCardName"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginRight="40dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="40dp"
             android:hint="@string/creditCardName"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -82,10 +82,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutCardNumber"
-            android:layout_width="374dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:hint="@string/cardNumber"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -113,64 +113,80 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             android:orientation="horizontal"
+            android:weightSum="4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutCardNumber">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutExpirationDate"
-                android:layout_width="170dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/cardExpiration"
-                app:boxBackgroundColor="#FFFFFF"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/primary_red"
-                app:boxStrokeErrorColor="#DC0303"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/primary_red"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/parent"
-                app:startIconDrawable="@drawable/baseline_date_range_24"
-                app:startIconTint="@color/primary_red"
-                tools:ignore="MissingConstraints">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="4dp"
+                android:layout_weight="2">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textState"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutExpirationDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="5" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="70dp"
+                    android:hint="@string/cardExpiration"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary_red"
+                    app:boxStrokeErrorColor="#DC0303"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/primary_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/parent"
+                    app:startIconDrawable="@drawable/baseline_date_range_24"
+                    app:startIconTint="@color/primary_red"
+                    tools:ignore="MissingConstraints">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutCardCVC"
-                android:layout_width="170dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="16dp"
-                android:hint="@string/cardCVC"
-                app:boxBackgroundColor="#FFFFFF"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/primary_red"
-                app:boxStrokeErrorColor="#DC0303"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/primary_red"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/parent"
-                app:startIconDrawable="@drawable/baseline_lock_open_24"
-                app:startIconTint="@color/primary_red"
-                tools:ignore="MissingConstraints">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="5" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textPostalCode"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:layout_weight="2">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutCardCVC"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="3" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="70dp"
+                    android:hint="@string/cardCVC"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary_red"
+                    app:boxStrokeErrorColor="#DC0303"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/primary_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/parent"
+                    app:startIconDrawable="@drawable/baseline_lock_open_24"
+                    app:startIconTint="@color/primary_red"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textPostalCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="3" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

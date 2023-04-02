@@ -67,8 +67,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="creditCardName">Owner name</string>
     <string name="cardNumber">Enter Card Number</string>
-    <string name="cardCVC">Card CVC</string>
-    <string name="cardExpiration">Expiration Date</string>
+    <string name="cardCVC">CVC</string>
+    <string name="cardExpiration">Expiration</string>
     <string name="registerCardInformations">Remember this card</string>
     <string name="cardInformationsPage">Complete your card informations to continue</string>
     <string name="streetInputLabel">Street, Box ..</string>
@@ -103,4 +103,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="loginText">Hey, Welcome back !</string>
+    <string name="resiliationTerms">No notice period required for termination during subscription</string>
 </resources>

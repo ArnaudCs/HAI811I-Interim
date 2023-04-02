@@ -10,8 +10,8 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:id="@+id/personLogin"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,23 +20,36 @@
         app:srcCompat="@drawable/person" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/loginDeck"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/personLogin"
         app:srcCompat="@drawable/bottom" />
+
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/loginText"
+        android:textAlignment="center"
+        android:textColor="@color/primary_red"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/loginDeck"></TextView>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutUser"
-        android:layout_width="374dp"
+        android:layout_width="0dp"
         android:layout_height="70dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="40dp"
         android:hint="@string/Mail"
         app:boxBackgroundColor="#FFFFFF"
         app:boxBackgroundMode="outline"
@@ -46,7 +59,7 @@
         app:endIconTint="@color/primary_red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/loginText"
         app:placeholderText="abc@df.com"
         app:startIconDrawable="@drawable/baseline_person_24"
         app:startIconTint="@color/primary_red">
@@ -60,11 +73,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutPassword"
-        android:layout_width="374dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="40dp"
         android:hint="@string/Password"
         app:boxBackgroundColor="#FFFFFF"
         app:boxBackgroundMode="outline"
@@ -92,7 +105,7 @@
         android:id="@+id/loginButton"
         android:layout_width="200dp"
         android:layout_height="55dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/gradient"
         android:text="@string/loginBtn"
         android:textColor="#F6F3F3"
@@ -106,7 +119,7 @@
         android:id="@+id/goRegisterUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:text="@string/goRegister"
         app:layout_constraintEnd_toEndOf="@+id/loginButton"
         app:layout_constraintHorizontal_bias="0.481"
@@ -117,6 +130,7 @@
         android:id="@+id/goRegisterCorp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/goRegisterCorp"
         app:layout_constraintEnd_toEndOf="@+id/loginButton"
         app:layout_constraintStart_toStartOf="@+id/loginButton"

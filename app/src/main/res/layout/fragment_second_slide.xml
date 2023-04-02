@@ -107,6 +107,7 @@
                     android:background="@drawable/slides"
                     android:paddingLeft="32dp"
                     android:paddingRight="32dp"
+                    android:stateListAnimator="@null"
                     android:text="@string/prevBtn"
                     android:textSize="24sp"
                     android:textStyle="bold"></Button>
@@ -124,6 +125,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/slides"
                     android:paddingLeft="32dp"
+                    android:stateListAnimator="@null"
                     android:paddingRight="32dp"
                     android:text="@string/nextBtn"
                     android:textSize="24sp"

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -25,7 +26,6 @@ public class fragment_order_summary extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_order_summary, container, false);
     }
 
@@ -33,18 +33,20 @@ public class fragment_order_summary extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button backButtonOrder = view.findViewById(R.id.backOrderBtn);
         Button validateBasket = view.findViewById(R.id.validateBasket);
+        TextView priceDisplay = view.findViewById(R.id.priceDisplay);
+        TextView planDisplay = view.findViewById(R.id.subscriptionChoice);
+
+        String planPrice = DataHolder.getInstance().getPlanPrice();
+        String planName = DataHolder.getInstance().getPlanName();
+
+        planDisplay.setText(planName);
+        priceDisplay.setText(planPrice + " $");
 
         if (validateBasket != null) {
             validateBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*fragment_order_summary fragmentOrderSummary = new fragment_order_summary();
 
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.paymentContainer, fragmentOrderSummary)
-                            .addToBackStack(null)
-                            .commit();*/
                 }
             });
         }

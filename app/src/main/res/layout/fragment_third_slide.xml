@@ -106,6 +106,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/slides"
                     android:paddingLeft="32dp"
+                    android:stateListAnimator="@null"
                     android:paddingRight="32dp"
                     android:text="@string/prevBtn"
                     android:textSize="24sp"
@@ -127,6 +128,7 @@
                     android:paddingRight="32dp"
                     android:text="@string/startSlideBtn"
                     android:textSize="24sp"
+                    android:stateListAnimator="@null"
                     android:textStyle="bold"></Button>
             </LinearLayout>
         </LinearLayout>
