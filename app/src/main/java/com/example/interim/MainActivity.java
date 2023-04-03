@@ -40,20 +40,35 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists()) {
-                                // User is a regular user
-                                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
-                                startActivity(profile);
-                                finish();
+                                if (!documentSnapshot.getBoolean("verified")) {
+                                    Intent profile = new Intent(MainActivity.this, PhoneValidation.class);
+                                    startActivity(profile);
+                                    finish();
+                                }
+                                else {
+                                    // User is a regular user
+                                    Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                                    startActivity(profile);
+                                    finish();
+                                }
+
                             } else {
                                 db.collection("Pros").document(currentUser.getUid()).get()
                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 if (documentSnapshot.exists()) {
-                                                    // User is a Pro
-                                                    Pro pro = documentSnapshot.toObject(Pro.class);
+                                                    if (!documentSnapshot.getBoolean("verified")) {
+                                                        Intent profile = new Intent(MainActivity.this, PhoneValidation.class);
+                                                        startActivity(profile);
+                                                        finish();
+                                                    }
+                                                    else {
+                                                        // User is a Pro
+                                                        Pro pro = documentSnapshot.toObject(Pro.class);
 
-                                                    isSubscribed(currentUser.getUid());
+                                                        isSubscribed(currentUser.getUid());
+                                                    }
                                                 }
                                             }
                                         });

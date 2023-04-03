@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.models;
 
 public class JobSeekerUser {
     private String name;
@@ -7,6 +7,7 @@ public class JobSeekerUser {
     private String phoneNumber;
     private String birthdate;
     private String city;
+    private boolean verified;
 
     public JobSeekerUser() {
         // Default constructor required for Firestore
@@ -19,6 +20,7 @@ public class JobSeekerUser {
         this.phoneNumber = phoneNumber;
         this.birthdate = birthdate;
         this.city = city;
+        this.verified = false;
     }
 
     public String getName() {
@@ -69,4 +71,11 @@ public class JobSeekerUser {
         this.city = city;
     }
 
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 }

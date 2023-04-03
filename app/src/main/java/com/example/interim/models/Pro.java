@@ -23,14 +23,16 @@ public class Pro {
     private String phoneNumber;
     private String companyAddress;
     private String website;
-    private String password;
+
     private String service;
     private String subService;
     private String contact2Name;
     private String contact2Email;
     private String contact2Phone;
 
-    public Pro(String name, String companyName, String nationalNumber, String email, String phoneNumber, String companyAddress, String website, String password, String service, String subService, String contact2Name, String contact2Email, String contact2Phone) {
+    private boolean verified;
+
+    public Pro(String name, String companyName, String nationalNumber, String email, String phoneNumber, String companyAddress, String website, String service, String subService, String contact2Name, String contact2Email, String contact2Phone) {
         this.name = name;
         this.companyName = companyName;
         this.nationalNumber = nationalNumber;
@@ -38,13 +40,25 @@ public class Pro {
         this.phoneNumber = phoneNumber;
         this.companyAddress = companyAddress;
         this.website = website;
-        this.password = password;
         this.service = service;
         this.subService = subService;
         this.contact2Name = contact2Name;
         this.contact2Email = contact2Email;
         this.contact2Phone = contact2Phone;
+        this.verified = false;
     }
+
+    public Pro(String name, String companyName, String nationalNumber, String email, String phoneNumber, String companyAddress, String website) {
+        this.name = name;
+        this.companyName = companyName;
+        this.nationalNumber = nationalNumber;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.companyAddress = companyAddress;
+        this.website = website;
+        this.verified = false;
+    }
+
 
     public Pro() {
         // Required empty constructor
@@ -104,14 +118,6 @@ public class Pro {
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getService() {
