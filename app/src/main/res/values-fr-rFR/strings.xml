@@ -34,7 +34,7 @@
     <string name="profile">Page de profil</string>
     <string name="profileIndication">Vos informations</string>
     <string name="mobileValidationText">Pour créer un nouveau compte, vous devez confirmer votre identité en validant le code reçu par SMS sur votre smartphone. Si vus n\'avez pas reçu de code, appuyez sur le bouton recevoir un nouveau code</string>
-    <string name="newCodeButton">Recevoir un nouveau code</string>
+    <string name="newCodeButton">Recevoir un code</string>
     <string name="validateButton">Valider</string>
     <string name="mobileValidationInput">Code</string>
     <string name="choosSubscription">Choisissez un abonnement</string>
@@ -95,4 +95,8 @@
     <string name="startSlideBtn">Go</string>
     <string name="loginText">"Hey, Re-Bonjour ! "</string>
     <string name="resiliationTerms">Pas de préavis requis pour une résiliation en cours d\'abonnement</string>
+    <string name="OTPSent">Code OTP envoyé avec succés</string>
+    <string name="OTPError">Une erreur est survenue</string>
+    <string name="phoneVerified">Numéro vérifié avec succès.</string>
+    <string name="wrongOTP">Mauvais code, veuillez réessayer</string>
 </resources>

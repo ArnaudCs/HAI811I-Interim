@@ -33,7 +33,7 @@
     <string name="profile">Profile page</string>
     <string name="profileIndication">Your Profile</string>
     <string name="mobileValidationText">To create a new account, you need to confirm your identity by entering the code received by SMS on your mobile phone. If you didn\'t receive the code, use the send new code button.</string>
-    <string name="newCodeButton">Receive new code</string>
+    <string name="newCodeButton">Get code</string>
     <string name="validateButton">Confirm</string>
     <string name="mobileValidationInput">Enter Code</string>
     <string name="choosSubscription">Choose your plan</string>
@@ -105,4 +105,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="loginText">Hey, Welcome back !</string>
     <string name="resiliationTerms">No notice period required for termination during subscription</string>
+    <string name="OTPSent">OTP code sent successfully</string>
+    <string name="OTPError">Error occured sending code</string>
+    <string name="phoneVerified">Phone number verified successfuly</string>
+    <string name="wrongOTP">Wrong OTP, try again</string>
 </resources>
