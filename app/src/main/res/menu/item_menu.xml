@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/navMessage" android:title="Message" android:icon="@drawable/baseline_message_24"></item>
+    <item android:id="@+id/navNotification" android:title="Notification" android:icon="@drawable/baseline_notifications_active_24"></item>
+    <item android:id="@+id/navHome" android:title="Home" android:icon="@drawable/baseline_other_houses_24"></item>
+    <item android:id="@+id/navFavorite" android:title="Favorite" android:icon="@drawable/baseline_favorite_24"></item>
+    <item android:id="@+id/navProfile" android:title="Profile" android:icon="@drawable/baseline_person_2_24"></item>
+
+
+</menu>
