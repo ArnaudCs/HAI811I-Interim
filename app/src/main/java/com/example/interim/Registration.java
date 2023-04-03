@@ -93,12 +93,25 @@ public class Registration extends AppCompatActivity {
                     // Check if any fields are empty
                     if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(companyName) && !TextUtils.isEmpty(nationalNumber)
                             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(companyAddress)
-                            && !TextUtils.isEmpty(website) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(service)
-                            && !TextUtils.isEmpty(subService)) {
+                            && !TextUtils.isEmpty(website) && !TextUtils.isEmpty(password)) {
 
+                        if (addContact.isChecked()) {
+                            if (TextUtils.isEmpty(service) || TextUtils.isEmpty(subService) || TextUtils.isEmpty(contact2Name) || TextUtils.isEmpty(contact2Email) || TextUtils.isEmpty(contact2Phone)) {
+                                Toast.makeText(Registration.this, R.string.missingFieldsErroToast, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
                         // Create a new instance of the Pro model with all the input values
-                        Pro pro = new Pro(name, companyName, nationalNumber, email, phoneNumber, companyAddress, website,
-                                password, service, subService, contact2Name, contact2Email, contact2Phone);
+                        Pro pro = new Pro();
+
+                        if(addContact.isChecked()) {
+                           pro = new Pro(name, companyName, nationalNumber, email, phoneNumber, companyAddress, website, service, subService, contact2Name, contact2Email, contact2Phone);
+                        }
+                        else {
+                            pro = new Pro(name, companyName, nationalNumber, email, phoneNumber, companyAddress, website);
+                        }
+
+                        Pro newPro = pro;
 
                         // Add the Pro object to Firestore database
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -114,11 +127,14 @@ public class Registration extends AppCompatActivity {
                                             // Sign in success, update UI with the signed-in user's information
                                             Log.d(TAG, "createUserWithEmail:success");
                                             FirebaseUser user = mAuth.getCurrentUser();
-                                            db.collection("Pros").document(user.getUid()).set(pro)
+                                            db.collection("Pros").document(user.getUid()).set(newPro)
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            Log.d(TAG, "DocumentSnapshot added with ID: " + email);
+                                                            // Go to the next activity
+                                                            finish();
+                                                            Intent phoneVerif = new Intent(Registration.this, PhoneValidation.class);
+                                                            startActivity(phoneVerif);
                                                         }
                                                     })
                                                     .addOnFailureListener(new OnFailureListener() {
@@ -127,10 +143,7 @@ public class Registration extends AppCompatActivity {
                                                             Log.w(TAG, "Error adding document", e);
                                                         }
                                                     });
-                                            // Go to the next activity
-                                            finish();
-                                            Intent choosePlan = new Intent(Registration.this, PaymentAndSubscription.class);
-                                            startActivity(choosePlan);
+
                                         } else {
                                             // If sign in fails, display a message to the user.
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());

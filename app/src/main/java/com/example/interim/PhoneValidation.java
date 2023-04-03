@@ -3,6 +3,7 @@ package com.example.interim;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import java.net.URI;
 import java.math.BigDecimal;
 
+import com.example.interim.models.Pro;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.BufferedReader;
@@ -56,7 +59,41 @@ public class PhoneValidation extends AppCompatActivity {
         receiveCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phoneNumber = "+33658529940";
+                String phoneNumber = null;
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Users").document(mAuth.getCurrentUser().getUid()).get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if (documentSnapshot.exists()) {
+                                    if (documentSnapshot.get("verified").equals(true)) {
+                                        Intent profile = new Intent(PhoneValidation.this, ProfileActivity.class);
+                                        startActivity(profile);
+                                        finish();
+                                    }
+                                    else {
+                                        final String phoneNumber = documentSnapshot.getString("phoneNumber").toString();
+                                    }
+                                } else {
+                                    db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    if (documentSnapshot.exists()) {
+                                                        if (documentSnapshot.get("verified").equals(true)) {
+                                                            Intent profile = new Intent(PhoneValidation.this, ProfileActivity.class);
+                                                            startActivity(profile);
+                                                            finish();
+                                                        }
+                                                        else {
+                                                            final String phoneNumber = documentSnapshot.getString("phoneNumber").toString();
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                }
+                            }
+                        });
                 if(phoneNumber.isEmpty()) {
                     Toast.makeText(PhoneValidation.this, "Provide phone number", Toast.LENGTH_SHORT).show();
                     return;
@@ -129,7 +166,7 @@ public class PhoneValidation extends AppCompatActivity {
                             FirebaseUser user = task.getResult().getUser();
                             // Update the "verified" boolean in the document for the user
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("Users").document(user.getEmail())
+                            db.collection("Users").document(user.getUid())
                                     .update("verified", true)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override

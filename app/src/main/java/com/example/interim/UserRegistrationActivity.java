@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.interim.models.JobSeekerUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -104,8 +105,8 @@ public class UserRegistrationActivity extends AppCompatActivity {
                                             progressBar.setVisibility(View.GONE);
                                             Toast.makeText(UserRegistrationActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
                                             finish();
-                                            Intent profile = new Intent(UserRegistrationActivity.this, ProfileActivity.class);
-                                            startActivity(profile);
+                                            Intent phone = new Intent(UserRegistrationActivity.this, PhoneValidation.class);
+                                            startActivity(phone);
                                         })
                                         .addOnFailureListener(e -> {
                                             // Error saving user data
