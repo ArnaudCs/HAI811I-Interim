@@ -135,8 +135,49 @@ public class MainActivity extends AppCompatActivity {
                         // Connexion réussie
                         FirebaseUser user = mAuth.getCurrentUser();
                         System.out.println("Login successfull : "+ mAuth.getCurrentUser());
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("Users").document(user.getUid()).get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if (documentSnapshot.exists()) {
+                                            if (!documentSnapshot.getBoolean("verified")) {
+                                                Intent profile = new Intent(MainActivity.this, PhoneValidation.class);
+                                                startActivity(profile);
+                                                finish();
+                                            }
+                                            else {
+                                                // User is a regular user
+                                                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                                                startActivity(profile);
+                                                finish();
+                                            }
+
+                                        } else {
+                                            db.collection("Pros").document(user.getUid()).get()
+                                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                            if (documentSnapshot.exists()) {
+                                                                if (!documentSnapshot.getBoolean("verified")) {
+                                                                    Intent profile = new Intent(MainActivity.this, PhoneValidation.class);
+                                                                    startActivity(profile);
+                                                                    finish();
+                                                                }
+                                                                else {
+                                                                    // User is a Pro
+                                                                    Pro pro = documentSnapshot.toObject(Pro.class);
+
+                                                                    isSubscribed(user.getUid());
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                });
                         finish();
-                        Intent profile = new Intent(MainActivity.this, AppActivity.class);
+                        Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
                         startActivity(profile);
                     } else {
                         System.out.println("Login error");
