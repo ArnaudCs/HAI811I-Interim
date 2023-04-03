@@ -102,19 +102,7 @@ public class Registration extends AppCompatActivity {
 
                         // Add the Pro object to Firestore database
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        db.collection("Pros").document(email).set(pro)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot added with ID: " + email);
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error adding document", e);
-                                    }
-                                });
+
 
                         // Create user account with Firebase Authentication
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -126,6 +114,19 @@ public class Registration extends AppCompatActivity {
                                             // Sign in success, update UI with the signed-in user's information
                                             Log.d(TAG, "createUserWithEmail:success");
                                             FirebaseUser user = mAuth.getCurrentUser();
+                                            db.collection("Pros").document(user.getUid()).set(pro)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d(TAG, "DocumentSnapshot added with ID: " + email);
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w(TAG, "Error adding document", e);
+                                                        }
+                                                    });
                                             // Go to the next activity
                                             finish();
                                             Intent choosePlan = new Intent(Registration.this, PaymentAndSubscription.class);

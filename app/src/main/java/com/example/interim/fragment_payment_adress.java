@@ -31,6 +31,7 @@ public class fragment_payment_adress extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private String mUserEmail;
+    private String mUserId;
 
     public fragment_payment_adress() {
     }
@@ -48,6 +49,7 @@ public class fragment_payment_adress extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         mUserEmail = mAuth.getCurrentUser().getEmail();
+        mUserId = mAuth.getCurrentUser().getUid();
         super.onViewCreated(view, savedInstanceState);
         Button useAdress = view.findViewById(R.id.useAdressBtn);
         Button backButtonAdressInfos = view.findViewById(R.id.backAdressBtn);
@@ -59,7 +61,7 @@ public class fragment_payment_adress extends Fragment {
 
         CheckBox defaultAdress = view.findViewById(R.id.defaultAdress);
 
-        DocumentReference docRef = mFirestore.collection("Pros").document(mUserEmail);
+        DocumentReference docRef = mFirestore.collection("Pros").document(mUserId);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists() && documentSnapshot.contains("adress")) {
                 Map<String, Object> adress = (Map<String, Object>) documentSnapshot.getData().get("adress");
@@ -100,7 +102,7 @@ public class fragment_payment_adress extends Fragment {
                             adress.put("state", state.getText().toString());
                             adress.put("code", postalCode.getText().toString());
 
-                            DocumentReference docRef = mFirestore.collection("Pros").document(mUserEmail);
+                            DocumentReference docRef = mFirestore.collection("Pros").document(mUserId);
                             docRef.update("adress", adress);
                         }
                     } else {

@@ -34,6 +34,7 @@ public class CardInformations extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private String mUserEmail;
+    private String mUserId;
 
     public CardInformations() {
         // Required empty public constructor
@@ -45,6 +46,7 @@ public class CardInformations extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         mUserEmail = mAuth.getCurrentUser().getEmail();
+        mUserId = mAuth.getCurrentUser().getUid();
     }
 
     @Override
@@ -67,7 +69,7 @@ public class CardInformations extends Fragment {
 
         CheckBox rememberCheck = view.findViewById(R.id.rememberCardCheck);
 
-        DocumentReference docRef = mFirestore.collection("Pros").document(mUserEmail);
+        DocumentReference docRef = mFirestore.collection("Pros").document(mUserId);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists() && documentSnapshot.contains("card")) {
                 Map<String, Object> cardInfo = (Map<String, Object>) documentSnapshot.getData().get("card");
@@ -106,7 +108,7 @@ public class CardInformations extends Fragment {
                             cardInfo.put("cvc", cardCVC.getText().toString());
                             cardInfo.put("expiration", cardExpiration.getText().toString());
 
-                            DocumentReference docRef = mFirestore.collection("Pros").document(mUserEmail);
+                            DocumentReference docRef = mFirestore.collection("Pros").document(mUserId);
                             docRef.update("card", cardInfo);
                         }
                     } else {

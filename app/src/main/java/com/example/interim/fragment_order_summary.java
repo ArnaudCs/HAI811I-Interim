@@ -1,6 +1,7 @@
 package com.example.interim;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class fragment_order_summary extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private String mUserEmail;
+    private String mUserId;
 
     public fragment_order_summary() {
         // Required empty public constructor
@@ -42,6 +44,7 @@ public class fragment_order_summary extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         mUserEmail = mAuth.getCurrentUser().getEmail();
+        mUserId = mAuth.getCurrentUser().getUid();
     }
 
     @Override
@@ -105,12 +108,14 @@ public class fragment_order_summary extends Fragment {
                     subscription.put("startDate", now);
                     subscription.put("endDate", endDate);
 
-                    DocumentReference docRef = mFirestore.collection("Subscriptions").document(mUserEmail);
+                    DocumentReference docRef = mFirestore.collection("Subscriptions").document(mUserId);
                     docRef.set(subscription)
                             .addOnSuccessListener(aVoid -> {
                                 // Subscription saved successfully
                                 Toast.makeText(getContext(), "Subscription saved", Toast.LENGTH_SHORT).show();
-
+                                getActivity().finish();
+                                Intent profile = new Intent(getActivity(), ProfileActivity.class);
+                                startActivity(profile);
 
                             })
                             .addOnFailureListener(e -> {

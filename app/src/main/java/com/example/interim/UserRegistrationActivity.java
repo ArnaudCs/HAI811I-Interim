@@ -103,14 +103,15 @@ public class UserRegistrationActivity extends AppCompatActivity {
                                             // User data saved successfully
                                             progressBar.setVisibility(View.GONE);
                                             Toast.makeText(UserRegistrationActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            Intent profile = new Intent(UserRegistrationActivity.this, ProfileActivity.class);
+                                            startActivity(profile);
                                         })
                                         .addOnFailureListener(e -> {
                                             // Error saving user data
                                             progressBar.setVisibility(View.GONE);
                                             Toast.makeText(UserRegistrationActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                            finish();
-                                            Intent profile = new Intent(UserRegistrationActivity.this, ProfileActivity.class);
-                                            startActivity(profile);
+
                                         });
                             }
                             else {

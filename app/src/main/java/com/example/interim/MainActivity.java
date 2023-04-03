@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Users").document(currentUser.getEmail()).get()
+            db.collection("Users").document(currentUser.getUid()).get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(profile);
                                 finish();
                             } else {
-                                db.collection("Pros").document(currentUser.getEmail()).get()
+                                db.collection("Pros").document(currentUser.getUid()).get()
                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                                                     // User is a Pro
                                                     Pro pro = documentSnapshot.toObject(Pro.class);
 
-                                                    isSubscribed(pro.getEmail());
+                                                    isSubscribed(currentUser.getUid());
                                                 }
                                             }
                                         });
@@ -145,11 +145,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void isSubscribed(String userEmail) {
+    private void isSubscribed(String uid) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("Subscriptions")
-                .document(userEmail)
+                .document(uid)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
