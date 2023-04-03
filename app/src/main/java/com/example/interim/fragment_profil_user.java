@@ -49,33 +49,23 @@ public class fragment_profil_user extends Fragment {
         decoBtn = view.findViewById(R.id.decoBtn);
         editProfilBtn = view.findViewById(R.id.editProfileBtn);
 
-        if(mAuth.getCurrentUser().getUid() != null){
+        if(mAuth.getCurrentUser() != null){
             String userId = mAuth.getCurrentUser().getUid();
             DocumentReference userRef = db.collection("Users").document(userId);
             userRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        fragment_navbar_user navbarFrag = new fragment_navbar_user();
 
-                        // Remplacer le fragment actuel par le nouveau fragment
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.navbarContainer, navbarFrag)
-                                .addToBackStack(null)
-                                .commit();
                     } else {
-                        fragment_navbar_entreprise navbarFrag = new fragment_navbar_entreprise();
 
-                        // Remplacer le fragment actuel par le nouveau fragment
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.navbarContainer, navbarFrag)
-                                .addToBackStack(null)
-                                .commit();
                     }
                 }
             });
+        } else {
+            getActivity().finish();
+            Intent mainActivity = new Intent(getActivity(), MainActivity.class);
+            startActivity(mainActivity);
         }
 
         decoBtn.setOnClickListener(new View.OnClickListener() {

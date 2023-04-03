@@ -5,6 +5,6 @@
     <item android:id="@+id/navSearch" android:title="Search" android:icon="@drawable/baseline_search_24"></item>
     <item android:id="@+id/navAdd" android:title="Add" android:icon="@drawable/baseline_add_circle_24"></item>
     <item android:id="@+id/navApp" android:title="Application" android:icon="@drawable/baseline_library_books_24"></item>
-    <item android:id="@+id/navProfile" android:title="Profile" android:checked="true" android:icon="@drawable/baseline_person_2_24"></item>
+    <item android:id="@+id/navProfile" android:title="Profile" android:icon="@drawable/baseline_person_2_24"></item>
 
 </menu>
