@@ -6,6 +6,4 @@
     <item android:id="@+id/navHome" android:title="Home" android:icon="@drawable/baseline_other_houses_24"></item>
     <item android:id="@+id/navFavorite" android:title="Favorite" android:icon="@drawable/baseline_favorite_24"></item>
     <item android:id="@+id/navProfile" android:title="Profile" android:icon="@drawable/baseline_person_2_24"></item>
-
-
 </menu>

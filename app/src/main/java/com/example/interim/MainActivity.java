@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if(currentUser != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("Users").document(currentUser.getUid()).get()
@@ -102,23 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                /*String password = charSequence.toString();
-                if(password.length() >= 8){
-                    Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
-                    Matcher matcher = pattern.matcher(password);
-                    boolean isPwdContainsSpeChar = matcher.find();
-                    if(isPwdContainsSpeChar){
-                        layoutPassword.setHelperText("Strong Password");
-                        layoutPassword.setError("");
-                    } else {
-                        layoutPassword.setHelperText("");
-                        layoutPassword.setError(getString(R.string.badPass));
-                    }
-                } else {
-                    layoutPassword.setHelperText(getString(R.string.minPass));
-                    layoutPassword.setError("");
-                }
-                utile pour la registration*/
+
             }
 
             @Override
@@ -136,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         System.out.println("Login successfull : "+ mAuth.getCurrentUser());
                         finish();
-                        Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                        Intent profile = new Intent(MainActivity.this, AppActivity.class);
                         startActivity(profile);
                     } else {
                         System.out.println("Login error");

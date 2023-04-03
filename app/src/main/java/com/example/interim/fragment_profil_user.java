@@ -1,58 +1,28 @@
 package com.example.interim;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_profil_user#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class fragment_profil_user extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public fragment_profil_user() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_profil_user.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragment_profil_user newInstance(String param1, String param2) {
-        fragment_profil_user fragment = new fragment_profil_user();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -60,5 +30,90 @@ public class fragment_profil_user extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profil_user, container, false);
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FirebaseFirestore db;
+        FirebaseAuth mAuth;
+        TextView firstNameTextView, nameTextView, phoneNumberTextView, emailTextView;
+        Button decoBtn, editProfilBtn;
+
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        firstNameTextView = view.findViewById(R.id.textView7);
+        nameTextView = view.findViewById(R.id.textView6);
+        phoneNumberTextView = view.findViewById(R.id.textView8);
+        emailTextView = view.findViewById(R.id.textView12);
+        decoBtn = view.findViewById(R.id.decoBtn);
+        editProfilBtn = view.findViewById(R.id.editProfileBtn);
+
+        if(mAuth.getCurrentUser().getUid() != null){
+            String userId = mAuth.getCurrentUser().getUid();
+            DocumentReference userRef = db.collection("Users").document(userId);
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        fragment_navbar_user navbarFrag = new fragment_navbar_user();
+
+                        // Remplacer le fragment actuel par le nouveau fragment
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.navbarContainer, navbarFrag)
+                                .addToBackStack(null)
+                                .commit();
+                    } else {
+                        fragment_navbar_entreprise navbarFrag = new fragment_navbar_entreprise();
+
+                        // Remplacer le fragment actuel par le nouveau fragment
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.navbarContainer, navbarFrag)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                }
+            });
+        }
+
+        decoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                getActivity().finish();
+                Intent profile = new Intent(getActivity(), MainActivity.class);
+                startActivity(profile);
+            }
+        });
+
+        if(mAuth.getCurrentUser() != null) {
+
+            String userId = mAuth.getCurrentUser().getUid();
+            DocumentReference userRef = db.collection("Users").document(userId);
+
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String firstName = document.getString("firstName");
+                        String name = document.getString("name");
+                        String phoneNumber = document.getString("phoneNumber");
+                        String email = mAuth.getCurrentUser().getEmail();
+
+                        firstNameTextView.setText(firstName);
+                        nameTextView.setText(name);
+                        phoneNumberTextView.setText(phoneNumber);
+                        emailTextView.setText(email);
+                    }
+                }
+            });
+        }
+        else {
+            getActivity().finish();
+            Intent profile = new Intent(getActivity(), MainActivity.class);
+            startActivity(profile);
+        }
     }
 }
