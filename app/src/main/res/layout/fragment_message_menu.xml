@@ -145,8 +145,11 @@
 
                         <CheckBox
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                        </CheckBox>
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/primary_red"
+                            android:foregroundTint="@color/primary_red"
+                            android:textColorHighlight="@color/primary_red"
+                            android:textColorLink="@color/primary_red"></CheckBox>
 
                     </LinearLayout>
 
