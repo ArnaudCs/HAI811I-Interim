@@ -110,4 +110,6 @@
     <string name="phoneVerified">Phone number verified successfuly</string>
     <string name="wrongOTP">Wrong OTP, try again</string>
     <string name="createGroup">Create Group</string>
+    <string name="modifyProfile">Modify Profile</string>
+    <string name="conversationPageTitle">My Messages</string>
 </resources>

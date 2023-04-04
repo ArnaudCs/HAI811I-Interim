@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +46,7 @@ public class fragment_profil_user extends Fragment {
         phoneNumberTextView = view.findViewById(R.id.textView8);
         emailTextView = view.findViewById(R.id.textView12);
         decoBtn = view.findViewById(R.id.decoBtn);
-        editProfilBtn = view.findViewById(R.id.editProfileBtn);
+        editProfilBtn = view.findViewById(R.id.settingsBtn);
 
         if(mAuth.getCurrentUser() != null){
             String userId = mAuth.getCurrentUser().getUid();

@@ -114,7 +114,7 @@ public class fragment_order_summary extends Fragment {
                                 // Subscription saved successfully
                                 Toast.makeText(getContext(), "Subscription saved", Toast.LENGTH_SHORT).show();
                                 getActivity().finish();
-                                Intent profile = new Intent(getActivity(), ProfileActivity.class);
+                                Intent profile = new Intent(getActivity(), AppActivity.class);
                                 startActivity(profile);
 
                             })

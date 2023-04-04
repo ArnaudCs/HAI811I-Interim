@@ -180,7 +180,7 @@
         app:srcCompat="@drawable/profileex" />
 
     <Button
-        android:id="@+id/editProfileBtn"
+        android:id="@+id/settingsBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
