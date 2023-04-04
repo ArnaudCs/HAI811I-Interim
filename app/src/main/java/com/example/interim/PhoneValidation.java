@@ -29,6 +29,7 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -46,6 +47,7 @@ public class PhoneValidation extends AppCompatActivity {
     private EditText mobileConfirmationInput;
     private FirebaseAuth mAuth;
     private String mVerificationId;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,13 @@ public class PhoneValidation extends AppCompatActivity {
         validateMobileBtn = findViewById(R.id.validateMobileBtn);
         mobileConfirmationInput = findViewById(R.id.mobileConfirmationInput);
         mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         receiveCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Users").document(mAuth.getCurrentUser().getUid()).get()
+                db.collection("Users").document(currentUser.getUid()).get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -92,7 +95,7 @@ public class PhoneValidation extends AppCompatActivity {
                                         PhoneAuthProvider.verifyPhoneNumber(options);
                                     }
                                 } else {
-                                    db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
+                                    db.collection("Pros").document(currentUser.getUid()).get()
                                             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -175,16 +178,15 @@ public class PhoneValidation extends AppCompatActivity {
 
     private void verifyCode(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
-        FirebaseUser user = mAuth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Check if user is a Pro
-        db.collection("Pros").document(user.getUid()).get()
+        db.collection("Pros").document(currentUser.getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            db.collection("Pros").document(user.getUid())
+                            db.collection("Pros").document(currentUser.getUid())
                                     .update("verified", true)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -202,7 +204,7 @@ public class PhoneValidation extends AppCompatActivity {
                                         }
                                     });
                         } else {
-                            db.collection("Users").document(user.getUid())
+                            db.collection("Users").document(currentUser.getUid())
                                     .update("verified", true)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
