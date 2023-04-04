@@ -109,6 +109,7 @@
     <string name="OTPError">Error occured sending code</string>
     <string name="phoneVerified">Phone number verified successfuly</string>
     <string name="wrongOTP">Wrong OTP, try again</string>
+    <string name="createGroup">Create Group</string>
     <string name="modifyProfile">Modify Profile</string>
     <string name="conversationPageTitle">My Messages</string>
     <string name="exampleSearch">Manager, Barmaid ...</string>
