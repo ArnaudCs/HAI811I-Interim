@@ -74,6 +74,14 @@ public class AppActivity extends AppCompatActivity {
                         }
                         break;
 
+                    case R.id.navSearch:
+                        fragment = new fragment_search_page();
+                        break;
+
+                    case R.id.navHome:
+                        fragment = new fragment_search_page();
+                        break;
+
                     case R.id.navAdd:
                         fragment = new fragment_second_slide();
                         break;

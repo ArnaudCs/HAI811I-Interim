@@ -101,4 +101,10 @@
     <string name="wrongOTP">Mauvais code, veuillez réessayer</string>
     <string name="modifyProfile">Modifier le profil</string>
     <string name="conversationPageTitle">Mes Conversations</string>
+    <string name="exampleSearch">Manager, Carleur ...</string>
+    <string name="startDateFilter">Date Début</string>
+    <string name="endDateFilter">Date Fin</string>
+    <string name="areaFilter">"Zone : "</string>
+    <string name="startPriceFilter">Salaire Min</string>
+    <string name="endPriceFilter">Salaire Max</string>
 </resources>

@@ -111,4 +111,10 @@
     <string name="wrongOTP">Wrong OTP, try again</string>
     <string name="modifyProfile">Modify Profile</string>
     <string name="conversationPageTitle">My Messages</string>
+    <string name="exampleSearch">Manager, Barmaid ...</string>
+    <string name="startDateFilter">Start Date</string>
+    <string name="endDateFilter">End Date</string>
+    <string name="areaFilter">Area :</string>
+    <string name="startPriceFilter">Min Salary</string>
+    <string name="endPriceFilter">Max Salary</string>
 </resources>
