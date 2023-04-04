@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 else {
                                     // User is a regular user
-                                    Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                                    Intent profile = new Intent(MainActivity.this, AppActivity.class);
                                     startActivity(profile);
                                     finish();
                                 }
@@ -106,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signInUser(textEmail.getText().toString(), textPassword.getText().toString());
+                if(!TextUtils.isEmpty(textEmail.getText()) && !TextUtils.isEmpty(textPassword.getText())){
+                    signInUser(textEmail.getText().toString(), textPassword.getText().toString());
+                }
             }
         });
 
@@ -142,13 +145,13 @@ public class MainActivity extends AppCompatActivity {
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         if (documentSnapshot.exists()) {
                                             if (!documentSnapshot.getBoolean("verified")) {
-                                                Intent profile = new Intent(MainActivity.this, PhoneValidation.class);
+                                                Intent profile = new Intent(MainActivity.this, AppActivity.class);
                                                 startActivity(profile);
                                                 finish();
                                             }
                                             else {
                                                 // User is a regular user
-                                                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                                                Intent profile = new Intent(MainActivity.this, AppActivity.class);
                                                 startActivity(profile);
                                                 finish();
                                             }
@@ -177,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                         finish();
-                        Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                        Intent profile = new Intent(MainActivity.this, AppActivity.class);
                         startActivity(profile);
                     } else {
                         System.out.println("Login error");
@@ -203,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
                             if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date()))) {
                                 // User has an active subscription
-                                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                                Intent profile = new Intent(MainActivity.this, AppActivity.class);
                                 startActivity(profile);
                                 finish();
                             } else {

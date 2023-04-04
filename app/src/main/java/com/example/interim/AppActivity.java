@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AppActivity extends AppCompatActivity {
 
+    private boolean pro = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,13 @@ public class AppActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
+                        pro = false;
                         getMenuInflater().inflate(R.menu.item_menu, menu);
+                        bottomNav.setSelectedItemId(R.id.navHome);
                     } else {
+                        pro = true;
                         getMenuInflater().inflate(R.menu.item_menu_entreprise, menu);
+                        bottomNav.setSelectedItemId(R.id.navAdd);
                     }
                 }
             });
@@ -62,7 +67,11 @@ public class AppActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navProfile:
-                        fragment = new fragment_profil_user();
+                        if(pro){
+                            fragment = new fragment_user_company();
+                        } else {
+                            fragment = new fragment_profil_user();
+                        }
                         break;
 
                     case R.id.navAdd:
@@ -76,10 +85,6 @@ public class AppActivity extends AppCompatActivity {
                         currentFragment = fragment;
                     }
                 }
-
-                System.out.println(bottomNav.getItemActiveIndicatorColor());
-                System.out.println(bottomNav.getSelectedItemId());
-
                 return true;
             }
         });

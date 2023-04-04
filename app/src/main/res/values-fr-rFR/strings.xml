@@ -99,4 +99,6 @@
     <string name="OTPError">Une erreur est survenue</string>
     <string name="phoneVerified">Numéro vérifié avec succès.</string>
     <string name="wrongOTP">Mauvais code, veuillez réessayer</string>
+    <string name="modifyProfile">Modifier le profil</string>
+    <string name="conversationPageTitle">Mes Conversations</string>
 </resources>
