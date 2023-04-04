@@ -179,9 +179,6 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-                        finish();
-                        Intent profile = new Intent(MainActivity.this, AppActivity.class);
-                        startActivity(profile);
                     } else {
                         System.out.println("Login error");
                     }
