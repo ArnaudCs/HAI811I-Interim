@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +37,16 @@ public class fragment_search_page extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button filterBtn = view.findViewById(R.id.filterBtn);
         Button closeFilter = view.findViewById(R.id.closeFilter);
+        Button validateAndSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.otherChoice);
         Spinner cityChoice = (Spinner) view.findViewById(R.id.cityChoice);
         LinearLayout filterContainer = view.findViewById(R.id.filterContainer);
+        TextView areaDisplay = view.findViewById(R.id.areaDisplay);
+        SeekBar areaChoice = view.findViewById(R.id.areaChoice);
+
+        //Initialisation de la valeur par défaut du progress de la barre de sélection
+        areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf((areaChoice.getProgress() + 1) * 10) + " Km");
 
         List<String> spinnerArray =  new ArrayList<String>();
         spinnerArray.add("Chantier et BTP");
@@ -69,7 +77,29 @@ public class fragment_search_page extends Fragment {
             }
         });
 
+        areaChoice.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                i = (i+1)*10;
+                areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf(i) + " Km");
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
         closeFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TransitionManager.beginDelayedTransition(filterContainer);
+                filterContainer.setVisibility(view.GONE);
+                closeFilter.setVisibility(view.GONE);
+                filterBtn.setVisibility(view.VISIBLE);
+            }
+        });
+
+        validateAndSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TransitionManager.beginDelayedTransition(filterContainer);

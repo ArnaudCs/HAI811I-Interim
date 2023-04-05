@@ -4,12 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptionsExtension;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -54,6 +62,31 @@ public class AppActivity extends AppCompatActivity {
                 }
             });
         }
+
+        ViewGroup rootView = findViewById(android.R.id.content);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private int previousHeight = 0;
+
+            @Override
+            public void onGlobalLayout() {
+                int newHeight = rootView.getHeight();
+                if (previousHeight != 0 && previousHeight > newHeight) {
+                    // Le clavier est ouvert
+                    //System.out.println("Le clavier est ouvert");
+                    bottomNav.setVisibility(View.GONE);
+                } else if (previousHeight != 0 && previousHeight < newHeight) {
+                    // Le clavier est fermé
+                    //System.out.println("Le clavier est fermé");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            bottomNav.setVisibility(View.VISIBLE);
+                        }
+                    }, 100); // Delai de 200 millisecondes avant de réafficher la navigation
+                }
+                previousHeight = newHeight;
+            }
+        });
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             Fragment currentFragment = null;

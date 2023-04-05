@@ -108,4 +108,5 @@
     <string name="areaFilter">"Zone : "</string>
     <string name="startPriceFilter">Salaire Min</string>
     <string name="endPriceFilter">Salaire Max</string>
+    <string name="searchBtn">Chercher</string>
 </resources>

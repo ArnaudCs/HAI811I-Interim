@@ -48,6 +48,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="5"
+                            android:maxLength="30"
                             android:background="@null"
                             android:hint="@string/exampleSearch"
                             android:textColorHint="#838383"
@@ -82,7 +83,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/baseline_filter_list_24"
-                        android:backgroundTint="#FFFFFF"></Button>
+                        android:backgroundTint="#FFFFFF"
+                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck"></Button>
 
                     <Button
                         android:id="@+id/closeFilter"
@@ -153,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="4"
-                    android:paddingTop="30dp"
+                    android:paddingTop="20dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp">
 
@@ -167,7 +169,6 @@
                             android:id="@+id/dateStartLayout"
                             android:layout_width="match_parent"
                             android:layout_height="70dp"
-                            android:hint="@string/startDateFilter"
                             app:boxBackgroundColor="#FFFFFF"
                             app:boxBackgroundMode="outline"
                             app:boxStrokeColor="@color/primary_red"
@@ -175,6 +176,7 @@
                             app:endIconMode="clear_text"
                             app:endIconTint="@color/primary_red"
                             app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/parent"
@@ -187,7 +189,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
-                                android:inputType="text" />
+                                android:hint="@string/startDateFilter"
+                                android:inputType="date" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
@@ -202,7 +205,7 @@
                             android:id="@+id/dateEndLayout"
                             android:layout_width="match_parent"
                             android:layout_height="70dp"
-                            android:hint="@string/endDateFilter"
+                            android:hint=""
                             app:boxBackgroundColor="#FFFFFF"
                             app:boxBackgroundMode="outline"
                             app:boxStrokeColor="@color/primary_red"
@@ -210,6 +213,7 @@
                             app:endIconMode="clear_text"
                             app:endIconTint="@color/primary_red"
                             app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/parent"
@@ -222,7 +226,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
-                                android:inputType="text" />
+                                android:hint="@string/endDateFilter"
+                                android:inputType="date" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
@@ -234,8 +239,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:paddingTop="20dp">
+                    android:paddingRight="30dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -257,19 +261,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:padding="30dp"
+                    android:padding="20dp"
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/areaDisplay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:text="@string/areaFilter"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="24sp"
-                        android:paddingBottom="10dp"
-                        android:textStyle="bold"
-                        android:text="@string/areaFilter">
-                    </TextView>
+                        android:textStyle="bold"></TextView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -279,14 +283,17 @@
                         android:paddingRight="30dp">
 
                         <SeekBar
+                            android:id="@+id/areaChoice"
+                            style="@style/Widget.AppCompat.SeekBar.Discrete"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:progressBackgroundTint="#000000"
-                            android:thumbTint="#FFFFFF">
-                        </SeekBar>
+                            android:max="5"
+                            android:progress="1"
+                            android:thumbTint="@color/white"
+                            android:thumb="@drawable/baseline_panorama_fish_eye_24"
+                            android:progressTint="@color/white"/>
 
                     </LinearLayout>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -307,7 +314,6 @@
                             android:id="@+id/priceStartLayout"
                             android:layout_width="match_parent"
                             android:layout_height="70dp"
-                            android:hint="@string/startPriceFilter"
                             app:boxBackgroundColor="#FFFFFF"
                             app:boxBackgroundMode="outline"
                             app:boxStrokeColor="@color/primary_red"
@@ -315,6 +321,7 @@
                             app:endIconMode="clear_text"
                             app:endIconTint="@color/primary_red"
                             app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/parent"
@@ -327,6 +334,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
+                                android:hint="@string/startPriceFilter"
                                 android:inputType="numberSigned" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -342,7 +350,6 @@
                             android:id="@+id/dateEndPrice"
                             android:layout_width="match_parent"
                             android:layout_height="70dp"
-                            android:hint="@string/endPriceFilter"
                             app:boxBackgroundColor="#FFFFFF"
                             app:boxBackgroundMode="outline"
                             app:boxStrokeColor="@color/primary_red"
@@ -350,6 +357,7 @@
                             app:endIconMode="clear_text"
                             app:endIconTint="@color/primary_red"
                             app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/parent"
@@ -362,10 +370,35 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
+                                android:hint="@string/endPriceFilter"
                                 android:inputType="numberSigned" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:text="@string/searchBtn"
+                        android:paddingLeft="30dp"
+                        android:id="@+id/validateAndSearchBtn"
+                        android:paddingRight="30dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:stateListAnimator="@null"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/navigation_bar">
+
+                    </Button>
 
                 </LinearLayout>
             </LinearLayout>
@@ -400,7 +433,8 @@
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/bottomDeckSearchPage">
+            app:layout_constraintTop_toTopOf="@+id/bottomDeckSearchPage"
+            tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -410,14 +444,6 @@
             </LinearLayout>
 
         </ScrollView>
-
-        <androidx.fragment.app.FragmentContainerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></androidx.fragment.app.FragmentContainerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

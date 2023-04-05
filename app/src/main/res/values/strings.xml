@@ -118,4 +118,5 @@
     <string name="areaFilter">Area :</string>
     <string name="startPriceFilter">Min Salary</string>
     <string name="endPriceFilter">Max Salary</string>
+    <string name="searchBtn">Search</string>
 </resources>
