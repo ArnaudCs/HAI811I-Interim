@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/groupCreationCl"
-    android:background="@color/white">
+    android:id="@+id/groupCreationCl">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutUser1"
@@ -18,7 +17,7 @@
         app:boxBackgroundColor="#FFFFFF"
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="@color/primary_red"
-        app:boxStrokeErrorColor="#DC0303"
+        app:boxStrokeErrorColor="@color/strokeError"
         app:endIconMode="clear_text"
         app:endIconTint="@color/primary_red"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +40,7 @@
         android:layout_width="196dp"
         android:layout_height="184dp"
         android:layout_marginTop="130dp"
+        android:src="@drawable/person"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.34"
-        app:layout_constraintStart_toEndOf="@+id/layoutUser"
+        app:layout_constraintStart_toEndOf="@+id/layoutUser1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.558" />
 
