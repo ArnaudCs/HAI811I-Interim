@@ -172,12 +172,19 @@
                             android:layout_weight="2">
 
                             <ImageView
+                                android:id="@+id/profilePic"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@drawable/profileex">
-                            </ImageView>
+                                android:src="@drawable/profileex"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"></ImageView>
 
                         </LinearLayout>
+
+
+
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -215,12 +222,21 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:visibility="gone"
                                 android:backgroundTint="@color/grey"
                                 android:foregroundTint="@color/grey"
                                 android:src="@drawable/baseline_arrow_forward_ios_24"
                                 app:tint="@color/black">
 
                             </ImageView>
+
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:lottie_rawRes="@raw/newmessage"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true">
+                            </com.airbnb.lottie.LottieAnimationView>
 
                         </LinearLayout>
 
