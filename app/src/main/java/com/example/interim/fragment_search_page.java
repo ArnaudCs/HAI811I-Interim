@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class fragment_search_page extends Fragment {
+
+
+    boolean liked = false;
     public fragment_search_page() {
         // Required empty public constructor
     }
@@ -37,6 +40,7 @@ public class fragment_search_page extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button filterBtn = view.findViewById(R.id.filterBtn);
         Button closeFilter = view.findViewById(R.id.closeFilter);
+        Button likeBtn = view.findViewById(R.id.likeBtn);
         Button validateAndSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
@@ -74,6 +78,19 @@ public class fragment_search_page extends Fragment {
                 filterContainer.setVisibility(view.VISIBLE);
                 closeFilter.setVisibility(view.VISIBLE);
                 filterBtn.setVisibility(view.GONE);
+            }
+        });
+
+        likeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(liked){
+                    likeBtn.setBackground(getResources().getDrawable(R.drawable.baseline_favorite_border_24));
+                    liked = !liked;
+                } else {
+                    likeBtn.setBackground(getResources().getDrawable(R.drawable.baseline_favorite_24));
+                    liked = !liked;
+                }
             }
         });
 

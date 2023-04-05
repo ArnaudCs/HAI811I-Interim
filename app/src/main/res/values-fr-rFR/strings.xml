@@ -109,4 +109,5 @@
     <string name="startPriceFilter">Salaire Min</string>
     <string name="endPriceFilter">Salaire Max</string>
     <string name="searchBtn">Chercher</string>
+    <string name="applyBtn">Candidater</string>
 </resources>
