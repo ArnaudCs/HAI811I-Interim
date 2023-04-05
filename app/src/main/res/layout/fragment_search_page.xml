@@ -46,6 +46,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
+                            android:singleLine="true"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="5"
                             android:maxLength="30"
@@ -139,15 +140,12 @@
                         android:layout_height="wrap_content">
 
                         <Spinner
-                            android:id="@+id/otherChoice"
+                            android:id="@+id/labelChoice"
                             android:padding="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:foregroundTint="@color/white"></Spinner>
                     </LinearLayout>
-
-
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -187,6 +185,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/textStartDate"
                                 android:layout_width="match_parent"
+                                android:maxLength="8"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
                                 android:hint="@string/startDateFilter"
@@ -224,6 +223,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/textEndDate"
                                 android:layout_width="match_parent"
+                                android:maxLength="8"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
                                 android:hint="@string/endDateFilter"
@@ -253,9 +253,6 @@
                             android:layout_height="wrap_content"
                             android:foregroundTint="@color/white"></Spinner>
                     </LinearLayout>
-
-
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -332,6 +329,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/textStartPrice"
                                 android:layout_width="match_parent"
+                                android:maxLength="5"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
                                 android:hint="@string/startPriceFilter"
@@ -369,6 +367,7 @@
                                 android:id="@+id/textEndPrice"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:maxLength="5"
                                 android:background="@drawable/navigation_bar"
                                 android:hint="@string/endPriceFilter"
                                 android:inputType="numberSigned" />
@@ -425,7 +424,6 @@
                 app:srcCompat="@drawable/bottom2" />
 
         </LinearLayout>
-
 
         <ScrollView
             android:layout_width="match_parent"

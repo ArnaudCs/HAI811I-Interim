@@ -39,7 +39,7 @@ public class fragment_search_page extends Fragment {
         Button closeFilter = view.findViewById(R.id.closeFilter);
         Button validateAndSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
-        Spinner labelChoice = (Spinner) view.findViewById(R.id.otherChoice);
+        Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
         Spinner cityChoice = (Spinner) view.findViewById(R.id.cityChoice);
         LinearLayout filterContainer = view.findViewById(R.id.filterContainer);
         TextView areaDisplay = view.findViewById(R.id.areaDisplay);
