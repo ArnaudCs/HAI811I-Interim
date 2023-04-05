@@ -118,6 +118,10 @@ public class AppActivity extends AppCompatActivity {
                     case R.id.navAdd:
                         fragment = new fragment_second_slide();
                         break;
+
+                    case R.id.navNotification:
+                        fragment = new fragment_payment_confirm();
+                        break;
                 }
 
                 if (fragment != null) {

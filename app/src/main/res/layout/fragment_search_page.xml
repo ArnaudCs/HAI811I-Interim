@@ -442,14 +442,45 @@
                             android:padding="17dp">
 
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:weightSum="6"
                                 android:gravity="center"
-                                android:text="Barman"
-                                android:textColor="@color/white"
-                                android:textSize="30sp"
-                                android:textStyle="bold"></TextView>
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:gravity="left|center"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="5">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="Barman"
+                                        android:textColor="@color/white"
+                                        android:textSize="30sp"
+                                        android:textStyle="bold"></TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right|center"
+                                    android:layout_weight="1">
+
+                                    <Button
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:background="@drawable/baseline_language_24"
+                                        android:backgroundTint="#FFFFFF"
+                                        android:foregroundTint="@color/white" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -609,7 +640,7 @@
                         android:layout_marginBottom="20dp"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="6">
+                        android:weightSum="8">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -619,8 +650,8 @@
 
                             <Button
                                 android:id="@+id/shareBtn"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:background="@drawable/baseline_share_24">
 
                             </Button>
@@ -630,21 +661,35 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right|center">
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:gravity="center">
 
                             <Button
-                                android:id="@+id/likeBtn"
+                                android:id="@+id/likeInit"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:background="@drawable/baseline_favorite_border_24"></Button>
+                                android:background="@drawable/baseline_favorite_border_24">
+                            </Button>
+
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:scaleType="center"
+                                android:scaleX="0.6"
+                                android:scaleY="0.6"
+                                android:visibility="gone"
+                                app:lottie_rawRes="@raw/dislike"
+                                android:id="@+id/likeBtn">
+
+                            </com.airbnb.lottie.LottieAnimationView>
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="4"
+                            android:layout_weight="5"
                             android:gravity="right">
 
                             <Button

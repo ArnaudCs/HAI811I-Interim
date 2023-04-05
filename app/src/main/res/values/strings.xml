@@ -120,4 +120,6 @@
     <string name="endPriceFilter">Max Salary</string>
     <string name="searchBtn">Search</string>
     <string name="applyBtn">Apply</string>
+    <string name="chooseCat">Choose category</string>
+    <string name="paymentValidateAnimation">Congratulations ! Now let\'s make your dream team ! Click on Next to go to your Home Page</string>
 </resources>

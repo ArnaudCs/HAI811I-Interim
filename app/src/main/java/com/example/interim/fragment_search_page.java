@@ -18,6 +18,8 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +42,11 @@ public class fragment_search_page extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button filterBtn = view.findViewById(R.id.filterBtn);
         Button closeFilter = view.findViewById(R.id.closeFilter);
-        Button likeBtn = view.findViewById(R.id.likeBtn);
         Button validateAndSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
+
+        Button likeInit = view.findViewById(R.id.likeInit);
+        LottieAnimationView likeBtn = view.findViewById(R.id.likeBtn);
+
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
         Spinner cityChoice = (Spinner) view.findViewById(R.id.cityChoice);
@@ -53,6 +58,7 @@ public class fragment_search_page extends Fragment {
         areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf((areaChoice.getProgress() + 1) * 10) + " Km");
 
         List<String> spinnerArray =  new ArrayList<String>();
+        spinnerArray.add(getResources().getString(R.string.chooseCat));
         spinnerArray.add("Chantier et BTP");
         spinnerArray.add("Nettoyage");
 
@@ -81,14 +87,29 @@ public class fragment_search_page extends Fragment {
             }
         });
 
+        likeInit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!liked) {
+                    likeInit.setVisibility(View.GONE);
+                    likeBtn.setVisibility(View.VISIBLE);
+                    likeBtn.setAnimation(R.raw.like);
+                    likeBtn.playAnimation();
+                    liked = !liked;
+                }
+            }
+        });
+
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(liked){
-                    likeBtn.setBackground(getResources().getDrawable(R.drawable.baseline_favorite_border_24));
+                if(!liked){
+                    likeBtn.setAnimation(R.raw.like);
+                    likeBtn.playAnimation();
                     liked = !liked;
                 } else {
-                    likeBtn.setBackground(getResources().getDrawable(R.drawable.baseline_favorite_24));
+                    likeBtn.setAnimation(R.raw.dislike);
+                    likeBtn.playAnimation();
                     liked = !liked;
                 }
             }

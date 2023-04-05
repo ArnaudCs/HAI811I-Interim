@@ -110,4 +110,6 @@
     <string name="endPriceFilter">Salaire Max</string>
     <string name="searchBtn">Chercher</string>
     <string name="applyBtn">Candidater</string>
+    <string name="chooseCat">Choisissez une catégorie</string>
+    <string name="paymentValidateAnimation">Félicitation ! Il est l\'heure de constituer votre équipe de rêve, appuyez sur Suivant pour vous rendre sur votre page d\'accueil</string>
 </resources>
