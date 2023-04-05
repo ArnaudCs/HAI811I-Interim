@@ -112,4 +112,8 @@
     <string name="applyBtn">Candidater</string>
     <string name="chooseCat">Choisissez une catégorie</string>
     <string name="paymentValidateAnimation">Félicitation ! Il est l\'heure de constituer votre équipe de rêve, appuyez sur Suivant pour vous rendre sur votre page d\'accueil</string>
+    <string name="workCitation">« En travaillant ensemble et réunissant nos richesses, nous pouvons accomplir de grandes choses. » - Ronald Reagan.</string>
+    <string name="fullNextBtn">Suivant</string>
+    <string name="paymentValidateAnimationUser">Félicitation ! Allons trouver votre prochaine mission ! Appuyez sur Suivant pour vous rendre sur votre page d\'accueil</string>
+    <string name="savedOffersDisplay">" offres favorites"</string>
 </resources>

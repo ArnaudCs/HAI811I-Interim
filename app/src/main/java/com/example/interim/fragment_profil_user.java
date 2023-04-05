@@ -35,17 +35,18 @@ public class fragment_profil_user extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         FirebaseFirestore db;
         FirebaseAuth mAuth;
-        TextView firstNameTextView, nameTextView, phoneNumberTextView, emailTextView;
+        TextView birthdate, savedOffers, nameTextView, phoneNumberTextView, emailTextView;
         Button decoBtn, editProfilBtn;
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        firstNameTextView = view.findViewById(R.id.textView7);
-        nameTextView = view.findViewById(R.id.textView6);
-        phoneNumberTextView = view.findViewById(R.id.textView8);
-        emailTextView = view.findViewById(R.id.textView12);
+        nameTextView = view.findViewById(R.id.nameDisplay);
+        phoneNumberTextView = view.findViewById(R.id.phoneNumber);
+        emailTextView = view.findViewById(R.id.mailAdress);
+        birthdate = view.findViewById(R.id.birthDate);
         decoBtn = view.findViewById(R.id.decoBtn);
+        savedOffers = view.findViewById(R.id.savedOffers);
         editProfilBtn = view.findViewById(R.id.settingsBtn);
 
         if(mAuth.getCurrentUser() != null){
@@ -90,11 +91,13 @@ public class fragment_profil_user extends Fragment {
                         String name = document.getString("name");
                         String phoneNumber = document.getString("phoneNumber");
                         String email = mAuth.getCurrentUser().getEmail();
+                        String birth = document.getString("birthDate");
 
-                        firstNameTextView.setText(firstName);
-                        nameTextView.setText(name);
+                        nameTextView.setText(firstName + name);
                         phoneNumberTextView.setText(phoneNumber);
+                        birthdate.setText(birth);
                         emailTextView.setText(email);
+                        savedOffers.setText("0" + getResources().getString(R.string.savedOffersDisplay));
                     }
                 }
             });

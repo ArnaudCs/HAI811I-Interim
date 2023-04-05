@@ -122,4 +122,8 @@
     <string name="applyBtn">Apply</string>
     <string name="chooseCat">Choose category</string>
     <string name="paymentValidateAnimation">Congratulations ! Now let\'s make your dream team ! Click on Next to go to your Home Page</string>
+    <string name="workCitation">\"Alone we can do so little; together we can do so much.\" – Helen Keller</string>
+    <string name="fullNextBtn">Next</string>
+    <string name="paymentValidateAnimationUser">Congratulations ! Now let\'s find your next mission ! Click on Next to go to your Home Page</string>
+    <string name="savedOffersDisplay">" saved offers"</string>
 </resources>
