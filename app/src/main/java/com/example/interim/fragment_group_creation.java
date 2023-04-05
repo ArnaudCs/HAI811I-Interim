@@ -1,5 +1,6 @@
 package com.example.interim;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,11 +26,14 @@ import java.util.List;
 
 public class fragment_group_creation extends Fragment {
 
-    final float scale = getContext().getResources().getDisplayMetrics().density;
+    private float scale;
     private static int userNumber = 0;
     private Button newMemberButton;
     private Button createGroupButton;
-    private List<Integer> generatedTextInputsIds;
+    // tie : TextInputEdit
+    private List<Integer> generatedTieIds;
+    // til : TextInputLayout
+    private List<Integer> generatedTilIds;
     private TextInputEditText memberInput;
     private List<String> memberList;
     private ConstraintLayout groupCreationCl;
@@ -38,69 +43,82 @@ public class fragment_group_creation extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        generatedTextInputsIds = new ArrayList<>();
+        generatedTieIds = new ArrayList<>();
+        generatedTilIds = new ArrayList<>();
         memberList = new ArrayList<>();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_group_creation, container, false);
+        View v = inflater.inflate(R.layout.fragment_group_creation, container, false);
+        createGroupButton = v.findViewById(R.id.createGroupButton);
+        newMemberButton = v.findViewById(R.id.addMemberButton);
+        return v;
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // on récupère l'id du 1er membre pour pouvoir définir les contraintes des InputLayout plus tard
-        generatedTextInputsIds.add(R.id.textMember1);
-        newMemberButton = view.findViewById(R.id.addMemberButton);
+        scale = view.getContext().getResources().getDisplayMetrics().density;
+        // on récupère l'id du 1er layout pour pouvoir définir les contraintes des InputLayout plus tard
+        generatedTieIds.add(R.id.textMember1);
+        generatedTilIds.add(R.id.layoutUser1);
         newMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int lastUserId = generatedTextInputsIds.get(userNumber);
+                int lastUserTilId = generatedTilIds.get(userNumber);
+                int lastUserTieId = generatedTieIds.get(userNumber);
                 userNumber++;
-
-                groupCreationCl = view.findViewById(R.id.groupCreationCl);
+                groupCreationCl = getView().findViewById(R.id.groupCreationCl);
                 TextInputLayout tilNewMember = new TextInputLayout(view.getContext());
                 TextInputEditText tieNewMember = new TextInputEditText(view.getContext());
+                int newTieId = View.generateViewId();
+                generatedTieIds.add(newTieId);
                 // paramètres du textInput
-                int newId = View.generateViewId();
-                generatedTextInputsIds.add(newId);
-                tieNewMember.setId(newId);
-                tieNewMember.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                tieNewMember.setId(newTieId);
+                tieNewMember.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
                 tieNewMember.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 tilNewMember.addView(tieNewMember);
+                int newTilId = View.generateViewId();
+                generatedTilIds.add(newTilId);
+
                 // paramètres du nouveau layout
-                ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                        0,
-                        (int) (60 * scale + 0.5f)); // 60 dp convertis en pixels
-                params.setMargins(
-                        (int) (70 * scale + 0.5f),
-                        (int) (60 * scale + 0.5f),
-                        (int) (90 * scale + 0.5f),
-                        0
-                );
-
-                tilNewMember.setBoxBackgroundColor(getResources().getColor(R.color.white));
+                tilNewMember.setId(newTilId);
                 tilNewMember.setHint("Mail User "+String.valueOf(userNumber+1));
-                tilNewMember.setLayoutParams(params);
+                tilNewMember.setBoxBackgroundColor(getResources().getColor(R.color.white));
+                tilNewMember.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE);
+                tilNewMember.setBoxStrokeColor(getResources().getColor(R.color.primary_red));
+                tilNewMember.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.strokeError)));
+                tilNewMember.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                tilNewMember.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary_red)));
+                tilNewMember.setPlaceholderText("abc@df.com");
+                tilNewMember.setStartIconDrawable(R.drawable.baseline_person_24);
+                tilNewMember.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary_red)));
 
+                tilNewMember.setLayoutParams(new ConstraintLayout.LayoutParams(
+                        0,
+                        (int) (60 * scale + 0.5f))); // 60 dp convertis en pixels
 
-
+                groupCreationCl.addView(tilNewMember);
                 // contraintes
+
                 ConstraintSet cs = new ConstraintSet();
                 cs.clone(groupCreationCl);
-                cs.connect(newId,ConstraintSet.TOP,lastUserId,ConstraintSet.BOTTOM);
-
-
+//                cs.connect(newTilId,ConstraintSet.TOP,ConstraintSet.PARENT_ID, (int) (20 * scale + 0.5f));
+//
+//                cs.connect(newTilId, ConstraintSet.LEFT,ConstraintSet.PARENT_ID,ConstraintSet.LEFT,(int) (70 * scale + 0.5f));
+//                cs.connect(newTilId, ConstraintSet.RIGHT,ConstraintSet.PARENT_ID,ConstraintSet.RIGHT,(int) (90 * scale + 0.5f));
+//
+//                cs.applyTo(groupCreationCl);
 
             }
         });
 
-        createGroupButton = view.findViewById(R.id.createGroupButton);
         createGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 memberInput = view.findViewById(R.id.textMember1);
                 memberList.add(String.valueOf(memberInput.getText()));
                 Log.i("Info",String.valueOf(memberInput.getText()));
-                for (int id : generatedTextInputsIds){
+                // Récupération des données entrées dans les TextInputEdit
+                for (int id : generatedTieIds){
                     memberInput = view.findViewById(id);
                     memberList.add(String.valueOf(memberInput.getText()));
                     Log.i("Info",String.valueOf(memberInput.getText()));
