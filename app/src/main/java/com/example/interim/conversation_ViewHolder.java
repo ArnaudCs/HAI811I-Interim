@@ -1,7 +1,13 @@
 package com.example.interim;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +23,11 @@ public class conversation_ViewHolder extends RecyclerView.ViewHolder {
     TextView userName;
     TextView lastMsg;
     LottieAnimationView unRead;
+
     ImageView openConv;
+
+    Button deleteConvBtn, makeGroupBtn, cancelDelete, validateDelete;
+    LinearLayout conversationContainer, checkDelete, goToMessages;
 
     public conversation_ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,5 +35,13 @@ public class conversation_ViewHolder extends RecyclerView.ViewHolder {
         lastMsg = itemView.findViewById(R.id.lastMsg);
         unRead = itemView.findViewById(R.id.unRead);
         openConv = itemView.findViewById(R.id.openConv);
+
+        deleteConvBtn = itemView.findViewById(R.id.deleteMessages);
+        makeGroupBtn = itemView.findViewById(R.id.groupMaking);
+        cancelDelete = itemView.findViewById(R.id.cancelDelete);
+        validateDelete = itemView.findViewById(R.id.validateDelete);
+        checkDelete = itemView.findViewById(R.id.checkDelete);
+        goToMessages = itemView.findViewById(R.id.messageBubble);
+        conversationContainer = itemView.findViewById(R.id.conversationContainer);
     }
 }

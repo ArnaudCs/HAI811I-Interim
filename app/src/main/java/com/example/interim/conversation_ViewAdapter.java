@@ -1,9 +1,12 @@
 package com.example.interim;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +43,38 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
             holder.unRead.setVisibility(View.GONE);
             holder.openConv.setVisibility(View.VISIBLE);
         }
+
+        holder.deleteConvBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.checkDelete.setVisibility(View.VISIBLE);
+                holder.cancelDelete.setVisibility(View.VISIBLE);
+                holder.deleteConvBtn.setVisibility(View.GONE);
+                holder.validateDelete.setVisibility(View.VISIBLE);
+                holder.makeGroupBtn.setVisibility(View.GONE);
+                holder.conversationContainer.setWeightSum(6);
+            }
+        });
+
+        holder.cancelDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.checkDelete.setVisibility(View.GONE);
+                holder.cancelDelete.setVisibility(View.GONE);
+                holder.validateDelete.setVisibility(View.GONE);
+                holder.makeGroupBtn.setVisibility(View.VISIBLE);
+                holder.deleteConvBtn.setVisibility(View.VISIBLE);
+                holder.conversationContainer.setWeightSum(5);
+            }
+        });
+
+        holder.goToMessages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent discussion = new Intent(context, DiscussionViewActivity.class);
+                context.startActivity(discussion);
+            }
+        });
 
     }
 
