@@ -3,6 +3,7 @@ package com.example.interim;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class AppActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.navbar);
         Menu menu = bottomNav.getMenu();
+        FragmentContainerView navContainer = findViewById(R.id.navContainer);
         menu.clear();
 
         pro = false;

@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.models.Offer;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,6 +60,7 @@ public class fragment_search_page extends Fragment {
         LinearLayout filterContainer = view.findViewById(R.id.filterContainer);
         TextView areaDisplay = view.findViewById(R.id.areaDisplay);
         SeekBar areaChoice = view.findViewById(R.id.areaChoice);
+        BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
 
         //Initialisation de la valeur par défaut du progress de la barre de sélection
         areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf((areaChoice.getProgress() + 1) * 10) + " Km");
@@ -77,6 +79,8 @@ public class fragment_search_page extends Fragment {
         List<String> spinnerCity =  new ArrayList<String>();
         spinnerArray.add("Marseille");
         spinnerArray.add("Montpellier");
+        RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
+
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
 
@@ -84,6 +88,33 @@ public class fragment_search_page extends Fragment {
         cityChoice.setAdapter(adapter1);
 
         List<Offer> mockOffers = new ArrayList<>();
+
+        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            private int scrollThreshold = 10;
+            private int scrolledDistance = 0;
+            private boolean isScrollingDown = false;
+
+            @Override
+            public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                int currentScrollPosition = scrollY;
+
+                if (scrolledDistance > scrollThreshold && isScrollingDown) {
+                    // Hide BottomNavigationView
+                    bottomNav.animate().translationY(bottomNav.getHeight() + 100).setDuration(200);
+                    scrolledDistance = 0;
+                    isScrollingDown = false;
+                } else if (scrolledDistance < -scrollThreshold && !isScrollingDown) {
+                    // Show BottomNavigationView
+                    bottomNav.animate().translationY(0).setDuration(200);
+                    scrolledDistance = 0;
+                    isScrollingDown = true;
+                }
+
+                if ((isScrollingDown && scrollY > oldScrollY) || (!isScrollingDown && scrollY < oldScrollY)) {
+                    scrolledDistance += (scrollY - oldScrollY);
+                }
+            }
+        });
 
 // Offer 1
         Date startDate1 = new Date(1648873200000L); // 1st March 2022
@@ -155,7 +186,6 @@ public class fragment_search_page extends Fragment {
         mockOffers.add(offer3);
 
 
-        RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), mockOffers));
 

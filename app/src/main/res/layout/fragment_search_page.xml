@@ -410,7 +410,6 @@
             android:layout_height="0dp"
             android:background="@drawable/bottom2"
             android:orientation="vertical"
-            android:paddingBottom="150dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/topDeckSearch">
 
@@ -419,9 +418,11 @@
                 android:id="@+id/cardContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingStart="20dp"
-                android:paddingTop="20dp"
-                android:paddingEnd="20dp" />
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
 
