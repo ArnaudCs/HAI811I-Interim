@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
@@ -48,8 +50,8 @@ public class fragment_search_page extends Fragment {
         Button closeFilter = view.findViewById(R.id.closeFilter);
         Button validateAndSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
 
-        Button likeInit = view.findViewById(R.id.likeInit);
-        LottieAnimationView likeBtn = view.findViewById(R.id.likeBtn);
+//        Button likeInit = view.findViewById(R.id.likeInit);
+//        LottieAnimationView likeBtn = view.findViewById(R.id.likeBtn);
 
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
@@ -153,9 +155,9 @@ public class fragment_search_page extends Fragment {
         mockOffers.add(offer3);
 
 
-
-
-
+        RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), mockOffers));
 
 
 
@@ -169,33 +171,33 @@ public class fragment_search_page extends Fragment {
             }
         });
 
-        likeInit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!liked) {
-                    likeInit.setVisibility(View.GONE);
-                    likeBtn.setVisibility(View.VISIBLE);
-                    likeBtn.setAnimation(R.raw.like);
-                    likeBtn.playAnimation();
-                    liked = !liked;
-                }
-            }
-        });
-
-        likeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!liked){
-                    likeBtn.setAnimation(R.raw.like);
-                    likeBtn.playAnimation();
-                    liked = !liked;
-                } else {
-                    likeBtn.setAnimation(R.raw.dislike);
-                    likeBtn.playAnimation();
-                    liked = !liked;
-                }
-            }
-        });
+//        likeInit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (!liked) {
+//                    likeInit.setVisibility(View.GONE);
+//                    likeBtn.setVisibility(View.VISIBLE);
+//                    likeBtn.setAnimation(R.raw.like);
+//                    likeBtn.playAnimation();
+//                    liked = !liked;
+//                }
+//            }
+//        });
+//
+//        likeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(!liked){
+//                    likeBtn.setAnimation(R.raw.like);
+//                    likeBtn.playAnimation();
+//                    liked = !liked;
+//                } else {
+//                    likeBtn.setAnimation(R.raw.dislike);
+//                    likeBtn.playAnimation();
+//                    liked = !liked;
+//                }
+//            }
+//        });
 
         areaChoice.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
