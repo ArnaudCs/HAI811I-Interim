@@ -15,4 +15,7 @@
     <color name="cards">#F4F4F4</color>
     <color name="navBarUnpressed">#ff9d96</color>
     <color name="strokeError">#DC0303</color>
+    <color name="messagebar">#f0f0f0</color>
+    <color name="incommingmessages">#ffc8c4</color>
+    <color name="sendingmessage">#dcfafa</color>
 </resources>

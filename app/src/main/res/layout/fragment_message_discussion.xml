@@ -11,90 +11,162 @@
         android:id="@+id/messageBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:weightSum="6"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/layoutMessages">
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:layout_width="0dp"
+
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="left">
-
-            <Button
-                android:id="@+id/deleteMessages"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/baseline_delete_24"
-                android:backgroundTint="#FFFFFF"
-                android:drawableTint="#FBFAFA"
-                android:foregroundTint="#FFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/cancelDelete"
-                android:layout_width="30dp"
-                android:visibility="gone"
-                android:layout_height="30dp"
-                android:background="@drawable/baseline_cancel_24"
-                android:backgroundTint="#FFFFFF"
-                android:drawableTint="#FBFAFA"
-                android:foregroundTint="#FFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:padding="20dp"
             android:gravity="center"
-            android:layout_weight="4">
+            android:weightSum="6"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layoutMessages">
 
-            <TextView
-                android:id="@+id/homeText"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/conversationPageTitle"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/layoutMain" />
-        </LinearLayout>
+                android:layout_weight="1"
+                android:gravity="left">
 
+                <Button
+                    android:id="@+id/deleteMessages"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/baseline_arrow_circle_left_24"
+                    android:backgroundTint="#FFFFFF"
+                    android:drawableTint="#FBFAFA"
+                    android:foregroundTint="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="4">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/profileex">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/homeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alexandre"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="@id/layoutMain" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right">
+
+                <Button
+                    android:id="@+id/infosBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/baseline_info_24"
+                    android:backgroundTint="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/closeInfos"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/baseline_keyboard_double_arrow_up_24"
+                    android:backgroundTint="#FFFFFF"
+                    android:drawableTint="#FBFAFA"
+                    android:visibility="gone"
+                    android:foregroundTint="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/infosContainer"
+            android:visibility="gone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right">
+            android:layout_marginBottom="20dp"
+            android:weightSum="6">
 
-            <Button
-                android:id="@+id/groupMaking"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/baseline_groups_2_24"
-                android:backgroundTint="#FFFFFF"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_weight="2">
 
-            <Button
-                android:id="@+id/validateDelete"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/baseline_delete_24"
-                android:backgroundTint="#FFFFFF"
-                android:drawableTint="#FBFAFA"
-                android:visibility="gone"
-                android:foregroundTint="#FFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <Button
+                    android:id="@+id/signalUserBtn"
+                    android:layout_width="match_parent"
+                    android:text="@string/signalBtn"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:stateListAnimator="@null"
+                    android:background="@drawable/navigation_bar">
 
+                </Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <Button
+                    android:id="@+id/blockUserBtn"
+                    android:layout_width="match_parent"
+                    android:text="@string/blockButton"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:stateListAnimator="@null"
+                    android:background="@drawable/navigation_bar">
+
+                </Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <Button
+                    android:id="@+id/muteBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/muteBtn"
+                    android:textStyle="bold"
+                    android:stateListAnimator="@null"
+                    android:background="@drawable/navigation_bar">
+                </Button>
+
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -118,446 +190,58 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
+                android:paddingBottom="150dp"
                 android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/primary_red"
-                            android:foregroundTint="@color/primary_red"
-                            android:textColorHighlight="@color/primary_red"
-                            android:textColorLink="@color/primary_red"></CheckBox>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:background="@drawable/messagebox"
-                        android:weightSum="8"
-                        android:layout_marginTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/profileex"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                        </LinearLayout>
-
-
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4">
+                            android:layout_marginBottom="10dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Florian"
-                                android:textStyle="bold"
-                                android:textSize="22sp"
-                                android:textColor="@color/black">
-                            </TextView>
+                                android:textAlignment="center"
+                                android:text="23h34">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:text="Il faudrait que tu m'envoi le dernierrelevé"
-                                android:textSize="17sp"
-                                android:textColor="@color/black">
                             </TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:gravity="right"
+                            android:layout_height="wrap_content">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/grey"
-                                android:foregroundTint="@color/grey"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                app:tint="@color/black">
-
-                            </ImageView>
-
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:lottie_rawRes="@raw/newmessage"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true">
-                            </com.airbnb.lottie.LottieAnimationView>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/primary_red"
-                            android:foregroundTint="@color/primary_red"
-                            android:textColorHighlight="@color/primary_red"
-                            android:textColorLink="@color/primary_red"></CheckBox>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:background="@drawable/messagebox"
-                        android:weightSum="8"
-                        android:layout_marginTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/profileex"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                        </LinearLayout>
-
-
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4">
-
-                            <TextView
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="Florian"
-                                android:textStyle="bold"
-                                android:textSize="22sp"
-                                android:textColor="@color/black">
-                            </TextView>
+                                android:padding="10dp"
+                                android:layout_weight="8"
+                                android:background="@drawable/senderbubbles">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:text="Il faudrait que tu m'envoi le dernierrelevé"
-                                android:textSize="17sp"
-                                android:textColor="@color/black">
-                            </TextView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:text="salut je m'apelle arnaud j'ai rzendez vous avec vous à 19H30 mais je ne sais pas comment">
 
-                        </LinearLayout>
+                                </TextView>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/grey"
-                                android:foregroundTint="@color/grey"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                app:tint="@color/black">
-
-                            </ImageView>
-
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:lottie_rawRes="@raw/newmessage"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true">
-                            </com.airbnb.lottie.LottieAnimationView>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/primary_red"
-                            android:foregroundTint="@color/primary_red"
-                            android:textColorHighlight="@color/primary_red"
-                            android:textColorLink="@color/primary_red"></CheckBox>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:background="@drawable/messagebox"
-                        android:weightSum="8"
-                        android:layout_marginTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/profileex"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                        </LinearLayout>
-
-
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Florian"
-                                android:textStyle="bold"
-                                android:textSize="22sp"
-                                android:textColor="@color/black">
-                            </TextView>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:text="Il faudrait que tu m'envoi le dernierrelevé"
-                                android:textSize="17sp"
-                                android:textColor="@color/black">
-                            </TextView>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/grey"
-                                android:foregroundTint="@color/grey"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                app:tint="@color/black">
-
-                            </ImageView>
-
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:lottie_rawRes="@raw/newmessage"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true">
-                            </com.airbnb.lottie.LottieAnimationView>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/primary_red"
-                            android:foregroundTint="@color/primary_red"
-                            android:textColorHighlight="@color/primary_red"
-                            android:textColorLink="@color/primary_red"></CheckBox>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:background="@drawable/messagebox"
-                        android:weightSum="8"
-                        android:layout_marginTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/profileex"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                        </LinearLayout>
-
-
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Florian"
-                                android:textStyle="bold"
-                                android:textSize="22sp"
-                                android:textColor="@color/black">
-                            </TextView>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:text="Il faudrait que tu m'envoi le dernierrelevé"
-                                android:textSize="17sp"
-                                android:textColor="@color/black">
-                            </TextView>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/grey"
-                                android:foregroundTint="@color/grey"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                app:tint="@color/black">
-
-                            </ImageView>
-
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:lottie_rawRes="@raw/newmessage"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true">
-                            </com.airbnb.lottie.LottieAnimationView>
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -567,442 +251,277 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/primary_red"
-                            android:foregroundTint="@color/primary_red"
-                            android:textColorHighlight="@color/primary_red"
-                            android:textColorLink="@color/primary_red"></CheckBox>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:background="@drawable/messagebox"
-                        android:weightSum="8"
-                        android:layout_marginTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/profileex"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                        </LinearLayout>
-
-
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4">
+                            android:layout_marginBottom="10dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Florian"
-                                android:textStyle="bold"
-                                android:textSize="22sp"
-                                android:textColor="@color/black">
-                            </TextView>
+                                android:textAlignment="center"
+                                android:text="12h98">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:text="Il faudrait que tu m'envoi le dernierrelevé"
-                                android:textSize="17sp"
-                                android:textColor="@color/black">
                             </TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:gravity="left"
+                            android:layout_height="wrap_content">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/grey"
-                                android:foregroundTint="@color/grey"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                app:tint="@color/black">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:layout_weight="8"
+                                android:background="@drawable/receivebubble">
 
-                            </ImageView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:text="salut je m'apelle arnaud j'ai rzendez vous avec vous à 19H30 mais je ne sais pas comment">
 
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:lottie_rawRes="@raw/newmessage"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true">
-                            </com.airbnb.lottie.LottieAnimationView>
+                                </TextView>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/primary_red"
-                            android:foregroundTint="@color/primary_red"
-                            android:textColorHighlight="@color/primary_red"
-                            android:textColorLink="@color/primary_red"></CheckBox>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:background="@drawable/messagebox"
-                        android:weightSum="8"
-                        android:layout_marginTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/profileex"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                        </LinearLayout>
-
-
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4">
+                            android:layout_marginBottom="10dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Florian"
-                                android:textStyle="bold"
-                                android:textSize="22sp"
-                                android:textColor="@color/black">
-                            </TextView>
+                                android:textAlignment="center"
+                                android:text="07h99">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:text="Il faudrait que tu m'envoi le dernierrelevé"
-                                android:textSize="17sp"
-                                android:textColor="@color/black">
                             </TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:gravity="right"
+                            android:layout_height="wrap_content">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/grey"
-                                android:foregroundTint="@color/grey"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                app:tint="@color/black">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:layout_weight="8"
+                                android:background="@drawable/senderbubbles">
 
-                            </ImageView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:text="salut je m'apellevec vous à 19H30 mais je ne sais pas comment">
 
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:lottie_rawRes="@raw/newmessage"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true">
-                            </com.airbnb.lottie.LottieAnimationView>
+                                </TextView>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/primary_red"
-                            android:foregroundTint="@color/primary_red"
-                            android:textColorHighlight="@color/primary_red"
-                            android:textColorLink="@color/primary_red"></CheckBox>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:background="@drawable/messagebox"
-                        android:weightSum="8"
-                        android:layout_marginTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/profileex"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                        </LinearLayout>
-
-
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4">
+                            android:layout_marginBottom="10dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Florian"
-                                android:textStyle="bold"
-                                android:textSize="22sp"
-                                android:textColor="@color/black">
-                            </TextView>
+                                android:textAlignment="center"
+                                android:text="07h99">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:text="Il faudrait que tu m'envoi le dernierrelevé"
-                                android:textSize="17sp"
-                                android:textColor="@color/black">
                             </TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:gravity="right"
+                            android:layout_height="wrap_content">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/grey"
-                                android:foregroundTint="@color/grey"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                app:tint="@color/black">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:layout_weight="8"
+                                android:background="@drawable/senderbubbles">
 
-                            </ImageView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:text="salut je m'apellevec vous à 19H30 mais je ne sais pas comment">
 
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:lottie_rawRes="@raw/newmessage"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true">
-                            </com.airbnb.lottie.LottieAnimationView>
+                                </TextView>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="5">
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/primary_red"
-                            android:foregroundTint="@color/primary_red"
-                            android:textColorHighlight="@color/primary_red"
-                            android:textColorLink="@color/primary_red"></CheckBox>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:background="@drawable/messagebox"
-                        android:weightSum="8"
-                        android:layout_marginTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="5"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:layout_weight="2">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/profileex"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-                        </LinearLayout>
-
-
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4">
+                            android:layout_marginBottom="10dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Florian"
-                                android:textStyle="bold"
-                                android:textSize="22sp"
-                                android:textColor="@color/black">
-                            </TextView>
+                                android:textAlignment="center"
+                                android:text="12h98">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp"
-                                android:text="Il faudrait que tu m'envoi le dernierrelevé"
-                                android:textSize="17sp"
-                                android:textColor="@color/black">
                             </TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:gravity="left"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:layout_weight="8"
+                                android:background="@drawable/receivebubble">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:text="salut je m'apelle arnaud j'ai rzendez vous avec vous à 19H30 mais je ne sais pas comment">
+
+                                </TextView>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
+                            android:layout_marginBottom="10dp">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/grey"
-                                android:foregroundTint="@color/grey"
-                                android:src="@drawable/baseline_arrow_forward_ios_24"
-                                app:tint="@color/black">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:text="07h99">
 
-                            </ImageView>
+                            </TextView>
 
-                            <com.airbnb.lottie.LottieAnimationView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:lottie_rawRes="@raw/newmessage"
-                                app:lottie_autoPlay="true"
-                                app:lottie_loop="true">
-                            </com.airbnb.lottie.LottieAnimationView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:gravity="right"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:layout_weight="8"
+                                android:background="@drawable/senderbubbles">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:text="salut je m'apellevec vous à 19H30 mais je ne sais pas comment">
+
+                                </TextView>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -1011,6 +530,7 @@
                 </LinearLayout>
 
             </LinearLayout>
+
         </ScrollView>
 
     </LinearLayout>
@@ -1020,12 +540,47 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
-        android:background="@drawable/navbar_back"
+        android:background="@drawable/messagetypebar"
         app:layout_constraintBottom_toBottomOf="@+id/layoutMessages"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:gravity="center"
+                tools:ignore="MissingConstraints">
 
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="5"
+                    android:maxLength="200"
+                    android:background="@null"
+                    android:hint="@string/placeholderBarMessage"
+                    android:textColorHint="#838383"
+                    android:textSize="20sp"
+                    tools:ignore="TouchTargetSizeCheck"></EditText>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingRight="5dp"
+                    android:gravity="right|center">
+
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/baseline_arrow_circle_right_24"
+                        tools:ignore="TouchTargetSizeCheck"></Button>
+                </LinearLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

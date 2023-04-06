@@ -116,4 +116,9 @@
     <string name="fullNextBtn">Suivant</string>
     <string name="paymentValidateAnimationUser">Félicitation ! Allons trouver votre prochaine mission ! Appuyez sur Suivant pour vous rendre sur votre page d\'accueil</string>
     <string name="savedOffersDisplay">" offres favorites"</string>
+    <string name="placeholderBarMessage">Place text ...</string>
+    <string name="blockButton">Bloquer</string>
+    <string name="signalBtn">Signaler</string>
+    <string name="muteBtn">Mute</string>
+    <string name="allowNotification">Activées</string>
 </resources>

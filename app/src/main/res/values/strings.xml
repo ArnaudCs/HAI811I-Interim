@@ -126,4 +126,9 @@
     <string name="fullNextBtn">Next</string>
     <string name="paymentValidateAnimationUser">Congratulations ! Now let\'s find your next mission ! Click on Next to go to your Home Page</string>
     <string name="savedOffersDisplay">" saved offers"</string>
+    <string name="placeholderBarMessage">Type text ...</string>
+    <string name="blockButton">Block User</string>
+    <string name="signalBtn">Signal User</string>
+    <string name="muteBtn">Mute</string>
+    <string name="allowNotification">Activated</string>
 </resources>
