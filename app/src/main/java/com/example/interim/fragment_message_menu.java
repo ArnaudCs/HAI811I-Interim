@@ -23,7 +23,8 @@ import java.util.List;
 
 public class fragment_message_menu extends Fragment {
 
-    Button deleteMessages;
+    private conversation_ViewAdapter mAdapter;
+    Button deleteMessages, cancelDelete;
     public fragment_message_menu() {
         // Required empty public constructor
     }
@@ -38,6 +39,7 @@ public class fragment_message_menu extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         deleteMessages = view.findViewById(R.id.deleteMessages);
+        cancelDelete = view.findViewById(R.id.cancelDelete);
         List<Conversation> conversations = new ArrayList<>();
 
 // Add some fake conversations to the list
@@ -51,15 +53,22 @@ public class fragment_message_menu extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new conversation_ViewAdapter(getContext(),conversations));
 
+        mAdapter = (conversation_ViewAdapter) recyclerView.getAdapter();
 
-        deleteMessages.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        recyclerView.getAdapter();
-                    }
-                }
-        );
+
+        deleteMessages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAdapter.deleteConversation();
+            }
+        });
+
+        cancelDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAdapter.cancelDelete();
+            }
+        });
     }
 
 

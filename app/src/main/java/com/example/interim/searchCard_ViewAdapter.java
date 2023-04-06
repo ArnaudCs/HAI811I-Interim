@@ -1,12 +1,17 @@
 package com.example.interim;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieComposition;
+import com.airbnb.lottie.LottieCompositionFactory;
+import com.airbnb.lottie.LottieResult;
 import com.example.interim.models.Offer;
 
 import java.util.List;
@@ -38,6 +43,34 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
         holder.jobLocation.setText(offers.get(position).getLocation());
         holder.postDate.setText(offers.get(position).getPostDate().toString());
         holder.jobKeywords.setText(offers.get(position).getKeywords());
+
+        holder.likeInit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!holder.liked) {
+                    holder.likeInit.setVisibility(View.GONE);
+                    holder.likeBtn.setVisibility(View.VISIBLE);
+                    holder.likeBtn.setAnimation(R.raw.like);
+                    holder.likeBtn.playAnimation();
+                    holder.liked = !holder.liked;
+                }
+            }
+        });
+
+        holder.likeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!holder.liked){
+                    holder.likeBtn.setAnimation(R.raw.like);
+                    holder.likeBtn.playAnimation();
+                    holder.liked = !holder.liked;
+                } else {
+                    holder.likeBtn.setAnimation(R.raw.dislike);
+                    holder.likeBtn.playAnimation();
+                    holder.liked = !holder.liked;
+                }
+            }
+        });
     }
 
     @Override

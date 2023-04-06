@@ -1,6 +1,7 @@
 package com.example.interim;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,8 +21,9 @@ public class searchCard_ViewHolder extends RecyclerView.ViewHolder {
     TextView jobLocation;
     TextView jobSalary;
     TextView jobUrl;
+    Button likeInit;
 
-
+    Boolean liked = false;
 
     public searchCard_ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -35,5 +37,7 @@ public class searchCard_ViewHolder extends RecyclerView.ViewHolder {
         jobLocation = itemView.findViewById(R.id.jobLocation);
         jobSalary = itemView.findViewById(R.id.jobSalary);
         jobUrl = itemView.findViewById(R.id.jobUrl);
+        likeBtn = itemView.findViewById(R.id.likeBtn);
+        likeInit = itemView.findViewById(R.id.likeInit);
     }
 }

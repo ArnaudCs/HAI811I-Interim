@@ -201,33 +201,7 @@ public class fragment_search_page extends Fragment {
             }
         });
 
-//        likeInit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (!liked) {
-//                    likeInit.setVisibility(View.GONE);
-//                    likeBtn.setVisibility(View.VISIBLE);
-//                    likeBtn.setAnimation(R.raw.like);
-//                    likeBtn.playAnimation();
-//                    liked = !liked;
-//                }
-//            }
-//        });
 //
-//        likeBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(!liked){
-//                    likeBtn.setAnimation(R.raw.like);
-//                    likeBtn.playAnimation();
-//                    liked = !liked;
-//                } else {
-//                    likeBtn.setAnimation(R.raw.dislike);
-//                    likeBtn.playAnimation();
-//                    liked = !liked;
-//                }
-//            }
-//        });
 
         areaChoice.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
