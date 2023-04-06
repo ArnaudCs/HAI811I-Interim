@@ -89,6 +89,15 @@ public class fragment_group_creation extends Fragment {
         newMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // on augmente le margin du bouton + et du bouton créer groupe
+                ConstraintLayout.LayoutParams paramsButton = (ConstraintLayout.LayoutParams) newMemberButton.getLayoutParams();
+                paramsButton.topMargin += (int) (50 * scale + 0.5f);
+                newMemberButton.setLayoutParams(paramsButton);
+
+                paramsButton = (ConstraintLayout.LayoutParams) createGroupButton.getLayoutParams();
+                paramsButton.topMargin += (int) (50 * scale + 0.5f);
+                createGroupButton.setLayoutParams(paramsButton);
                 int lastUserTilId = generatedTilIds.get(userNumber);
                 int lastUserTieId = generatedTieIds.get(userNumber);
                 userNumber++;
