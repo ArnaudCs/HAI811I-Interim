@@ -1,9 +1,11 @@
 package com.example.interim;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -19,8 +21,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.interim.models.Offer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class fragment_search_page extends Fragment {
@@ -76,6 +80,84 @@ public class fragment_search_page extends Fragment {
 
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cityChoice.setAdapter(adapter1);
+
+        List<Offer> mockOffers = new ArrayList<>();
+
+// Offer 1
+        Date startDate1 = new Date(1648873200000L); // 1st March 2022
+        Date endDate1 = new Date(1670409199000L); // 5th June 2023
+        Date postDate1 = new Date(1646751600000L); // 6th March 2022
+        Date expDate1 = new Date(1659438000000L); // 2nd August 2022
+        Offer offer1 = new Offer(
+                "Software Engineer",
+                "Google",
+                "Mountain View, CA",
+                startDate1,
+                endDate1,
+                postDate1,
+                expDate1,
+                "Java, Python, Kubernetes",
+                "Software Engineering",
+                "Full-time",
+                120000,
+                150000,
+                "We are seeking a skilled software engineer to join our team at Google. The ideal candidate will have experience with Java, Python, and Kubernetes.",
+                "https://www.google.com/careers/software-engineer"
+        );
+        mockOffers.add(offer1);
+
+// Offer 2
+        Date startDate2 = new Date(1652943600000L); // 18th May 2022
+        Date endDate2 = new Date(1688141999000L); // 28th October 2023
+        Date postDate2 = new Date(1646578800000L); // 5th March 2022
+        Date expDate2 = new Date(1656092400000L); // 24th June 2022
+        Offer offer2 = new Offer(
+                "Marketing Manager",
+                "Amazon",
+                "Seattle, WA",
+                startDate2,
+                endDate2,
+                postDate2,
+                expDate2,
+                "SEO, SEM, Social Media",
+                "Marketing",
+                "Full-time",
+                90000,
+                120000,
+                "Amazon is seeking a talented marketing manager to join our team. The ideal candidate will have experience with SEO, SEM, and social media marketing.",
+                "https://www.amazon.jobs/marketing-manager"
+        );
+        mockOffers.add(offer2);
+
+// Offer 3
+        Date startDate3 = new Date(1664540400000L); // 31st August 2022
+        Date endDate3 = new Date(1695980399000L); // 28th January 2024
+        Date postDate3 = new Date(1650946800000L); // 25th May 2022
+        Date expDate3 = new Date(1661967600000L); // 1st September 2022
+        Offer offer3 = new Offer(
+                "Financial Analyst",
+                "Goldman Sachs",
+                "New York, NY",
+                startDate3,
+                endDate3,
+                postDate3,
+                expDate3,
+                "Financial Modeling, Excel, Accounting",
+                "Finance",
+                "Full-time",
+                85000,
+                110000,
+                "We are seeking a talented financial analyst to join our team at Goldman Sachs. The ideal candidate will have experience with financial modeling, Excel, and accounting.",
+                "https://www.goldmansachs.com/careers/financial-analyst"
+        );
+        mockOffers.add(offer3);
+
+
+
+
+
+
+
 
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override

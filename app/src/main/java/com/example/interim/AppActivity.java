@@ -44,6 +44,10 @@ public class AppActivity extends AppCompatActivity {
         Menu menu = bottomNav.getMenu();
         menu.clear();
 
+        pro = false;
+        getMenuInflater().inflate(R.menu.item_menu, menu);
+        bottomNav.setSelectedItemId(R.id.navHome);
+
         if (mAuth.getCurrentUser() != null) {
             String userId = mAuth.getCurrentUser().getUid();
             DocumentReference userRef = db.collection("Users").document(userId);
@@ -52,12 +56,10 @@ public class AppActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         pro = false;
-                        getMenuInflater().inflate(R.menu.item_menu, menu);
-                        bottomNav.setSelectedItemId(R.id.navHome);
+
                     } else {
                         pro = true;
-                        getMenuInflater().inflate(R.menu.item_menu_entreprise, menu);
-                        bottomNav.setSelectedItemId(R.id.navAdd);
+
                     }
                 }
             });
