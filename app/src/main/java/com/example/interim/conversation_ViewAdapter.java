@@ -20,6 +20,8 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
     Context context;
     List<Conversation> conversations;
 
+    conversation_ViewHolder holder;
+
     public conversation_ViewAdapter(Context context, List<Conversation> conversations) {
         this.context = context;
         this.conversations = conversations;
@@ -33,6 +35,7 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
 
     @Override
     public void onBindViewHolder(@NonNull conversation_ViewHolder holder, int position) {
+        this.holder = holder;
         holder.userName.setText(conversations.get(position).getContact());
         holder.lastMsg.setText(conversations.get(position).getLastMsg());
         if (conversations.get(position).isUnread()) {
@@ -44,29 +47,30 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
             holder.openConv.setVisibility(View.VISIBLE);
         }
 
-        holder.deleteConvBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.checkDelete.setVisibility(View.VISIBLE);
-                holder.cancelDelete.setVisibility(View.VISIBLE);
-                holder.deleteConvBtn.setVisibility(View.GONE);
-                holder.validateDelete.setVisibility(View.VISIBLE);
-                holder.makeGroupBtn.setVisibility(View.GONE);
-                holder.conversationContainer.setWeightSum(6);
-            }
-        });
+//        holder.deleteConvBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                holder.checkDelete.setVisibility(View.VISIBLE);
+//                holder.cancelDelete.setVisibility(View.VISIBLE);
+//                holder.deleteConvBtn.setVisibility(View.GONE);
+//                holder.validateDelete.setVisibility(View.VISIBLE);
+//                holder.makeGroupBtn.setVisibility(View.GONE);
+//                holder.conversationContainer.setWeightSum(6);
+//            }
+//        });
 
-        holder.cancelDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.checkDelete.setVisibility(View.GONE);
-                holder.cancelDelete.setVisibility(View.GONE);
-                holder.validateDelete.setVisibility(View.GONE);
-                holder.makeGroupBtn.setVisibility(View.VISIBLE);
-                holder.deleteConvBtn.setVisibility(View.VISIBLE);
-                holder.conversationContainer.setWeightSum(5);
-            }
-        });
+
+//        holder.cancelDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                holder.checkDelete.setVisibility(View.GONE);
+//                holder.cancelDelete.setVisibility(View.GONE);
+//                holder.validateDelete.setVisibility(View.GONE);
+//                holder.makeGroupBtn.setVisibility(View.VISIBLE);
+//                holder.deleteConvBtn.setVisibility(View.VISIBLE);
+//                holder.conversationContainer.setWeightSum(5);
+//            }
+//        });
 
         holder.goToMessages.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +80,24 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
             }
         });
 
+    }
+
+    public void deleteConversation() {
+        holder.checkDelete.setVisibility(View.VISIBLE);
+        holder.cancelDelete.setVisibility(View.VISIBLE);
+        holder.deleteConvBtn.setVisibility(View.GONE);
+        holder.validateDelete.setVisibility(View.VISIBLE);
+        holder.makeGroupBtn.setVisibility(View.GONE);
+        holder.conversationContainer.setWeightSum(6);
+    }
+
+    public void cancelDelete() {
+        holder.checkDelete.setVisibility(View.GONE);
+        holder.cancelDelete.setVisibility(View.GONE);
+        holder.validateDelete.setVisibility(View.GONE);
+        holder.makeGroupBtn.setVisibility(View.VISIBLE);
+        holder.deleteConvBtn.setVisibility(View.VISIBLE);
+        holder.conversationContainer.setWeightSum(5);
     }
 
     @Override
