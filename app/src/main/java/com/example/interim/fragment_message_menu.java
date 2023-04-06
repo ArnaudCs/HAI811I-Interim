@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class fragment_message_menu extends Fragment {
         Button cancelDelete = view.findViewById(R.id.cancelDelete);
         Button validateDelete = view.findViewById(R.id.validateDelete);
         LinearLayout checkDelete = view.findViewById(R.id.checkDelete);
+        LinearLayout goToMessages = view.findViewById(R.id.messageBubble);
         LinearLayout conversationContainer = view.findViewById(R.id.conversationContainer);
 
         deleteConvBtn.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +58,14 @@ public class fragment_message_menu extends Fragment {
                 makeGroupBtn.setVisibility(View.VISIBLE);
                 deleteConvBtn.setVisibility(View.VISIBLE);
                 conversationContainer.setWeightSum(5);
+            }
+        });
+
+        goToMessages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent discussion = new Intent(getActivity(), DiscussionViewActivity.class);
+                startActivity(discussion);
             }
         });
     }

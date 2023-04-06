@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Interim</string>
+    <string name="app_name">Jobrr</string>
     <string name="Mail">E-mail</string>
     <string name="Password">Mot de passe</string>
     <string name="StrongIndication">Choisissez un mot de passe complexe</string>
