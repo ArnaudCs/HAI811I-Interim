@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.interim.models.JobSeekerUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,19 +55,16 @@ public class UserRegistrationActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-
-        Button registerButton = findViewById(R.id.registerButton);
-        EditText name = findViewById(R.id.nameEditText);
-        EditText firstName = findViewById(R.id.firstNameEditText);
+        Button registerButton = findViewById(R.id.createAccount);
+        TextInputEditText name = findViewById(R.id.textName);
+        TextInputEditText firstName = findViewById(R.id.textFirstName);
         Spinner nationality =  findViewById(R.id.nationalitySpinner);
-        EditText email = findViewById(R.id.emailEditText);
-        EditText phoneNumber = findViewById(R.id.phoneEditText);
-        EditText birthdate = findViewById(R.id.birthdateEditText);
-        AutoCompleteTextView city = findViewById(R.id.cityAutoCompleteTextView);
-        EditText password = findViewById(R.id.passwordEditText);
-        EditText confirmPassword = findViewById(R.id.passwordConfirmationEditText);
-        EditText cityForWork = findViewById(R.id.cityAutoCompleteTextView);
-        progressBar = findViewById(R.id.progressBar);
+        TextInputEditText email = findViewById(R.id.textMail);
+        TextInputEditText phoneNumber = findViewById(R.id.textNumber);
+        TextInputEditText birthdate = findViewById(R.id.textBirthdate);
+        TextInputEditText password = findViewById(R.id.textPassword);
+        TextInputEditText confirmPassword = findViewById(R.id.textConfirmPassword);
+        TextInputEditText city = findViewById(R.id.textCity);
 
         registerButton.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
@@ -73,7 +72,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
             if(email.getText().toString().trim().equals("") || password.getText().toString().trim().equals("") || confirmPassword.getText().toString().trim().equals("")
                     || name.getText().toString().trim().equals("")  || firstName.getText().toString().trim().equals("") || nationality.getSelectedItem().toString().trim().equals("")
                     || phoneNumber.getText().toString().trim().equals("") || birthdate.getText().toString().trim().equals("")  || city.getText().toString().trim().equals("")) {
-                progressBar.setVisibility(View.GONE);
                 Toast.makeText(UserRegistrationActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -84,7 +82,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
             String confirmPasswordText = confirmPassword.getText().toString();
 
             if(!checkPasswords(passwordText, confirmPasswordText)) {
-                progressBar.setVisibility(View.GONE);
                 Toast.makeText(UserRegistrationActivity.this, "Passwords does not match !", Toast.LENGTH_SHORT).show();
                 return;
             };
@@ -102,7 +99,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
                                 db.collection("Users").document(user.getUid()).set(newUser)
                                         .addOnSuccessListener(documentReference -> {
                                             // User data saved successfully
-                                            progressBar.setVisibility(View.GONE);
                                             Toast.makeText(UserRegistrationActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
                                             finish();
                                             Intent phone = new Intent(UserRegistrationActivity.this, PhoneValidation.class);
@@ -110,13 +106,11 @@ public class UserRegistrationActivity extends AppCompatActivity {
                                         })
                                         .addOnFailureListener(e -> {
                                             // Error saving user data
-                                            progressBar.setVisibility(View.GONE);
                                             Toast.makeText(UserRegistrationActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                         });
                             }
                             else {
-                                progressBar.setVisibility(View.GONE);
                                 Toast.makeText(UserRegistrationActivity.this, "Failed during user registration", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -134,8 +128,8 @@ public class UserRegistrationActivity extends AppCompatActivity {
         nationality.setAdapter(nationalityAdapter);
 
         // Set up the listeners for the password fields
-        EditText passwordEditText = findViewById(R.id.passwordEditText);
-        EditText passwordConfirmationEditText = findViewById(R.id.passwordConfirmationEditText);
+        TextInputEditText passwordEditText = findViewById(R.id.textPassword);
+        TextInputEditText passwordConfirmationEditText = findViewById(R.id.textConfirmPassword);
         passwordConfirmationEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (checkPasswords(passwordEditText.getText().toString(), passwordConfirmationEditText.getText().toString())) {
@@ -202,9 +196,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
             // Set up the adapter for the city autocomplete text input
             ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(UserRegistrationActivity.this, android.R.layout.simple_dropdown_item_1line, cities);
-            AutoCompleteTextView cityAutoCompleteTextView = findViewById(R.id.cityAutoCompleteTextView);
-            cityAutoCompleteTextView.setAdapter(cityAdapter);
-            cityAutoCompleteTextView.setThreshold(3);
         }
     }
 

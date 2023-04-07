@@ -122,4 +122,5 @@
     <string name="muteBtn">Mute</string>
     <string name="allowNotification">Activées</string>
     <string name="groupCreation">Création de groupe</string>
+    <string name="City">Ville</string>
 </resources>
