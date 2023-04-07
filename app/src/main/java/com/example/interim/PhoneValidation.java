@@ -48,90 +48,91 @@ public class PhoneValidation extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String mVerificationId;
     private FirebaseUser currentUser;
-
+    private boolean isPro;
+    private String phoneNumber = "00000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_validation);
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Users").document(currentUser.getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot.getBoolean("verified")) {
+                                Intent profile = new Intent(PhoneValidation.this, AppActivity.class);
+                                startActivity(profile);
+                                finish();
+                            }
+                            else {
+                                phoneNumber = documentSnapshot.getString("phoneNumber");
+                                if(phoneNumber == null || phoneNumber.isEmpty()) {
+                                    Toast.makeText(PhoneValidation.this, "Provide phone number", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                if(phoneNumber.length() < 8) {
+                                    Toast.makeText(PhoneValidation.this, "Provide valid phone number", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+                        }
+                        else {
+                            db.collection("Pros").document(currentUser.getUid()).get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if (documentSnapshot.exists()) {
+                                            if (documentSnapshot.getBoolean("verified")) {
+                                                Intent profile = new Intent(PhoneValidation.this, PaymentAndSubscription.class);
+                                                startActivity(profile);
+                                                finish();
+                                            }
+                                            else {
+                                                isPro = true;
+                                                phoneNumber = documentSnapshot.getString("phoneNumber");
+                                                System.out.println("PHONE : "+ phoneNumber);
+                                                if(phoneNumber == null || phoneNumber.isEmpty()) {
+                                                    Toast.makeText(PhoneValidation.this, "Provide phone number", Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
+                                                if(phoneNumber.length() < 8) {
+                                                    Toast.makeText(PhoneValidation.this, "Provide valid phone number", Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                });
+                        }
+                    }
+                });
+
+
+
         receiveCodeBtn = findViewById(R.id.receiveNewCodeBtn);
         validateMobileBtn = findViewById(R.id.validateMobileBtn);
         mobileConfirmationInput = findViewById(R.id.mobileConfirmationInput);
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+
 
         receiveCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Users").document(currentUser.getUid()).get()
-                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                if (documentSnapshot.exists()) {
-                                    if (documentSnapshot.getBoolean("verified")) {
-                                        Intent profile = new Intent(PhoneValidation.this, ProfileActivity.class);
-                                        startActivity(profile);
-                                        finish();
-                                    }
-                                    else {
-                                        String phoneNumber = documentSnapshot.getString("phoneNumber");
-                                        if(phoneNumber == null || phoneNumber.isEmpty()) {
-                                            Toast.makeText(PhoneValidation.this, "Provide phone number", Toast.LENGTH_SHORT).show();
-                                            return;
-                                        }
-                                        if(phoneNumber.length() < 10) {
-                                            Toast.makeText(PhoneValidation.this, "Provide valid phone number", Toast.LENGTH_SHORT).show();
-                                            return;
-                                        }
+                System.out.println(phoneNumber.toString());
+                // Send verification code to the entered phone number
+                PhoneAuthOptions options =
+                    PhoneAuthOptions.newBuilder(mAuth)
+                        .setPhoneNumber("+33"+phoneNumber)
+                        .setTimeout(60L, TimeUnit.SECONDS)
+                        .setActivity(PhoneValidation.this)
+                        .setCallbacks(mCallbacks)
+                        .build();
+                PhoneAuthProvider.verifyPhoneNumber(options);
 
-                                        // Send verification code to the entered phone number
-                                        PhoneAuthOptions options =
-                                                PhoneAuthOptions.newBuilder(mAuth)
-                                                        .setPhoneNumber("+33"+phoneNumber)
-                                                        .setTimeout(60L, TimeUnit.SECONDS)
-                                                        .setActivity(PhoneValidation.this)
-                                                        .setCallbacks(mCallbacks)
-                                                        .build();
-                                        PhoneAuthProvider.verifyPhoneNumber(options);
-                                    }
-                                } else {
-                                    db.collection("Pros").document(currentUser.getUid()).get()
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                    if (documentSnapshot.exists()) {
-                                                        if (documentSnapshot.getBoolean("verified")) {
-                                                            Intent profile = new Intent(PhoneValidation.this, ProfileActivity.class);
-                                                            startActivity(profile);
-                                                            finish();
-                                                        }
-                                                        else {
-                                                            String phoneNumber = documentSnapshot.getString("phoneNumber");
-                                                            if(phoneNumber == null || phoneNumber.isEmpty()) {
-                                                                Toast.makeText(PhoneValidation.this, "Provide phone number", Toast.LENGTH_SHORT).show();
-                                                                return;
-                                                            }
-                                                            if(phoneNumber.length() < 10) {
-                                                                Toast.makeText(PhoneValidation.this, "Provide valid phone number", Toast.LENGTH_SHORT).show();
-                                                                return;
-                                                            }
-
-                                                            // Send verification code to the entered phone number
-                                                            PhoneAuthOptions options =
-                                                                    PhoneAuthOptions.newBuilder(mAuth)
-                                                                            .setPhoneNumber("+33"+phoneNumber)
-                                                                            .setTimeout(60L, TimeUnit.SECONDS)
-                                                                            .setActivity(PhoneValidation.this)
-                                                                            .setCallbacks(mCallbacks)
-                                                                            .build();
-                                                            PhoneAuthProvider.verifyPhoneNumber(options);
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                }
-                            }
-                        });
             }
 
         });
@@ -179,61 +180,18 @@ public class PhoneValidation extends AppCompatActivity {
     private void verifyCode(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Check if user is a Pro
-        db.collection("Pros").document(currentUser.getUid()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            db.collection("Pros").document(currentUser.getUid())
-                                    .update("verified", true)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.phoneVerified), Toast.LENGTH_LONG).show();
-                                            Intent profile = new Intent(PhoneValidation.this, ProfileActivity.class);
-                                            startActivity(profile);
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getApplicationContext(), "Failed to update Pro document: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                        } else {
-                            db.collection("Users").document(currentUser.getUid())
-                                    .update("verified", true)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.phoneVerified), Toast.LENGTH_LONG).show();
-                                            Intent profile = new Intent(PhoneValidation.this, ProfileActivity.class);
-                                            startActivity(profile);
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getApplicationContext(), "Failed to update user document: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Failed to get user document: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+        if(isPro) {
+            db.collection("Pros").document(currentUser.getUid()).update("verified", true);
+            Intent profile = new Intent(PhoneValidation.this, PaymentAndSubscription.class);
+            startActivity(profile);
+            finish();
+        }
+        else {
+            db.collection("Users").document(currentUser.getUid()).update("verified", true);
+            Intent profile = new Intent(PhoneValidation.this, AppActivity.class);
+            startActivity(profile);
+            finish();
+        }
     }
-
-
-
-
 
 }

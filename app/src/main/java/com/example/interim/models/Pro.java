@@ -59,6 +59,13 @@ public class Pro {
         this.verified = false;
     }
 
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 
     public Pro() {
         // Required empty constructor
