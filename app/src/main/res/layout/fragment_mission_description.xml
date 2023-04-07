@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutMessages"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorPrimary">
+
+    <LinearLayout
+        android:id="@+id/messageBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:weightSum="6"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layoutMessages">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left">
+
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/baseline_arrow_circle_left_24"
+                    android:backgroundTint="#FFFFFF"
+                    android:drawableTint="#FBFAFA"
+                    android:foregroundTint="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="4">
+
+                <TextView
+                    android:id="@+id/missionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Barman [M/F]"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="@id/layoutMain" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right">
+
+                <Button
+                    android:id="@+id/moreActions"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/baseline_add_circle_24"
+                    android:backgroundTint="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/closeInfos"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/baseline_keyboard_double_arrow_up_24"
+                    android:backgroundTint="#FFFFFF"
+                    android:drawableTint="#FBFAFA"
+                    android:visibility="gone"
+                    android:foregroundTint="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/infosContainer"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:weightSum="6">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_weight="2">
+
+                <Button
+                    android:id="@+id/shareBtn"
+                    android:layout_width="match_parent"
+                    android:text="@string/signalBtn"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:stateListAnimator="@null"
+                    android:background="@drawable/navigation_bar">
+
+                </Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <Button
+                    android:id="@+id/signalPost"
+                    android:layout_width="match_parent"
+                    android:text="@string/signalBtn"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:stateListAnimator="@null"
+                    android:background="@drawable/navigation_bar">
+
+                </Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <Button
+                    android:id="@+id/seeProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/muteBtn"
+                    android:textStyle="bold"
+                    android:stateListAnimator="@null"
+                    android:background="@drawable/navigation_bar">
+                </Button>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomDeckMessage"
+        android:layout_width="0dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:background="@drawable/bottom2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageBar">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

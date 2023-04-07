@@ -133,4 +133,6 @@
     <string name="allowNotification">Activated</string>
     <string name="groupCreation">Group Creation</string>
     <string name="City">City</string>
+    <string name="shareBtn">Share</string>
+    <string name="seeProfile">Company</string>
 </resources>
