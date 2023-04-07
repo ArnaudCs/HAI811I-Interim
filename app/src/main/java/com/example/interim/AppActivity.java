@@ -126,6 +126,10 @@ public class AppActivity extends AppCompatActivity {
                     case R.id.navNotification:
                         fragment = new fragment_payment_confirm();
                         break;
+
+                    case R.id.navFavorite:
+                        fragment = new fragment_loading_screen();
+                        break;
                 }
 
                 if (fragment != null) {
