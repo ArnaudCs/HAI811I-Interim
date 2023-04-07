@@ -60,16 +60,16 @@
             android:background="@drawable/greybox">
 
             <TextView
+                android:id="@+id/companyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:gravity="center"
-                android:textSize="30sp"
                 android:padding="10dp"
-                android:textStyle="bold"
-                android:text="Mon entreprise">
-            </TextView>
+                android:text="Mon entreprise"
+                android:textSize="30sp"
+                android:textStyle="bold"></TextView>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -88,17 +88,17 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/subPlan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginEnd="40dp"
                     android:drawableStart="@drawable/baseline_payment_24"
                     android:drawablePadding="10dp"
-                    android:textSize="18sp"
                     android:padding="10dp"
-                    android:textStyle="bold"
-                    android:text="Monthly Plan">
-                </TextView>
+                    android:text="Monthly Plan"
+                    android:textSize="18sp"
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
             <LinearLayout
@@ -107,6 +107,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/sirenNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
@@ -128,6 +129,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/contactName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
@@ -137,8 +139,7 @@
                     android:padding="10dp"
                     android:text="John Doe"
                     android:textSize="18sp"
-                    android:textStyle="bold">
-                </TextView>
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
             <LinearLayout
@@ -147,6 +148,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/phoneNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
@@ -156,8 +158,7 @@
                     android:padding="10dp"
                     android:text="06 15 47 89 65"
                     android:textSize="18sp"
-                    android:textStyle="bold">
-                </TextView>
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
             <LinearLayout
@@ -166,6 +167,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
@@ -175,8 +177,7 @@
                     android:padding="10dp"
                     android:text="john.doe@gmail.com"
                     android:textSize="18sp"
-                    android:textStyle="bold">
-                </TextView>
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
         </LinearLayout>
 

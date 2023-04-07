@@ -113,9 +113,14 @@ public class fragment_order_summary extends Fragment {
                             .addOnSuccessListener(aVoid -> {
                                 // Subscription saved successfully
                                 Toast.makeText(getContext(), "Subscription saved", Toast.LENGTH_SHORT).show();
-                                getActivity().finish();
-                                Intent profile = new Intent(getActivity(), AppActivity.class);
-                                startActivity(profile);
+                                fragment_payment_confirm fragmentPaymentConfirm = new fragment_payment_confirm();
+
+                                // Remplacer le fragment actuel par le nouveau fragment
+                                FragmentManager fragmentManager = getParentFragmentManager();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.paymentContainer, fragmentPaymentConfirm)
+                                        .addToBackStack(null)
+                                        .commit();
 
                             })
                             .addOnFailureListener(e -> {
