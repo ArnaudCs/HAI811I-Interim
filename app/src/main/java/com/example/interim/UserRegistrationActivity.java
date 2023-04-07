@@ -67,8 +67,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
         TextInputEditText city = findViewById(R.id.textCity);
 
         registerButton.setOnClickListener(v -> {
-            progressBar.setVisibility(View.VISIBLE);
-
             if(email.getText().toString().trim().equals("") || password.getText().toString().trim().equals("") || confirmPassword.getText().toString().trim().equals("")
                     || name.getText().toString().trim().equals("")  || firstName.getText().toString().trim().equals("") || nationality.getSelectedItem().toString().trim().equals("")
                     || phoneNumber.getText().toString().trim().equals("") || birthdate.getText().toString().trim().equals("")  || city.getText().toString().trim().equals("")) {

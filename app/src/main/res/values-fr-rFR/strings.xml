@@ -21,7 +21,7 @@
     <string name="companyName">Nom de l\'entreprise</string>
     <string name="registrationTitle">Créer un compte</string>
     <string name="confirmPassword">Confirmer mot de passe</string>
-    <string name="passwordMatching">Les mot de passe sont identiques</string>
+    <string name="passwordMatching">Les mots de passe sont identiques</string>
     <string name="passwordMismatch">Les mots de passe sont différents</string>
     <string name="Name">Nom</string>
     <string name="Firstname">Prénom</string>
