@@ -129,4 +129,5 @@
     <string name="moneyMonthIndicator">" / Mois"</string>
     <string name="dateIndicationsStart">"Du "</string>
     <string name="dateIndicationsEnd">" au "</string>
+    <string name="itinaryBtn">Calculer l\'itinéraire</string>
 </resources>

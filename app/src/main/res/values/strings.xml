@@ -139,4 +139,5 @@
     <string name="moneyMonthIndicator">/ Months</string>
     <string name="dateIndicationsStart">From</string>
     <string name="dateIndicationsEnd">" to"</string>
+    <string name="itinaryBtn">Get the itinary</string>
 </resources>
