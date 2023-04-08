@@ -70,11 +70,12 @@ public class fragment_mission_description extends Fragment {
 
         salary.setText("1237€" + getResources().getString(R.string.moneyMonthIndicator));
 
-        moreInfosText.setText("Bien sûr, voici un court texte avec des informations sur les avantages et les conditions de travail pour un poste chez Google :\n" +
-                );
+        moreInfosText.setText("Bien sûr, voici un court texte avec des informations sur les avantages et " +
+                        "les conditions de travail pour un poste chez Google :\n");
 
-        missionText.setText("Vous êtes à la recherche d'une opportunité professionnelle passionnante et stimulante ? Vous cherchez à travailler dans une entreprise innovante et dynamique ? Si c'est le cas, alors cette annonce d'emploi chez Google est faite pour vous !\n" +
-                );
+        missionText.setText("Vous êtes à la recherche d'une opportunité professionnelle passionnante et stimulante ? " +
+                        "Vous cherchez à travailler dans une entreprise innovante et dynamique ? Si c'est le cas, alors cette annonce" +
+                " d'emploi chez Google est faite pour vous !\n");
 
         moreActions.setOnClickListener(new View.OnClickListener() {
             @Override
