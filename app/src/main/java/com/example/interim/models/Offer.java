@@ -3,7 +3,7 @@ package com.example.interim.models;
 import java.util.Date;
 
 public class Offer {
-    private String id;
+    private String _id;
     private String jobTitle;
     private String companyName;
     private String location;
@@ -36,12 +36,16 @@ public class Offer {
         this.url = url;
     }
 
-    public String getId() {
-        return id;
+    public Offer() {
+        // Required empty constructor for Firestore
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String _id) {
+        this._id = _id;
     }
 
     public String getJobTitle() {
