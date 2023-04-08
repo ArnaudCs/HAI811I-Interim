@@ -21,7 +21,7 @@ public class searchCard_ViewHolder extends RecyclerView.ViewHolder {
     TextView jobLocation;
     TextView jobSalary;
     TextView jobUrl;
-    Button likeInit;
+    Button likeInit, applyBtn;
 
     Boolean liked = false;
 
@@ -39,5 +39,7 @@ public class searchCard_ViewHolder extends RecyclerView.ViewHolder {
         jobUrl = itemView.findViewById(R.id.jobUrl);
         likeBtn = itemView.findViewById(R.id.likeBtn);
         likeInit = itemView.findViewById(R.id.likeInit);
+        applyBtn = itemView.findViewById(R.id.applyBtn);
+
     }
 }

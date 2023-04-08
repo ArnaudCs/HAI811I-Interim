@@ -1,6 +1,7 @@
 package com.example.interim;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +70,14 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                     holder.likeBtn.playAnimation();
                     holder.liked = !holder.liked;
                 }
+            }
+        });
+
+        holder.applyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent discussion = new Intent(context, MissionsActivity.class);
+                context.startActivity(discussion);
             }
         });
     }

@@ -112,7 +112,6 @@ public class fragment_order_summary extends Fragment {
                     docRef.set(subscription)
                             .addOnSuccessListener(aVoid -> {
                                 // Subscription saved successfully
-                                Toast.makeText(getContext(), "Subscription saved", Toast.LENGTH_SHORT).show();
                                 fragment_payment_confirm fragmentPaymentConfirm = new fragment_payment_confirm();
 
                                 // Remplacer le fragment actuel par le nouveau fragment

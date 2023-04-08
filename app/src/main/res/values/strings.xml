@@ -135,4 +135,8 @@
     <string name="City">City</string>
     <string name="shareBtn">Share</string>
     <string name="seeProfile">Company</string>
+    <string name="moreInfos">"More informations : "</string>
+    <string name="moneyMonthIndicator">/ Months</string>
+    <string name="dateIndicationsStart">From</string>
+    <string name="dateIndicationsEnd">" to"</string>
 </resources>

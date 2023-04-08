@@ -41,7 +41,8 @@
                     android:drawableTint="#FBFAFA"
                     android:foregroundTint="#FFFFFF"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
             </LinearLayout>
 
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:text="Barman [M/F]"
                     android:textColor="@color/white"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="@id/layoutMain" />
             </LinearLayout>
@@ -76,10 +77,11 @@
                     android:background="@drawable/baseline_add_circle_24"
                     android:backgroundTint="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <Button
-                    android:id="@+id/closeInfos"
+                    android:id="@+id/closeActions"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/baseline_keyboard_double_arrow_up_24"
@@ -95,7 +97,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/infosContainer"
+            android:id="@+id/actionContainer"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,7 +113,7 @@
                 <Button
                     android:id="@+id/shareBtn"
                     android:layout_width="match_parent"
-                    android:text="@string/signalBtn"
+                    android:text="@string/shareBtn"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:stateListAnimator="@null"
@@ -150,7 +152,7 @@
                     android:id="@+id/seeProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/muteBtn"
+                    android:text="@string/seeProfile"
                     android:textStyle="bold"
                     android:stateListAnimator="@null"
                     android:background="@drawable/navigation_bar">
@@ -178,6 +180,155 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/redbox"
+                    android:padding="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="Developper web chez Google a plein temps ta mère la pute"
+                        android:textStyle="bold"
+                        android:textSize="25sp">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/dateText"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:drawableLeft="@drawable/baseline_date_range_24"
+                        android:drawableTint="@color/white"
+                        android:drawablePadding="10dp"
+                        android:textStyle="italic"
+                        android:textSize="20sp">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/salaryText"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:drawableLeft="@drawable/baseline_attach_money_24"
+                        android:drawableTint="@color/white"
+                        android:drawablePadding="10dp"
+                        android:textStyle="italic"
+                        android:textSize="20sp">
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/textcardmission"
+                    android:padding="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Description : "
+                            android:textStyle="bold"
+                            android:textSize="28sp">
+                        </TextView>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="10dp"
+                            app:dividerColor="@color/grey"
+                            android:layout_height="wrap_content">
+                        </com.google.android.material.divider.MaterialDivider>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/missionDescriptionText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp">
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/textcardmission"
+                    android:padding="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/moreInfos"
+                            android:textStyle="bold"
+                            android:textSize="28sp">
+                        </TextView>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="10dp"
+                            app:dividerColor="@color/grey"
+                            android:layout_height="wrap_content">
+                        </com.google.android.material.divider.MaterialDivider>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/missionMoreInfosText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp">
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cardElevation="0dp"
+                        android:stateListAnimator="@null"
+                        android:minHeight="300dp"
+                        app:cardCornerRadius="50dp">
+
+                        <org.osmdroid.views.MapView
+                            android:id="@+id/map"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp">
+                        </org.osmdroid.views.MapView>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
 
         </ScrollView>
 
