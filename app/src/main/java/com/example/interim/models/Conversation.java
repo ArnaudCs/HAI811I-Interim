@@ -19,6 +19,9 @@ public class Conversation {
         this.lastMsg = lastMsg;
     }
 
+    public Conversation() {
+    }
+
     public String getLastMsg() {
         return lastMsg;
     }
