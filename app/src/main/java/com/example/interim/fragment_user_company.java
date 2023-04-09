@@ -172,7 +172,6 @@ public class fragment_user_company extends Fragment {
                 });
 
         super.onViewCreated(view, savedInstanceState);
-        Button modifyProfil = view.findViewById(R.id.modifyProfileBtn);
         Button deconnectionBtn = view.findViewById(R.id.decoBtn);
 
 
@@ -183,13 +182,6 @@ public class fragment_user_company extends Fragment {
                 getActivity().finish();
                 Intent profile = new Intent(getActivity(), MainActivity.class);
                 startActivity(profile);
-            }
-        });
-
-        modifyProfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
 

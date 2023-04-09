@@ -33,7 +33,7 @@
                 android:gravity="left">
 
                 <Button
-                    android:id="@+id/deleteMessages"
+                    android:id="@+id/backBtnDiscussionView"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/baseline_arrow_circle_left_24"

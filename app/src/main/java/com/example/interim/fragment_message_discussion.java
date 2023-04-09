@@ -56,6 +56,7 @@ public class fragment_message_discussion extends Fragment {
         Button closeInfos = view.findViewById(R.id.closeInfos);
         Button signalUser = view.findViewById(R.id.signalUserBtn);
         Button blockUser = view.findViewById(R.id.signalUserBtn);
+        Button backBtnDiscussionView = view.findViewById(R.id.backBtnDiscussionView);
         LinearLayout infosContainer = view.findViewById(R.id.infosContainer);
         RecyclerView recyclerView = view.findViewById(R.id.messagesContainer);
 
@@ -101,7 +102,12 @@ public class fragment_message_discussion extends Fragment {
             }
         });
 
-
+        backBtnDiscussionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
 
 
         infosBtn.setOnClickListener(new View.OnClickListener() {

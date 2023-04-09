@@ -139,4 +139,10 @@
     <string name="secondContact">Contact 2</string>
     <string name="addPicBtn">Choisir le fichier</string>
     <string name="uploadBtn">Enregistrer la photo</string>
+    <string name="spontaneousApplyBtn">Candidature spontanée</string>
+    <string name="moreInfosCallActionTitle">Besoin de plus d\'infos, annonces similaires ?</string>
+    <string name="findSimilarBtn">Annonces similaires</string>
+    <string name="contactCompanyBtn">Contacter Entreprise</string>
+    <string name="postedDateSuffix">"Postée le : "</string>
+    <string name="jobrrFooter">Postée avec l\'application Jobrr</string>
 </resources>

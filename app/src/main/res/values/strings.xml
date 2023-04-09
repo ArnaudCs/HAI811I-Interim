@@ -149,4 +149,10 @@
     <string name="secondContact">Contact 2</string>
     <string name="addPicBtn">Choose file</string>
     <string name="uploadBtn">Upload Photo</string>
+    <string name="spontaneousApplyBtn">Spontaneous Application</string>
+    <string name="moreInfosCallActionTitle">Need more infos, find more offers ?</string>
+    <string name="findSimilarBtn">Similar Offers</string>
+    <string name="contactCompanyBtn">Contact Company</string>
+    <string name="postedDateSuffix">Post date :</string>
+    <string name="jobrrFooter">Posted with Jobrr App</string>
 </resources>

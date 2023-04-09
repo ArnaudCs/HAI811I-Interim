@@ -1,9 +1,11 @@
 package com.example.interim;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -64,11 +66,15 @@ public class fragment_mission_description extends Fragment {
         TextView moreInfosText = view.findViewById(R.id.missionMoreInfosText);
         TextView salary = view.findViewById(R.id.salaryText);
         TextView dateText = view.findViewById(R.id.dateText);
+        TextView postedDate = view.findViewById(R.id.postedDate);
+        Button itinaryButtonMission = view.findViewById(R.id.itinaryButtonMission);
 
         dateText.setText(getResources().getString(R.string.dateIndicationsStart) + "24/06/2022"
                 + getResources().getString(R.string.dateIndicationsEnd) + "24/08/2023");
 
         salary.setText("1237€" + getResources().getString(R.string.moneyMonthIndicator));
+
+        postedDate.setText(getResources().getString(R.string.postedDateSuffix) + "24/03/2023");
 
         moreInfosText.setText("Bien sûr, voici un court texte avec des informations sur les avantages et " +
                         "les conditions de travail pour un poste chez Google :\n");
@@ -85,6 +91,17 @@ public class fragment_mission_description extends Fragment {
                 actionsContainer.setVisibility(View.VISIBLE);
                 closeActions.setVisibility(View.VISIBLE);
 
+            }
+        });
+
+        itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
+                intent.setPackage("com.google.android.apps.maps");
+                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivity(intent);
+                }
             }
         });
 

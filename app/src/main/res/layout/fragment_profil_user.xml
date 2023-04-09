@@ -167,27 +167,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/modifyProfileBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gradient"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="@string/modifyProfile"
-                android:textColor="@color/white"
-                android:stateListAnimator="@null"
-                android:textSize="18sp"
-                android:textStyle="bold"></Button>
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
