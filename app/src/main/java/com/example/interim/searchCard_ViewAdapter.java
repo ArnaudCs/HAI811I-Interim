@@ -42,7 +42,7 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String startDate = formatter.format(offers.get(position).getStartDate());
         String endDate = formatter.format(offers.get(position).getEndDate());
-        holder.jobDate.setText("From " + startDate + " to " + endDate);
+        holder.jobDate.setText(context.getString(R.string.dateIndicationsStart) + startDate + context.getString(R.string.dateIndicationsEnd) + endDate);
         holder.jobUrl.setText(offers.get(position).getUrl());
         holder.jobSalary.setText(String.valueOf(offers.get(position).getSalaryMax()) + "€");
         holder.jobLocation.setText(offers.get(position).getLocation());

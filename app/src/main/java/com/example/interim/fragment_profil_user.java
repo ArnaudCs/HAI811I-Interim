@@ -95,7 +95,6 @@ public class fragment_profil_user extends Fragment {
                         birthdate.setText(birth);
                         emailTextView.setText(email);
                         savedOffers.setText("0" + getResources().getString(R.string.savedOffersDisplay));
-                        // Ajouter line ville favorite
                     }
                 }
             });
