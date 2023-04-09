@@ -15,6 +15,7 @@ import com.airbnb.lottie.LottieCompositionFactory;
 import com.airbnb.lottie.LottieResult;
 import com.example.interim.models.Offer;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_ViewHolder> {
@@ -38,7 +39,10 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
         holder.jobTitle.setText(offers.get(position).getJobTitle());
         holder.companyName.setText(offers.get(position).getCompanyName());
         holder.jobCategory.setText(offers.get(position).getCategory());
-        holder.jobDate.setText("From " + offers.get(position).getStartDate().toString() + " to " + offers.get(position).getEndDate().toString());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String startDate = formatter.format(offers.get(position).getStartDate());
+        String endDate = formatter.format(offers.get(position).getEndDate());
+        holder.jobDate.setText("From " + startDate + " to " + endDate);
         holder.jobUrl.setText(offers.get(position).getUrl());
         holder.jobSalary.setText(String.valueOf(offers.get(position).getSalaryMax()) + "€");
         holder.jobLocation.setText(offers.get(position).getLocation());
