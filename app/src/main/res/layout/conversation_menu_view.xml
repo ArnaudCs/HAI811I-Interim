@@ -82,7 +82,9 @@
                 <TextView
                     android:id="@+id/lastMsg"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
+                    android:minLines="1"
+                    android:maxLines="1"
                     android:text="Il faudrait que tu m'envoi le dernierrelevé"
                     android:textColor="@color/black"
                     android:textSize="17sp"></TextView>

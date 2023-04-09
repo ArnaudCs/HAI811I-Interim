@@ -195,15 +195,106 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="124dp"
-        android:layout_height="128dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profilePicCompanyContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="-60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bottomDeckCompanyProfile"
-        app:srcCompat="@drawable/profileex" />
+        app:layout_constraintTop_toTopOf="@+id/bottomDeckCompanyProfile">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:cardCornerRadius="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/profileCompanyPic"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/profileplaceholder"></ImageView>
+            
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        app:layout_constraintTop_toTopOf="@+id/profilePicCompanyContainer"
+        app:layout_constraintBottom_toBottomOf="@+id/profilePicCompanyContainer"
+        app:layout_constraintStart_toStartOf="@+id/profilePicCompanyContainer"
+        app:layout_constraintEnd_toEndOf="@+id/profilePicCompanyContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/editProfileCompanyContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20dp"
+                    android:paddingLeft="20dp"
+                    android:layout_weight="2">
+
+                    <LinearLayout
+                        android:id="@+id/editProfileCompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:background="@drawable/redbutton">
+
+                        <Button
+                            android:id="@+id/editProfileCompanyBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/baseline_edit_24">
+                        </Button>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/profileActions"

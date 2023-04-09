@@ -189,16 +189,80 @@
 
     </LinearLayout>
 
-
-    <ImageView
-        android:id="@+id/imageView3"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="124dp"
-        android:layout_height="128dp"
+        android:layout_height="124dp"
         android:layout_marginTop="-60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bottomDeckProfilEntreprise"
-        app:srcCompat="@drawable/profileex" />
+        app:layout_constraintTop_toTopOf="@+id/bottomDeckProfilEntreprise">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/profileex">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:weightSum="4"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_weight="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/editProfileUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="25dp"
+                    android:paddingLeft="25dp"
+                    android:gravity="right|bottom"
+                    android:layout_weight="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="7dp"
+                        android:background="@drawable/redbutton">
+
+                        <Button
+                            android:id="@+id/editProfilePic"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/baseline_edit_24">
+                        </Button>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -2,7 +2,11 @@ package com.example.interim;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,16 +21,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +55,8 @@ public class fragment_user_company extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private String mUserEmail;
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
     private String mUserId;
     private String companyNameText;
     private String subPlanText;
@@ -43,6 +64,10 @@ public class fragment_user_company extends Fragment {
     private String contactNameText;
     private String phoneNumText;
     private String emailText;
+
+    private ImageView profileCompanyPic;
+
+    private LinearLayout editProfileCompany;
 
 
     public fragment_user_company() {
@@ -168,5 +193,47 @@ public class fragment_user_company extends Fragment {
             }
         });
 
+        editProfileCompany = view.findViewById(R.id.editProfileCompanyContainer);
+        Button editprofileBtn = view.findViewById(R.id.editProfileCompanyBtn);
+
+        editProfileCompany.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("edit profile company");
+                Intent editProfile = new Intent(getActivity(), editProfile.class);
+                startActivity(editProfile);
+            }
+        });
+
+        editprofileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("edit profile company");
+                Intent editProfile = new Intent(getActivity(), editProfile.class);
+                startActivity(editProfile);
+            }
+        });
+
+        profileCompanyPic = view.findViewById(R.id.profileCompanyPic);
+
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + mAuth.getCurrentUser().getUid());
+        try {
+            final File localFile = File.createTempFile("profilePic", "jpg");
+            mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Uri fileUri = Uri.fromFile(localFile);
+                    String imageUrl = fileUri.toString();
+                    Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(profileCompanyPic);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Error while retrieving picture", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

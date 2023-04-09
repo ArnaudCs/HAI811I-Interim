@@ -140,4 +140,13 @@
     <string name="dateIndicationsStart">From</string>
     <string name="dateIndicationsEnd">" to"</string>
     <string name="itinaryBtn">Get the itinary</string>
+    <string name="findSimilar">Similar Offers</string>
+    <string name="visitWebsite">Website</string>
+    <string name="actionCall">What\'s next ?</string>
+    <string name="applyActionCall">If you\'re interrrested, don\'t hesitate</string>
+    <string name="profileModification">Profile Modification</string>
+    <string name="saveModificationBtn">Save informations</string>
+    <string name="secondContact">Contact 2</string>
+    <string name="addPicBtn">Choose file</string>
+    <string name="uploadBtn">Upload Photo</string>
 </resources>

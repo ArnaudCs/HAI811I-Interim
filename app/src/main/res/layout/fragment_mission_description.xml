@@ -53,13 +53,21 @@
                 android:gravity="center"
                 android:layout_weight="4">
 
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/profileex">
+
+                </ImageView>
+
                 <TextView
                     android:id="@+id/missionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Barman [M/F]"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="@id/layoutMain" />
             </LinearLayout>
@@ -311,6 +319,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
+                    android:layout_marginBottom="30dp"
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
@@ -339,6 +348,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/itinaryBtn"
                             android:textStyle="bold"
+                            android:stateListAnimator="@null"
                             android:background="@drawable/redbutton"
                             android:textColor="@color/white"
                             android:paddingLeft="20dp"
@@ -349,17 +359,61 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/actionsMissionContainer"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="30dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:background="@drawable/textcardmission"
+                    android:padding="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/actionCall"
+                            android:textStyle="bold"
+                            android:textSize="28sp">
+                        </TextView>
 
-                    </TextView>
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="10dp"
+                            app:dividerColor="@color/grey"
+                            android:layout_height="wrap_content">
+                        </com.google.android.material.divider.MaterialDivider>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="20sp"
+                            android:text="@string/applyActionCall">
+                        </TextView>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="32dp"
+                            android:paddingLeft="32dp"
+                            android:stateListAnimator="@null"
+                            android:text="@string/applyBtn"
+                            android:background="@drawable/redbutton"
+                            android:textColor="@color/white">
+                        </Button>
+
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>

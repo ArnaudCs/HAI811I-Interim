@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class fragment_profil_user extends Fragment {
+
+    LinearLayout editProfileUser;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
 
@@ -89,7 +92,15 @@ public class fragment_profil_user extends Fragment {
             }
         });
 
+        editProfileUser = view.findViewById(R.id.editProfileUser);
 
+        editProfileUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editProfile = new Intent(getActivity(), editProfile.class);
+                startActivity(editProfile);
+            }
+        });
 
     }
 }

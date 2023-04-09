@@ -130,4 +130,13 @@
     <string name="dateIndicationsStart">"Du "</string>
     <string name="dateIndicationsEnd">" au "</string>
     <string name="itinaryBtn">Calculer l\'itinéraire</string>
+    <string name="findSimilar">Annonces similaires</string>
+    <string name="visitWebsite">Site web</string>
+    <string name="actionCall">Et ensuite ?</string>
+    <string name="applyActionCall">Si vous êtes intéressés, n\'hésitez pas</string>
+    <string name="profileModification">Modification du profil</string>
+    <string name="saveModificationBtn">Enregistrer</string>
+    <string name="secondContact">Contact 2</string>
+    <string name="addPicBtn">Choisir le fichier</string>
+    <string name="uploadBtn">Enregistrer la photo</string>
 </resources>
