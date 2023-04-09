@@ -1,10 +1,6 @@
 package com.example.interim;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.ContentResolver;
-import android.content.Intent;
-import android.icu.lang.UCharacter;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -40,7 +35,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class fragment_profile_edition_company extends Fragment {
+public class fragment_profile_edition extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -56,7 +51,7 @@ public class fragment_profile_edition_company extends Fragment {
 
     private StorageTask muploadTask;
 
-    public fragment_profile_edition_company() {
+    public fragment_profile_edition() {
         // Required empty public constructor
     }
 
