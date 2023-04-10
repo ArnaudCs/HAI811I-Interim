@@ -147,4 +147,6 @@
     <string name="jobrrFooter">Postée avec l\'application Jobrr</string>
     <string name="seeMore">Voir Plus</string>
     <string name="notificationCenterTitle">Centre de notification</string>
+    <string name="postOffersPageTitle">Ajouter une offre</string>
+    <string name="offerTitle">Titre de l\'offre</string>
 </resources>

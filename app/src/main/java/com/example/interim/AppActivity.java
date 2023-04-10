@@ -58,10 +58,14 @@ public class AppActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         pro = false;
-
+                        menu.clear();
+                        getMenuInflater().inflate(R.menu.item_menu, menu);
+                        bottomNav.setSelectedItemId(R.id.navHome);
                     } else {
                         pro = true;
-
+                        menu.clear();
+                        getMenuInflater().inflate(R.menu.item_menu_entreprise, menu);
+                        bottomNav.setSelectedItemId(R.id.navSearch);
                     }
                 }
             });
@@ -75,18 +79,14 @@ public class AppActivity extends AppCompatActivity {
             public void onGlobalLayout() {
                 int newHeight = rootView.getHeight();
                 if (previousHeight != 0 && previousHeight > newHeight) {
-                    // Le clavier est ouvert
-                    //System.out.println("Le clavier est ouvert");
                     bottomNav.setVisibility(View.GONE);
                 } else if (previousHeight != 0 && previousHeight < newHeight) {
-                    // Le clavier est fermé
-                    //System.out.println("Le clavier est fermé");
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             bottomNav.setVisibility(View.VISIBLE);
                         }
-                    }, 100); // Delai de 200 millisecondes avant de réafficher la navigation
+                    }, 100);
                 }
                 previousHeight = newHeight;
             }
@@ -115,12 +115,12 @@ public class AppActivity extends AppCompatActivity {
                         fragment = new fragment_search_page();
                         break;
 
-                    case R.id.navHome:
-                        fragment = new fragment_search_page();
+                    case R.id.navAdd:
+                        fragment = new fragment_post_offers();
                         break;
 
-                    case R.id.navAdd:
-                        fragment = new fragment_second_slide();
+                    case R.id.navHome:
+                        fragment = new fragment_search_page();
                         break;
 
                     case R.id.navNotification:

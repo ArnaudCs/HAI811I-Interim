@@ -157,4 +157,6 @@
     <string name="jobrrFooter">Posted with Jobrr App</string>
     <string name="seeMore">See More</string>
     <string name="notificationCenterTitle">Notification Center</string>
+    <string name="postOffersPageTitle">Post an offers</string>
+    <string name="offerTitle">Offer Title</string>
 </resources>
