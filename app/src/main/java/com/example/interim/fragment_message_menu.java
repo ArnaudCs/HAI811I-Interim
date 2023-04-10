@@ -96,6 +96,8 @@ public class fragment_message_menu extends Fragment {
 
                                                         // Set the RecyclerView adapter with the updated list of Conversations
                                                         mAdapter.notifyDataSetChanged();
+                                                        recyclerView.setAdapter(mAdapter);
+
                                                     }
                                                 }
                                             });
@@ -111,6 +113,8 @@ public class fragment_message_menu extends Fragment {
 
                                                         // Set the RecyclerView adapter with the updated list of Conversations
                                                         mAdapter.notifyDataSetChanged();
+                                                        recyclerView.setAdapter(mAdapter);
+
                                                     }
                                                 }
                                             });
@@ -142,7 +146,6 @@ public class fragment_message_menu extends Fragment {
                         }
                     }
                 });
-
 
 
         deleteMessages.setOnClickListener(new View.OnClickListener() {

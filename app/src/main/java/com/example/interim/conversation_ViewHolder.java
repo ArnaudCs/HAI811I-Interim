@@ -24,7 +24,7 @@ public class conversation_ViewHolder extends RecyclerView.ViewHolder {
     TextView lastMsg;
     LottieAnimationView unRead;
 
-    ImageView openConv;
+    ImageView openConv, profilePic;
 
     Button deleteConvBtn, makeGroupBtn, cancelDelete, validateDelete;
     LinearLayout conversationContainer, checkDelete, goToMessages;
@@ -35,7 +35,7 @@ public class conversation_ViewHolder extends RecyclerView.ViewHolder {
         lastMsg = itemView.findViewById(R.id.lastMsg);
         unRead = itemView.findViewById(R.id.unRead);
         openConv = itemView.findViewById(R.id.openConv);
-
+        profilePic = itemView.findViewById(R.id.profilePic);
         deleteConvBtn = itemView.findViewById(R.id.deleteMessages);
         makeGroupBtn = itemView.findViewById(R.id.groupMaking);
         cancelDelete = itemView.findViewById(R.id.cancelDelete);
