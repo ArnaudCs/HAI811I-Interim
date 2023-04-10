@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,10 @@ import com.airbnb.lottie.LottieComposition;
 import com.airbnb.lottie.LottieCompositionFactory;
 import com.airbnb.lottie.LottieResult;
 import com.example.interim.models.Offer;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -22,6 +27,8 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
 
     Context context;
     List<Offer> offers;
+
+    boolean pro = false;
 
     public searchCard_ViewAdapter(Context context, List<Offer> offers) {
         this.context = context;
@@ -48,6 +55,28 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
         holder.jobLocation.setText(offers.get(position).getLocation());
         holder.postDate.setText(offers.get(position).getPostDate().toString());
         holder.jobKeywords.setText(offers.get(position).getKeywords());
+
+        FirebaseFirestore db;
+        FirebaseAuth mAuth;
+
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            DocumentReference userRef = db.collection("Users").document(userId);
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        pro = false;
+                    } else {
+                        pro = true;
+                        holder.applyBtn.setText(context.getString(R.string.seeMore));
+                    }
+                }
+            });
+        }
 
         holder.likeInit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -40,6 +40,5 @@ public class searchCard_ViewHolder extends RecyclerView.ViewHolder {
         likeBtn = itemView.findViewById(R.id.likeBtn);
         likeInit = itemView.findViewById(R.id.likeInit);
         applyBtn = itemView.findViewById(R.id.applyBtn);
-
     }
 }

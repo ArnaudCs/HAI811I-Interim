@@ -33,7 +33,7 @@
                 android:gravity="left">
 
                 <Button
-                    android:id="@+id/backButton"
+                    android:id="@+id/backMission"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/baseline_arrow_circle_left_24"
@@ -402,6 +402,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/applyContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"

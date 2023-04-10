@@ -24,7 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -46,6 +49,8 @@ public class fragment_mission_description extends Fragment {
     private static final int REQUEST_LOCATION = 1;
     LocationManager lm;
     float latitude, longitude;
+    boolean pro = false;
+    LinearLayout applyContainer;
     public fragment_mission_description() {
         // Required empty public constructor
     }
@@ -58,10 +63,16 @@ public class fragment_mission_description extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        applyContainer = view.findViewById(R.id.applyContainer);
+        FirebaseFirestore db;
+        FirebaseAuth mAuth;
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         super.onViewCreated(view, savedInstanceState);
         Button moreActions = view.findViewById(R.id.moreActions);
         LinearLayout actionsContainer = view.findViewById(R.id.actionContainer);
         Button closeActions = view.findViewById(R.id.closeActions);
+        Button backMission = view.findViewById(R.id.backMission);
         TextView missionText = view.findViewById(R.id.missionDescriptionText);
         TextView moreInfosText = view.findViewById(R.id.missionMoreInfosText);
         TextView salary = view.findViewById(R.id.salaryText);
@@ -93,6 +104,29 @@ public class fragment_mission_description extends Fragment {
 
             }
         });
+
+        backMission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            DocumentReference userRef = db.collection("Users").document(userId);
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        pro = false;
+                    } else {
+                        pro = true;
+                        applyContainer.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
 
         itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
             @Override
