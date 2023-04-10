@@ -1,8 +1,12 @@
 package com.example.interim;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +22,11 @@ import com.example.interim.models.Offer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_ViewHolder> {
@@ -70,23 +76,62 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         pro = false;
+                        List<String> likedOffers = (List<String>) document.get("likedOffers");
+                        if (likedOffers != null && likedOffers.contains(offers.get(position).getId())) {
+                            holder.likeInit.setVisibility(View.GONE);
+                            holder.likeBtn.setVisibility(View.VISIBLE);
+                            holder.likeBtn.setAnimation(R.raw.like);
+                            holder.likeBtn.playAnimation();
+                            holder.liked = true;
+                        } else {
+                            holder.likeInit.setVisibility(View.VISIBLE);
+                            holder.likeBtn.setVisibility(View.GONE);
+                            holder.liked = false;
+                        }
                     } else {
                         pro = true;
                         holder.applyBtn.setText(context.getString(R.string.seeMore));
                     }
                 }
             });
+        } else {
+            holder.likeInit.setVisibility(View.VISIBLE);
+            holder.likeBtn.setVisibility(View.GONE);
+            holder.liked = false;
         }
 
         holder.likeInit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!holder.liked) {
-                    holder.likeInit.setVisibility(View.GONE);
-                    holder.likeBtn.setVisibility(View.VISIBLE);
-                    holder.likeBtn.setAnimation(R.raw.like);
-                    holder.likeBtn.playAnimation();
-                    holder.liked = !holder.liked;
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    if (mAuth.getCurrentUser() != null) {
+                        String userId = mAuth.getCurrentUser().getUid();
+                        DocumentReference userRef = db.collection("Users").document(userId);
+                        userRef.get().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    List<String> likedOffers = (List<String>) document.get("likedOffers");
+                                    if (likedOffers == null) {
+                                        likedOffers = new ArrayList<>();
+                                    }
+                                    likedOffers.add(offers.get(position).getId());
+                                    userRef.update("likedOffers", likedOffers);
+                                }
+                            }
+                        });
+                        holder.likeInit.setVisibility(View.GONE);
+                        holder.likeBtn.setVisibility(View.VISIBLE);
+                        holder.likeBtn.setAnimation(R.raw.like);
+                        holder.likeBtn.playAnimation();
+                        holder.liked = !holder.liked;
+                    }
+                    else {
+                        Intent loginIntent = new Intent(context, MainActivity.class);
+                        context.startActivity(loginIntent);
+                    }
                 }
             }
         });
@@ -95,16 +140,62 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
             @Override
             public void onClick(View view) {
                 if(!holder.liked){
-                    holder.likeBtn.setAnimation(R.raw.like);
-                    holder.likeBtn.playAnimation();
-                    holder.liked = !holder.liked;
+                    // Save the offer to the user's document
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    if (mAuth.getCurrentUser() != null) {
+                        String userId = mAuth.getCurrentUser().getUid();
+                        DocumentReference userRef = db.collection("Users").document(userId);
+                        userRef.get().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    List<String> likedOffers = (List<String>) document.get("likedOffers");
+                                    if (likedOffers == null) {
+                                        likedOffers = new ArrayList<>();
+                                    }
+                                    likedOffers.add(offers.get(position).getId());
+                                    userRef.update("likedOffers", likedOffers);
+                                }
+                            }
+                        });
+                        holder.likeBtn.setAnimation(R.raw.like);
+                        holder.likeBtn.playAnimation();
+                        holder.liked = !holder.liked;
+                    }
+                    else {
+                        Intent loginIntent = new Intent(context, MainActivity.class);
+                        context.startActivity(loginIntent);
+                    }
+
                 } else {
+                    // Remove the offer from the user's document
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    if (mAuth.getCurrentUser() != null) {
+                        String userId = mAuth.getCurrentUser().getUid();
+                        DocumentReference userRef = db.collection("Users").document(userId);
+                        userRef.get().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    List<String> likedOffers = (List<String>) document.get("likedOffers");
+                                    if (likedOffers != null) {
+                                        likedOffers.remove(offers.get(position).getId());
+                                        userRef.update("likedOffers", likedOffers);
+                                    }
+                                }
+                            }
+                        });
+                    }
                     holder.likeBtn.setAnimation(R.raw.dislike);
                     holder.likeBtn.playAnimation();
                     holder.liked = !holder.liked;
                 }
             }
         });
+
+
 
         holder.applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
