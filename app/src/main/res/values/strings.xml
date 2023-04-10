@@ -156,4 +156,5 @@
     <string name="postedDateSuffix">Post date :</string>
     <string name="jobrrFooter">Posted with Jobrr App</string>
     <string name="seeMore">See More</string>
+    <string name="notificationCenterTitle">Notification Center</string>
 </resources>

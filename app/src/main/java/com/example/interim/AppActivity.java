@@ -124,7 +124,7 @@ public class AppActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navNotification:
-                        fragment = new fragment_payment_confirm();
+                        fragment = new fragment_notification_center();
                         break;
 
                     case R.id.navFavorite:
