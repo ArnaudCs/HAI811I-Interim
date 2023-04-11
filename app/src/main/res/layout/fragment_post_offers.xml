@@ -146,7 +146,7 @@
                             app:boxBackgroundMode="outline"
                             app:boxStrokeColor="@color/primary_red"
                             app:boxStrokeErrorColor="#DC0303"
-                            app:endIconMode="clear_text"
+                            app:endIconMode="none"
                             app:endIconTint="@color/primary_red"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +158,8 @@
                                 android:id="@+id/textDateStartOffer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="date" />
+                                android:inputType="date"
+                                android:textSize="16sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
@@ -179,7 +180,7 @@
                             app:boxBackgroundMode="outline"
                             app:boxStrokeColor="@color/primary_red"
                             app:boxStrokeErrorColor="#DC0303"
-                            app:endIconMode="clear_text"
+                            app:endIconMode="none"
                             app:endIconTint="@color/primary_red"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -191,7 +192,8 @@
                                 android:id="@+id/textDateEndOffer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName" />
+                                android:inputType="textPersonName"
+                                android:textSize="16sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
