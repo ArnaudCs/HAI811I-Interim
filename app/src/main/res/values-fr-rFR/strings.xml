@@ -149,4 +149,10 @@
     <string name="notificationCenterTitle">Centre de notification</string>
     <string name="postOffersPageTitle">Ajouter une offre</string>
     <string name="offerTitle">Titre de l\'offre</string>
+    <string name="salaryPrice">Salaire par mois</string>
+    <string name="placeInput">Ville</string>
+    <string name="offerLink">Lien de l\'offre</string>
+    <string name="postOffersDescription">Description de l\'offre</string>
+    <string name="postOfferDetails">Ajouter des détails à l\'offre comme des horaires ...</string>
+    <string name="addOfferBtn">Ajouter l\'offre</string>
 </resources>

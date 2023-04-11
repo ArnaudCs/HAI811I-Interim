@@ -157,6 +157,12 @@
     <string name="jobrrFooter">Posted with Jobrr App</string>
     <string name="seeMore">See More</string>
     <string name="notificationCenterTitle">Notification Center</string>
-    <string name="postOffersPageTitle">Post an offers</string>
+    <string name="postOffersPageTitle">Post an offer</string>
     <string name="offerTitle">Offer Title</string>
+    <string name="salaryPrice">Salary Per Month</string>
+    <string name="placeInput">City or place</string>
+    <string name="offerLink">Offer Link</string>
+    <string name="postOffersDescription">Post offer description</string>
+    <string name="postOfferDetails">Add offer details like hour shift ...</string>
+    <string name="addOfferBtn">Add offer</string>
 </resources>
