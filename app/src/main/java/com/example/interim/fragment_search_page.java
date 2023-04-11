@@ -29,7 +29,11 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -66,6 +70,8 @@ public class fragment_search_page extends Fragment {
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
         Spinner cityChoice = (Spinner) view.findViewById(R.id.cityChoice);
+        TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
+        TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
         LinearLayout filterContainer = view.findViewById(R.id.filterContainer);
         TextView areaDisplay = view.findViewById(R.id.areaDisplay);
         SeekBar areaChoice = view.findViewById(R.id.areaChoice);
@@ -193,8 +199,56 @@ public class fragment_search_page extends Fragment {
                 filterContainer.setVisibility(view.GONE);
                 closeFilter.setVisibility(view.GONE);
                 filterBtn.setVisibility(view.VISIBLE);
+
+                String category = categoryChoice.getSelectedItem().toString();
+                String label = labelChoice.getSelectedItem().toString();
+                String city = cityChoice.getSelectedItem().toString();
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                CollectionReference offersRef = db.collection("Offers");
+
+                Query query = offersRef;
+
+                if (city != null) {
+                    query = query.whereEqualTo("location", city);
+                }
+
+                if (startPriceValue != null && endPriceValue != null) {
+                    Query priceQuery = offersRef.whereGreaterThanOrEqualTo("priceMax", startPriceValue)
+                            .whereLessThanOrEqualTo("priceMin", endPriceValue);
+                    queries.add(priceQuery);
+                }
+
+                Task<List<QuerySnapshot>> task = Tasks.whenAllSuccess(queries);
+                task.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
+                    @Override
+                    public void onSuccess(List<QuerySnapshot> querySnapshots) {
+                        List<Offer> offers = new ArrayList<>();
+                        for (QuerySnapshot querySnapshot : querySnapshots) {
+                            for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                Offer offer = documentSnapshot.toObject(Offer.class);
+                                offer.setId(documentSnapshot.getId());
+                                offers.add(offer);
+                                System.out.println(offer.getId());
+                            }
+                        }
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Error", "Failed to search for offers with filters");
+                    }
+                });
+
             }
-        });
+
+            });
+
+
+
+
 
     }
 }
