@@ -55,7 +55,7 @@ public class messages_ViewAdapter extends RecyclerView.Adapter<messages_ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (messages.get(position).getSenderId().equals(userId)) {
+        if (messages.get(position).getSender().equals(userId)) {
             return VIEW_TYPE_SENT;
         } else {
             return VIEW_TYPE_RECEIVED;

@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/homeText"
+                android:id="@+id/convName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/choosSubscription"

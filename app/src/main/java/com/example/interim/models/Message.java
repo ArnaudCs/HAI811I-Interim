@@ -3,13 +3,13 @@ package com.example.interim.models;
 import java.util.Date;
 
 public class Message {
-    private String _id;
-    private String senderId;
+//    private String _id;
+    private String sender;
     private Date date;
     private String text;
 
-    public Message(String senderId, Date date, String text) {
-        this.senderId = senderId;
+    public Message(String sender, Date date, String text) {
+        this.sender = sender;
         this.date = date;
         this.text = text;
     }
@@ -17,20 +17,20 @@ public class Message {
     public Message() {
     }
 
-    public String get_id() {
-        return _id;
+//    public String get_id() {
+//        return _id;
+//    }
+//
+//    public void set_id(String _id) {
+//        this._id = _id;
+//    }
+
+    public String getSender() {
+        return sender;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public Date getDate() {

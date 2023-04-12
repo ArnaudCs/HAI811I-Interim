@@ -53,6 +53,7 @@
                 android:layout_weight="4">
 
                 <ImageView
+                    android:id="@+id/convPic"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginRight="10dp"
@@ -61,7 +62,7 @@
                 </ImageView>
 
                 <TextView
-                    android:id="@+id/homeText"
+                    android:id="@+id/convName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Alexandre"
@@ -210,15 +211,16 @@
                 tools:ignore="MissingConstraints">
 
                 <EditText
+                    android:id="@+id/messageText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="5"
-                    android:maxLength="200"
                     android:background="@null"
                     android:hint="@string/placeholderBarMessage"
+                    android:maxLength="200"
                     android:textColorHint="#838383"
                     android:textSize="20sp"
                     tools:ignore="TouchTargetSizeCheck"></EditText>
@@ -231,6 +233,7 @@
                     android:gravity="right|center">
 
                     <Button
+                        android:id="@+id/sendMessage"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/baseline_arrow_circle_right_24"
