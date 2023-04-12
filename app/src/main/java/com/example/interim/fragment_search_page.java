@@ -69,7 +69,7 @@ public class fragment_search_page extends Fragment {
 
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
-        Spinner cityChoice = (Spinner) view.findViewById(R.id.cityChoice);
+        TextInputEditText cityChoice = view.findViewById(R.id.textCityInput);
         TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
         TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
         LinearLayout filterContainer = view.findViewById(R.id.filterContainer);
@@ -100,7 +100,6 @@ public class fragment_search_page extends Fragment {
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
 
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cityChoice.setAdapter(adapter1);
 
         List<Offer> mockOffers = new ArrayList<>();
 
@@ -202,16 +201,11 @@ public class fragment_search_page extends Fragment {
 
                 String category = categoryChoice.getSelectedItem().toString();
                 String label = labelChoice.getSelectedItem().toString();
-                String city = cityChoice.getSelectedItem().toString();
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 CollectionReference offersRef = db.collection("Offers");
 
                 Query query = offersRef;
-
-                if (city != null) {
-                    query = query.whereEqualTo("location", city);
-                }
 
 //                if (startPriceValue != null && endPriceValue != null) {
 //                    Query priceQuery = offersRef.whereGreaterThanOrEqualTo("priceMax", startPriceValue)
