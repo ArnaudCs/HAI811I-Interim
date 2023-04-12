@@ -200,48 +200,48 @@ public class fragment_search_page extends Fragment {
                 closeFilter.setVisibility(view.GONE);
                 filterBtn.setVisibility(view.VISIBLE);
 
-                String category = categoryChoice.getSelectedItem().toString();
-                String label = labelChoice.getSelectedItem().toString();
-                String city = cityChoice.getSelectedItem().toString();
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                CollectionReference offersRef = db.collection("Offers");
-
-                Query query = offersRef;
-
-                if (city != null) {
-                    query = query.whereEqualTo("location", city);
-                }
-
-                if (startPriceValue != null && endPriceValue != null) {
-                    Query priceQuery = offersRef.whereGreaterThanOrEqualTo("priceMax", startPriceValue)
-                            .whereLessThanOrEqualTo("priceMin", endPriceValue);
-                    queries.add(priceQuery);
-                }
-
-                Task<List<QuerySnapshot>> task = Tasks.whenAllSuccess(queries);
-                task.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
-                    @Override
-                    public void onSuccess(List<QuerySnapshot> querySnapshots) {
-                        List<Offer> offers = new ArrayList<>();
-                        for (QuerySnapshot querySnapshot : querySnapshots) {
-                            for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                                Offer offer = documentSnapshot.toObject(Offer.class);
-                                offer.setId(documentSnapshot.getId());
-                                offers.add(offer);
-                                System.out.println(offer.getId());
-                            }
-                        }
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Error", "Failed to search for offers with filters");
-                    }
-                });
-
+//                String category = categoryChoice.getSelectedItem().toString();
+//                String label = labelChoice.getSelectedItem().toString();
+//                String city = cityChoice.getSelectedItem().toString();
+//
+//                FirebaseFirestore db = FirebaseFirestore.getInstance();
+//                CollectionReference offersRef = db.collection("Offers");
+//
+//                Query query = offersRef;
+//
+//                if (city != null) {
+//                    query = query.whereEqualTo("location", city);
+//                }
+//
+//                if (startPriceValue != null && endPriceValue != null) {
+//                    Query priceQuery = offersRef.whereGreaterThanOrEqualTo("priceMax", startPriceValue)
+//                            .whereLessThanOrEqualTo("priceMin", endPriceValue);
+//                    queries.add(priceQuery);
+//                }
+//
+//                Task<List<QuerySnapshot>> task = Tasks.whenAllSuccess(queries);
+//                task.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
+//                    @Override
+//                    public void onSuccess(List<QuerySnapshot> querySnapshots) {
+//                        List<Offer> offers = new ArrayList<>();
+//                        for (QuerySnapshot querySnapshot : querySnapshots) {
+//                            for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+//                                Offer offer = documentSnapshot.toObject(Offer.class);
+//                                offer.setId(documentSnapshot.getId());
+//                                offers.add(offer);
+//                                System.out.println(offer.getId());
+//                            }
+//                        }
+//                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                        recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.d("Error", "Failed to search for offers with filters");
+//                    }
+//                });
+//
             }
 
             });

@@ -36,6 +36,7 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
     @Override
     public void onBindViewHolder(@NonNull conversation_ViewHolder holder, int position) {
         this.holder = holder;
+        holder.conversationId = conversations.get(position).getId();
         holder.userName.setText(conversations.get(position).getContact());
         holder.lastMsg.setText(conversations.get(position).getLastMsg());
         if (conversations.get(position).isUnread()) {
@@ -75,7 +76,9 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
         holder.goToMessages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String conversationId = holder.conversationId; // Get the conversation ID here
                 Intent discussion = new Intent(context, DiscussionViewActivity.class);
+                discussion.putExtra("conversationId", conversationId);
                 context.startActivity(discussion);
             }
         });

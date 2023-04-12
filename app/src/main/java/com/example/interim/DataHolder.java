@@ -4,6 +4,15 @@ public class DataHolder {
     private static final DataHolder instance = new DataHolder();
     private String planPrice;
     private String planName;
+    private String conversationId;
+
+    public String getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(String conversationId) {
+        this.conversationId = conversationId;
+    }
 
     private DataHolder() {}
 

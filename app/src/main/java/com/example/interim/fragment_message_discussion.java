@@ -38,7 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 public class fragment_message_discussion extends Fragment {
-
+    String conversationId;
     public fragment_message_discussion() {
         // Required empty public constructor
     }
@@ -47,11 +47,15 @@ public class fragment_message_discussion extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+//        System.out.println("ARGUMENTS : "+getArguments().toString());
+
         return inflater.inflate(R.layout.fragment_message_discussion, container, false);
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        conversationId = DataHolder.getInstance().getConversationId();
         Button infosBtn = view.findViewById(R.id.infosBtn);
         Button closeInfos = view.findViewById(R.id.closeInfos);
         Button signalUser = view.findViewById(R.id.signalUserBtn);
@@ -61,7 +65,6 @@ public class fragment_message_discussion extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.messagesContainer);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String conversationId = "uuHzkJ9N2TH1e4F2Ld7T";
 // Get the list of message IDs from the conversation document
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
         conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

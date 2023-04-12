@@ -20,6 +20,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class conversation_ViewHolder extends RecyclerView.ViewHolder {
 
+    String conversationId;
     TextView userName;
     TextView lastMsg;
     LottieAnimationView unRead;

@@ -1,5 +1,7 @@
 package com.example.interim;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,9 +75,8 @@ public class fragment_message_menu extends Fragment {
                                 // Extract the Conversation data from the Firestore document
                                 System.out.println(document.toString());
                                 String otherParticipant = "";
-                                boolean isRead = false;
                                 String lastMessage = "";
-                                Conversation conversation = new Conversation(otherParticipant, isRead, lastMessage);
+                                Conversation conversation = new Conversation(document.getId(), otherParticipant, false, lastMessage);
                                 List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
 
                                 for (DocumentReference participantRef : participantsRefs) {
@@ -125,11 +127,13 @@ public class fragment_message_menu extends Fragment {
                                     }
                                 }
 
-                                DocumentReference unreadByRef = (DocumentReference) document.get("unRead");
-                                if (unreadByRef != null) {
-                                    String unreadBy = unreadByRef.getId();
-                                    isRead = unreadBy.equals(userId);
-                                    conversation.setUnread(isRead);
+                                List<DocumentReference> unReadRef = (List<DocumentReference>) document.get("unRead");
+                                for (DocumentReference userUnReadRef : unReadRef) {
+                                    String userUnReadId = userUnReadRef.getId();
+                                    if (userUnReadId.equals(userId)) {
+                                        conversation.setUnread(true);
+                                        break;
+                                    }
                                 }
                                 if (document.contains("lastMessage")) {
                                     lastMessage = document.getString("lastMessage");
@@ -142,7 +146,7 @@ public class fragment_message_menu extends Fragment {
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setAdapter(new conversation_ViewAdapter(getContext(), conversations));
                         } else {
-
+                            Log.e("TAG", "No conversations to retrieve");
                         }
                     }
                 });
