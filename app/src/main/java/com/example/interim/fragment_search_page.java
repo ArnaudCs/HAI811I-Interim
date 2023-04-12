@@ -69,7 +69,7 @@ public class fragment_search_page extends Fragment {
 
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
-        Spinner cityChoice = (Spinner) view.findViewById(R.id.cityChoice);
+        TextInputEditText cityChoice = view.findViewById(R.id.textCityInput);
         TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
         TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
         LinearLayout filterContainer = view.findViewById(R.id.filterContainer);
@@ -100,7 +100,6 @@ public class fragment_search_page extends Fragment {
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
 
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cityChoice.setAdapter(adapter1);
 
         List<Offer> mockOffers = new ArrayList<>();
 

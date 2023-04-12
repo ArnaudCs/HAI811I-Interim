@@ -66,7 +66,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/baseline_search_24"
-                                tools:ignore="TouchTargetSizeCheck"></Button>
+                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
                         </LinearLayout>
 
 
@@ -85,7 +85,7 @@
                         android:layout_height="30dp"
                         android:background="@drawable/baseline_filter_list_24"
                         android:backgroundTint="#FFFFFF"
-                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck"></Button>
+                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
 
                     <Button
                         android:id="@+id/closeFilter"
@@ -120,8 +120,9 @@
                         <Spinner
                             android:id="@+id/categoryChoice"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:padding="15dp"
-                            android:layout_height="wrap_content"></Spinner>
+                            tools:ignore="TouchTargetSizeCheck"></Spinner>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -141,10 +142,11 @@
 
                         <Spinner
                             android:id="@+id/labelChoice"
-                            android:padding="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:foregroundTint="@color/white"></Spinner>
+                            android:foregroundTint="@color/white"
+                            android:padding="15dp"
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Spinner>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -243,15 +245,38 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:background="@drawable/navigation_bar"
                         android:layout_height="wrap_content">
 
-                        <Spinner
-                            android:id="@+id/cityChoice"
-                            android:padding="15dp"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layoutCity"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:foregroundTint="@color/white"></Spinner>
+                            android:layout_height="70dp"
+                            app:boxBackgroundColor="#FFFFFF"
+                            app:boxBackgroundMode="outline"
+                            app:boxStrokeColor="@color/primary_red"
+                            app:boxStrokeErrorColor="#DC0303"
+                            app:endIconMode="clear_text"
+                            app:endIconTint="@color/primary_red"
+                            app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/parent"
+                            app:startIconDrawable="@drawable/baseline_pin_drop_24"
+                            app:startIconTint="@color/primary_red"
+                            tools:ignore="MissingConstraints">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/textCityInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/navigation_bar"
+                                android:hint="@string/CityofSearch"
+                                android:inputType="text"
+                                android:minLines="1"
+                                android:maxLines="1"
+                                android:maxLength="50" />
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </LinearLayout>
 
