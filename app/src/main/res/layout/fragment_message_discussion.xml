@@ -223,7 +223,7 @@
                     android:maxLength="200"
                     android:textColorHint="#838383"
                     android:textSize="20sp"
-                    tools:ignore="TouchTargetSizeCheck"></EditText>
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <LinearLayout
                     android:layout_width="0dp"

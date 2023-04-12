@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -90,6 +91,9 @@ public class fragment_message_discussion extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
+                                    DocumentReference userRef = db.collection("Users").document(userId);
+                                    DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
+                                    conversationRef.update("unRead", FieldValue.arrayRemove(userRef));
                                     List<Message> messages = new ArrayList<>();
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         String senderId = document.getString("sender");
@@ -170,6 +174,25 @@ public class fragment_message_discussion extends Fragment {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
+                                                // Add a reference to the message in the unRead array for each participant
+                                                conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
+                                                                for (DocumentReference participantRef : participantsRefs) {
+                                                                    String participantId = participantRef.getId();
+                                                                    if (!participantId.equals(userId)) {
+                                                                        participantRef.update("unRead", FieldValue.arrayUnion(conversationRef));
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                });
+
                                                 // Refresh the layout to display the new message
                                                 recyclerView.getAdapter().notifyDataSetChanged();
                                                 recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
@@ -183,5 +206,8 @@ public class fragment_message_discussion extends Fragment {
 
 
 
+
     }
+
+
 }
