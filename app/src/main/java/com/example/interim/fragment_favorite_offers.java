@@ -1,13 +1,7 @@
 package com.example.interim;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +9,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.interim.models.Offer;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class fragment_favorite_offers extends Fragment {
     public fragment_favorite_offers() {
@@ -39,10 +57,59 @@ public class fragment_favorite_offers extends Fragment {
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
 
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+
+            DocumentReference userRef = db.collection("Users").document(userId);
+            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    List<String> likedOffersIds = (List<String>) documentSnapshot.get("likedOffers");
+                    if (likedOffersIds != null && likedOffersIds.size() >= 1) {
+                        Query offersQuery = db.collection("Offers").whereIn(FieldPath.documentId(), likedOffersIds);
+                        offersQuery
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                        List<Offer> offers = new ArrayList<>();
+                                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                            Offer offer = documentSnapshot.toObject(Offer.class);
+                                            offer.setId(documentSnapshot.getId());
+                                            offers.add(offer);
+                                        }
+                                        favoriteContainer.setLayoutManager(new LinearLayoutManager(getContext()));
+                                        favoriteContainer.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+                    }
+                }
+            });
+        }
+        else {
+            Intent mainActivity = new Intent(getActivity(), MainActivity.class);
+            startActivity(mainActivity);
+            this.getActivity().finish();
+        }
+
+
+
+
         favoriteContainer.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             private int scrollThreshold = 10;
             private int scrolledDistance = 0;
             private boolean isScrollingDown = false;
+
 
             @Override
             public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
