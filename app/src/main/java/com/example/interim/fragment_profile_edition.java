@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -28,6 +29,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -40,9 +44,12 @@ public class fragment_profile_edition extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     Upload upload;
+    FirebaseFirestore db;
+    FirebaseAuth mAuth;
 
     ImageView profilePic;
     private Uri mImageUri;
+    boolean pro = false;
 
     private ProgressBar progressBarFile;
 
@@ -59,6 +66,8 @@ public class fragment_profile_edition extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         return inflater.inflate(R.layout.fragment_profile_edition_company, container, false);
     }
 
@@ -72,12 +81,6 @@ public class fragment_profile_edition extends Fragment {
         TextInputEditText textCompanyAdressModification = view.findViewById(R.id.textCompanyAdressModification);
         TextInputEditText textWebsiteModification = view.findViewById(R.id.textWebsiteModification);
 
-
-        TextInputLayout layoutContact2NameModification = view.findViewById(R.id.layoutContact2NameModification);
-        TextInputLayout layoutContact2MailAdressModification = view.findViewById(R.id.layoutContact2MailAdressModification);
-        TextInputLayout layoutContact2NumberModification = view.findViewById(R.id.layoutContact2NumberModification);
-        TextInputLayout layoutServiceModification = view.findViewById(R.id.layoutServiceModification);
-        TextInputLayout layoutSubModification = view.findViewById(R.id.layoutSubServiceModification);
         Button backBtnProfileModification = view.findViewById(R.id.backBtnProfileModification);
         Button choosePic = view.findViewById(R.id.choosePicBtn);
         Button uploadFile = view.findViewById(R.id.uploadBtn);
@@ -86,6 +89,67 @@ public class fragment_profile_edition extends Fragment {
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+
+        TextInputLayout layoutCompanyModification = view.findViewById(R.id.layoutCompanyModification);
+        TextInputLayout layoutRegistrationNumberModification = view.findViewById(R.id.layoutRegistrationNumberModification);
+        TextInputLayout layoutCompanyAdressModification = view.findViewById(R.id.layoutCompanyAdressModification);
+        TextInputLayout layoutCompanyWebsiteModification = view.findViewById(R.id.layoutCompanyWebsiteModification);
+        LinearLayout contactModificationDivider = view.findViewById(R.id.contactModificationDivider);
+        LinearLayout layoutContact1MailAdressModification = view.findViewById(R.id.layoutContact1MailAdressModification);
+        LinearLayout layoutContact1NameModification = view.findViewById(R.id.layoutContact1NameModification);
+        TextInputLayout layoutContact2NameModification = view.findViewById(R.id.layoutContact2NameModification);
+        TextInputLayout layoutContact2MailAdressModification = view.findViewById(R.id.layoutContact2MailAdressModification);
+        TextInputLayout layoutContact2NumberModification = view.findViewById(R.id.layoutContact2NumberModification);
+        TextInputLayout layoutServiceModification = view.findViewById(R.id.layoutServiceModification);
+        TextInputLayout layoutSubServiceModification = view.findViewById(R.id.layoutSubServiceModification);
+        TextInputLayout layoutContact1NumberModification = view.findViewById(R.id.layoutContact1NumberModification);
+
+        TextInputLayout layoutBirthdateModification = view.findViewById(R.id.layoutSimpleUserBirthdateModification);
+        TextInputLayout layoutUserFirstnameModification = view.findViewById(R.id.layoutServiceModification);
+        TextInputLayout layoutUserNameModification = view.findViewById(R.id.layoutSimpleUserNameModification);
+        TextInputLayout layoutMailAdressModification = view.findViewById(R.id.layoutMailAdressModification);
+        TextInputLayout layoutNumberModification = view.findViewById(R.id.layoutSimpleUserNumberModification);
+
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            DocumentReference userRef = db.collection("Users").document(userId);
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        pro = false;
+                        layoutCompanyModification.setVisibility(View.GONE);
+                        layoutRegistrationNumberModification.setVisibility(View.GONE);
+                        layoutCompanyAdressModification.setVisibility(View.GONE);
+                        layoutCompanyWebsiteModification.setVisibility(View.GONE);
+                        contactModificationDivider.setVisibility(View.GONE);
+                        layoutSubServiceModification.setVisibility(View.GONE);
+                        layoutContact2NameModification.setVisibility(View.GONE);
+                        layoutContact2MailAdressModification.setVisibility(View.GONE);
+                        layoutContact2NumberModification.setVisibility(View.GONE);
+                        layoutServiceModification.setVisibility(View.GONE);
+                        layoutSubServiceModification.setVisibility(View.GONE);
+                        layoutContact1NumberModification.setVisibility(View.GONE);
+                        layoutContact1MailAdressModification.setVisibility(View.GONE);
+                        layoutContact1NameModification.setVisibility(View.GONE);
+
+                        layoutBirthdateModification.setVisibility(View.VISIBLE);
+                        layoutUserFirstnameModification.setVisibility(View.VISIBLE);
+                        layoutUserNameModification.setVisibility(View.VISIBLE);
+                        layoutMailAdressModification.setVisibility(View.VISIBLE);
+                        layoutNumberModification.setVisibility(View.VISIBLE);
+
+                    } else {
+                        pro = true;
+                        layoutBirthdateModification.setVisibility(View.GONE);
+                        layoutUserFirstnameModification.setVisibility(View.GONE);
+                        layoutUserNameModification.setVisibility(View.GONE);
+                        layoutMailAdressModification.setVisibility(View.GONE);
+                        layoutNumberModification.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
 
         backBtnProfileModification.setOnClickListener(new View.OnClickListener() {
             @Override

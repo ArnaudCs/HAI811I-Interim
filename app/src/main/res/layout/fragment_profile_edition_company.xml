@@ -163,6 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="60dp"
+                android:layout_marginBottom="30dp"
                 android:layout_marginTop="10dp"
                 android:paddingRight="60dp"
                 android:gravity="center">
@@ -257,6 +258,62 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutSimpleUserNameModification"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:hint="@string/Name"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primary_red"
+                android:visibility="gone"
+                app:boxStrokeErrorColor="#DC0303"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/primary_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutRegistrationNumber"
+                app:startIconDrawable="@drawable/baseline_person_24"
+                app:startIconTint="@color/primary_red"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textSimpleUserNameModification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutSimpleUserFirstnameModification"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:hint="@string/Firstname"
+                app:boxBackgroundColor="#FFFFFF"
+                android:visibility="gone"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primary_red"
+                app:boxStrokeErrorColor="#DC0303"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/primary_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutRegistrationNumber"
+                app:startIconDrawable="@drawable/baseline_person_24"
+                app:startIconTint="@color/primary_red"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/TextUserFirstnameModification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutContact1MailAdressModification"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -285,6 +342,64 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutMailAdressModification"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                android:hint="@string/Mail"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primary_red"
+                app:boxStrokeErrorColor="#DC0303"
+                app:endIconMode="clear_text"
+                android:visibility="gone"
+                app:endIconTint="@color/primary_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutContact1Name"
+                app:startIconDrawable="@drawable/baseline_alternate_email_24"
+                app:startIconTint="@color/primary_red"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textMailAdressModification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutSimpleUserBirthdateModification"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                android:hint="@string/Birthdate"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primary_red"
+                app:boxStrokeErrorColor="#DC0303"
+                app:endIconMode="clear_text"
+                android:visibility="gone"
+                app:endIconTint="@color/primary_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutContact1Name"
+                app:startIconDrawable="@drawable/baseline_cake_24"
+                app:startIconTint="@color/primary_red"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textBirthdateModification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutContact1NumberModification"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -307,6 +422,32 @@
                     android:layout_height="wrap_content"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutSimpleUserNumberModification"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:hint="@string/PhoneNumber"
+                android:visibility="gone"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primary_red"
+                app:boxStrokeErrorColor="#DC0303"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/primary_red"
+                app:startIconDrawable="@drawable/baseline_phone_iphone_24"
+                app:startIconTint="@color/primary_red"
+                tools:ignore="MissingConstraints">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textSimpleUserNumberModification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutCompanyAdressModification"
@@ -357,6 +498,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
+                android:id="@+id/contactModificationDivider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="6"
