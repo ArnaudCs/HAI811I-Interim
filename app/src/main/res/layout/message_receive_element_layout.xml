@@ -37,20 +37,33 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:layout_weight="8"
-                    android:background="@drawable/receivebubble">
+                    android:weightSum="8"
+                    android:gravity="left">
 
-                    <TextView
-                        android:id="@+id/text"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="salut je m'apelle arnaud j'ai rzendez vous avec vous à 19H30 mais je ne sais pas comment"
-                        android:textSize="16sp">
+                        android:background="@drawable/receivebubble"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
 
-                    </TextView>
+                        <TextView
+                            android:id="@+id/text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="salut j'a sais pas dfn jnvdfj nffnd  b rb b f gbfg dfg    ds gbn    fksng k skng"
+                            android:textSize="16sp">
+
+                        </TextView>
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
+
 
             </LinearLayout>
 

@@ -29,27 +29,40 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:weightSum="10"
                 android:gravity="right"
-                android:weightSum="10">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
-                    android:background="@drawable/senderbubbles"
-                    android:padding="10dp">
+                    android:weightSum="8"
+                    android:gravity="right">
 
-                    <TextView
-                        android:id="@+id/text"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="salut j'ai rzendez vous avec vous à 19H30 mais je ne sais pas comment"
-                        android:textSize="16sp">
+                        android:background="@drawable/senderbubbles"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
 
-                    </TextView>
+                        <TextView
+                            android:id="@+id/text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="salut j'a sais pas dfn jnvdfj nffnd  b rb b f gbfg dfg    ds gbn    fksng k skng"
+                            android:textSize="16sp">
+
+                        </TextView>
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
+
 
             </LinearLayout>
 
