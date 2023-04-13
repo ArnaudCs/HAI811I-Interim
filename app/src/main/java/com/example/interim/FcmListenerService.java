@@ -17,7 +17,7 @@ public class FcmListenerService extends FirebaseMessagingService {
         String body = remoteMessage.getNotification().getBody();
 
         // Build a notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "my_channel_id")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "fcm_channel")
                 .setContentTitle(title)
                 .setContentText(body)
                 .setSmallIcon(R.mipmap.icon)
