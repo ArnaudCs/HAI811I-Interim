@@ -244,10 +244,5 @@ public class fragment_search_page extends Fragment {
             }
 
             });
-
-
-
-
-
     }
 }

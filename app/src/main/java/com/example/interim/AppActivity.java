@@ -128,7 +128,7 @@ public class AppActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navFavorite:
-                        fragment = new fragment_loading_screen();
+                        fragment = new fragment_favorite_offers();
                         break;
                 }
 

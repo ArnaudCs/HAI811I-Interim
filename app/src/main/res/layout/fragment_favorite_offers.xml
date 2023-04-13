@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorPrimary"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".Registration">
+
+        <LinearLayout
+            android:id="@+id/topDeckSearchFavorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layoutMain">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:weightSum="6">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/navigation_bar"
+                    android:gravity="left">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:gravity="center">
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:singleLine="true"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="5"
+                            android:maxLength="30"
+                            android:background="@null"
+                            android:hint="@string/searchFavorite"
+                            android:textColorHint="#838383"
+                            android:textSize="18sp"
+                            tools:ignore="TouchTargetSizeCheck"></EditText>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center">
+
+                            <Button
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/baseline_search_24"
+                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center">
+
+                    <Button
+                        android:id="@+id/filterBtnFavorites"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/baseline_filter_list_24"
+                        android:backgroundTint="#FFFFFF"
+                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
+
+                    <Button
+                        android:id="@+id/closeFilterFavorites"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/baseline_keyboard_double_arrow_up_24"
+                        android:backgroundTint="#FFFFFF"
+                        android:visibility="gone"></Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/filterFavoriteContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="30dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/navigation_bar"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:id="@+id/categoryChoice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="15dp"
+                            tools:ignore="TouchTargetSizeCheck"></Spinner>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="30dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/navigation_bar"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:id="@+id/labelChoice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:foregroundTint="@color/white"
+                            android:padding="15dp"
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Spinner>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:paddingRight="30dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layoutCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            app:boxBackgroundColor="#FFFFFF"
+                            app:boxBackgroundMode="outline"
+                            app:boxStrokeColor="@color/primary_red"
+                            app:boxStrokeErrorColor="#DC0303"
+                            app:endIconMode="clear_text"
+                            app:endIconTint="@color/primary_red"
+                            app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/parent"
+                            app:startIconDrawable="@drawable/baseline_pin_drop_24"
+                            app:startIconTint="@color/primary_red"
+                            tools:ignore="MissingConstraints">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/textCityInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/navigation_bar"
+                                android:hint="@string/CityofSearch"
+                                android:inputType="text"
+                                android:minLines="1"
+                                android:maxLines="1"
+                                android:maxLength="50" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/priceStartLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            app:boxBackgroundColor="#FFFFFF"
+                            app:boxBackgroundMode="outline"
+                            app:boxStrokeColor="@color/primary_red"
+                            app:boxStrokeErrorColor="#DC0303"
+                            app:endIconMode="clear_text"
+                            app:endIconTint="@color/primary_red"
+                            app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/parent"
+                            app:startIconDrawable="@drawable/baseline_attach_money_24"
+                            app:startIconTint="@color/primary_red"
+                            tools:ignore="MissingConstraints">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/textStartPrice"
+                                android:layout_width="match_parent"
+                                android:maxLength="5"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/navigation_bar"
+                                android:hint="@string/startPriceFilter"
+                                android:inputType="numberSigned" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/dateEndPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            app:boxBackgroundColor="#FFFFFF"
+                            app:boxBackgroundMode="outline"
+                            app:boxStrokeColor="@color/primary_red"
+                            app:boxStrokeErrorColor="#DC0303"
+                            app:endIconMode="clear_text"
+                            app:endIconTint="@color/primary_red"
+                            app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/parent"
+                            app:startIconDrawable="@drawable/baseline_attach_money_24"
+                            app:startIconTint="@color/primary_red"
+                            tools:ignore="MissingConstraints">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/textEndPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLength="5"
+                                android:background="@drawable/navigation_bar"
+                                android:hint="@string/endPriceFilter"
+                                android:inputType="numberSigned" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:text="@string/searchBtn"
+                        android:paddingLeft="30dp"
+                        android:id="@+id/validateAndSearchFavoriteBtn"
+                        android:paddingRight="30dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:stateListAnimator="@null"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/navigation_bar">
+
+                    </Button>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomDeckFavoritePage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bottom2"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topDeckSearchFavorites">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favoriteContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+

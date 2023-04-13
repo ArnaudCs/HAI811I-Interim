@@ -165,4 +165,5 @@
     <string name="postOffersDescription">Post offer description</string>
     <string name="postOfferDetails">Add offer details like hour shift ...</string>
     <string name="addOfferBtn">Add offer</string>
+    <string name="searchFavorite">Search Through Favorites</string>
 </resources>
