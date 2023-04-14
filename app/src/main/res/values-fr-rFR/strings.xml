@@ -156,4 +156,7 @@
     <string name="postOfferDetails">Ajouter des détails à l\'offre comme des horaires ...</string>
     <string name="addOfferBtn">Ajouter l\'offre</string>
     <string name="searchFavorite">Chercher parmi les favoris</string>
+    <string name="generalInformations">Informations générales</string>
+    <string name="offerTags">Mots clés</string>
+    <string name="labelTitle">Labels de l\'offre</string>
 </resources>
