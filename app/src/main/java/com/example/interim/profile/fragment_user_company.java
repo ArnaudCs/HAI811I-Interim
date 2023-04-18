@@ -165,34 +165,12 @@ public class fragment_user_company extends Fragment {
 
         settingsBtn = view.findViewById(R.id.settingsBtn);
 
-        settingsBtn.addAnimatorListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                // L'animation a commencé
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                // L'animation a fini de jouer, on lance l'Intent
-                Intent settings = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(settings);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                // L'animation a été annulée
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-                // L'animation se répète
-            }
-        });
-
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 settingsBtn.playAnimation();
+                Intent settings = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(settings);
             }
         });
 

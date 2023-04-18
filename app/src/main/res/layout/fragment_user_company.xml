@@ -316,6 +316,7 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/settingsBtn"
                 android:layout_width="60dp"
+                app:lottie_speed="4"
                 android:layout_height="60dp"
                 app:lottie_rawRes="@raw/settings">
 

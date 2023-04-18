@@ -313,6 +313,7 @@
                 android:id="@+id/settingsBtnUser"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                app:lottie_speed="4"
                 app:lottie_rawRes="@raw/settings">
 
             </com.airbnb.lottie.LottieAnimationView>
