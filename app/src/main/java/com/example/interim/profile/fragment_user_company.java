@@ -1,5 +1,6 @@
 package com.example.interim.profile;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.example.interim.SettingsActivity;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.authentication.PaymentAndSubscription;
 import com.example.interim.authentication.PhoneValidation;
@@ -52,7 +55,7 @@ public class fragment_user_company extends Fragment {
 
     private ImageView profileCompanyPic;
 
-    private Button settingsBtn;
+    private LottieAnimationView settingsBtn;
 
     private LinearLayout editProfileCompany;
 
@@ -162,11 +165,34 @@ public class fragment_user_company extends Fragment {
 
         settingsBtn = view.findViewById(R.id.settingsBtn);
 
+        settingsBtn.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                // L'animation a commencé
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                // L'animation a fini de jouer, on lance l'Intent
+                Intent settings = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(settings);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                // L'animation a été annulée
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                // L'animation se répète
+            }
+        });
+
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent settings = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(settings);
+                settingsBtn.playAnimation();
             }
         });
 

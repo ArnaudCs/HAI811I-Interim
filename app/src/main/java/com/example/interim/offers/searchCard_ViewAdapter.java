@@ -1,15 +1,12 @@
 package com.example.interim.offers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD:app/src/main/java/com/example/interim/searchCard_ViewAdapter.java
-import android.widget.Button;
 import android.widget.Toast;
-=======
->>>>>>> 346a0f6f6542ec1ff449c522ee4b91abe30780c5:app/src/main/java/com/example/interim/offers/searchCard_ViewAdapter.java
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

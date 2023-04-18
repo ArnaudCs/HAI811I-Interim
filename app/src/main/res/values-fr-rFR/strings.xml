@@ -171,4 +171,6 @@
     <string name="categoryOfferDisplay">Categorie</string>
     <string name="settingsPageTitle">Paramètres</string>
     <string name="settingsFirstSection">"Notifications et autres : "</string>
+    <string name="disableAllNotifications">Désactiver les notifications</string>
+    <string name="contactAssistance">Contacter l\'assistance</string>
 </resources>

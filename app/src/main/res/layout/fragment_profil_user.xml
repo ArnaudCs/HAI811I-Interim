@@ -298,6 +298,7 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:weightSum="4"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bodyProfile">
@@ -308,16 +309,14 @@
             android:layout_weight="2"
             android:gravity="left">
 
-            <Button
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/settingsBtnUser"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/baseline_settings_24"
-                android:backgroundTint="#FFFFFF"
-                android:drawableTint="#FBFAFA"
-                android:foregroundTint="#FFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:lottie_rawRes="@raw/settings">
+
+            </com.airbnb.lottie.LottieAnimationView>
+
         </LinearLayout>
 
 
