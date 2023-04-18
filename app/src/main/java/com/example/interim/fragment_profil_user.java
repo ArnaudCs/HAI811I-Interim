@@ -42,6 +42,8 @@ public class fragment_profil_user extends Fragment {
     private DatabaseReference mDatabaseRef;
     private String mUserId;
 
+    private Button settingsBtn;
+
     private Button myApplicationsButton;
 
     public fragment_profil_user() {
@@ -79,7 +81,6 @@ public class fragment_profil_user extends Fragment {
         savedOffers = view.findViewById(R.id.savedOffers);
         editProfilBtn = view.findViewById(R.id.settingsBtn);
 
-
             String userId = mAuth.getCurrentUser().getUid();
             DocumentReference userRef = db.collection("Users").document(userId);
             userRef.get().addOnCompleteListener(task -> {
@@ -108,6 +109,16 @@ public class fragment_profil_user extends Fragment {
                 mAuth.signOut();
                 Intent profile = new Intent(getActivity(), AppActivity.class);
                 startActivity(profile);
+            }
+        });
+
+        settingsBtn = view.findViewById(R.id.settingsBtnUser);
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settings = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(settings);
             }
         });
 

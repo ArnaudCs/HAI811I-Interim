@@ -172,4 +172,13 @@
     <string name="myApplicationsBtn">My Applications</string>
     <string name="searchApplications">Search Through applications</string>
     <string name="myApplicationsTitle">My Applications</string>
+    <string name="connectionWarning">You must be connected to make this operation</string>
+    <string name="shareofferTitle">I found an offer that might interrest you</string>
+    <string name="shareofferHook">Hey it\'s</string>
+    <string name="shareOfferDetails">Offer details :</string>
+    <string name="shareofferActionCall">To see more about this offer, or find similar offers, visit the Jobrr App ! See you soon ..</string>
+    <string name="dateDisplay">Date</string>
+    <string name="categoryOfferDisplay">Category</string>
+    <string name="settingsPageTitle">Settings</string>
+    <string name="settingsFirstSection">Notifications and more :</string>
 </resources>

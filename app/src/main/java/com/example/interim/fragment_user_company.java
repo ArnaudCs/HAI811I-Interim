@@ -67,6 +67,8 @@ public class fragment_user_company extends Fragment {
 
     private ImageView profileCompanyPic;
 
+    private Button settingsBtn;
+
     private LinearLayout editProfileCompany;
 
 
@@ -173,6 +175,16 @@ public class fragment_user_company extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
         Button deconnectionBtn = view.findViewById(R.id.decoBtn);
+
+        settingsBtn = view.findViewById(R.id.settingsBtn);
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settings = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(settings);
+            }
+        });
 
 
         deconnectionBtn.setOnClickListener(new View.OnClickListener() {

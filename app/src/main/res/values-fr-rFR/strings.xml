@@ -162,4 +162,13 @@
     <string name="myApplicationsBtn">Mes Candidatures</string>
     <string name="searchApplications">Chercher parmi les candidatures</string>
     <string name="myApplicationsTitle">Mes Candidatures</string>
+    <string name="connectionWarning">Vous devez être connecté pour effectuer cette opération</string>
+    <string name="shareofferTitle">J\'ai trouvé une offre qui pourrait t\'intéresser</string>
+    <string name="shareofferHook">"Hey ! C'est "</string>
+    <string name="shareOfferDetails">"Détails de l'offre : "</string>
+    <string name="shareofferActionCall">Pour en savoir plus sur l\'offre ou découvrir des offres similaires, visitez l\'application Jobrr ! À tout de suite ...</string>
+    <string name="dateDisplay">"Dates "</string>
+    <string name="categoryOfferDisplay">Categorie</string>
+    <string name="settingsPageTitle">Paramètres</string>
+    <string name="settingsFirstSection">"Notifications et autres : "</string>
 </resources>
