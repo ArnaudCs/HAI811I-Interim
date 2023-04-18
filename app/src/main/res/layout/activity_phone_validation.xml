@@ -6,7 +6,7 @@
     android:id="@+id/mainLayoutPhoneValidation"
     android:layout_height="match_parent"
     android:background="@color/primary_red"
-    tools:context=".PhoneValidation">
+    tools:context=".authentication.PhoneValidation">
 
     <ImageView
         android:id="@+id/imageView8"
