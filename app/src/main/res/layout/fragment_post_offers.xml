@@ -12,7 +12,7 @@
         android:id="@+id/layoutMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".Registration">
+        tools:context=".authentication.Registration">
 
         <LinearLayout
             android:layout_width="match_parent"

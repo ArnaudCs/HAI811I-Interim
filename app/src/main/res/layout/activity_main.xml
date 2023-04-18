@@ -7,7 +7,7 @@
     android:background="?colorPrimary"
     android:elevation="4dp"
     android:outlineProvider="none"
-    tools:context=".MainActivity">
+    tools:context=".authentication.MainActivity">
 
     <ImageView
         android:id="@+id/personLogin"

@@ -14,19 +14,19 @@
         android:theme="@style/Theme.Interim"
         tools:targetApi="31">
         <activity
-            android:name=".MyApplicationsActivity"
+            android:name=".offers.MyApplicationsActivity"
             android:exported="false" />
         <activity
-            android:name=".editProfile"
+            android:name=".profile.editProfile"
             android:exported="false" />
         <activity
-            android:name=".MissionsActivity"
+            android:name=".offers.MissionsActivity"
             android:exported="false" />
         <activity
-            android:name=".DiscussionViewActivity"
+            android:name=".discussion.DiscussionViewActivity"
             android:exported="false" />
         <activity
-            android:name=".GroupActivity"
+            android:name=".discussion.GroupActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
@@ -42,42 +42,42 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SlideActivity"
+            android:name=".authentication.SlideActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".PaymentActivity"
+            android:name=".authentication.PaymentActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".PaymentAndSubscription"
+            android:name=".authentication.PaymentAndSubscription"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".PhoneValidation"
+            android:name=".authentication.PhoneValidation"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Registration"
+            android:name=".authentication.Registration"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".profile.ProfileActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".MainActivity"
+            android:name=".authentication.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".UserRegistrationActivity"
+            android:name=".authentication.UserRegistrationActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />

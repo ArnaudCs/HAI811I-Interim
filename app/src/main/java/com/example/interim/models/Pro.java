@@ -1,20 +1,5 @@
 package com.example.interim.models;
 
-import static android.content.ContentValues.TAG;
-
-import android.content.Intent;
-import android.util.Log;
-
-import com.example.interim.MainActivity;
-import com.example.interim.ProfileActivity;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.util.Date;
-import java.util.concurrent.Flow;
-
 public class Pro {
     private String name;
     private String companyName;
