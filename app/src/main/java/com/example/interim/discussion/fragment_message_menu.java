@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class fragment_message_menu extends Fragment {
 
@@ -49,7 +50,7 @@ public class fragment_message_menu extends Fragment {
         deleteMessages = view.findViewById(R.id.deleteMessages);
         cancelDelete = view.findViewById(R.id.cancelDelete);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         List<Conversation> conversations = new ArrayList<>();
         RecyclerView recyclerView = view.findViewById(R.id.conversationsRecycler);
@@ -74,6 +75,7 @@ public class fragment_message_menu extends Fragment {
                                 Conversation conversation = new Conversation(document.getId(), otherParticipant, false, lastMessage);
                                 List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
 
+                                assert participantsRefs != null;
                                 for (DocumentReference participantRef : participantsRefs) {
                                     String participantId = participantRef.getId();
                                     if (!participantId.equals(userId)) {

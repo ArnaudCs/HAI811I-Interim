@@ -175,6 +175,7 @@ public class fragment_message_discussion extends Fragment {
                                 String messageId = messageRef.getId();
                                 // Add a reference to the message in the conversation document
                                 DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
+                                conversationRef.update("lastMessage", text);
                                 conversationRef.update("messages", FieldValue.arrayUnion(messageRef))
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
