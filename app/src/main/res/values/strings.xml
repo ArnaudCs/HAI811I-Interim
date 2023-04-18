@@ -169,4 +169,7 @@
     <string name="generalInformations">General Informations</string>
     <string name="offerTags">Offer Keywords</string>
     <string name="labelTitle">Offer Labels</string>
+    <string name="myApplicationsBtn">My Applications</string>
+    <string name="searchApplications">Search Through applications</string>
+    <string name="myApplicationsTitle">My Applications</string>
 </resources>

@@ -159,4 +159,7 @@
     <string name="generalInformations">Informations générales</string>
     <string name="offerTags">Mots clés</string>
     <string name="labelTitle">Labels de l\'offre</string>
+    <string name="myApplicationsBtn">Mes Candidatures</string>
+    <string name="searchApplications">Chercher parmi les candidatures</string>
+    <string name="myApplicationsTitle">Mes Candidatures</string>
 </resources>

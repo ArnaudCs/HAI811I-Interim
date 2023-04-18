@@ -42,6 +42,8 @@ public class fragment_profil_user extends Fragment {
     private DatabaseReference mDatabaseRef;
     private String mUserId;
 
+    private Button myApplicationsButton;
+
     public fragment_profil_user() {
         // Required empty public constructor
     }
@@ -63,6 +65,7 @@ public class fragment_profil_user extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        myApplicationsButton = view.findViewById(R.id.myApplicationsButton);
 
         TextView birthdate, savedOffers, nameTextView, phoneNumberTextView, emailTextView;
         Button decoBtn, editProfilBtn;
@@ -105,6 +108,14 @@ public class fragment_profil_user extends Fragment {
                 mAuth.signOut();
                 Intent profile = new Intent(getActivity(), AppActivity.class);
                 startActivity(profile);
+            }
+        });
+
+        myApplicationsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myApplications = new Intent(getActivity(), MyApplicationsActivity.class);
+                startActivity(myApplications);
             }
         });
 
