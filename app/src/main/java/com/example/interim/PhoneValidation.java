@@ -94,7 +94,6 @@ public class PhoneValidation extends AppCompatActivity {
                                             else {
                                                 isPro = true;
                                                 phoneNumber = documentSnapshot.getString("phoneNumber");
-                                                System.out.println("PHONE : "+ phoneNumber);
                                                 if(phoneNumber == null || phoneNumber.isEmpty()) {
                                                     Toast.makeText(PhoneValidation.this, "Provide phone number", Toast.LENGTH_SHORT).show();
                                                     return;
@@ -122,7 +121,6 @@ public class PhoneValidation extends AppCompatActivity {
         receiveCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(phoneNumber.toString());
                 // Send verification code to the entered phone number
                 PhoneAuthOptions options =
                     PhoneAuthOptions.newBuilder(mAuth)

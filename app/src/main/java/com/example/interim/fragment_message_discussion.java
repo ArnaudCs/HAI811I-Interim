@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -41,6 +42,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class fragment_message_discussion extends Fragment {
     String conversationId;
@@ -52,8 +54,6 @@ public class fragment_message_discussion extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        System.out.println("ARGUMENTS : "+getArguments().toString());
-
         return inflater.inflate(R.layout.fragment_message_discussion, container, false);
     }
 
@@ -72,7 +72,7 @@ public class fragment_message_discussion extends Fragment {
         EditText messageText = view.findViewById(R.id.messageText);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 // Get the list of message IDs from the conversation document
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
         conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -85,36 +85,44 @@ public class fragment_message_discussion extends Fragment {
 
                         // Get the list of messages using the message IDs
                         CollectionReference messagesRef = db.collection("Messages");
-                        Query query = messagesRef.whereIn(FieldPath.documentId(), messageIds);
+                        assert messageIds != null;
 
-                        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        List<List<String>> messageIdChunks = chunkList(messageIds, 10);
+
+                        List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+                        for (List<String> chunk : messageIdChunks) {
+                            Query query = messagesRef.whereIn(FieldPath.documentId(), chunk);
+                            tasks.add(query.get());
+                        }
+
+                        Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
                             @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentReference userRef = db.collection("Users").document(userId);
-                                    DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
-                                    conversationRef.update("unRead", FieldValue.arrayRemove(userRef));
-                                    List<Message> messages = new ArrayList<>();
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                            public void onComplete(@NonNull Task<List<Object>> task) {
+                                List<Message> messages = new ArrayList<>();
+                                for (Object result : task.getResult()) {
+                                    QuerySnapshot querySnapshot = (QuerySnapshot) result;
+                                    for (QueryDocumentSnapshot document : querySnapshot) {
                                         String senderId = document.getString("sender");
-                                        System.out.println(senderId);
                                         String text = document.getString("text");
                                         Date date = document.getDate("date");
                                         Message message = new Message(senderId, date, text);
                                         messages.add(message);
                                     }
-                                    Collections.sort(messages, new Comparator<Message>() {
-                                        @Override
-                                        public int compare(Message m1, Message m2) {
-                                            return m1.getDate().compareTo(m2.getDate());
-                                        }
-                                    });
-
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                    recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
-                                    // Do something with the list of messages
-                                } else {
                                 }
+                                messages.sort(new Comparator<Message>() {
+                                    @Override
+                                    public int compare(Message m1, Message m2) {
+                                        return m1.getDate().compareTo(m2.getDate());
+                                    }
+                                });
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+                                // Do something with the list of messages
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("ERROR: " + e.getMessage());
                             }
                         });
                     } else {
@@ -208,6 +216,14 @@ public class fragment_message_discussion extends Fragment {
 
 
     }
-
+    private static <T> List<List<T>> chunkList(List<T> list, int chunkSize) {
+        List<List<T>> chunks = new ArrayList<>();
+        int index = 0;
+        while (index < list.size()) {
+            chunks.add(list.subList(index, Math.min(index + chunkSize, list.size())));
+            index += chunkSize;
+        }
+        return chunks;
+    }
 
 }

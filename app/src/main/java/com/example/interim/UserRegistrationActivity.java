@@ -184,7 +184,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
             } catch (IOException | JSONException e) {
                 Log.e("TAG", "Error: " + e.getMessage());
             }
-            System.out.println(cities.toString());
             return cities;
         }
 

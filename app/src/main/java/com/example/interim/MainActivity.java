@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Connexion réussie
                         FirebaseUser user = mAuth.getCurrentUser();
-                        System.out.println("Login successfull : "+ mAuth.getCurrentUser());
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("Users").document(user.getUid()).get()
                                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

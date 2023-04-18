@@ -73,7 +73,6 @@ public class fragment_message_menu extends Fragment {
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // Extract the Conversation data from the Firestore document
-                                System.out.println(document.toString());
                                 String otherParticipant = "";
                                 String lastMessage = "";
                                 Conversation conversation = new Conversation(document.getId(), otherParticipant, false, lastMessage);
@@ -93,7 +92,6 @@ public class fragment_message_menu extends Fragment {
                                                     if (task.isSuccessful()) {
                                                         DocumentSnapshot participantDoc = task.getResult();
                                                         participantName[0] = participantDoc.getString("firstName");
-                                                        System.out.println(participantName[0]);
                                                         conversation.setContact(participantName[0]);
 
                                                         // Set the RecyclerView adapter with the updated list of Conversations

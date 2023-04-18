@@ -144,7 +144,6 @@ public class fragment_search_page extends Fragment {
                             Offer offer = documentSnapshot.toObject(Offer.class);
                             offer.setId(documentSnapshot.getId());
                             offers.add(offer);
-                            System.out.println(offer.getId());
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
@@ -228,7 +227,6 @@ public class fragment_search_page extends Fragment {
 //                                Offer offer = documentSnapshot.toObject(Offer.class);
 //                                offer.setId(documentSnapshot.getId());
 //                                offers.add(offer);
-//                                System.out.println(offer.getId());
 //                            }
 //                        }
 //                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

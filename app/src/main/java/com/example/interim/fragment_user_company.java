@@ -1,42 +1,25 @@
 package com.example.interim;
 
-import static android.content.ContentValues.TAG;
-
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
@@ -47,8 +30,6 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class fragment_user_company extends Fragment {
 
@@ -151,7 +132,6 @@ public class fragment_user_company extends Fragment {
                         TextView contactName = view.findViewById(R.id.contactName);
                         TextView phoneNum = view.findViewById(R.id.phoneNum);
                         TextView email = view.findViewById(R.id.email);
-                        System.out.println(emailText);
                         companyName.setText(companyNameText);
                         subPlan.setText(subPlanText);
                         sirenNum.setText(sirenNumText);
@@ -191,7 +171,6 @@ public class fragment_user_company extends Fragment {
         editProfileCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("edit profile company");
                 Intent editProfile = new Intent(getActivity(), editProfile.class);
                 startActivity(editProfile);
             }
@@ -200,7 +179,6 @@ public class fragment_user_company extends Fragment {
         editprofileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("edit profile company");
                 Intent editProfile = new Intent(getActivity(), editProfile.class);
                 startActivity(editProfile);
             }
