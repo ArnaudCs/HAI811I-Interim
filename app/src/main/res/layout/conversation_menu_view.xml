@@ -44,18 +44,25 @@
                 android:layout_width="0dp"
                 android:gravity="center"
                 android:layout_height="match_parent"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:layout_weight="2">
 
-                <ImageView
-                    android:id="@+id/profilePic"
+                <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/profileex"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ImageView>
+                    app:cardCornerRadius="25dp">
+
+                    <ImageView
+                        android:id="@+id/profilePic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/profileex"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 

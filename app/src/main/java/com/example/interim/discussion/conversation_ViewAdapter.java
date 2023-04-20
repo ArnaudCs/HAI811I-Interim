@@ -63,10 +63,12 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
         holder.lastMsg.setText(conversations.get(position).getLastMsg());
         participantId = conversations.get(position).getContactUid();
 
+        System.out.println(participantId + "----------------------");
+
         StorageReference mStorageRef;
-        DatabaseReference mDatabaseRef;
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String currentUserUid = mAuth.getCurrentUser().getUid();
+        System.out.println("Mon id" + currentUserUid + "----------------------");
 
         mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + participantId);
         try {

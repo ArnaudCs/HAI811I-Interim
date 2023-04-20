@@ -6,6 +6,9 @@ public class Conversation {
     private String contactUid;
     private String contact;
     private boolean unread;
+
+    private boolean groupConversation;
+
     private String lastMsg;
 
     public Conversation(String id, String contact, boolean unread, String lastMsg) {
@@ -26,6 +29,14 @@ public class Conversation {
 
     public String getContactUid() {
         return contactUid;
+    }
+
+    public boolean isGroupConversation() {
+        return groupConversation;
+    }
+
+    public void setGroupConversation(boolean groupConversation) {
+        this.groupConversation = groupConversation;
     }
 
     public void setContactUid(String contactUid) {
