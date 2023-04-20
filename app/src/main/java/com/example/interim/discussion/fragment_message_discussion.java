@@ -58,6 +58,7 @@ public class fragment_message_discussion extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         conversationId = DataHolder.getInstance().getConversationId();
         TextView convName = view.findViewById(R.id.convName);
         Button infosBtn = view.findViewById(R.id.infosBtn);
@@ -75,6 +76,20 @@ public class fragment_message_discussion extends Fragment {
 // Get the list of message IDs from the conversation document
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
         convName.setText("Participant names");
+        final String[] type = new String[1];
+        db.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        type[0] = "Users";
+                    } else {
+                        type[0] = "Pros";
+                    }
+                }
+            }
+        });
         conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -85,6 +100,15 @@ public class fragment_message_discussion extends Fragment {
                         List<DocumentReference> participants = (List<DocumentReference>) document.get("participants");
                         if (participants != null) {
                             getParticipantsNames(participants, convName, userId);
+                            List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
+                            if (unReadRefs != null) {
+                                for (int i = unReadRefs.size() - 1; i >= 0; i--) {
+                                    if (unReadRefs.get(i).equals(db.collection(type[0]).document(userId))) {
+                                        unReadRefs.remove(i);
+                                    }
+                                }
+                                conversationRef.update("unRead", unReadRefs);
+                            }
                         }
 
                         // Get the list of messages using the message IDs
@@ -186,34 +210,45 @@ public class fragment_message_discussion extends Fragment {
                                 DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
                                 conversationRef.update("lastMessage", text);
                                 conversationRef.update("messages", FieldValue.arrayUnion(messageRef))
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                // Add a reference to the message in the unRead array for each participant
-                                                conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                        if (task.isSuccessful()) {
-                                                            DocumentSnapshot document = task.getResult();
-                                                            if (document.exists()) {
-                                                                List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
-                                                                for (DocumentReference participantRef : participantsRefs) {
-                                                                    String participantId = participantRef.getId();
-                                                                    if (!participantId.equals(userId)) {
-                                                                        participantRef.update("unRead", FieldValue.arrayUnion(conversationRef));
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Add a reference to the message in the unRead array for each participant
+                                            conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        DocumentSnapshot document = task.getResult();
+                                                        if (document.exists()) {
+                                                            List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
+                                                            List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
+                                                            for (DocumentReference participantRef : participantsRefs) {
+                                                                String participantId = participantRef.getId();
+                                                                if (!participantId.equals(userId)) {
+                                                                    boolean userAlreadyRead = false;
+                                                                    for (DocumentReference unReadRef : unReadRefs) {
+                                                                        if (unReadRef.getId().equals(participantId)) {
+                                                                            userAlreadyRead = true;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                    if (!userAlreadyRead) {
+                                                                        conversationRef.update("unRead", FieldValue.arrayUnion(participantRef));
                                                                     }
                                                                 }
                                                             }
                                                         }
                                                     }
-                                                });
+                                                }
+                                            });
 
-                                                // Refresh the layout to display the new message
-                                                recyclerView.getAdapter().notifyDataSetChanged();
-                                                recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
-                                                messageText.getText().clear();
-                                            }
-                                        });
+
+                                            // Refresh the layout to display the new message
+                                            recyclerView.getAdapter().notifyDataSetChanged();
+                                            recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+                                            messageText.getText().clear();
+                                        }
+                                    });
                             }
                         });
             }
