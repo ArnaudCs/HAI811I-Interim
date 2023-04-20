@@ -115,6 +115,7 @@ public class fragment_message_menu extends Fragment {
                                                                    DocumentSnapshot participantDoc = task.getResult();
                                                                    participantName[0] = participantDoc.getString("firstName");
                                                                    conversation.setContact(participantName[0]);
+                                                                   conversation.setContactUid(participantId);
 
                                                                    // Set the RecyclerView adapter with the updated list of Conversations
                                                                    mAdapter.notifyDataSetChanged();

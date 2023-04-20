@@ -38,7 +38,7 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
     Context context;
     List<Conversation> conversations;
 
-    String contactParticpantId;
+    String participantId;
 
     String participant;
 
@@ -61,34 +61,32 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
         holder.conversationId = conversations.get(position).getId();
         holder.userName.setText(conversations.get(position).getContact());
         holder.lastMsg.setText(conversations.get(position).getLastMsg());
-        participant = conversations.get(position).getContact();
-
-//        A debug
+        participantId = conversations.get(position).getContactUid();
 
         StorageReference mStorageRef;
         DatabaseReference mDatabaseRef;
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String currentUserUid = mAuth.getCurrentUser().getUid();
-//
-//        mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + contactParticpantId);
-//        try {
-//            final File localFile = File.createTempFile("profilePic", "jpg");
-//            mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                    Uri fileUri = Uri.fromFile(localFile);
-//                    String imageUrl = fileUri.toString();
-//                    Picasso.with(context).load(imageUrl).fit().centerCrop().into(holder.profilePic);
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                }
-//            });
-//        } catch (
-//                IOException e) {
-//            throw new RuntimeException(e);
-//        }
+
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + participantId);
+        try {
+            final File localFile = File.createTempFile("profilePic", "jpg");
+            mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Uri fileUri = Uri.fromFile(localFile);
+                    String imageUrl = fileUri.toString();
+                    Picasso.with(context).load(imageUrl).fit().centerCrop().into(holder.profilePic);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
 
         if (conversations.get(position).isUnread()) {
             holder.unRead.setVisibility(View.VISIBLE);

@@ -2,6 +2,8 @@ package com.example.interim.models;
 
 public class Conversation {
     private String id;
+
+    private String contactUid;
     private String contact;
     private boolean unread;
     private String lastMsg;
@@ -20,6 +22,14 @@ public class Conversation {
     }
 
     public Conversation() {
+    }
+
+    public String getContactUid() {
+        return contactUid;
+    }
+
+    public void setContactUid(String contactUid) {
+        this.contactUid = contactUid;
     }
 
     public String getLastMsg() {
