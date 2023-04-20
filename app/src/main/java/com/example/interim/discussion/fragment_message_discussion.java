@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.interim.DataHolder;
 import com.example.interim.R;
@@ -58,6 +59,7 @@ public class fragment_message_discussion extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         conversationId = DataHolder.getInstance().getConversationId();
+        TextView convName = view.findViewById(R.id.convName);
         Button infosBtn = view.findViewById(R.id.infosBtn);
         Button closeInfos = view.findViewById(R.id.closeInfos);
         Button signalUser = view.findViewById(R.id.signalUserBtn);
@@ -72,6 +74,7 @@ public class fragment_message_discussion extends Fragment {
         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 // Get the list of message IDs from the conversation document
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
+        convName.setText("Participant names");
         conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -79,49 +82,55 @@ public class fragment_message_discussion extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         List<String> messageIds = (List<String>) document.get("messages");
-
-                        // Get the list of messages using the message IDs
-                        CollectionReference messagesRef = db.collection("Messages");
-                        assert messageIds != null;
-
-                        List<List<String>> messageIdChunks = chunkList(messageIds, 10);
-
-                        List<Task<QuerySnapshot>> tasks = new ArrayList<>();
-                        for (List<String> chunk : messageIdChunks) {
-                            Query query = messagesRef.whereIn(FieldPath.documentId(), chunk);
-                            tasks.add(query.get());
+                        List<DocumentReference> participants = (List<DocumentReference>) document.get("participants");
+                        if (participants != null) {
+                            getParticipantsNames(participants, convName, userId);
                         }
 
-                        Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
-                            @Override
-                            public void onComplete(@NonNull Task<List<Object>> task) {
-                                List<Message> messages = new ArrayList<>();
-                                for (Object result : task.getResult()) {
-                                    QuerySnapshot querySnapshot = (QuerySnapshot) result;
-                                    for (QueryDocumentSnapshot document : querySnapshot) {
-                                        String senderId = document.getString("sender");
-                                        String text = document.getString("text");
-                                        Date date = document.getDate("date");
-                                        Message message = new Message(senderId, date, text);
-                                        messages.add(message);
+                        // Get the list of messages using the message IDs
+                        if(messageIds != null) {
+                            CollectionReference messagesRef = db.collection("Messages");
+
+
+                            List<List<String>> messageIdChunks = chunkList(messageIds, 10);
+
+                            List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+                            for (List<String> chunk : messageIdChunks) {
+                                Query query = messagesRef.whereIn(FieldPath.documentId(), chunk);
+                                tasks.add(query.get());
+                            }
+
+                            Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
+                                @Override
+                                public void onComplete(@NonNull Task<List<Object>> task) {
+                                    List<Message> messages = new ArrayList<>();
+                                    for (Object result : task.getResult()) {
+                                        QuerySnapshot querySnapshot = (QuerySnapshot) result;
+                                        for (QueryDocumentSnapshot document : querySnapshot) {
+                                            String senderId = document.getString("sender");
+                                            String text = document.getString("text");
+                                            Date date = document.getDate("date");
+                                            Message message = new Message(senderId, date, text);
+                                            messages.add(message);
+                                        }
                                     }
+                                    messages.sort(new Comparator<Message>() {
+                                        @Override
+                                        public int compare(Message m1, Message m2) {
+                                            return m1.getDate().compareTo(m2.getDate());
+                                        }
+                                    });
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+                                    // Do something with the list of messages
                                 }
-                                messages.sort(new Comparator<Message>() {
-                                    @Override
-                                    public int compare(Message m1, Message m2) {
-                                        return m1.getDate().compareTo(m2.getDate());
-                                    }
-                                });
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
-                                // Do something with the list of messages
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                System.out.println("ERROR: " + e.getMessage());
-                            }
-                        });
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    System.out.println("ERROR: " + e.getMessage());
+                                }
+                            });
+                        }
                     } else {
                     }
                 } else {
@@ -214,6 +223,36 @@ public class fragment_message_discussion extends Fragment {
 
 
     }
+    private void getParticipantsNames(List<DocumentReference> participants, TextView convName, String userId) {
+        StringBuilder sb = new StringBuilder();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        for (int i = 0; i < participants.size(); i++) {
+            DocumentReference userRef = participants.get(i);
+            int finalI = i;
+            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("name");
+                        String uid = documentSnapshot.getId();
+                        if(!uid.equals(userId)) {
+                            if (name != null) {
+                                sb.append(name);
+                                if (finalI < participants.size() - 1) {
+                                    sb.append(", ");
+                                }
+                                convName.setText(sb.toString());
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+
+
     private static <T> List<List<T>> chunkList(List<T> list, int chunkSize) {
         List<List<T>> chunks = new ArrayList<>();
         int index = 0;

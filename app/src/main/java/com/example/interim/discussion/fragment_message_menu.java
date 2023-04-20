@@ -124,13 +124,16 @@ public class fragment_message_menu extends Fragment {
                                 }
 
                                 List<DocumentReference> unReadRef = (List<DocumentReference>) document.get("unRead");
-                                for (DocumentReference userUnReadRef : unReadRef) {
-                                    String userUnReadId = userUnReadRef.getId();
-                                    if (userUnReadId.equals(userId)) {
-                                        conversation.setUnread(true);
-                                        break;
+                                if (unReadRef != null) {
+                                    for (DocumentReference userUnReadRef : unReadRef) {
+                                        String userUnReadId = userUnReadRef.getId();
+                                        if (userUnReadId.equals(userId)) {
+                                            conversation.setUnread(true);
+                                            break;
+                                        }
                                     }
                                 }
+
                                 if (document.contains("lastMessage")) {
                                     lastMessage = document.getString("lastMessage");
                                     conversation.setLastMsg(lastMessage);
