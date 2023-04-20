@@ -1,11 +1,12 @@
 package com.example.interim.discussion;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,6 +79,7 @@ public class fragment_message_discussion extends Fragment {
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
         convName.setText("Participant names");
         final String[] type = new String[1];
+        type[0] = "Users";
         db.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

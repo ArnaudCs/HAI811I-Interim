@@ -174,4 +174,5 @@
     <string name="disableAllNotifications">Désactiver les notifications</string>
     <string name="contactAssistance">Contacter l\'assistance</string>
     <string name="myFavoritesBtnCompany">Mes Favoris</string>
+    <string name="myOffersPageTitle">Mes Offres</string>
 </resources>

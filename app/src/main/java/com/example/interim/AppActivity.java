@@ -134,6 +134,10 @@ public class AppActivity extends AppCompatActivity {
                     case R.id.navFavorite:
                         fragment = new fragment_favorite_offers();
                         break;
+
+                    case R.id.navOffers:
+                        fragment = new fragment_my_offers_company();
+                        break;
                 }
 
                 if (fragment != null) {
