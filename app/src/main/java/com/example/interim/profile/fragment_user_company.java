@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.SettingsActivity;
@@ -23,6 +24,8 @@ import com.example.interim.authentication.MainActivity;
 import com.example.interim.authentication.PaymentAndSubscription;
 import com.example.interim.authentication.PhoneValidation;
 import com.example.interim.R;
+import com.example.interim.authentication.fragment_order_summary;
+import com.example.interim.offers.FavoritesCompanyActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,6 +61,8 @@ public class fragment_user_company extends Fragment {
     private LottieAnimationView settingsBtn;
 
     private LinearLayout editProfileCompany;
+
+    private Button favoriteBtnCompany;
 
 
     public fragment_user_company() {
@@ -162,6 +167,16 @@ public class fragment_user_company extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
         Button deconnectionBtn = view.findViewById(R.id.decoBtn);
+
+        favoriteBtnCompany = view.findViewById(R.id.favoriteBtnCompany);
+
+        favoriteBtnCompany.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settings = new Intent(getActivity(), FavoritesCompanyActivity.class);
+                startActivity(settings);
+            }
+        });
 
         settingsBtn = view.findViewById(R.id.settingsBtn);
 

@@ -173,4 +173,5 @@
     <string name="settingsFirstSection">"Notifications et autres : "</string>
     <string name="disableAllNotifications">Désactiver les notifications</string>
     <string name="contactAssistance">Contacter l\'assistance</string>
+    <string name="myFavoritesBtnCompany">Mes Favoris</string>
 </resources>

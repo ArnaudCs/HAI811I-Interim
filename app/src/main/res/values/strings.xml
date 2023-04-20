@@ -183,4 +183,5 @@
     <string name="settingsFirstSection">Notifications and more :</string>
     <string name="disableAllNotifications">Disable all notifications</string>
     <string name="contactAssistance">Contact Support</string>
+    <string name="myFavoritesBtnCompany">My Favorites</string>
 </resources>

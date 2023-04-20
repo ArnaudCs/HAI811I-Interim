@@ -1,5 +1,6 @@
 package com.example.interim.discussion;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -166,6 +167,7 @@ public class fragment_message_discussion extends Fragment {
             }
         });
 
+        android.app.Fragment currentFragment = getActivity().getFragmentManager().findFragmentById(R.id.discussionContainer);
 
         sendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +210,8 @@ public class fragment_message_discussion extends Fragment {
                                                     }
                                                 });
 
+                                                System.out.println("Time to refresh");
+
                                                 // Refresh the layout to display the new message
                                                 recyclerView.getAdapter().notifyDataSetChanged();
                                                 recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
@@ -218,10 +222,6 @@ public class fragment_message_discussion extends Fragment {
                         });
             }
         });
-
-
-
-
     }
     private void getParticipantsNames(List<DocumentReference> participants, TextView convName, String userId) {
         StringBuilder sb = new StringBuilder();
@@ -262,5 +262,4 @@ public class fragment_message_discussion extends Fragment {
         }
         return chunks;
     }
-
 }
