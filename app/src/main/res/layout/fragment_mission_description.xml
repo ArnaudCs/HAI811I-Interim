@@ -62,7 +62,7 @@
                 </ImageView>
 
                 <TextView
-                    android:id="@+id/missionTitle"
+                    android:id="@+id/companyName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Barman [M/F]"
@@ -203,13 +203,13 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/jobTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
                         android:text="Developper web chez Google a plein temps ta mère la pute"
-                        android:textStyle="bold"
-                        android:textSize="25sp">
-                    </TextView>
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold"></TextView>
 
                     <TextView
                         android:id="@+id/dateText"

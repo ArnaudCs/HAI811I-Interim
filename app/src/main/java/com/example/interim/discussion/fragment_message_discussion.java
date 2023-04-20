@@ -77,6 +77,7 @@ public class fragment_message_discussion extends Fragment {
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
         convName.setText("Participant names");
         final String[] type = new String[1];
+        type[0] = "Users";
         db.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

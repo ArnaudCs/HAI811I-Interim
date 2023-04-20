@@ -42,7 +42,8 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull searchCard_ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull searchCard_ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        holder.jobId = offers.get(position).getId();
         holder.jobTitle.setText(offers.get(position).getJobTitle());
         holder.companyName.setText(offers.get(position).getCompanyName());
         holder.jobCategory.setText(offers.get(position).getCategory());
@@ -252,7 +253,9 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
             @Override
             public void onClick(View view) {
                 Intent discussion = new Intent(context, MissionsActivity.class);
+                discussion.putExtra("id",holder.jobId);
                 context.startActivity(discussion);
+
             }
         });
     }

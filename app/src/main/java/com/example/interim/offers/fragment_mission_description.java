@@ -1,5 +1,7 @@
 package com.example.interim.offers;
 
+import static com.google.firebase.messaging.Constants.MessageNotificationKeys.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -16,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +28,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.interim.R;
+import com.example.interim.models.Offer;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,17 +60,23 @@ public class fragment_mission_description extends Fragment {
     LocationManager lm;
     float latitude, longitude;
     boolean pro = false;
+    String jobId;
     LinearLayout applyContainer;
     public fragment_mission_description() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mission_description, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_mission_description, container, false);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            jobId = bundle.getString("id");
+            // Do something with the job ID
+        }
+        return view;
     }
+
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         applyContainer = view.findViewById(R.id.applyContainer);
@@ -74,6 +89,8 @@ public class fragment_mission_description extends Fragment {
         LinearLayout actionsContainer = view.findViewById(R.id.actionContainer);
         Button closeActions = view.findViewById(R.id.closeActions);
         Button backMission = view.findViewById(R.id.backMission);
+        TextView companyName = view.findViewById(R.id.companyName);
+        TextView jobTitle = view.findViewById(R.id.jobTitle);
         TextView missionText = view.findViewById(R.id.missionDescriptionText);
         TextView moreInfosText = view.findViewById(R.id.missionMoreInfosText);
         TextView salary = view.findViewById(R.id.salaryText);
@@ -81,19 +98,54 @@ public class fragment_mission_description extends Fragment {
         TextView postedDate = view.findViewById(R.id.postedDate);
         Button itinaryButtonMission = view.findViewById(R.id.itinaryButtonMission);
 
-        dateText.setText(getResources().getString(R.string.dateIndicationsStart) + "24/06/2022"
-                + getResources().getString(R.string.dateIndicationsEnd) + "24/08/2023");
 
-        salary.setText("1237€" + getResources().getString(R.string.moneyMonthIndicator));
+        db = FirebaseFirestore.getInstance();
+        // Assuming that you have the offer ID in a variable named 'offerId'
+        DocumentReference offerRef = db.collection("Offers").document(jobId);
 
-        postedDate.setText(getResources().getString(R.string.postedDateSuffix) + "24/03/2023");
+        offerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    // Convert the document snapshot to an Offer object
+                    Offer offer = documentSnapshot.toObject(Offer.class);
+                    jobTitle.setText(offer.getJobTitle());
+                    companyName.setText(offer.getCompanyName());
+                    dateText.setText(getResources().getString(R.string.dateIndicationsStart) + offer.getStartDate()
+                            + getResources().getString(R.string.dateIndicationsEnd) + offer.getEndDate());
+                    salary.setText( offer.getSalaryMax()+"€" + getResources().getString(R.string.moneyMonthIndicator));
+                    postedDate.setText(getResources().getString(R.string.postedDateSuffix) + offer.getPostDate());
+                    moreInfosText.setText(offer.getLabel());
+                    missionText.setText(offer.getDescription());
 
-        moreInfosText.setText("Bien sûr, voici un court texte avec des informations sur les avantages et " +
-                        "les conditions de travail pour un poste chez Google :\n");
 
-        missionText.setText("Vous êtes à la recherche d'une opportunité professionnelle passionnante et stimulante ? " +
-                        "Vous cherchez à travailler dans une entreprise innovante et dynamique ? Si c'est le cas, alors cette annonce" +
-                " d'emploi chez Google est faite pour vous !\n");
+
+
+                    itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
+                            intent.setPackage("com.google.android.apps.maps");
+                            if(intent.resolveActivity(getActivity().getPackageManager()) != null){
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    // Do something with the offer object
+                } else {
+                    // Handle the case when the offer document doesn't exist
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle the error case
+            }
+        });
+
+
+
+
 
         moreActions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,16 +181,7 @@ public class fragment_mission_description extends Fragment {
             });
         }
 
-        itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
-                intent.setPackage("com.google.android.apps.maps");
-                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivity(intent);
-                }
-            }
-        });
+
 
         closeActions.setOnClickListener(new View.OnClickListener() {
             @Override

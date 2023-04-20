@@ -13,6 +13,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class searchCard_ViewHolder extends RecyclerView.ViewHolder {
     LottieAnimationView likeBtn;
+    String jobId;
     TextView jobTitle;
     TextView companyName;
     TextView jobDate;
