@@ -89,7 +89,6 @@ public class fragment_message_menu extends Fragment {
                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                    final String[] participantName = new String[1];
                                    if (task.isSuccessful()) {
-                                       System.out.println("ID " + userId.toString());
 
                                        for (QueryDocumentSnapshot document : task.getResult()) {
                                            System.out.println(document.toString());
