@@ -18,8 +18,9 @@ public class Offer {
     private float salaryMax;
     private String description;
     private String url;
+    private String details;
 
-    public Offer(String jobTitle, String companyName, String location, Date startDate, Date endDate, Date postDate, Date expDate, String keywords, String category, String label, float salaryMin, float salaryMax, String description, String url) {
+    public Offer(String jobTitle, String companyName, String location, Date startDate, Date endDate, Date postDate, Date expDate, String keywords, String category, String label, float salaryMin, float salaryMax, String description, String details, String url) {
         this.jobTitle = jobTitle;
         this.companyName = companyName;
         this.location = location;
@@ -33,6 +34,7 @@ public class Offer {
         this.salaryMin = salaryMin;
         this.salaryMax = salaryMax;
         this.description = description;
+        this.details = details;
         this.url = url;
     }
 
@@ -150,6 +152,14 @@ public class Offer {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public String getUrl() {
