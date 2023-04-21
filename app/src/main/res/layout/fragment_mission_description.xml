@@ -206,7 +206,7 @@
                         android:id="@+id/jobTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Developper web chez Google a plein temps ta mère la pute"
+                        android:text="Title"
                         android:textColor="@color/white"
                         android:textSize="25sp"
                         android:textStyle="bold"></TextView>

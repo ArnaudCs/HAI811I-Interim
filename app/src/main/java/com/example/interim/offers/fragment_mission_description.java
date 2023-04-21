@@ -60,6 +60,14 @@ public class fragment_mission_description extends Fragment {
     LocationManager lm;
     float latitude, longitude;
     boolean pro = false;
+    String offerLocation;
+    String offerCategory;
+
+    String companyNameText;
+    String contactNameText;
+
+    String firstName;
+    String name;
     String jobId;
     LinearLayout applyContainer;
     public fragment_mission_description() {
@@ -97,11 +105,36 @@ public class fragment_mission_description extends Fragment {
         TextView dateText = view.findViewById(R.id.dateText);
         TextView postedDate = view.findViewById(R.id.postedDate);
         Button itinaryButtonMission = view.findViewById(R.id.itinaryButtonMission);
+        Button shareBtn = view.findViewById(R.id.shareBtn);
 
 
         db = FirebaseFirestore.getInstance();
         // Assuming that you have the offer ID in a variable named 'offerId'
         DocumentReference offerRef = db.collection("Offers").document(jobId);
+
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            DocumentReference userRef = db.collection("Users").document(userId);
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        pro = false;
+                    } else {
+                        pro = true;
+                        applyContainer.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
+
+        db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                companyNameText = documentSnapshot.getString("companyName");
+                contactNameText = documentSnapshot.getString("name");
+            }
+        });
 
         offerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -117,7 +150,8 @@ public class fragment_mission_description extends Fragment {
                     postedDate.setText(getResources().getString(R.string.postedDateSuffix) + offer.getPostDate());
                     moreInfosText.setText(offer.getLabel());
                     missionText.setText(offer.getDescription());
-
+                    offerLocation = offer.getLocation();
+                    offerCategory = offer.getCategory();
 
 
 
@@ -143,8 +177,63 @@ public class fragment_mission_description extends Fragment {
             }
         });
 
+        String userId = mAuth.getCurrentUser().getUid();
+        DocumentReference userRef = db.collection("Users").document(userId);
+        userRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    firstName = document.getString("firstName");
+                    name = document.getString("name");
+                }
+            }
+        });
 
 
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(pro){
+                    String shareMessage = getContext().getString(R.string.shareofferHook) +
+                            contactNameText + " " + getContext().getString(R.string.fromCompanyJoinDisplay) + " " + companyNameText +  ". " +
+                            getContext().getString(R.string.shareofferTitle) + "\n" + "" + "\n" +
+                            getContext().getString(R.string.shareOfferDetails) + "\n" + "" + "\n" +
+                            getContext().getString(R.string.offerTitle) + " : " + jobTitle.getText().toString() + "\n" +
+                            getContext().getString(R.string.companyName) + " : " + companyName.getText().toString() + "\n" +
+                            getContext().getString(R.string.salaryPrice) + " : " + salary.getText().toString() + "\n" +
+                            getContext().getString(R.string.dateDisplay) + ": " + dateText.getText().toString() + "\n" +
+                            getContext().getString(R.string.placeInput) + " : " + offerLocation + "\n" +
+                            getContext().getString(R.string.categoryOfferDisplay) + " : " + offerCategory + "\n" + "" + "\n" +
+                            getContext().getString(R.string.shareofferActionCall);
+
+                    Intent ShareIntent = new Intent();
+                    ShareIntent.setAction(Intent.ACTION_SEND);
+                    ShareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    ShareIntent.setType("text/plain");
+                    ShareIntent = Intent.createChooser(ShareIntent, "Share with : ");
+                    getContext().startActivity(ShareIntent);
+                } else {
+                    String shareMessage = getContext().getString(R.string.shareofferHook) +
+                            firstName + "" + name +  ". " +
+                            getContext().getString(R.string.shareofferTitle) + "\n" + "" + "\n" +
+                            getContext().getString(R.string.shareOfferDetails) + "\n" + "" + "\n" +
+                            getContext().getString(R.string.offerTitle) + " : " + jobTitle.getText().toString() + "\n" +
+                            getContext().getString(R.string.companyName) + " : " + companyName.getText().toString() + "\n" +
+                            getContext().getString(R.string.salaryPrice) + " : " + salary.getText().toString() + "\n" +
+                            getContext().getString(R.string.dateDisplay) + ": " + dateText.getText().toString() + "\n" +
+                            getContext().getString(R.string.placeInput) + " : " + offerLocation + "\n" +
+                            getContext().getString(R.string.categoryOfferDisplay) + " : " + offerCategory + "\n" + "" + "\n" +
+                            getContext().getString(R.string.shareofferActionCall);
+
+                    Intent ShareIntent = new Intent();
+                    ShareIntent.setAction(Intent.ACTION_SEND);
+                    ShareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    ShareIntent.setType("text/plain");
+                    ShareIntent = Intent.createChooser(ShareIntent, "Share with : ");
+                    getContext().startActivity(ShareIntent);
+                }
+            }
+        });
 
 
         moreActions.setOnClickListener(new View.OnClickListener() {
@@ -164,24 +253,6 @@ public class fragment_mission_description extends Fragment {
                 getActivity().finish();
             }
         });
-
-        if (mAuth.getCurrentUser() != null) {
-            String userId = mAuth.getCurrentUser().getUid();
-            DocumentReference userRef = db.collection("Users").document(userId);
-            userRef.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        pro = false;
-                    } else {
-                        pro = true;
-                        applyContainer.setVisibility(View.GONE);
-                    }
-                }
-            });
-        }
-
-
 
         closeActions.setOnClickListener(new View.OnClickListener() {
             @Override

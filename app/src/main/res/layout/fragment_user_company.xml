@@ -23,22 +23,56 @@
         app:layout_constraintTop_toBottomOf="@+id/profileActions">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right">
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:weightSum="4"
+             android:gravity="right">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="#AFAFAF"
-                android:foregroundTint="#B5B5B5"
-                android:src="@drawable/baseline_assured_workload_24"
-                app:tint="@color/primary_red">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:gravity="left">
 
-            </ImageView>
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:padding="7dp"
+                    android:background="@drawable/redbutton">
 
-        </LinearLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/white"
+                        android:foregroundTint="@color/white"
+                        android:src="@drawable/baseline_query_stats_24"
+                        app:tint="@color/white"></ImageView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_weight="2"
+                 android:layout_height="wrap_content"
+                 android:gravity="right">
+
+                 <ImageView
+                     android:layout_width="40dp"
+                     android:layout_height="40dp"
+                     android:layout_marginRight="10dp"
+                     android:backgroundTint="#AFAFAF"
+                     android:foregroundTint="#B5B5B5"
+                     android:src="@drawable/baseline_assured_workload_24"
+                     app:tint="@color/primary_red">
+
+                 </ImageView>
+
+             </LinearLayout>
+
+         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

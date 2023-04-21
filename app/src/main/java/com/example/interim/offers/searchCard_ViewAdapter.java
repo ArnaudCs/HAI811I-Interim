@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,6 +28,12 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
 
     Context context;
     List<Offer> offers;
+
+    String firstName;
+    String name;
+
+    String companyNameText;
+    String contactNameText;
 
     boolean pro = false;
 
@@ -71,6 +78,8 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         pro = false;
+                        firstName = document.getString("firstName");
+                        name = document.getString("name");
                         List<String> likedOffers = (List<String>) document.get("likedOffers");
                         if (likedOffers != null && likedOffers.contains(offers.get(position).getId())) {
                             holder.likeInit.setVisibility(View.GONE);
@@ -95,57 +104,57 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
             holder.liked = false;
         }
 
+        if(mAuth.getCurrentUser() != null){
+            db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    companyNameText = documentSnapshot.getString("companyName");
+                    contactNameText = documentSnapshot.getString("name");
+                }
+            });
+        }
+
         holder.shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mAuth.getCurrentUser() != null) {
-                    String userId = mAuth.getCurrentUser().getUid();
-                    DocumentReference userRef = db.collection("Users").document(userId);
-                    userRef.get().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
+                if(pro){
+                    String shareMessage = context.getString(R.string.shareofferHook) +
+                            contactNameText + " " + context.getString(R.string.fromCompanyJoinDisplay) + " " + companyNameText + ". " +
+                            context.getString(R.string.shareofferTitle) + "\n" + "" + "\n" +
+                            context.getString(R.string.shareOfferDetails) + "\n" + "" + "\n" +
+                            context.getString(R.string.offerTitle) + " : " + holder.jobTitle.getText().toString() + "\n" +
+                            context.getString(R.string.companyName) + " : " + holder.companyName.getText().toString() + "\n" +
+                            context.getString(R.string.salaryPrice) + " : " + holder.jobSalary.getText().toString() + "\n" +
+                            context.getString(R.string.dateDisplay) + ": " + holder.jobDate.getText().toString() + "\n" +
+                            context.getString(R.string.placeInput) + " : " + holder.jobLocation.getText().toString() + "\n" +
+                            context.getString(R.string.categoryOfferDisplay) + " : " + holder.jobCategory.getText().toString() + "\n" + "" + "\n" +
+                            context.getString(R.string.shareofferActionCall);
 
-                                String shareMessage = context.getString(R.string.shareofferHook) +
-                                        document.getString("firstName") + ". " +
-                                        context.getString(R.string.shareofferTitle) + "\n" + "" + "\n" +
-                                        context.getString(R.string.shareOfferDetails) + "\n" + "" + "\n" +
-                                        context.getString(R.string.offerTitle) + " : " + holder.jobTitle.getText().toString() + "\n" +
-                                        context.getString(R.string.companyName) + " : " + holder.companyName.getText().toString() + "\n" +
-                                        context.getString(R.string.salaryPrice) + " : " + holder.jobSalary.getText().toString() + "\n" +
-                                        context.getString(R.string.dateDisplay) + ": " + holder.jobDate.getText().toString() + "\n" +
-                                        context.getString(R.string.placeInput) + " : " + holder.jobLocation.getText().toString() + "\n" +
-                                        context.getString(R.string.categoryOfferDisplay) + " : " + holder.jobCategory.getText().toString() + "\n" + "" + "\n" +
-                                        context.getString(R.string.shareofferActionCall);
+                    Intent ShareIntent = new Intent();
+                    ShareIntent.setAction(Intent.ACTION_SEND);
+                    ShareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    ShareIntent.setType("text/plain");
+                    ShareIntent = Intent.createChooser(ShareIntent, "Share with : ");
+                    context.startActivity(ShareIntent);
+                } else if (!pro) {
+                    String shareMessage = context.getString(R.string.shareofferHook) +
+                            firstName + " " + name +  ". " +
+                            context.getString(R.string.shareofferTitle) + "\n" + "" + "\n" +
+                            context.getString(R.string.shareOfferDetails) + "\n" + "" + "\n" +
+                            context.getString(R.string.offerTitle) + " : " + holder.jobTitle.getText().toString() + "\n" +
+                            context.getString(R.string.companyName) + " : " + holder.companyName.getText().toString() + "\n" +
+                            context.getString(R.string.salaryPrice) + " : " + holder.jobSalary.getText().toString() + "\n" +
+                            context.getString(R.string.dateDisplay) + ": " + holder.jobDate.getText().toString() + "\n" +
+                            context.getString(R.string.placeInput) + " : " + holder.jobLocation + "\n" +
+                            context.getString(R.string.categoryOfferDisplay) + " : " + holder.jobCategory + "\n" + "" + "\n" +
+                            context.getString(R.string.shareofferActionCall);
 
-                                Intent ShareIntent = new Intent();
-                                ShareIntent.setAction(Intent.ACTION_SEND);
-                                ShareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                                ShareIntent.setType("text/plain");
-                                ShareIntent = Intent.createChooser(ShareIntent, "Share with : ");
-                                context.startActivity(ShareIntent);
-                            } else {
-                                String shareMessage = context.getString(R.string.shareofferHook) +
-                                        document.getString("companyName") + ". " +
-                                        context.getString(R.string.shareofferTitle) + "\n" + "" + "\n" +
-                                        context.getString(R.string.shareOfferDetails) + "\n" + "" + "\n" +
-                                        context.getString(R.string.offerTitle) + " : " + holder.jobTitle.getText().toString() + "\n" +
-                                        context.getString(R.string.companyName) + " : " + holder.companyName.getText().toString() + "\n" +
-                                        context.getString(R.string.salaryPrice) + " : " + holder.jobSalary.getText().toString() + "\n" +
-                                        context.getString(R.string.dateDisplay) + ": " + holder.jobDate.getText().toString() + "\n" +
-                                        context.getString(R.string.placeInput) + " : " + holder.jobLocation.getText().toString() + "\n" +
-                                        context.getString(R.string.categoryOfferDisplay) + " : " + holder.jobCategory.getText().toString() + "\n" + "" + "\n" +
-                                        context.getString(R.string.shareofferActionCall);
-
-                                Intent ShareIntent = new Intent();
-                                ShareIntent.setAction(Intent.ACTION_SEND);
-                                ShareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                                ShareIntent.setType("text/plain");
-                                ShareIntent = Intent.createChooser(ShareIntent, "Share with : ");
-                                context.startActivity(ShareIntent);
-                            }
-                        }
-                    });
+                    Intent ShareIntent = new Intent();
+                    ShareIntent.setAction(Intent.ACTION_SEND);
+                    ShareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    ShareIntent.setType("text/plain");
+                    ShareIntent = Intent.createChooser(ShareIntent, "Share with : ");
+                    context.startActivity(ShareIntent);
                 } else {
                     Toast.makeText(context, context.getString(R.string.connectionWarning), Toast.LENGTH_LONG).show();
                 }

@@ -185,4 +185,6 @@
     <string name="contactAssistance">Contact Support</string>
     <string name="myFavoritesBtnCompany">My Favorites</string>
     <string name="myOffersPageTitle">My Offers</string>
+    <string name="newConvBtn">New Conversation</string>
+    <string name="fromCompanyJoinDisplay">from</string>
 </resources>
