@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_without_border"
+    tools:context=".authentication.fragment_payment_confirm">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:scaleY="1.5"
+        android:scaleX="1.5"
+        android:orientation="vertical">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_rawRes="@raw/congratulation"
+            app:lottie_autoPlay="true">
+
+        </com.airbnb.lottie.LottieAnimationView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleY="1.5"
+        android:scaleX="1.5"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_rawRes="@raw/celebration"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true">
+
+        </com.airbnb.lottie.LottieAnimationView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:paddingRight="40dp"
+            android:paddingLeft="40dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="10dp"
+            android:textSize="24sp"
+            android:text="@string/onlineOfferCelebration">
+        </TextView>
+
+        <Button
+            android:id="@+id/myOffersBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/navigation_bar"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:stateListAnimator="@null"
+            android:text="@string/fullNextBtn"
+            android:textSize="20sp"
+            android:textStyle="bold"></Button>
+
+    </LinearLayout>
+
+</FrameLayout>

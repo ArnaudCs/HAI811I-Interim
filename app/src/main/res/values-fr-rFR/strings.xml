@@ -188,4 +188,6 @@
     <string name="myResume">Télécharger mon CV</string>
     <string name="myCoverLetter">Lettre de Motivation</string>
     <string name="letsgoBtn">"C'est parti ! "</string>
+    <string name="onlineOfferCelebration">Félicitation, votre offre est maintenant en ligne et disponible, rendez vous sur la page \"Mes Offres\" pour voir et gérer vos offres actives.</string>
+    <string name="seeMyOffersBtn">Voir mes offres</string>
 </resources>
