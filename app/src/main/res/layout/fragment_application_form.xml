@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bodyProfile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorPrimary"
+    android:foregroundTint="#AEAEAE">
+
+    <LinearLayout
+        android:id="@+id/bottomDeckUserProfile"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bottom2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topDeckSettings">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollIndicators="none"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingTop="20dp"
+                    android:padding="20dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/yourApplicationTitle"
+                        android:textAlignment="center"
+                        android:textSize="25sp"
+                        android:textStyle="bold">
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutApplicantName"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:hint="@string/Name"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/primary_red"
+                        app:boxStrokeErrorColor="#DC0303"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/primary_red"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:startIconDrawable="@drawable/baseline_person_2_24"
+                        app:startIconTint="@color/primary_red">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textApplicantName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutApplicantFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="40dp"
+                        android:hint="@string/Firstname"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/primary_red"
+                        app:boxStrokeErrorColor="#DC0303"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/primary_red"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:startIconDrawable="@drawable/baseline_person_2_24"
+                        app:startIconTint="@color/primary_red">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textApplicantFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutApplicantNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:hint="@string/PhoneNumber"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/primary_red"
+                        app:boxStrokeErrorColor="#DC0303"
+                        android:layout_marginBottom="10dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/primary_red"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:startIconDrawable="@drawable/baseline_phone_iphone_24"
+                        app:startIconTint="@color/primary_red">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textApplicantPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberSigned" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutApplicantMail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:hint="@string/Mail"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/primary_red"
+                        app:boxStrokeErrorColor="#DC0303"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/primary_red"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginBottom="10dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:startIconDrawable="@drawable/baseline_email_24"
+                        app:startIconTint="@color/primary_red">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textApplicantMail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutApplicantAdress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:hint="@string/placeInput"
+                        android:layout_marginBottom="10dp"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/primary_red"
+                        app:boxStrokeErrorColor="#DC0303"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/primary_red"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:startIconDrawable="@drawable/baseline_pin_drop_24"
+                        app:startIconTint="@color/primary_red">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textApplicantAdress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutApplicantBirth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:hint="@string/Birthdate"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/primary_red"
+                        app:boxStrokeErrorColor="#DC0303"
+                        app:endIconMode="clear_text"
+                        android:layout_marginBottom="10dp"
+                        app:endIconTint="@color/primary_red"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:startIconDrawable="@drawable/baseline_cake_24"
+                        app:startIconTint="@color/primary_red">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textApplicantBirth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="32dp"
+                        android:paddingRight="22dp"
+                        android:drawableEnd="@drawable/baseline_text_snippet_24"
+                        android:drawableTint="@color/primary_red"
+                        android:drawablePadding="10dp"
+                        android:stateListAnimator="@null"
+                        android:text="@string/useLastApplication"
+                        android:textColor="@color/primary_red"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:background="@drawable/greybox">
+                    </Button>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/fileTitle"
+                        android:textAlignment="center"
+                        android:textSize="25sp"
+                        android:textStyle="bold">
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:background="@drawable/redbox"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:weightSum="4"
+                    android:layout_marginBottom="20dp"
+                    android:paddingBottom="20dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:text="@string/myResume">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:maxLines="1"
+                            android:minLines="1"
+                            android:textColor="@color/white"
+                            android:text="@string/undefinedResume">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="32dp"
+                            android:paddingRight="22dp"
+                            android:text="@string/updateResume"
+                            android:textColor="@color/primary_red"
+                            android:stateListAnimator="@null"
+                            android:textStyle="bold"
+                            android:drawableEnd="@drawable/baseline_refresh_24"
+                            android:drawableTint="@color/primary_red"
+                            android:drawablePadding="10dp"
+                            android:textSize="15sp"
+                            android:background="@drawable/navigation_bar">
+                        </Button>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:background="@drawable/redbox"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:weightSum="4"
+                    android:paddingBottom="20dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:text="@string/myCoverLetter">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:maxLines="1"
+                            android:minLines="1"
+                            android:textColor="@color/white"
+                            android:text="@string/undefinedResume">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="32dp"
+                            android:paddingRight="22dp"
+                            android:text="@string/updateCoverLetter"
+                            android:textColor="@color/primary_red"
+                            android:stateListAnimator="@null"
+                            android:textStyle="bold"
+                            android:drawableEnd="@drawable/baseline_refresh_24"
+                            android:drawableTint="@color/primary_red"
+                            android:drawablePadding="10dp"
+                            android:textSize="15sp"
+                            android:background="@drawable/navigation_bar">
+                        </Button>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="32dp"
+                        android:paddingRight="32dp"
+                        android:text="@string/validateButton"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:stateListAnimator="@null"
+                        android:background="@drawable/redbutton">
+                    </Button>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="30dp">
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dividerColor="@color/grey"
+                        app:dividerThickness="1dp">
+
+                    </com.google.android.material.divider.MaterialDivider>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginBottom="100dp"
+                    android:background="@drawable/greybox">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:padding="15dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/whitebox"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lmGeneratorBtn"
+                                android:textSize="20sp"
+                                android:textAlignment="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary_red">
+
+                            </TextView>
+
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:text="@string/letsgoBtn"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:stateListAnimator="@null"
+                            android:background="@drawable/redbutton">
+
+                        </Button>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:weightSum="6"
+        android:gravity="center"
+        android:id="@+id/topDeckSettings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bodyProfile">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left">
+
+            <Button
+                android:id="@+id/backBtnApplication"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/baseline_arrow_circle_left_24"
+                android:backgroundTint="#FFFFFF"
+                android:drawableTint="#FBFAFA"
+                android:foregroundTint="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/convName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/applyBtn"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@id/layoutMain" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right">
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

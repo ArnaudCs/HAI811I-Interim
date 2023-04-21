@@ -177,4 +177,15 @@
     <string name="myOffersPageTitle">Mes Offres</string>
     <string name="newConvBtn">Nouveau Message</string>
     <string name="fromCompanyJoinDisplay">de l\'entreprise</string>
+    <string name="lmGeneratorBtn">Créer une lettre de motivation avec notre générateur ?</string>
+    <string name="yourApplicationTitle">Votre candidature</string>
+    <string name="useLastApplication">Utiliser la dernière candidature</string>
+    <string name="undefinedResume">Aucun CV</string>
+    <string name="updateResume">Maj CV</string>
+    <string name="fileTitle">Fichiers Nécessaires</string>
+    <string name="undefinedCoverLetter">Aucune lettre de motivation</string>
+    <string name="updateCoverLetter">Maj Lettre</string>
+    <string name="myResume">Télécharger mon CV</string>
+    <string name="myCoverLetter">Lettre de Motivation</string>
+    <string name="letsgoBtn">"C'est parti ! "</string>
 </resources>

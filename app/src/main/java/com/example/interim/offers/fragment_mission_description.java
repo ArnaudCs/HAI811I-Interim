@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.interim.R;
+import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -67,6 +68,8 @@ public class fragment_mission_description extends Fragment {
     String contactNameText;
 
     String firstName;
+
+    Button applyBtnMission;
     String name;
     String jobId;
     LinearLayout applyContainer;
@@ -174,6 +177,16 @@ public class fragment_mission_description extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // Handle the error case
+            }
+        });
+
+        applyBtnMission = view.findViewById(R.id.applyBtnMission);
+
+        applyBtnMission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loginIntent = new Intent(getContext(), ApplicationActivity.class);
+                getContext().startActivity(loginIntent);
             }
         });
 
