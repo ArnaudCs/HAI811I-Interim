@@ -2,11 +2,14 @@ package com.example.interim.offers;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
@@ -15,13 +18,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.interim.R;
+import com.example.interim.models.Offer;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class fragment_post_offers extends Fragment {
     public fragment_post_offers() {
@@ -40,9 +52,19 @@ public class fragment_post_offers extends Fragment {
 
         TextInputLayout layoutDateStartOffer = view.findViewById(R.id.dateOfferStartLayout);
         TextInputLayout layoutDateEndOffer = view.findViewById(R.id.dateOfferEndLayout);
-
         TextInputEditText textDateStartOffer = view.findViewById(R.id.textOfferStartDate);
         TextInputEditText textDateEndOffer = view.findViewById(R.id.textOfferEndDate);
+        TextInputEditText textOfferName = view.findViewById(R.id.textOfferName);
+        TextInputEditText textOfferCompanyName = view.findViewById(R.id.textOfferCompanyName);
+        TextInputEditText textOfferSalary = view.findViewById(R.id.textOfferSalary);
+        TextInputEditText textOfferCity = view.findViewById(R.id.textCityOffer);
+        TextInputEditText textOfferWebsite = view.findViewById(R.id.textOfferWebsite);
+        TextInputEditText textOfferTags = view.findViewById(R.id.textOfferTags);
+        TextInputEditText textOfferLabels = view.findViewById(R.id.textOfferLabels);
+        EditText textOfferDescription = view.findViewById(R.id.offerDescriptionText);
+        EditText textOfferDetails = view.findViewById(R.id.offerDetailsText);
+        Button addOfferButton = view.findViewById(R.id.addOfferButton);
+
 
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
         DatePickerDialog.OnDateSetListener setListener;
@@ -68,6 +90,82 @@ public class fragment_post_offers extends Fragment {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DATE);
+
+
+        addOfferButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                // Get input values from views
+                String jobTitle = textOfferName.getText().toString();
+                String companyName = textOfferCompanyName.getText().toString();
+                String salaryStr = textOfferSalary.getText().toString();
+                String location = textOfferCity.getText().toString();
+                String url = textOfferWebsite.getText().toString();
+                String keywords = textOfferTags.getText().toString();
+                String label = textOfferLabels.getText().toString();
+                String description = textOfferDescription.getText().toString();
+                String details = textOfferDetails.getText().toString();
+                String category = categoryOfferChoice.getSelectedItem().toString();
+
+                // Parse salary
+                int salaryMin = Integer.parseInt(salaryStr), salaryMax = Integer.parseInt(salaryStr);
+                if (!TextUtils.isEmpty(salaryStr)) {
+                    String[] salaryParts = salaryStr.split("-");
+                    if (salaryParts.length == 2) {
+                        salaryMin = Integer.parseInt(salaryParts[0].trim());
+                        salaryMax = Integer.parseInt(salaryParts[1].trim());
+                    }
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+                Date startDate = null, endDate = null, today = null, expDate = null;
+                try {
+                    startDate = sdf.parse(textDateStartOffer.getText().toString());
+                    endDate = sdf.parse(textDateEndOffer.getText().toString());
+                    today = new Date();
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(today);
+                    c.add(Calendar.DATE, 30);
+                    expDate = c.getTime();
+
+                } catch (ParseException e) {
+                }
+
+
+                Offer offer = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
+
+                db.collection("Offers")
+                        .add(offer)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                textOfferName.setText("");
+                                textOfferCompanyName.setText("");
+                                textOfferSalary.setText("");
+                                textOfferCity.setText("");
+                                textOfferWebsite.setText("");
+                                textOfferTags.setText("");
+                                textOfferLabels.setText("");
+                                textOfferDescription.setText("");
+                                textOfferDetails.setText("");
+                                categoryOfferChoice.setSelection(0);
+                                layoutDateStartOffer.setError(null);
+                                layoutDateEndOffer.setError(null);
+                                textDateStartOffer.setText("");
+                                textDateEndOffer.setText("");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+            }
+        });
+
+
 
         formScrollContainer.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             private int scrollThreshold = 10;
