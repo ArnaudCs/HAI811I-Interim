@@ -148,7 +148,7 @@
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/offerTitle"
                             android:inputType="text"
-                            android:maxLength="50"
+                            android:maxLength="40"
                             android:maxLines="1"
                             android:minLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +182,7 @@
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/companyName"
                             android:inputType="text"
-                            android:maxLength="50"
+                            android:maxLength="20"
                             android:maxLines="1"
                             android:minLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -250,7 +250,7 @@
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/placeInput"
                             android:inputType="text"
-                            android:maxLength="50"
+                            android:maxLength="30"
                             android:maxLines="1"
                             android:minLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -352,7 +352,7 @@
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/labelTitle"
                             android:inputType="text"
-                            android:maxLength="50"
+                            android:maxLength="20"
                             android:maxLines="1"
                             android:minLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -413,7 +413,7 @@
                                         android:background="@drawable/navigation_bar"
                                         android:hint="@string/startDateFilter"
                                         android:inputType="date"
-                                        android:maxLength="8"
+                                        android:maxLength="10"
                                         android:textSize="14sp" />
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -447,7 +447,7 @@
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/textOfferEndDate"
                                         android:layout_width="match_parent"
-                                        android:maxLength="8"
+                                        android:maxLength="10"
                                         android:textSize="14sp"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/navigation_bar"

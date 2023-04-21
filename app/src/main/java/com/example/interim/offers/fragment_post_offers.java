@@ -1,6 +1,7 @@
 package com.example.interim.offers;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.interim.R;
+import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -155,6 +157,10 @@ public class fragment_post_offers extends Fragment {
                                 layoutDateEndOffer.setError(null);
                                 textDateStartOffer.setText("");
                                 textDateEndOffer.setText("");
+
+                                Intent mainActivity = new Intent(getActivity(), CelebrationActivity.class);
+                                startActivity(mainActivity);
+                                getActivity().finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

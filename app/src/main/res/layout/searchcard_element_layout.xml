@@ -49,8 +49,8 @@
                                 android:id="@+id/jobTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:text="Barman"
+                                android:textAlignment="textStart"
                                 android:textColor="@color/white"
                                 android:textSize="25sp"
                                 android:textStyle="bold"></TextView>
