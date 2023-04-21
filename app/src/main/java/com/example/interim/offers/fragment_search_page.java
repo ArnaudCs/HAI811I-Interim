@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class fragment_search_page extends Fragment {
@@ -52,11 +53,11 @@ public class fragment_search_page extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button filterBtn = view.findViewById(R.id.filterBtn);
         Button closeFilter = view.findViewById(R.id.closeFilter);
-        Button validateAndSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
+        Button filtersSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
 
 //        Button likeInit = view.findViewById(R.id.likeInit);
 //        LottieAnimationView likeBtn = view.findViewById(R.id.likeBtn);
-
+        Button searchBtn = view.findViewById(R.id.searchBtn);
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
         TextInputEditText cityChoice = view.findViewById(R.id.textCityInput);
@@ -66,7 +67,7 @@ public class fragment_search_page extends Fragment {
         TextView areaDisplay = view.findViewById(R.id.areaDisplay);
         SeekBar areaChoice = view.findViewById(R.id.areaChoice);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
-
+        TextView searchText = view.findViewById(R.id.searchText);
         //Initialisation de la valeur par défaut du progress de la barre de sélection
         areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf((areaChoice.getProgress() + 1) * 10) + " Km");
 
@@ -180,7 +181,46 @@ public class fragment_search_page extends Fragment {
             }
         });
 
-        validateAndSearchBtn.setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String query = searchText.getText().toString().toLowerCase();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                db.collection("Offers")
+                        .orderBy("postDate", Query.Direction.DESCENDING)
+                        .limit(50)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot querySnapshot) {
+                                List<Offer> offers = new ArrayList<>();
+                                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                    Offer offer = documentSnapshot.toObject(Offer.class);
+                                    offer.setId(documentSnapshot.getId());
+                                    if (offer.getKeywords().contains(query) ||
+                                            offer.getJobTitle().toLowerCase().contains(query) ||
+                                            offer.getLabel().toLowerCase().contains(query) ||
+                                            offer.getCompanyName().toLowerCase().contains(query)) {
+                                        offers.add(offer);
+                                    }
+                                }
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle failure
+                            }
+                        });
+            }
+        });
+
+
+
+        filtersSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TransitionManager.beginDelayedTransition(filterContainer);
