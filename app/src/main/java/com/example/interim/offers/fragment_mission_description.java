@@ -186,6 +186,7 @@ public class fragment_mission_description extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent loginIntent = new Intent(getContext(), ApplicationActivity.class);
+                loginIntent.putExtra("jobId",jobId);
                 getContext().startActivity(loginIntent);
             }
         });

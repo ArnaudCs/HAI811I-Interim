@@ -221,20 +221,20 @@
                     android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/useLastInfos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/greybox"
+                        android:drawableEnd="@drawable/baseline_text_snippet_24"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/primary_red"
                         android:paddingLeft="32dp"
                         android:paddingRight="22dp"
-                        android:drawableEnd="@drawable/baseline_text_snippet_24"
-                        android:drawableTint="@color/primary_red"
-                        android:drawablePadding="10dp"
                         android:stateListAnimator="@null"
                         android:text="@string/useLastApplication"
                         android:textColor="@color/primary_red"
-                        android:textStyle="bold"
                         android:textSize="13sp"
-                        android:background="@drawable/greybox">
-                    </Button>
+                        android:textStyle="bold"></Button>
 
                 </LinearLayout>
 
@@ -435,17 +435,17 @@
                     android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/applyConfirm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/redbutton"
                         android:paddingLeft="32dp"
                         android:paddingRight="32dp"
+                        android:stateListAnimator="@null"
                         android:text="@string/validateButton"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:textSize="18sp"
-                        android:stateListAnimator="@null"
-                        android:background="@drawable/redbutton">
-                    </Button>
+                        android:textStyle="bold"></Button>
 
                 </LinearLayout>
 
