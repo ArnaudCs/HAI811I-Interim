@@ -94,7 +94,28 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                         }
                     } else {
                         pro = true;
-                        holder.applyBtn.setText(context.getString(R.string.seeMore));
+                        DocumentReference userRef2 = db.collection("Pros").document(userId);
+                        userRef2.get().addOnCompleteListener(task2 -> {
+                            if (task2.isSuccessful()) {
+                                DocumentSnapshot document2 = task2.getResult();
+                                if (document2.exists()) {
+                                    name = document2.getString("name");
+                                    List<String> likedOffers = (List<String>) document2.get("likedOffers");
+                                    if (likedOffers != null && likedOffers.contains(offers.get(position).getId())) {
+                                        holder.likeInit.setVisibility(View.GONE);
+                                        holder.likeBtn.setVisibility(View.VISIBLE);
+                                        holder.likeBtn.setAnimation(R.raw.like);
+                                        holder.likeBtn.playAnimation();
+                                        holder.liked = true;
+                                    } else {
+                                        holder.likeInit.setVisibility(View.VISIBLE);
+                                        holder.likeBtn.setVisibility(View.GONE);
+                                        holder.liked = false;
+                                    }
+                                }
+                            }
+                            holder.applyBtn.setText(context.getString(R.string.seeMore));
+                        });
                     }
                 }
             });
@@ -168,21 +189,37 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     if (mAuth.getCurrentUser() != null) {
-                        String userId = mAuth.getCurrentUser().getUid();
-                        DocumentReference userRef = db.collection("Users").document(userId);
-                        userRef.get().addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    List<String> likedOffers = (List<String>) document.get("likedOffers");
-                                    if (likedOffers == null) {
-                                        likedOffers = new ArrayList<>();
+                            String userId = mAuth.getCurrentUser().getUid();
+                            DocumentReference  userRef = db.collection("Users").document(userId);
+                            userRef.get().addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        List<String> likedOffers = (List<String>) document.get("likedOffers");
+                                        if (likedOffers == null) {
+                                            likedOffers = new ArrayList<>();
+                                        }
+                                        likedOffers.add(offers.get(position).getId());
+                                        userRef.update("likedOffers", likedOffers);
                                     }
-                                    likedOffers.add(offers.get(position).getId());
-                                    userRef.update("likedOffers", likedOffers);
+                                    else {
+                                        DocumentReference userRef2 = db.collection("Pros").document(userId);
+                                        userRef2.get().addOnCompleteListener(task2 -> {
+                                            if (task2.isSuccessful()) {
+                                                DocumentSnapshot document2 = task2.getResult();
+                                                if (document2.exists()) {
+                                                    List<String> likedOffers = (List<String>) document2.get("likedOffers");
+                                                    if (likedOffers == null) {
+                                                        likedOffers = new ArrayList<>();
+                                                    }
+                                                    likedOffers.add(offers.get(position).getId());
+                                                    userRef2.update("likedOffers", likedOffers);
+                                                }
+                                            }
+                                        });
+                                    }
                                 }
-                            }
-                        });
+                            });
                         holder.likeInit.setVisibility(View.GONE);
                         holder.likeBtn.setVisibility(View.VISIBLE);
                         holder.likeBtn.setAnimation(R.raw.like);
@@ -206,6 +243,7 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     if (mAuth.getCurrentUser() != null) {
                         String userId = mAuth.getCurrentUser().getUid();
+
                         DocumentReference userRef = db.collection("Users").document(userId);
                         userRef.get().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
@@ -217,6 +255,22 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                                     }
                                     likedOffers.add(offers.get(position).getId());
                                     userRef.update("likedOffers", likedOffers);
+                                }
+                                else {
+                                    DocumentReference userRef2 = db.collection("Pros").document(userId);
+                                    userRef2.get().addOnCompleteListener(task2 -> {
+                                        if (task2.isSuccessful()) {
+                                            DocumentSnapshot document2 = task2.getResult();
+                                            if (document2.exists()) {
+                                                List<String> likedOffers = (List<String>) document2.get("likedOffers");
+                                                if (likedOffers == null) {
+                                                    likedOffers = new ArrayList<>();
+                                                }
+                                                likedOffers.add(offers.get(position).getId());
+                                                userRef2.update("likedOffers", likedOffers);
+                                            }
+                                        }
+                                    });
                                 }
                             }
                         });
@@ -235,7 +289,7 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     if (mAuth.getCurrentUser() != null) {
                         String userId = mAuth.getCurrentUser().getUid();
-                        DocumentReference userRef = db.collection("Users").document(userId);
+                        DocumentReference userRef =  db.collection("Users").document(userId);
                         userRef.get().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
@@ -245,6 +299,22 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
                                         likedOffers.remove(offers.get(position).getId());
                                         userRef.update("likedOffers", likedOffers);
                                     }
+                                }
+                                else {
+                                    DocumentReference userRef2 =  db.collection("Pros").document(userId);
+                                    userRef2.get().addOnCompleteListener(task2 -> {
+                                        if (task2.isSuccessful()) {
+                                            DocumentSnapshot document2 = task2.getResult();
+                                            if (document2.exists()) {
+                                                List<String> likedOffers = (List<String>) document2.get("likedOffers");
+                                                if (likedOffers != null) {
+                                                    likedOffers.remove(offers.get(position).getId());
+                                                    userRef2.update("likedOffers", likedOffers);
+                                                }
+                                            }
+
+                                        }
+                                    });
                                 }
                             }
                         });
