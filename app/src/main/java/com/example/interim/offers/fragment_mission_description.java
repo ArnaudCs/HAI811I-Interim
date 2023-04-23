@@ -118,26 +118,31 @@ public class fragment_mission_description extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             String userId = mAuth.getCurrentUser().getUid();
             DocumentReference userRef = db.collection("Users").document(userId);
+            FirebaseFirestore finalDb = db;
             userRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         pro = false;
+                        firstName = document.getString("firstName");
+                        name = document.getString("name");
+
                     } else {
                         pro = true;
                         applyContainer.setVisibility(View.GONE);
+                        finalDb.collection("Pros").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                companyNameText = documentSnapshot.getString("companyName");
+                                contactNameText = documentSnapshot.getString("name");
+                            }
+                        });
                     }
                 }
             });
         }
 
-        db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                companyNameText = documentSnapshot.getString("companyName");
-                contactNameText = documentSnapshot.getString("name");
-            }
-        });
+
 
         offerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -161,6 +166,7 @@ public class fragment_mission_description extends Fragment {
                     itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            System.out.println("MAP");
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
                             intent.setPackage("com.google.android.apps.maps");
                             if(intent.resolveActivity(getActivity().getPackageManager()) != null){
@@ -191,17 +197,7 @@ public class fragment_mission_description extends Fragment {
             }
         });
 
-        String userId = mAuth.getCurrentUser().getUid();
-        DocumentReference userRef = db.collection("Users").document(userId);
-        userRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    firstName = document.getString("firstName");
-                    name = document.getString("name");
-                }
-            }
-        });
+
 
 
         shareBtn.setOnClickListener(new View.OnClickListener() {
