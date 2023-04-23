@@ -56,7 +56,6 @@ public class fragment_favorite_offers extends Fragment {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         if(mAuth.getCurrentUser() != null) {
@@ -66,12 +65,46 @@ public class fragment_favorite_offers extends Fragment {
             userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    List<String> likedOffersIds = (List<String>) documentSnapshot.get("likedOffers");
-                    if (likedOffersIds != null && likedOffersIds.size() >= 1) {
-                        Query offersQuery = db.collection("Offers").whereIn(FieldPath.documentId(), likedOffersIds);
-                        offersQuery
-                                .get()
-                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    final List<String>[] likedOffersIds = new List[]{null};
+                    if (documentSnapshot.exists()) {
+                        likedOffersIds[0] = (List<String>) documentSnapshot.get("likedOffers");
+                    } else {
+                        // user document does not exist, query likedOffers from Pros collection
+                        DocumentReference prosRef = db.collection("Pros").document(userId);
+                        prosRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if (documentSnapshot.exists()) {
+                                    likedOffersIds[0] = (List<String>) documentSnapshot.get("likedOffers");
+                                    if (likedOffersIds[0] != null && likedOffersIds[0].size() >= 1) {
+                                        Query offersQuery = db.collection("Offers").whereIn(FieldPath.documentId(), likedOffersIds[0]);
+                                        offersQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                                        List<Offer> offers = new ArrayList<>();
+                                                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                                            Offer offer = documentSnapshot.toObject(Offer.class);
+                                                            offer.setId(documentSnapshot.getId());
+                                                            offers.add(offer);
+                                                        }
+                                                        favoriteContainer.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                        favoriteContainer.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        // handle failure
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    if (likedOffersIds[0] != null && likedOffersIds[0].size() >= 1) {
+                        Query offersQuery = db.collection("Offers").whereIn(FieldPath.documentId(), likedOffersIds[0]);
+                        offersQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot querySnapshot) {
                                         List<Offer> offers = new ArrayList<>();
@@ -87,18 +120,18 @@ public class fragment_favorite_offers extends Fragment {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-
+                                        // handle failure
                                     }
                                 });
                     }
                 }
             });
-        }
-        else {
+        } else {
             Intent mainActivity = new Intent(getActivity(), MainActivity.class);
             startActivity(mainActivity);
             this.getActivity().finish();
         }
+
 
 
 
