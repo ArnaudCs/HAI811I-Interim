@@ -49,10 +49,10 @@
                 android:id="@+id/plan1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 app:cardCornerRadius="50dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginRight="30dp">
+                android:layout_marginRight="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -260,9 +260,9 @@
                 android:id="@+id/plan2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 app:cardCornerRadius="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@id/plan1"
                 android:layout_marginRight="30dp">
 
@@ -472,9 +472,9 @@
                 android:id="@+id/plan3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 app:cardCornerRadius="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@id/plan2"
                 android:layout_marginRight="30dp">
 
@@ -684,9 +684,9 @@
                 android:id="@+id/plan4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 app:cardCornerRadius="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@id/plan3"
                 android:layout_marginRight="30dp">
 
@@ -896,9 +896,9 @@
                 android:id="@+id/plan5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 app:cardCornerRadius="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@id/plan4"
                 android:layout_marginRight="30dp">
 
@@ -1108,9 +1108,9 @@
                 android:id="@+id/plan6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 app:cardCornerRadius="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="100dp"
                 app:layout_constraintTop_toBottomOf="@id/plan5"
                 android:layout_marginRight="30dp">

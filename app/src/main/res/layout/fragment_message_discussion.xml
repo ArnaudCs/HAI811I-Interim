@@ -179,8 +179,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/messagesContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+            android:layout_height="match_parent"
+            android:paddingBottom="100dp"
+            android:clipToPadding="false"/>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

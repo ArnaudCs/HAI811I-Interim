@@ -101,7 +101,7 @@
     <string name="wrongOTP">Mauvais code, veuillez réessayer</string>
     <string name="createGroup">Créer groupe</string>
     <string name="modifyProfile">Modifier le profil</string>
-    <string name="conversationPageTitle">Mes Conversations</string>
+    <string name="conversationPageTitle">Conversations</string>
     <string name="exampleSearch">Manager, Carleur ...</string>
     <string name="startDateFilter">Date Début</string>
     <string name="endDateFilter">Date Fin</string>

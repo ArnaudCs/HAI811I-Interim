@@ -47,6 +47,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginRight="5dp"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="5"
                             android:background="@null"
@@ -61,7 +62,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="left|center">
+                            android:layout_marginRight="5dp"
+                            android:gravity="center">
 
                             <LinearLayout
                                 android:layout_width="40dp"
@@ -111,335 +113,344 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <ScrollView
                 android:id="@+id/filterContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:paddingTop="30dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:background="@drawable/navigation_bar"
-                        android:layout_height="wrap_content">
-
-                        <Spinner
-                            android:id="@+id/categoryChoice"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="15dp"
-                            tools:ignore="TouchTargetSizeCheck"></Spinner>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:paddingTop="30dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:background="@drawable/navigation_bar"
-                        android:layout_height="wrap_content">
-
-                        <Spinner
-                            android:id="@+id/labelChoice"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:foregroundTint="@color/white"
-                            android:padding="15dp"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Spinner>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_weight="2"
-                        android:layout_marginRight="10dp"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/dateStartLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            app:boxBackgroundColor="#FFFFFF"
-                            app:boxBackgroundMode="outline"
-                            app:boxStrokeColor="@color/primary_red"
-                            app:boxStrokeErrorColor="#DC0303"
-                            app:endIconMode="clear_text"
-                            app:endIconTint="@color/primary_red"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/parent"
-                            app:startIconDrawable="@drawable/baseline_date_range_24"
-                            app:startIconTint="@color/primary_red"
-                            tools:ignore="MissingConstraints">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/textStartDate"
-                                android:layout_width="match_parent"
-                                android:maxLength="8"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/navigation_bar"
-                                android:hint="@string/startDateFilter"
-                                android:inputType="date" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_weight="2"
-                        android:layout_marginLeft="10dp"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/dateEndLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            android:hint=""
-                            app:boxBackgroundColor="#FFFFFF"
-                            app:boxBackgroundMode="outline"
-                            app:boxStrokeColor="@color/primary_red"
-                            app:boxStrokeErrorColor="#DC0303"
-                            app:endIconMode="clear_text"
-                            app:endIconTint="@color/primary_red"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/parent"
-                            app:startIconDrawable="@drawable/baseline_date_range_24"
-                            app:startIconTint="@color/primary_red"
-                            tools:ignore="MissingConstraints">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/textEndDate"
-                                android:layout_width="match_parent"
-                                android:maxLength="8"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/navigation_bar"
-                                android:hint="@string/endDateFilter"
-                                android:inputType="date" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/layoutCity"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            app:boxBackgroundColor="#FFFFFF"
-                            app:boxBackgroundMode="outline"
-                            app:boxStrokeColor="@color/primary_red"
-                            app:boxStrokeErrorColor="#DC0303"
-                            app:endIconMode="clear_text"
-                            app:endIconTint="@color/primary_red"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/parent"
-                            app:startIconDrawable="@drawable/baseline_pin_drop_24"
-                            app:startIconTint="@color/primary_red"
-                            tools:ignore="MissingConstraints">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/textCityInput"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/navigation_bar"
-                                android:hint="@string/CityofSearch"
-                                android:inputType="text"
-                                android:minLines="1"
-                                android:maxLines="1"
-                                android:maxLength="50" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/areaDisplay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="10dp"
-                        android:text="@string/areaFilter"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        android:textStyle="bold"></TextView>
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         android:paddingLeft="30dp"
-                        android:paddingTop="10dp"
+                        android:paddingRight="30dp"
+                        android:paddingTop="30dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:background="@drawable/navigation_bar"
+                            android:layout_height="wrap_content">
+
+                            <Spinner
+                                android:id="@+id/categoryChoice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="15dp"
+                                tools:ignore="TouchTargetSizeCheck"></Spinner>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"
+                        android:paddingTop="30dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:background="@drawable/navigation_bar"
+                            android:layout_height="wrap_content">
+
+                            <Spinner
+                                android:id="@+id/labelChoice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:foregroundTint="@color/white"
+                                android:padding="15dp"
+                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Spinner>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4"
+                        android:paddingTop="20dp"
+                        android:paddingLeft="30dp"
                         android:paddingRight="30dp">
 
-                        <SeekBar
-                            android:id="@+id/areaChoice"
-                            style="@style/Widget.AppCompat.SeekBar.Discrete"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_weight="2"
+                            android:layout_marginRight="10dp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/dateStartLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                app:boxBackgroundColor="#FFFFFF"
+                                app:boxBackgroundMode="outline"
+                                app:boxStrokeColor="@color/primary_red"
+                                app:boxStrokeErrorColor="#DC0303"
+                                app:endIconMode="clear_text"
+                                app:endIconTint="@color/primary_red"
+                                app:hintAnimationEnabled="false"
+                                app:hintEnabled="false"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/parent"
+                                app:startIconDrawable="@drawable/baseline_date_range_24"
+                                app:startIconTint="@color/primary_red"
+                                tools:ignore="MissingConstraints">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textStartDate"
+                                    android:layout_width="match_parent"
+                                    android:maxLength="8"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/navigation_bar"
+                                    android:hint="@string/startDateFilter"
+                                    android:inputType="date" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_weight="2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/dateEndLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:hint=""
+                                app:boxBackgroundColor="#FFFFFF"
+                                app:boxBackgroundMode="outline"
+                                app:boxStrokeColor="@color/primary_red"
+                                app:boxStrokeErrorColor="#DC0303"
+                                app:endIconMode="clear_text"
+                                app:endIconTint="@color/primary_red"
+                                app:hintAnimationEnabled="false"
+                                app:hintEnabled="false"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/parent"
+                                app:startIconDrawable="@drawable/baseline_date_range_24"
+                                app:startIconTint="@color/primary_red"
+                                tools:ignore="MissingConstraints">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textEndDate"
+                                    android:layout_width="match_parent"
+                                    android:maxLength="8"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/navigation_bar"
+                                    android:hint="@string/endDateFilter"
+                                    android:inputType="date" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layoutCity"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                app:boxBackgroundColor="#FFFFFF"
+                                app:boxBackgroundMode="outline"
+                                app:boxStrokeColor="@color/primary_red"
+                                app:boxStrokeErrorColor="#DC0303"
+                                app:endIconMode="clear_text"
+                                app:endIconTint="@color/primary_red"
+                                app:hintAnimationEnabled="false"
+                                app:hintEnabled="false"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/parent"
+                                app:startIconDrawable="@drawable/baseline_pin_drop_24"
+                                app:startIconTint="@color/primary_red"
+                                tools:ignore="MissingConstraints">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textCityInput"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/navigation_bar"
+                                    android:hint="@string/CityofSearch"
+                                    android:inputType="text"
+                                    android:minLines="1"
+                                    android:maxLines="1"
+                                    android:maxLength="50" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/areaDisplay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:max="5"
-                            android:progress="1"
-                            android:thumbTint="@color/white"
-                            android:thumb="@drawable/baseline_panorama_fish_eye_24"
-                            android:progressTint="@color/white"/>
+                            android:paddingBottom="10dp"
+                            android:text="@string/areaFilter"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"
+                            android:textStyle="bold"></TextView>
 
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_weight="2"
-                        android:layout_marginRight="10dp"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/priceStartLayout"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            app:boxBackgroundColor="#FFFFFF"
-                            app:boxBackgroundMode="outline"
-                            app:boxStrokeColor="@color/primary_red"
-                            app:boxStrokeErrorColor="#DC0303"
-                            app:endIconMode="clear_text"
-                            app:endIconTint="@color/primary_red"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/parent"
-                            app:startIconDrawable="@drawable/baseline_attach_money_24"
-                            app:startIconTint="@color/primary_red"
-                            tools:ignore="MissingConstraints">
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="30dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="30dp">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/textStartPrice"
+                            <SeekBar
+                                android:id="@+id/areaChoice"
+                                style="@style/Widget.AppCompat.SeekBar.Discrete"
                                 android:layout_width="match_parent"
-                                android:maxLength="5"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/navigation_bar"
-                                android:hint="@string/startPriceFilter"
-                                android:inputType="numberSigned" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                                android:max="5"
+                                android:progress="1"
+                                android:thumbTint="@color/white"
+                                android:thumb="@drawable/baseline_panorama_fish_eye_24"
+                                android:progressTint="@color/white"/>
 
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_weight="2"
-                        android:layout_marginLeft="10dp"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/dateEndPrice"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            app:boxBackgroundColor="#FFFFFF"
-                            app:boxBackgroundMode="outline"
-                            app:boxStrokeColor="@color/primary_red"
-                            app:boxStrokeErrorColor="#DC0303"
-                            app:endIconMode="clear_text"
-                            app:endIconTint="@color/primary_red"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/parent"
-                            app:startIconDrawable="@drawable/baseline_attach_money_24"
-                            app:startIconTint="@color/primary_red"
-                            tools:ignore="MissingConstraints">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/textEndPrice"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:maxLength="5"
-                                android:background="@drawable/navigation_bar"
-                                android:hint="@string/endPriceFilter"
-                                android:inputType="numberSigned" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:paddingBottom="20dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:text="@string/searchBtn"
-                        android:paddingLeft="30dp"
-                        android:id="@+id/validateAndSearchBtn"
-                        android:paddingRight="30dp"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:stateListAnimator="@null"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/navigation_bar">
+                        android:orientation="horizontal"
+                        android:weightSum="4"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp">
 
-                    </Button>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_weight="2"
+                            android:layout_marginRight="10dp"
+                            android:layout_height="wrap_content">
 
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/priceStartLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                app:boxBackgroundColor="#FFFFFF"
+                                app:boxBackgroundMode="outline"
+                                app:boxStrokeColor="@color/primary_red"
+                                app:boxStrokeErrorColor="#DC0303"
+                                app:endIconMode="clear_text"
+                                app:endIconTint="@color/primary_red"
+                                app:hintAnimationEnabled="false"
+                                app:hintEnabled="false"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/parent"
+                                app:startIconDrawable="@drawable/baseline_attach_money_24"
+                                app:startIconTint="@color/primary_red"
+                                tools:ignore="MissingConstraints">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textStartPrice"
+                                    android:layout_width="match_parent"
+                                    android:maxLength="5"
+                                    android:textSize="14sp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/navigation_bar"
+                                    android:hint="@string/startPriceFilter"
+                                    android:inputType="numberSigned" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_weight="2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/dateEndPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                app:boxBackgroundColor="#FFFFFF"
+                                app:boxBackgroundMode="outline"
+                                app:boxStrokeColor="@color/primary_red"
+                                app:boxStrokeErrorColor="#DC0303"
+                                app:endIconMode="clear_text"
+                                app:endIconTint="@color/primary_red"
+                                app:hintAnimationEnabled="false"
+                                app:hintEnabled="false"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/parent"
+                                app:startIconDrawable="@drawable/baseline_attach_money_24"
+                                app:startIconTint="@color/primary_red"
+                                tools:ignore="MissingConstraints">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textEndPrice"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:maxLength="5"
+                                    android:textSize="14sp"
+                                    android:background="@drawable/navigation_bar"
+                                    android:hint="@string/endPriceFilter"
+                                    android:inputType="numberSigned" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:text="@string/searchBtn"
+                            android:paddingLeft="30dp"
+                            android:id="@+id/validateAndSearchBtn"
+                            android:paddingRight="30dp"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:stateListAnimator="@null"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/navigation_bar">
+
+                        </Button>
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+
+            </ScrollView>
+
 
         </LinearLayout>
 
@@ -459,7 +470,9 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="10dp">
+                android:paddingTop="10dp"
+                android:clipToPadding="false"
+                android:paddingBottom="100dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 

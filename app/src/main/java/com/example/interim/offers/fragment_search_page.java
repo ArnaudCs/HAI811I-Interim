@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -63,7 +64,7 @@ public class fragment_search_page extends Fragment {
         TextInputEditText cityChoice = view.findViewById(R.id.textCityInput);
         TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
         TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
-        LinearLayout filterContainer = view.findViewById(R.id.filterContainer);
+        ScrollView filterContainer = view.findViewById(R.id.filterContainer);
         TextView areaDisplay = view.findViewById(R.id.areaDisplay);
         SeekBar areaChoice = view.findViewById(R.id.areaChoice);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
@@ -156,6 +157,7 @@ public class fragment_search_page extends Fragment {
                 filterContainer.setVisibility(View.VISIBLE);
                 closeFilter.setVisibility(View.VISIBLE);
                 filterBtn.setVisibility(View.GONE);
+                bottomNav.animate().translationY(bottomNav.getHeight() + 100).setDuration(200);
             }
         });
 
@@ -178,6 +180,7 @@ public class fragment_search_page extends Fragment {
                 filterContainer.setVisibility(view.GONE);
                 closeFilter.setVisibility(view.GONE);
                 filterBtn.setVisibility(view.VISIBLE);
+                bottomNav.animate().translationY(0).setDuration(200);
             }
         });
 
@@ -227,6 +230,7 @@ public class fragment_search_page extends Fragment {
                 filterContainer.setVisibility(view.GONE);
                 closeFilter.setVisibility(view.GONE);
                 filterBtn.setVisibility(view.VISIBLE);
+                bottomNav.animate().translationY(0).setDuration(200);
 
 //                String category = categoryChoice.getSelectedItem().toString();
 //                String label = labelChoice.getSelectedItem().toString();
