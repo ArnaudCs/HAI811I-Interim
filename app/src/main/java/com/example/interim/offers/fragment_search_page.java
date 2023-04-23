@@ -59,11 +59,14 @@ public class fragment_search_page extends Fragment {
 //        Button likeInit = view.findViewById(R.id.likeInit);
 //        LottieAnimationView likeBtn = view.findViewById(R.id.likeBtn);
         Button searchBtn = view.findViewById(R.id.searchBtn);
+        Button clearFiltersButton = view.findViewById(R.id.clearFilterBtn);
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
         TextInputEditText cityChoice = view.findViewById(R.id.textCityInput);
         TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
         TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
+        TextInputEditText startDate = view.findViewById(R.id.textStartDate);
+        TextInputEditText endDate = view.findViewById(R.id.textEndDate);
         ScrollView filterContainer = view.findViewById(R.id.filterContainer);
         TextView areaDisplay = view.findViewById(R.id.areaDisplay);
         SeekBar areaChoice = view.findViewById(R.id.areaChoice);
@@ -94,6 +97,23 @@ public class fragment_search_page extends Fragment {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         List<Offer> mockOffers = new ArrayList<>();
+
+        clearFiltersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categoryChoice.setSelection(0);
+                labelChoice.setSelection(0);
+                cityChoice.setText("");
+                startPrice.setText("");
+                endPrice.setText("");
+                startDate.setText("");
+                endDate.setText("");
+
+                areaChoice.setProgress(1);
+                areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf((areaChoice.getProgress() + 1) * 10) + " Km");
+
+            }
+        });
 
         recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             private int scrollThreshold = 10;

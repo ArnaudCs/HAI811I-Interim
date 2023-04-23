@@ -12,7 +12,9 @@ import com.example.interim.R;
 import com.example.interim.models.Message;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class messages_ViewAdapter extends RecyclerView.Adapter<messages_ViewHolder>{
 
@@ -44,7 +46,10 @@ public class messages_ViewAdapter extends RecyclerView.Adapter<messages_ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull messages_ViewHolder holder, int position) {
-        holder.date.setText(messages.get(position).getDate().toString());
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE d MMM HH'h'mm", Locale.getDefault());
+        String formattedDate = formatter.format(messages.get(position).getDate());
+
+        holder.date.setText(formattedDate);
         holder.text.setText(messages.get(position).getText().toString());
     }
 

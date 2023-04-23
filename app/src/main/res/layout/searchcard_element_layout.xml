@@ -45,14 +45,14 @@
                             android:layout_weight="5">
 
                             <TextView
-
                                 android:id="@+id/jobTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Barman"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/white"
-                                android:textSize="25sp"
+                                android:textSize="23sp"
+                                android:maxLength="35"
                                 android:textStyle="bold"></TextView>
                         </LinearLayout>
 

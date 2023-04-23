@@ -55,7 +55,7 @@
                             android:maxLength="30"
                             android:singleLine="true"
                             android:textColorHint="#838383"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             tools:ignore="TouchTargetSizeCheck"></EditText>
 
                         <LinearLayout
@@ -130,7 +130,7 @@
                         android:orientation="vertical"
                         android:paddingLeft="30dp"
                         android:paddingRight="30dp"
-                        android:paddingTop="30dp">
+                        android:paddingTop="15dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -153,7 +153,7 @@
                         android:orientation="vertical"
                         android:paddingLeft="30dp"
                         android:paddingRight="30dp"
-                        android:paddingTop="30dp">
+                        android:paddingTop="20dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -175,6 +175,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="4"
+                        android:paddingBottom="20dp"
                         android:paddingTop="20dp"
                         android:paddingLeft="30dp"
                         android:paddingRight="30dp">
@@ -188,7 +189,7 @@
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/dateStartLayout"
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="wrap_content"
                                 app:boxBackgroundColor="#FFFFFF"
                                 app:boxBackgroundMode="outline"
                                 app:boxStrokeColor="@color/primary_red"
@@ -208,6 +209,7 @@
                                     android:id="@+id/textStartDate"
                                     android:layout_width="match_parent"
                                     android:maxLength="8"
+                                    android:paddingRight="10dp"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/navigation_bar"
                                     android:hint="@string/startDateFilter"
@@ -225,7 +227,7 @@
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/dateEndLayout"
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="wrap_content"
                                 android:hint=""
                                 app:boxBackgroundColor="#FFFFFF"
                                 app:boxBackgroundMode="outline"
@@ -246,6 +248,7 @@
                                     android:id="@+id/textEndDate"
                                     android:layout_width="match_parent"
                                     android:maxLength="8"
+                                    android:paddingRight="10dp"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/navigation_bar"
                                     android:hint="@string/endDateFilter"
@@ -260,6 +263,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:paddingBottom="15dp"
                         android:paddingLeft="30dp"
                         android:paddingRight="30dp">
 
@@ -270,7 +274,7 @@
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/layoutCity"
                                 android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_height="wrap_content"
                                 app:boxBackgroundColor="#FFFFFF"
                                 app:boxBackgroundMode="outline"
                                 app:boxStrokeColor="@color/primary_red"
@@ -295,7 +299,7 @@
                                     android:inputType="text"
                                     android:minLines="1"
                                     android:maxLines="1"
-                                    android:maxLength="50" />
+                                    android:maxLength="30" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -303,7 +307,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:orientation="vertical"
-                        android:padding="20dp"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -430,7 +436,22 @@
                         android:paddingBottom="20dp"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
+                        android:orientation="horizontal"
                         android:layout_height="wrap_content">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:text="@string/clearFiltersButton"
+                            android:paddingLeft="10dp"
+                            android:id="@+id/clearFilterBtn"
+                            android:paddingRight="10dp"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:layout_marginRight="20dp"
+                            android:stateListAnimator="@null"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/greybox">
+                        </Button>
 
                         <Button
                             android:layout_width="wrap_content"
@@ -438,12 +459,11 @@
                             android:paddingLeft="30dp"
                             android:id="@+id/validateAndSearchBtn"
                             android:paddingRight="30dp"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:stateListAnimator="@null"
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar">
-
                         </Button>
 
                     </LinearLayout>

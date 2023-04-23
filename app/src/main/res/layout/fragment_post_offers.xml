@@ -148,7 +148,7 @@
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/offerTitle"
                             android:inputType="text"
-                            android:maxLength="40"
+                            android:maxLength="35"
                             android:maxLines="1"
                             android:minLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>

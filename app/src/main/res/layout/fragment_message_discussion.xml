@@ -205,6 +205,7 @@
                 <EditText
                     android:id="@+id/messageText"
                     android:layout_width="0dp"
+                    android:inputType="textCapSentences"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
