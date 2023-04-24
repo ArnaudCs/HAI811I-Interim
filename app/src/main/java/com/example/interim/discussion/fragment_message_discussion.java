@@ -46,6 +46,8 @@ import java.util.Objects;
 
 public class fragment_message_discussion extends Fragment {
     String conversationId;
+
+    List<Message> messages;
     public fragment_message_discussion() {
         // Required empty public constructor
     }
@@ -130,7 +132,7 @@ public class fragment_message_discussion extends Fragment {
                             Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
                                 @Override
                                 public void onComplete(@NonNull Task<List<Object>> task) {
-                                    List<Message> messages = new ArrayList<>();
+                                    messages = new ArrayList<>();
                                     for (Object result : task.getResult()) {
                                         QuerySnapshot querySnapshot = (QuerySnapshot) result;
                                         for (QueryDocumentSnapshot document : querySnapshot) {
@@ -147,9 +149,16 @@ public class fragment_message_discussion extends Fragment {
                                             return m1.getDate().compareTo(m2.getDate());
                                         }
                                     });
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                                    layoutManager.setStackFromEnd(true);
+                                    recyclerView.setLayoutManager(layoutManager);
                                     recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+
+                                    recyclerView.smoothScrollToPosition(messages.size());
                                     // Do something with the list of messages
+
+
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -246,10 +255,10 @@ public class fragment_message_discussion extends Fragment {
                                                 }
                                             });
 
-
-                                            // Refresh the layout to display the new message
-                                            recyclerView.getAdapter().notifyDataSetChanged();
-                                            recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+                                            int position = recyclerView.getAdapter().getItemCount();
+                                            recyclerView.getAdapter().notifyItemInserted(position);
+                                            messages.add(message);
+                                            recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
                                             messageText.getText().clear();
                                         }
                                     });
@@ -258,6 +267,7 @@ public class fragment_message_discussion extends Fragment {
             }
         });
     }
+
     private void getParticipantsNames(List<DocumentReference> participants, TextView convName, String userId) {
         StringBuilder sb = new StringBuilder();
         FirebaseFirestore db = FirebaseFirestore.getInstance();

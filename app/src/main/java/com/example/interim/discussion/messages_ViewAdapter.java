@@ -25,6 +25,10 @@ public class messages_ViewAdapter extends RecyclerView.Adapter<messages_ViewHold
     Context context;
     List<Message> messages;
 
+    public List<Message> getMessages() {
+        return messages;
+    }
+
     public messages_ViewAdapter(Context context, List<Message> messages) {
         this.context = context;
         this.messages = messages;
