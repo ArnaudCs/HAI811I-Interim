@@ -2,6 +2,7 @@ package com.example.interim.offers;
 
 import static com.google.firebase.messaging.Constants.MessageNotificationKeys.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
+import android.os.StrictMode;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +43,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -80,10 +83,14 @@ public class fragment_mission_description extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mission_description, container, false);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Context ctx = getContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         Bundle bundle = getArguments();
         if (bundle != null) {
             jobId = bundle.getString("id");
-            // Do something with the job ID
         }
         return view;
     }
@@ -145,11 +152,13 @@ public class fragment_mission_description extends Fragment {
 
 
         offerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     // Convert the document snapshot to an Offer object
                     Offer offer = documentSnapshot.toObject(Offer.class);
+                    assert offer != null;
                     jobTitle.setText(offer.getJobTitle());
                     companyName.setText(offer.getCompanyName());
                     dateText.setText(getResources().getString(R.string.dateIndicationsStart) + offer.getStartDate()
@@ -278,7 +287,7 @@ public class fragment_mission_description extends Fragment {
 
         map = view.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
-        map.setBuiltInZoomControls(true);
+        map.setBuiltInZoomControls(false);
         map.setMultiTouchControls(true);
 
         GeoPoint startPoint = new GeoPoint(43.63178, 3.86347);
@@ -286,7 +295,7 @@ public class fragment_mission_description extends Fragment {
         mapController.setCenter(startPoint);
         mapController.setZoom(20.0);
         ArrayList<OverlayItem> items = new ArrayList<>();
-        OverlayItem position = new OverlayItem("Votre position", "Actualisée", new GeoPoint(43.63178, 3.86347));
+        OverlayItem position = new OverlayItem("Lieu de l'offre", "", new GeoPoint(43.63178, 3.86347));
         Drawable m = position.getMarker(0);
         items.add(position);
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
