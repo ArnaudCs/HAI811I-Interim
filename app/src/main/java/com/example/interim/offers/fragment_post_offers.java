@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -137,7 +138,7 @@ public class fragment_post_offers extends Fragment {
 
 
                 Offer offer = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
-
+                offer.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 db.collection("Offers")
                         .add(offer)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

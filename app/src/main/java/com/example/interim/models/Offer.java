@@ -3,6 +3,7 @@ package com.example.interim.models;
 import java.util.Date;
 
 public class Offer {
+    private String recruiter;
     private String _id;
     private String jobTitle;
     private String companyName;
@@ -48,6 +49,14 @@ public class Offer {
 
     public void setId(String _id) {
         this._id = _id;
+    }
+
+    public String getRecruiter() {
+        return recruiter;
+    }
+
+    public void setRecruiter(String recruiter) {
+        this.recruiter = recruiter;
     }
 
     public String getJobTitle() {
