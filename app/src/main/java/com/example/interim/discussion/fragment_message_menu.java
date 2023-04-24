@@ -91,8 +91,6 @@ public class fragment_message_menu extends Fragment {
                                    if (task.isSuccessful()) {
 
                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                           System.out.println(document.toString());
-
                                            // Extract the Conversation data from the Firestore document
                                            String otherParticipant = "";
                                            String lastMessage = "";
@@ -102,10 +100,10 @@ public class fragment_message_menu extends Fragment {
                                            assert participantsRefs != null;
                                            for (DocumentReference participantRef : participantsRefs) {
                                                String participantId = participantRef.getId();
+                                               conversation.setContactUid(participantId);
                                                if (!participantId.equals(userId)) {
                                                    // Get the other participant's name from the Users or Pros collection
                                                    String participantType = participantRef.getParent().getId();
-
                                                    if (participantType.equals("Users")) {
                                                        DocumentReference participantDocRef = db.collection("Users").document(participantId);
                                                        participantDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -148,14 +146,12 @@ public class fragment_message_menu extends Fragment {
                                                }
                                            }
 
-                                           List<DocumentReference> unReadRef = (List<DocumentReference>) document.get("unRead");
-                                           if (unReadRef != null) {
-                                               for (DocumentReference userUnReadRef : unReadRef) {
-                                                   String userUnReadId = userUnReadRef.getId();
-                                                   if (userUnReadId.equals(userId)) {
-                                                       conversation.setUnread(true);
-                                                       break;
-                                                   }
+                                           if (document.contains("unRead")) {
+                                               List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
+
+                                               if (unReadRefs != null && unReadRefs.contains(db.collection(type).document(userId))) {
+                                                   // User has unread messages in this conversation
+                                                   conversation.setUnread(true);
                                                }
                                            }
 
