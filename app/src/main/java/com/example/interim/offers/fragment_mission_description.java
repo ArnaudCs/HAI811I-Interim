@@ -177,10 +177,7 @@ public class fragment_mission_description extends Fragment {
                         public void onClick(View view) {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
                             intent.setPackage("com.google.android.apps.maps");
-                            if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-                                System.out.println("MAP");
-                                startActivity(intent);
-                            }
+                            startActivity(intent);
                         }
                     });
                     // Do something with the offer object
