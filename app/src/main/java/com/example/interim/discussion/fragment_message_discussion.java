@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.DataHolder;
 import com.example.interim.R;
 import com.example.interim.models.Message;
@@ -72,7 +73,7 @@ public class fragment_message_discussion extends Fragment {
         Button backBtnDiscussionView = view.findViewById(R.id.backBtnDiscussionView);
         LinearLayout infosContainer = view.findViewById(R.id.infosContainer);
         RecyclerView recyclerView = view.findViewById(R.id.messagesContainer);
-        Button sendMsg = view.findViewById(R.id.sendMessage);
+        LottieAnimationView sendMsg = view.findViewById(R.id.sendMessage);
         EditText messageText = view.findViewById(R.id.messageText);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -207,6 +208,7 @@ public class fragment_message_discussion extends Fragment {
         sendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sendMsg.playAnimation();
                 // Get the message text
                 String text = messageText.getText().toString();
 

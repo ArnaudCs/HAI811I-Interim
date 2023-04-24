@@ -201,4 +201,5 @@
     <string name="onlineOfferCelebration">Congratulation, your offer is now online, go to the \"My Offers\" page to see and manage your online offers.</string>
     <string name="seeMyOffersBtn">See my offers</string>
     <string name="clearFiltersButton">Clear Filters</string>
+    <string name="newConversationTitle">New Conversation</string>
 </resources>
