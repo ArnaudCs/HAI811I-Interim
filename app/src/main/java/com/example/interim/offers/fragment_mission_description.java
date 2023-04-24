@@ -175,10 +175,10 @@ public class fragment_mission_description extends Fragment {
                     itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            System.out.println("MAP");
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
                             intent.setPackage("com.google.android.apps.maps");
                             if(intent.resolveActivity(getActivity().getPackageManager()) != null){
+                                System.out.println("MAP");
                                 startActivity(intent);
                             }
                         }
