@@ -116,6 +116,7 @@ public class fragment_message_menu extends Fragment {
                                                                    participantName[0] = participantDoc.getString("firstName");
                                                                    conversation.setContact(participantName[0]);
                                                                    conversation.setContactUid(participantId);
+                                                                   System.out.println(participantId + "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 
                                                                    // Set the RecyclerView adapter with the updated list of Conversations
                                                                    mAdapter.notifyDataSetChanged();

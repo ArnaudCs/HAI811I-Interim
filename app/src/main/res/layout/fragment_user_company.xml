@@ -92,7 +92,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="Mon entreprise"
-                android:textSize="30sp"
+                android:textSize="27sp"
                 android:textStyle="bold"></TextView>
 
             <com.google.android.material.divider.MaterialDivider
@@ -140,7 +140,7 @@
                     android:drawablePadding="10dp"
                     android:padding="10dp"
                     android:text="06587496956263"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold">
 
                 </TextView>
@@ -162,7 +162,7 @@
                     android:drawablePadding="10dp"
                     android:padding="10dp"
                     android:text="John Doe"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"></TextView>
             </LinearLayout>
 
@@ -181,7 +181,7 @@
                     android:drawablePadding="10dp"
                     android:padding="10dp"
                     android:text="06 15 47 89 65"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"></TextView>
             </LinearLayout>
 
@@ -199,6 +199,8 @@
                     android:drawableStart="@drawable/baseline_alternate_email_24"
                     android:drawablePadding="10dp"
                     android:padding="10dp"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:text="john.doe@gmail.com"
                     android:textSize="15sp"
                     android:textStyle="bold"></TextView>

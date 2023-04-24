@@ -8,20 +8,6 @@
     android:background="?colorPrimary"
     android:foregroundTint="#AEAEAE">
 
-    <ImageView
-        android:id="@+id/bottomDeckProfilEntreprise"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="100dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/bottom2"></ImageView>
-
     <LinearLayout
         android:id="@+id/bottomDeckUserProfile"
         android:layout_width="match_parent"
@@ -30,8 +16,9 @@
         android:padding="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bottom2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bottomDeckProfilEntreprise">
+        app:layout_constraintTop_toBottomOf="@+id/userProfileNavbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -170,7 +157,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="30sp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
@@ -295,6 +282,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/userProfileNavbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
