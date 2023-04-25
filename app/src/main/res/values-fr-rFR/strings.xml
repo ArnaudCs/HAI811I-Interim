@@ -192,4 +192,9 @@
     <string name="seeMyOffersBtn">Voir mes offres</string>
     <string name="clearFiltersButton">Enlever filtres</string>
     <string name="newConversationTitle">Nouveau Message</string>
+    <string name="chooseYourCorrespondant">Qui voulez vous contacter ?</string>
+    <string name="newMessagePlaceholder">J\'espère que ce message vous parviendra. Mon nom est ...</string>
+    <string name="sendMessageBtn">Envoyer le message</string>
+    <string name="participantMail">Mail du contact</string>
+    <string name="newConvCelelbration">Félicitation, votre message sera bientôt envoyé, visitez la page \"Discussions\" pour voir vos conversations.</string>
 </resources>

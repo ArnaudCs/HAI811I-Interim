@@ -29,15 +29,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:background="@drawable/redbox"
+                android:layout_marginBottom="30dp"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="@string/settingsFirstSection"
+                    android:text="@string/chooseYourCorrespondant"
                     android:textAlignment="center"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textColor="@color/white"
                     android:textStyle="bold">
 
@@ -45,19 +46,51 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutRegistrationNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="30dp">
+                android:hint="@string/participantMail"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxBackgroundMode="outline"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                app:boxStrokeColor="@color/primary_red"
+                app:boxStrokeErrorColor="#DC0303"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/primary_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:startIconDrawable="@drawable/baseline_person_2_24"
+                app:startIconTint="@color/primary_red"
+                tools:ignore="MissingConstraints">
 
-                <com.google.android.material.divider.MaterialDivider
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textContactMailMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dividerColor="@color/grey"
-                    app:dividerThickness="1dp">
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.divider.MaterialDivider>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/greybox"
+                android:padding="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/firstMessageText"
+                    android:layout_width="match_parent"
+                    android:inputType="textCapSentences"
+                    android:layout_height="wrap_content"
+                    android:maxLength="250"
+                    android:maxHeight="300dp"
+                    android:hint="@string/newMessagePlaceholder">
+
+                </EditText>
 
             </LinearLayout>
 
@@ -68,11 +101,13 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/sendFirstMessageBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="32dp"
                     android:paddingRight="32dp"
-                    android:text="@string/contactAssistance"
+                    android:text="@string/sendMessageBtn"
+                    android:stateListAnimator="@null"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:textSize="18sp"
@@ -91,6 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
+        android:gravity="center"
         android:weightSum="6"
         android:id="@+id/topDeckSettings"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +140,7 @@
             android:gravity="left">
 
             <Button
-                android:id="@+id/backBtnSettings"
+                android:id="@+id/backBtnNewConv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/baseline_arrow_circle_left_24"
@@ -122,12 +158,12 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/convName"
+                android:id="@+id/newConversation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settingsPageTitle"
+                android:text="@string/newConversationTitle"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@id/layoutMain" />
 

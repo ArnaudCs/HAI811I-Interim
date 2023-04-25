@@ -5,11 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.DataHolder;
 import com.example.interim.R;
 import com.example.interim.models.Message;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +49,14 @@ public class fragment_message_discussion extends Fragment {
     String conversationId;
 
     List<Message> messages;
+
+    private Handler mHandler;
+
+    Message lastMessageUnread;
+    private int numMessages;
+
+    RecyclerView recyclerView;
+    private Runnable mRunnable;
     public fragment_message_discussion() {
         // Required empty public constructor
     }
@@ -72,7 +80,7 @@ public class fragment_message_discussion extends Fragment {
         Button blockUser = view.findViewById(R.id.signalUserBtn);
         Button backBtnDiscussionView = view.findViewById(R.id.backBtnDiscussionView);
         LinearLayout infosContainer = view.findViewById(R.id.infosContainer);
-        RecyclerView recyclerView = view.findViewById(R.id.messagesContainer);
+        recyclerView = view.findViewById(R.id.messagesContainer);
         LottieAnimationView sendMsg = view.findViewById(R.id.sendMessage);
         EditText messageText = view.findViewById(R.id.messageText);
 
@@ -157,9 +165,8 @@ public class fragment_message_discussion extends Fragment {
                                     recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
 
                                     recyclerView.smoothScrollToPosition(messages.size());
+                                    startRefreshingMessages();
                                     // Do something with the list of messages
-
-
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -179,6 +186,7 @@ public class fragment_message_discussion extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
+                mHandler.removeCallbacks(mRunnable);
             }
         });
 
@@ -269,6 +277,71 @@ public class fragment_message_discussion extends Fragment {
             }
         });
     }
+
+    // Fonction pour initialiser le Handler et le Runnable
+    private void startRefreshingMessages() {
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                getLastMessage();
+                mHandler.postDelayed(this, 3000); // Actualisation toutes les 3 secondes
+            }
+        };
+        mHandler.post(mRunnable);
+    }
+
+    // Fonction pour actualiser les messages depuis la base de données
+
+    private void getLastMessage() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference messagesRef = db.collection("Messages");
+
+        messagesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int numMessages = task.getResult().size();
+                    System.out.println("Nombre de messages dans la base de données : " + numMessages);
+
+                    Query lastMessageQuery = messagesRef.orderBy("date", Query.Direction.DESCENDING).limit(1);
+                    lastMessageQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                                if (!documents.isEmpty()) {
+                                    DocumentSnapshot lastMessageDoc = documents.get(0);
+                                    String senderId = lastMessageDoc.getString("sender");
+                                    String text = lastMessageDoc.getString("text");
+                                    Date date = lastMessageDoc.getDate("date");
+                                    Message lastMessage = new Message(senderId, date, text);
+
+                                    boolean isDuplicate = false;
+                                    for (Message message : messages) {
+                                        if (message.getmId() == lastMessage.getmId() &&
+                                                message.getDate().equals(lastMessage.getDate()) &&
+                                                message.getText().equals(lastMessage.getText())) {
+                                            isDuplicate = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!isDuplicate) {
+                                        messages.add(lastMessage);
+                                        int position = recyclerView.getAdapter().getItemCount();
+                                        recyclerView.getAdapter().notifyItemInserted(position);
+                                        recyclerView.smoothScrollToPosition(messages.size());
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 
     private void getParticipantsNames(List<DocumentReference> participants, TextView convName, String userId) {
         StringBuilder sb = new StringBuilder();

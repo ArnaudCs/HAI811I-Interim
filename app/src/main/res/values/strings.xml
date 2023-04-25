@@ -202,4 +202,9 @@
     <string name="seeMyOffersBtn">See my offers</string>
     <string name="clearFiltersButton">Clear Filters</string>
     <string name="newConversationTitle">New Conversation</string>
+    <string name="chooseYourCorrespondant">Who would you like to contact ?</string>
+    <string name="newMessagePlaceholder">I hope this message finds you well. My name is ...</string>
+    <string name="sendMessageBtn">Send Message</string>
+    <string name="participantMail">Contact Mail</string>
+    <string name="newConvCelelbration">Congratulation, your message will be delivered soon, visit the \"Discussion\" page to see your messages.</string>
 </resources>

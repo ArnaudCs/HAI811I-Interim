@@ -18,6 +18,7 @@ import android.widget.Button;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Conversation;
+import com.example.interim.offers.ApplicationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +35,7 @@ import java.util.Objects;
 public class fragment_message_menu extends Fragment {
 
     private conversation_ViewAdapter mAdapter;
-    Button deleteMessages, cancelDelete;
+    Button deleteMessages, cancelDelete, newConvBtn;
     String type;
 
     public fragment_message_menu() {
@@ -175,8 +176,15 @@ public class fragment_message_menu extends Fragment {
            }
        });
 
+        newConvBtn = view.findViewById(R.id.newConvBtn);
 
-
+        newConvBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newConversation = new Intent(getContext(), NewMessageConversationActivity.class);
+                getContext().startActivity(newConversation);
+            }
+        });
 
         deleteMessages.setOnClickListener(new View.OnClickListener() {
             @Override

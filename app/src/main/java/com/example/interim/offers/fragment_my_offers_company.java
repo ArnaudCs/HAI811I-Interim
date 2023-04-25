@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.offers;
 
 import android.os.Bundle;
 
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.interim.R;
 import com.example.interim.models.Offer;
 import com.example.interim.offers.searchCard_ViewAdapter;
 import com.google.android.gms.tasks.OnFailureListener;

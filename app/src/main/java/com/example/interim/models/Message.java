@@ -8,6 +8,16 @@ public class Message {
     private Date date;
     private String text;
 
+    private int mId;
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int mId) {
+        this.mId = mId;
+    }
+
     public Message(String sender, Date date, String text) {
         this.sender = sender;
         this.date = date;

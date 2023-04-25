@@ -20,6 +20,7 @@ import android.view.ViewTreeObserver;
 
 import com.example.interim.discussion.fragment_message_menu;
 import com.example.interim.offers.fragment_favorite_offers;
+import com.example.interim.offers.fragment_my_offers_company;
 import com.example.interim.offers.fragment_post_offers;
 import com.example.interim.offers.fragment_search_page;
 import com.example.interim.profile.fragment_profil_user;
