@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,9 @@ public class fragment_search_page extends Fragment {
 
 
     boolean liked = false;
+    filterDataHolder dataHolder;
+    ScrollView filterContainer;
+    TextInputEditText cityChoice;
     public fragment_search_page() {
         // Required empty public constructor
     }
@@ -52,6 +56,10 @@ public class fragment_search_page extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // on appel ceci au chargement utile seulement lors d'un chargement après clic sur le bouton find similar
+        loadFiltersFromDataHolder(dataHolder);
+
         Button filterBtn = view.findViewById(R.id.filterBtn);
         Button closeFilter = view.findViewById(R.id.closeFilter);
         Button filtersSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
@@ -62,12 +70,12 @@ public class fragment_search_page extends Fragment {
         Button clearFiltersButton = view.findViewById(R.id.clearFilterBtn);
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
         Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
-        TextInputEditText cityChoice = view.findViewById(R.id.textCityInput);
+        cityChoice = view.findViewById(R.id.textCityInput);
         TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
         TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
         TextInputEditText startDate = view.findViewById(R.id.textStartDate);
         TextInputEditText endDate = view.findViewById(R.id.textEndDate);
-        ScrollView filterContainer = view.findViewById(R.id.filterContainer);
+        filterContainer = view.findViewById(R.id.filterContainer);
         TextView areaDisplay = view.findViewById(R.id.areaDisplay);
         SeekBar areaChoice = view.findViewById(R.id.areaChoice);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
@@ -108,10 +116,8 @@ public class fragment_search_page extends Fragment {
                 endPrice.setText("");
                 startDate.setText("");
                 endDate.setText("");
-
                 areaChoice.setProgress(1);
                 areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf((areaChoice.getProgress() + 1) * 10) + " Km");
-
             }
         });
 
@@ -296,5 +302,16 @@ public class fragment_search_page extends Fragment {
             }
 
             });
+    }
+
+    private void loadFiltersFromDataHolder(filterDataHolder dataHolder) {
+        if (dataHolder != null) {
+            // Vérifier si les champs du dataholder ne sont pas vides
+            if (!TextUtils.isEmpty(dataHolder.getCategory()) && !TextUtils.isEmpty(dataHolder.getJobTitle())) {
+                cityChoice.setText(dataHolder.getCityText());
+                dataHolder.setCityText("");
+                filterContainer.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

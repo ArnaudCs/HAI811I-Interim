@@ -104,6 +104,7 @@ public class fragment_mission_description extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         super.onViewCreated(view, savedInstanceState);
         Button moreActions = view.findViewById(R.id.moreActions);
+        Button findSimilarBtn = view.findViewById(R.id.findSimilarBtn);
         LinearLayout actionsContainer = view.findViewById(R.id.actionContainer);
         Button closeActions = view.findViewById(R.id.closeActions);
         Button backMission = view.findViewById(R.id.backMission);
@@ -149,8 +150,6 @@ public class fragment_mission_description extends Fragment {
             });
         }
 
-
-
         offerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -189,6 +188,19 @@ public class fragment_mission_description extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // Handle the error case
+            }
+        });
+
+        findSimilarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterDataHolder filterDataHolder = new filterDataHolder(offerCategory, jobTitle.getText().toString(),
+                        offerLocation,
+                        salary.getText().toString(),
+                        "",
+                        "",
+                        "");
+                getActivity().finish();
             }
         });
 
