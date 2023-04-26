@@ -58,8 +58,7 @@ public class fragment_search_page extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // on appel ceci au chargement utile seulement lors d'un chargement après clic sur le bouton find similar
-        //loadFiltersFromDataHolder(dataHolder);
+
         Bundle bundle = getArguments();
 
 
@@ -67,8 +66,6 @@ public class fragment_search_page extends Fragment {
         Button closeFilter = view.findViewById(R.id.closeFilter);
         Button filtersSearchBtn = view.findViewById(R.id.validateAndSearchBtn);
 
-//        Button likeInit = view.findViewById(R.id.likeInit);
-//        LottieAnimationView likeBtn = view.findViewById(R.id.likeBtn);
         Button searchBtn = view.findViewById(R.id.searchBtn);
         Button clearFiltersButton = view.findViewById(R.id.clearFilterBtn);
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
@@ -106,8 +103,6 @@ public class fragment_search_page extends Fragment {
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
 
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        List<Offer> mockOffers = new ArrayList<>();
 
         clearFiltersButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,11 +148,6 @@ public class fragment_search_page extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        Offer offerForFilter = null;
-        if (bundle != null && bundle.getSerializable("offerForFilters") != null) {
-            offerForFilter = (Offer) bundle.getSerializable("offerForFilters");
-        }
-        Offer finalOfferForFilter = offerForFilter;
         db.collection("Offers")
                 .orderBy("postDate", Query.Direction.DESCENDING)
                 .limit(50)
@@ -171,53 +161,9 @@ public class fragment_search_page extends Fragment {
                             offer.setId(documentSnapshot.getId());
                             offers.add(offer);
                         }
-                        if (finalOfferForFilter != null) {
-                            ArrayList<Offer> filtered = new ArrayList<Offer>();
-                            for (Offer off : offers) {
-                                // Filter based on category
-                                if (off.getCategory().equals(finalOfferForFilter.getCategory())) {
-                                    filtered.add(off);
-                                    System.out.println("ADDED BY CATEGORY");
-                                    continue;
-                                }
-
-                                // Filter based on keywords
-                                Set<String> keywords = new HashSet<>(Arrays.asList(off.getKeywords().split(",")));
-                                Set<String> filterKeywords = new HashSet<>(Arrays.asList(finalOfferForFilter.getKeywords().split(",")));
-                                keywords.retainAll(filterKeywords);
-                                if (!keywords.isEmpty()) {
-                                    filtered.add(off);
-                                    System.out.println("ADDED BY KEYWORDS");
-                                    continue;
-                                }
-
-                                // Filter based on location
-                                if (off.getLocation().equals(finalOfferForFilter.getLocation())) {
-                                    filtered.add(off);
-                                    System.out.println("ADDED BY LOCATION");
-                                    continue;
-                                }
-
-                                // Filter based on price
-                                if (off.getSalaryMin() >= finalOfferForFilter.getSalaryMin() && off.getSalaryMax() <= finalOfferForFilter.getSalaryMax()) {
-                                    filtered.add(off);
-                                    System.out.println("ADDED BY SALARY");
-                                    continue;
-                                }
-
-                                // Filter based on company
-                                if (off.getCompanyName().equals(finalOfferForFilter.getCompanyName())) {
-                                    filtered.add(off);
-                                    System.out.println("ADDED BY COMPANY");
-                                    continue;
-                                }
-                            }
-                            offers = filtered;
-                        }
-                        System.out.println(offers.toString());
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
-                        recyclerView.getAdapter().notifyDataSetChanged(); // add this line
+                        recyclerView.getAdapter().notifyDataSetChanged();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -226,10 +172,6 @@ public class fragment_search_page extends Fragment {
 
                     }
                 });
-
-
-
-
 
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,6 +244,22 @@ public class fragment_search_page extends Fragment {
             }
         });
 
+        if (bundle != null && bundle.getSerializable("offerForFilters") != null) {
+            Offer offerForFilter = (Offer) bundle.getSerializable("offerForFilters");
+            categoryChoice.setSelection(0);
+            labelChoice.setSelection(0);
+            cityChoice.setText(offerForFilter.getLocation());
+            startPrice.setText(String.valueOf(offerForFilter.getSalaryMin()));
+            endPrice.setText(String.valueOf(offerForFilter.getSalaryMax()));
+            startDate.setText(offerForFilter.getStartDate().toString());
+            endDate.setText(offerForFilter.getEndDate().toString());
+            TransitionManager.beginDelayedTransition(filterContainer);
+            filterContainer.setVisibility(View.VISIBLE);
+            closeFilter.setVisibility(View.VISIBLE);
+            filterBtn.setVisibility(View.GONE);
+            bottomNav.animate().translationY(bottomNav.getHeight() + 100).setDuration(200);
+        }
+
 
 
         filtersSearchBtn.setOnClickListener(new View.OnClickListener() {
@@ -359,21 +317,21 @@ public class fragment_search_page extends Fragment {
             });
     }
 
-    private void loadFiltersFromDataHolder(filterDataHolder dataHolder) {
-
-        if (dataHolder != null) {
-            System.out.println("DATAHOLDER IS NOT NULL");
-            System.out.println(dataHolder.toString());
-
-            // Vérifier si les champs du dataholder ne sont pas vides
-            if (!TextUtils.isEmpty(dataHolder.getCategory()) && !TextUtils.isEmpty(dataHolder.getJobTitle())) {
-                cityChoice.setText(dataHolder.getCityText());
-                dataHolder.setCityText("");
-                filterContainer.setVisibility(View.VISIBLE);
-            }
-        }
-        else {
-            System.out.println("DATAHOLDER IS NULL");
-        }
-    }
+//    private void loadFiltersFromDataHolder(filterDataHolder dataHolder) {
+//
+//        if (dataHolder != null) {
+//            System.out.println("DATAHOLDER IS NOT NULL");
+//            System.out.println(dataHolder.toString());
+//
+//            // Vérifier si les champs du dataholder ne sont pas vides
+//            if (!TextUtils.isEmpty(dataHolder.getCategory()) && !TextUtils.isEmpty(dataHolder.getJobTitle())) {
+//                cityChoice.setText(dataHolder.getCityText());
+//                dataHolder.setCityText("");
+//                filterContainer.setVisibility(View.VISIBLE);
+//            }
+//        }
+//        else {
+//            System.out.println("DATAHOLDER IS NULL");
+//        }
+//    }
 }
