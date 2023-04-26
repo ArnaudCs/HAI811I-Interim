@@ -1,5 +1,8 @@
 package com.example.interim.offers;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.interim.PDFClass;
 import com.example.interim.R;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,11 +31,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -40,12 +53,27 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class fragment_application_form extends Fragment {
     String offerId;
+
+    private String name, url;
+
+    boolean resume = false;
+
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+
+    StorageReference storageRef;
+    DatabaseReference databaseRefResume, databaseRefCover;
+    Button uploadResume, uploadCoverLetter;
+
+    TextView coverLetterDisplay, resumeDisplay;
 
     public fragment_application_form() {
         // Required empty public constructor
@@ -79,6 +107,62 @@ public class fragment_application_form extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
+            }
+        });
+
+        uploadCoverLetter = view.findViewById(R.id.uploadCoverLetter);
+        uploadResume = view.findViewById(R.id.uploadResume);
+
+        storageRef = FirebaseStorage.getInstance().getReference();
+        databaseRefResume = FirebaseDatabase.getInstance().getReference("uploadResume");
+        databaseRefCover = FirebaseDatabase.getInstance().getReference("uploadCover");
+
+        coverLetterDisplay = view.findViewById(R.id.coverLetterDisplay);
+        resumeDisplay = view.findViewById(R.id.resumeDisplay);
+
+        StorageReference storageRefResume = FirebaseStorage.getInstance().getReference().child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
+        storageRefResume.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+            @Override
+            public void onSuccess(StorageMetadata storageMetadata) {
+                String fileName = storageMetadata.getName();
+                resumeDisplay.setText(getContext().getResources().getString(R.string.resumeInDatabase));
+                // Utiliser le nom du fichier récupéré pour afficher le nom du fichier sur votre interface utilisateur
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                resumeDisplay.setText(getContext().getResources().getString(R.string.resumeNotFound));
+            }
+        });
+
+        StorageReference storageRefCover = FirebaseStorage.getInstance().getReference().child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
+        storageRefCover.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+            @Override
+            public void onSuccess(StorageMetadata storageMetadata) {
+                String fileName = storageMetadata.getName();
+                coverLetterDisplay.setText(getContext().getResources().getString(R.string.coverLetterinDatabase));
+                // Utiliser le nom du fichier récupéré pour afficher le nom du fichier sur votre interface utilisateur
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                coverLetterDisplay.setText(getContext().getResources().getString(R.string.coverNotFound));
+            }
+        });
+
+        uploadResume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectFiles();
+                resume = true;
+            }
+        });
+
+        uploadCoverLetter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectFiles();
+                resume = false;
             }
         });
 
@@ -198,13 +282,93 @@ public class fragment_application_form extends Fragment {
                         });
             }
         });
-
-
-
-
-
-
-
     }
 
+    private void selectFiles() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, getContext().getResources().getString(R.string.selectPDF)), 12);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==12 && resultCode==RESULT_OK && data!=null &&data.getData()!=null){
+            if(resume) {
+                UploadFiles(data.getData());
+            } else {
+                UploadFilesCover(data.getData());
+            }
+        }
+    }
+
+    private void UploadFiles(Uri data) {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Uploading ...");
+        progressDialog.show();
+
+        StorageReference reference = storageRef.child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
+        reference.putFile(data)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uriTask.isComplete());
+                        Uri url = uriTask.getResult();
+
+                        String fileName = "Resume_" + FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
+                        PDFClass pdf = new PDFClass(fileName, url.toString());
+
+                        databaseRefResume.child(databaseRefResume.push().getKey()).setValue(pdf);
+
+                        Toast.makeText(getContext(), getContext().getResources().getString(R.string.fileUploaded), Toast.LENGTH_SHORT).show();
+
+                        progressDialog.dismiss();
+                        resumeDisplay.setText(getContext().getResources().getString(R.string.resumeInDatabase));
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        double progress = (100.0 * snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
+                        progressDialog.setMessage(" Uploaded : " + (int)progress+"%");
+                    }
+                });
+    }
+
+    private void UploadFilesCover(Uri data) {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Uploading ...");
+        progressDialog.show();
+
+        StorageReference reference = storageRef.child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
+        reference.putFile(data)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uriTask.isComplete());
+                        Uri url = uriTask.getResult();
+
+                        String fileName = "CoverLetter_" + FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
+                        PDFClass pdf = new PDFClass(fileName, url.toString());
+
+                        databaseRefCover.child(databaseRefCover.push().getKey()).setValue(pdf);
+
+                        Toast.makeText(getContext(), getContext().getResources().getString(R.string.fileUploaded), Toast.LENGTH_SHORT).show();
+
+                        progressDialog.dismiss();
+                        coverLetterDisplay.setText(getContext().getResources().getString(R.string.coverLetterinDatabase));
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        double progress = (100.0 * snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
+                        progressDialog.setMessage(" Uploaded : " + (int)progress+"%");
+                    }
+                });
+    }
 }

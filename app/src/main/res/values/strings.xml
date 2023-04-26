@@ -207,4 +207,10 @@
     <string name="sendMessageBtn">Send Message</string>
     <string name="participantMail">Contact Mail</string>
     <string name="newConvCelelbration">Congratulation, your message will be delivered soon, visit the \"Discussion\" page to see your messages.</string>
+    <string name="selectPDF">Select a PDF file</string>
+    <string name="fileUploaded">File Uploaded</string>
+    <string name="resumeInDatabase">Your Resume is uploaded</string>
+    <string name="coverLetterinDatabase">Cover Letter uploaded</string>
+    <string name="resumeNotFound">Upload a resume</string>
+    <string name="coverNotFound">Upload a cover letter</string>
 </resources>

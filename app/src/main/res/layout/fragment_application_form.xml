@@ -303,6 +303,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/resumeDisplay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
@@ -311,7 +312,6 @@
                             android:minLines="1"
                             android:textColor="@color/white"
                             android:text="@string/undefinedResume">
-
                         </TextView>
 
                     </LinearLayout>
@@ -324,6 +324,7 @@
                         android:orientation="vertical">
 
                         <Button
+                            android:id="@+id/uploadResume"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="32dp"
@@ -388,6 +389,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/coverLetterDisplay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
@@ -409,6 +411,7 @@
                         android:orientation="vertical">
 
                         <Button
+                            android:id="@+id/uploadCoverLetter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="32dp"

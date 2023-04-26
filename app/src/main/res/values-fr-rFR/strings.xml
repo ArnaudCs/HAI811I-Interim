@@ -197,4 +197,10 @@
     <string name="sendMessageBtn">Envoyer le message</string>
     <string name="participantMail">Mail du contact</string>
     <string name="newConvCelelbration">Félicitation, votre message sera bientôt envoyé, visitez la page \"Discussions\" pour voir vos conversations.</string>
+    <string name="selectPDF">Selectionnez un fichier PDF</string>
+    <string name="fileUploaded">Fichier enregistré</string>
+    <string name="resumeInDatabase">Votre CV est enregistré</string>
+    <string name="coverLetterinDatabase">Lettre enregistrée</string>
+    <string name="resumeNotFound">Ajouter un CV</string>
+    <string name="coverNotFound">Ajouter une lettre</string>
 </resources>
