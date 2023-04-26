@@ -1,6 +1,5 @@
 package com.example.interim.profile;
 
-import android.animation.Animator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,15 +15,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.interim.SettingsActivity;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.authentication.PaymentAndSubscription;
 import com.example.interim.authentication.PhoneValidation;
 import com.example.interim.R;
-import com.example.interim.authentication.fragment_order_summary;
 import com.example.interim.offers.FavoritesCompanyActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

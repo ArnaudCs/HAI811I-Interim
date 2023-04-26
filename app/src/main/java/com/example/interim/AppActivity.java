@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.example.interim.discussion.fragment_message_menu;
+import com.example.interim.models.Offer;
 import com.example.interim.offers.fragment_favorite_offers;
 import com.example.interim.offers.fragment_my_offers_company;
 import com.example.interim.offers.fragment_post_offers;
@@ -42,6 +44,19 @@ public class AppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_app);
         FirebaseFirestore db;
         FirebaseAuth mAuth;
+
+        Intent intent = getIntent();
+        if(intent.hasExtra("offerFilters")) {
+            Offer offerForFilters = (Offer) intent.getSerializableExtra("offerFilters");
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment fragment = new fragment_search_page();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("offerForFilters", offerForFilters);
+            fragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.navContainer, fragment);
+            fragmentTransaction.commit();
+        }
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

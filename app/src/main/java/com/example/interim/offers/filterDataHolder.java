@@ -65,6 +65,19 @@ public class filterDataHolder {
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "filterDataHolder{" +
+                "category='" + category + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", cityText='" + cityText + '\'' +
+                ", startPriceText='" + startPriceText + '\'' +
+                ", endPriceText='" + endPriceText + '\'' +
+                ", startDateText='" + startDateText + '\'' +
+                ", endDateText='" + endDateText + '\'' +
+                '}';
+    }
+
     public filterDataHolder(String category, String jobTitle, String cityText, String startPriceText, String endPriceText, String startDateText, String endDateText) {
         this.category = category;
         this.jobTitle = jobTitle;

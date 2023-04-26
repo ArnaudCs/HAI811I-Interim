@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.profile;
 
 public class Upload {
     private String mName;

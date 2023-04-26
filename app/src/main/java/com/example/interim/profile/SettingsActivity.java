@@ -1,8 +1,10 @@
-package com.example.interim;
+package com.example.interim.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.interim.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

@@ -1,6 +1,5 @@
 package com.example.interim.profile;
 
-import android.animation.Animator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.AppActivity;
-import com.example.interim.SettingsActivity;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.offers.MyApplicationsActivity;
 import com.example.interim.R;

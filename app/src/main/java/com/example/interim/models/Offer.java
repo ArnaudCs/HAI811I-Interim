@@ -1,8 +1,9 @@
 package com.example.interim.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Offer {
+public class Offer implements Serializable {
     private String recruiter;
     private String _id;
     private String jobTitle;

@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.interim.AppActivity;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
@@ -118,6 +119,7 @@ public class fragment_mission_description extends Fragment {
         Button itinaryButtonMission = view.findViewById(R.id.itinaryButtonMission);
         Button shareBtn = view.findViewById(R.id.shareBtn);
 
+        final Offer[] offer = {new Offer()};
 
         db = FirebaseFirestore.getInstance();
         // Assuming that you have the offer ID in a variable named 'offerId'
@@ -156,18 +158,18 @@ public class fragment_mission_description extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     // Convert the document snapshot to an Offer object
-                    Offer offer = documentSnapshot.toObject(Offer.class);
-                    assert offer != null;
-                    jobTitle.setText(offer.getJobTitle());
-                    companyName.setText(offer.getCompanyName());
-                    dateText.setText(getResources().getString(R.string.dateIndicationsStart) + offer.getStartDate()
-                            + getResources().getString(R.string.dateIndicationsEnd) + offer.getEndDate());
-                    salary.setText( offer.getSalaryMax()+"€" + getResources().getString(R.string.moneyMonthIndicator));
-                    postedDate.setText(getResources().getString(R.string.postedDateSuffix) + offer.getPostDate());
-                    moreInfosText.setText(offer.getLabel());
-                    missionText.setText(offer.getDescription());
-                    offerLocation = offer.getLocation();
-                    offerCategory = offer.getCategory();
+                    offer[0] = documentSnapshot.toObject(Offer.class);
+                    assert offer[0] != null;
+                    jobTitle.setText(offer[0].getJobTitle());
+                    companyName.setText(offer[0].getCompanyName());
+                    dateText.setText(getResources().getString(R.string.dateIndicationsStart) + offer[0].getStartDate()
+                            + getResources().getString(R.string.dateIndicationsEnd) + offer[0].getEndDate());
+                    salary.setText( offer[0].getSalaryMax()+"€" + getResources().getString(R.string.moneyMonthIndicator));
+                    postedDate.setText(getResources().getString(R.string.postedDateSuffix) + offer[0].getPostDate());
+                    moreInfosText.setText(offer[0].getLabel());
+                    missionText.setText(offer[0].getDescription());
+                    offerLocation = offer[0].getLocation();
+                    offerCategory = offer[0].getCategory();
 
 
 
@@ -194,12 +196,10 @@ public class fragment_mission_description extends Fragment {
         findSimilarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                filterDataHolder filterDataHolder = new filterDataHolder(offerCategory, jobTitle.getText().toString(),
-                        offerLocation,
-                        salary.getText().toString(),
-                        "",
-                        "",
-                        "");
+                Offer offerToGive = offer[0];
+                Intent intent = new Intent(getActivity(), AppActivity.class);
+                intent.putExtra("offerFilters", offerToGive);
+                startActivity(intent);
                 getActivity().finish();
             }
         });
