@@ -220,4 +220,5 @@
     <string name="rejectedBtn">Rejected</string>
     <string name="pendingBtn">Pending</string>
     <string name="statusApplication">"Status "</string>
+    <string name="noUserWithEmailErr">No user found with this email</string>
 </resources>

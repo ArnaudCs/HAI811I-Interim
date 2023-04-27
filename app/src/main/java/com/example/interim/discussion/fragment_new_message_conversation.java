@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -72,10 +74,11 @@ public class fragment_new_message_conversation extends Fragment {
         sendFirstMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!TextUtils.isEmpty(firstMessageText.getText()) && !TextUtils.isEmpty(textContactMailMessage.getText())){
+                if (!TextUtils.isEmpty(firstMessageText.getText()) && !TextUtils.isEmpty(textContactMailMessage.getText())) {
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     String userId = mAuth.getCurrentUser().getUid();
+
                     Task<DocumentSnapshot> userFromUsersTask = db.collection("Users").document(userId).get();
                     Task<DocumentSnapshot> userFromProsTask = db.collection("Pros").document(userId).get();
 
@@ -87,6 +90,7 @@ public class fragment_new_message_conversation extends Fragment {
                         DocumentSnapshot userFromPros = documentSnapshots.get(1);
 
                         DocumentReference userRef = null;
+
                         if (userFromUsers.exists()) {
                             userRef = db.collection("Users").document(userId);
                         } else if (userFromPros.exists()) {
@@ -97,26 +101,39 @@ public class fragment_new_message_conversation extends Fragment {
                             return;
                         }
 
-                        Map<String, Object> conversationData = new HashMap<>();
-                        conversationData.put("participants", Arrays.asList(userRef));
-                        conversationData.put("lastMessage", firstMessageText.getText());
-                        db.collection("Conversations").add(conversationData)
-                                .addOnSuccessListener(documentReference -> {
-                                    // the document was successfully created
-                                    Log.d(TAG, "New conversation document created with ID: " + documentReference.getId());
-                                })
-                                .addOnFailureListener(e -> {
-                                    // an error occurred while creating the document
-                                    Log.w(TAG, "Error creating new conversation document", e);
-                                });
+                        // Query to find user with given email
+                        String contactEmail = textContactMailMessage.getText().toString();
+                        Task<QuerySnapshot> usersQuery = db.collection("Users").whereEqualTo("email", contactEmail).get();
+                        Task<QuerySnapshot> prosQuery = db.collection("Pros").whereEqualTo("email", contactEmail).get();
 
-                        fragment_successfull_new_conversation fragmentConversationCreation = new fragment_successfull_new_conversation();
+                        DocumentReference finalUserRef = userRef;
+                        Tasks.whenAllSuccess(usersQuery, prosQuery).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                QuerySnapshot usersSnapshot = (QuerySnapshot) task.getResult().get(0);
+                                QuerySnapshot prosSnapshot = (QuerySnapshot) task.getResult().get(1);
 
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.newConversationContainer, fragmentConversationCreation)
-                                .addToBackStack(null)
-                                .commit();
+                                if (!usersSnapshot.isEmpty()) {
+                                    // Get document ID of user with given email from Users collection
+                                    String contactUserId = usersSnapshot.getDocuments().get(0).getId();
+                                    DocumentReference contactRef = db.collection("Users").document(contactUserId);
+                                    createNewConversation(db,finalUserRef, contactRef);
+                                } else if (!prosSnapshot.isEmpty()) {
+                                    // Get document ID of user with given email from Pros collection
+                                    String contactUserId = prosSnapshot.getDocuments().get(0).getId();
+                                    DocumentReference contactRef = db.collection("Pros").document(contactUserId);
+                                    createNewConversation(db,finalUserRef, contactRef);
+                                } else {
+                                    // User with given email not found in both collections
+                                    Log.e(TAG, "User with email " + contactEmail + " not found in Users or Pros collection");
+                                    Toast.makeText(getContext(), getContext().getResources().getString(R.string.noUserWithEmailErr), Toast.LENGTH_SHORT).show();
+
+                                }
+                            } else {
+                                // Query failed
+                                Log.e(TAG, "Error querying for user with email " + contactEmail, task.getException());
+                            }
+                        });
+
                     }).addOnFailureListener(e -> {
                         Log.e(TAG, "Error querying for user", e);
                     });
@@ -124,8 +141,33 @@ public class fragment_new_message_conversation extends Fragment {
                     Toast.makeText(getContext(), getContext().getResources().getString(R.string.missingFieldsErroToast), Toast.LENGTH_SHORT).show();
                 }
 
+
             }
         });
 
+    }
+
+    private void createNewConversation(FirebaseFirestore db, DocumentReference userRef, DocumentReference contactRef) {
+        // Create new conversation document
+        Map<String, Object> conversationData = new HashMap<>();
+        conversationData.put("participants", Arrays.asList(userRef, contactRef));
+        conversationData.put("lastMessage", firstMessageText.getText().toString());
+        db.collection("Conversations").add(conversationData)
+                .addOnSuccessListener(documentReference -> {
+                    // the document was successfully created
+                    Log.d(TAG, "New conversation document created with ID: " + documentReference.getId());
+                })
+                .addOnFailureListener(e -> {
+                    // an error occurred while creating the document
+                    Log.w(TAG, "Error creating new conversation document", e);
+                });
+
+        fragment_successfull_new_conversation fragmentConversationCreation = new fragment_successfull_new_conversation();
+
+        FragmentManager fragmentManager = getParentFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.newConversationContainer, fragmentConversationCreation)
+                .addToBackStack(null)
+                .commit();
     }
 }

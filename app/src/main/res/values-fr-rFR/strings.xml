@@ -210,4 +210,5 @@
     <string name="rejectedBtn">Refusé</string>
     <string name="pendingBtn">En cours</string>
     <string name="statusApplication">"État "</string>
+    <string name="noUserWithEmailErr">Aucun utilisateur trouvé avec cette adresse mail</string>
 </resources>
