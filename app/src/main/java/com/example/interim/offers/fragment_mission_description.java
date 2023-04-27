@@ -199,8 +199,9 @@ public class fragment_mission_description extends Fragment {
                 Offer offerToGive = offer[0];
                 Intent intent = new Intent(getActivity(), AppActivity.class);
                 intent.putExtra("offerFilters", offerToGive);
-                startActivity(intent);
                 getActivity().finish();
+                startActivity(intent);
+
             }
         });
 

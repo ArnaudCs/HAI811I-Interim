@@ -10,6 +10,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navContainer"
+        android:name="com.example.interim.offers.fragment_search_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout="@layout/fragment_search_page"

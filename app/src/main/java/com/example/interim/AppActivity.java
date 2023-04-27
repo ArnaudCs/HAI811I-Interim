@@ -64,9 +64,9 @@ public class AppActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.navbar);
         Menu menu = bottomNav.getMenu();
         FragmentContainerView navContainer = findViewById(R.id.navContainer);
-        menu.clear();
-
         pro = false;
+
+        menu.clear();
         getMenuInflater().inflate(R.menu.item_menu, menu);
         bottomNav.setSelectedItemId(R.id.navHome);
 
@@ -78,14 +78,13 @@ public class AppActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         pro = false;
-                        menu.clear();
-                        getMenuInflater().inflate(R.menu.item_menu, menu);
-                        bottomNav.setSelectedItemId(R.id.navHome);
                     } else {
+
                         pro = true;
-                        menu.clear();
-                        getMenuInflater().inflate(R.menu.item_menu_entreprise, menu);
-                        bottomNav.setSelectedItemId(R.id.navSearch);
+                            menu.clear();
+                            getMenuInflater().inflate(R.menu.item_menu_entreprise, menu);
+                            bottomNav.setSelectedItemId(R.id.navSearch);
+
                     }
                 }
             });
