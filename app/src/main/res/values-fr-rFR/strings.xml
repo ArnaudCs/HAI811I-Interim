@@ -203,4 +203,6 @@
     <string name="coverLetterinDatabase">Lettre enregistrée</string>
     <string name="resumeNotFound">Ajouter un CV</string>
     <string name="coverNotFound">Ajouter une lettre</string>
+    <string name="uploadResumeRegister">Ajoutez votre CV</string>
+    <string name="uploadCoverRegister">Ajoutez votre lettre</string>
 </resources>
