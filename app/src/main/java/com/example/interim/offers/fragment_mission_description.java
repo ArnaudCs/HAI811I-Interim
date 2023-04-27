@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -52,6 +57,8 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,6 +74,7 @@ public class fragment_mission_description extends Fragment {
     boolean pro = false;
     String offerLocation;
     String offerCategory;
+    String recruiterId;
 
     String companyNameText;
     String contactNameText;
@@ -74,6 +82,7 @@ public class fragment_mission_description extends Fragment {
     String firstName;
 
     Button applyBtnMission;
+    StorageReference mStorageRef;
     String name;
     String jobId;
     LinearLayout applyContainer;
@@ -118,6 +127,7 @@ public class fragment_mission_description extends Fragment {
         TextView postedDate = view.findViewById(R.id.postedDate);
         Button itinaryButtonMission = view.findViewById(R.id.itinaryButtonMission);
         Button shareBtn = view.findViewById(R.id.shareBtn);
+        ImageView companyProfile = view.findViewById(R.id.companyProfile);
 
         final Offer[] offer = {new Offer()};
 
@@ -152,46 +162,28 @@ public class fragment_mission_description extends Fragment {
             });
         }
 
-        offerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    // Convert the document snapshot to an Offer object
-                    offer[0] = documentSnapshot.toObject(Offer.class);
-                    assert offer[0] != null;
-                    jobTitle.setText(offer[0].getJobTitle());
-                    companyName.setText(offer[0].getCompanyName());
-                    dateText.setText(getResources().getString(R.string.dateIndicationsStart) + offer[0].getStartDate()
-                            + getResources().getString(R.string.dateIndicationsEnd) + offer[0].getEndDate());
-                    salary.setText( offer[0].getSalaryMax()+"€" + getResources().getString(R.string.moneyMonthIndicator));
-                    postedDate.setText(getResources().getString(R.string.postedDateSuffix) + offer[0].getPostDate());
-                    moreInfosText.setText(offer[0].getLabel());
-                    missionText.setText(offer[0].getDescription());
-                    offerLocation = offer[0].getLocation();
-                    offerCategory = offer[0].getCategory();
+        System.out.println(recruiterId + "------ id du recruter");
 
-
-
-                    itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
-                            intent.setPackage("com.google.android.apps.maps");
-                            startActivity(intent);
-                        }
-                    });
-                    // Do something with the offer object
-                } else {
-                    // Handle the case when the offer document doesn't exist
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + recruiterId);
+        try {
+            final File localFile = File.createTempFile("profilePic", "jpg");
+            mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Uri fileUri = Uri.fromFile(localFile);
+                    String imageUrl = fileUri.toString();
+                    Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(companyProfile);
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // Handle the error case
-            }
-        });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
         findSimilarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
