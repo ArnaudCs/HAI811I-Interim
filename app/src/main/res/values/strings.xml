@@ -225,4 +225,8 @@
     <string name="continueWithoutUploading">Continue without uploading files ?</string>
     <string name="continueBtn">Continue</string>
     <string name="cancelBtn">Cancel</string>
+    <string name="downloadResume">Download Resume</string>
+    <string name="downloadCover">Download Cover Letter</string>
+    <string name="applicationPage">Applications</string>
+    <string name="manageApplicationsBtn">Applications</string>
 </resources>

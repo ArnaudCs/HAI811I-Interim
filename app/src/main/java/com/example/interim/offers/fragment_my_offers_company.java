@@ -90,7 +90,7 @@ public class fragment_my_offers_company extends Fragment {
                             offers.add(offer);
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+                        recyclerView.setAdapter(new myOffersCard_ViewAdapter(getContext(), offers));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/missionCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cards"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/primary_red"
+                    android:gravity="left"
+                    android:orientation="vertical"
+                    android:padding="17dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:weightSum="6"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:gravity="left|center"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5">
+
+                            <TextView
+                                android:id="@+id/jobTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Barman"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/white"
+                                android:textSize="23sp"
+                                android:maxLength="35"
+                                android:textStyle="bold"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="right|center"
+                            android:layout_weight="1">
+
+                            <Button
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/baseline_language_24"
+                                android:backgroundTint="#FFFFFF"
+                                android:foregroundTint="@color/white" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/companyName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="The Victoria's Bar"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold"></TextView>
+
+                    <TextView
+                        android:id="@+id/jobDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/baseline_date_range_24"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/white"
+                        android:gravity="left|center"
+                        android:paddingTop="10dp"
+                        android:text="From 04/06/2026 to 23/08/2023"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"></TextView>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/jobCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_tab_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="Sale and marketing"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/postDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_access_time_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="Post Date : 12/01/2023"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/jobKeywords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_label_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="Undefined Label"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/jobLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_pin_drop_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="New-York, USA"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/jobSalary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_attach_money_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="1237€ / Months"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/jobUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_language_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="www.walmart.rh.com"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="8">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left|center">
+
+                    <Button
+                        android:id="@+id/shareBtn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/baseline_share_24">
+
+                    </Button>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/likeInit"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/baseline_favorite_border_24">
+                    </Button>
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:scaleType="center"
+                        android:scaleX="0.6"
+                        android:scaleY="0.6"
+                        android:visibility="gone"
+                        app:lottie_rawRes="@raw/dislike"
+                        android:id="@+id/likeBtn">
+
+                    </com.airbnb.lottie.LottieAnimationView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/manageAplicationsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/redbutton"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:stateListAnimator="@null"
+                        android:text="@string/manageApplicationsBtn"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold"></Button>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

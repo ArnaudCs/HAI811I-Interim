@@ -215,4 +215,8 @@
     <string name="continueWithoutUploading">"Voulez-vous vraiment continuer sans avoir ajouté de fichiers ? "</string>
     <string name="continueBtn">Continuer</string>
     <string name="cancelBtn">Annuler</string>
+    <string name="downloadResume">Télécharger le CV</string>
+    <string name="downloadCover">Télécharger la lettre</string>
+    <string name="applicationPage">Candidatures</string>
+    <string name="manageApplicationsBtn">Candidatures</string>
 </resources>
