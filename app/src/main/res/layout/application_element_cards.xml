@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/missionCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cards"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/primary_red"
+                    android:gravity="left"
+                    android:orientation="vertical"
+                    android:padding="17dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:weightSum="6"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:gravity="left|center"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5">
+
+                            <TextView
+                                android:id="@+id/jobTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Barman"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/white"
+                                android:textSize="23sp"
+                                android:maxLength="35"
+                                android:textStyle="bold"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="right|center"
+                            android:layout_weight="1">
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/companyName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="The Victoria's Bar"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold"></TextView>
+
+                    <TextView
+                        android:id="@+id/jobDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/baseline_date_range_24"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/white"
+                        android:gravity="left|center"
+                        android:paddingTop="10dp"
+                        android:text="From 04/06/2026 to 23/08/2023"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"></TextView>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/jobCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_tab_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="Sale and marketing"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/jobLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_pin_drop_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="New-York, USA"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:id="@+id/jobSalary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:drawableStart="@drawable/baseline_attach_money_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_red"
+                    android:text="1237€ / Months"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:weightSum="7"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="3">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:text="@string/statusApplication">
+
+                        </TextView>
+
+                        <ImageView
+                            android:id="@+id/statusPendinIcon"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/baseline_access_time_24"
+                            android:visibility="visible"
+                            app:tint="@color/waitingApplications">
+                        </ImageView>
+
+                        <ImageView
+                            android:id="@+id/statusAcceptedIcon"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/baseline_check_circle_24"
+                            android:visibility="gone"
+                            app:tint="@color/acceptedApplication">
+                        </ImageView>
+
+                        <ImageView
+                            android:id="@+id/statusRejectedIcon"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/baseline_cancel_24"
+                            android:visibility="gone"
+                            app:tint="@color/primary_red">
+                        </ImageView>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:weightSum="6"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2">
+
+                        <LinearLayout
+                            android:id="@+id/seeMoreApplicationBtn"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:background="@drawable/redbutton">
+
+                            <ImageView
+                                android:layout_margin="10dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                app:tint="@color/white"
+                                android:backgroundTint="@color/white"
+                                android:foregroundTint="@color/white"
+                                android:src="@drawable/baseline_remove_red_eye_24">
+                            </ImageView>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2">
+
+                        <LinearLayout
+                            android:id="@+id/modifyApplicationBtn"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:background="@drawable/redbutton">
+
+                            <ImageView
+                                android:layout_margin="10dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                app:tint="@color/white"
+                                android:backgroundTint="@color/white"
+                                android:foregroundTint="@color/white"
+                                android:src="@drawable/baseline_edit_24">
+
+                            </ImageView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2">
+
+                        <LinearLayout
+                            android:id="@+id/deleteApplicationBtn"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:background="@drawable/redbutton">
+
+                            <ImageView
+                                android:layout_margin="10dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                app:tint="@color/white"
+                                android:backgroundTint="@color/white"
+                                android:foregroundTint="@color/white"
+                                android:src="@drawable/baseline_delete_24">
+
+                            </ImageView>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

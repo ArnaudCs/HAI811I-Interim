@@ -35,8 +35,14 @@ import java.util.ArrayList;
 
 public class fragment_my_applications extends Fragment {
     String userId;
-    RecyclerView recyclerView;
+    RecyclerView recyclerViewAccepted;
+    RecyclerView recyclerViewRejected;
+    RecyclerView recyclerViewPending;
+
+    LinearLayout acceptedContainer, pendingContainer, rejectedContainer;
     ArrayList<Offer> offers;
+
+    Button acceptedBtn, pendingBtn, rejectedBtn;
 
     public fragment_my_applications() {
         // Required empty public constructor
@@ -57,6 +63,15 @@ public class fragment_my_applications extends Fragment {
         if(mAuth.getCurrentUser() != null) {
             userId = mAuth.getCurrentUser().getUid();
         }
+
+
+        recyclerViewAccepted = view.findViewById(R.id.acceptedDisplay);
+        recyclerViewPending = view.findViewById(R.id.pendingDisplay);
+        recyclerViewRejected = view.findViewById(R.id.rejectedDisplay);
+
+        acceptedContainer = view.findViewById(R.id.acceptedContainer);
+        pendingContainer = view.findViewById(R.id.pendingContainer);
+        rejectedContainer = view.findViewById(R.id.rejectedContainer);
 
         if(userId != null) {
             db.collection("Applications")
@@ -81,9 +96,8 @@ public class fragment_my_applications extends Fragment {
                                                 offer.setId(documentSnapshot.getId());
                                                 offers.add(offer);
                                             }
-                                            recyclerView = view.findViewById(R.id.favoriteContainer);
-                                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                            recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+                                            recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getContext()));
+                                            recyclerViewAccepted.setAdapter(new applicationCard_ViewAdapter(getContext(), offers));
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -107,6 +121,68 @@ public class fragment_my_applications extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
+            }
+        });
+
+        acceptedBtn = view.findViewById(R.id.acceptedBtn);
+        pendingBtn = view.findViewById(R.id.pendingBtn);
+        rejectedBtn = view.findViewById(R.id.rejectedBtn);
+
+        acceptedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Changement des couleurs des boutons
+                acceptedBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
+                acceptedBtn.setTextColor(getResources().getColor(R.color.white));
+
+                pendingBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
+                rejectedBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
+                pendingBtn.setTextColor(getResources().getColor(R.color.grey));
+                rejectedBtn.setTextColor(getResources().getColor(R.color.grey));
+
+                //Affichage du recyclerView correspondant
+                acceptedContainer.setVisibility(View.VISIBLE);
+                pendingContainer.setVisibility(View.GONE);
+                rejectedContainer.setVisibility(View.GONE);
+            }
+        });
+
+        pendingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Changement des couleurs des boutons
+                pendingBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
+                pendingBtn.setTextColor(getResources().getColor(R.color.white));
+
+                acceptedBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
+                rejectedBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
+                acceptedBtn.setTextColor(getResources().getColor(R.color.grey));
+                rejectedBtn.setTextColor(getResources().getColor(R.color.grey));
+
+                //Affichage du recyclerView correspondant
+                acceptedContainer.setVisibility(View.GONE);
+                pendingContainer.setVisibility(View.VISIBLE);
+                rejectedContainer.setVisibility(View.GONE);
+            }
+        });
+
+        rejectedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Changement des couleurs des boutons
+                rejectedBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
+                rejectedBtn.setTextColor(getResources().getColor(R.color.white));
+
+                pendingBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
+                acceptedBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
+                pendingBtn.setTextColor(getResources().getColor(R.color.grey));
+                acceptedBtn.setTextColor(getResources().getColor(R.color.grey));
+
+                //Affichage du recyclerView correspondant
+                acceptedContainer.setVisibility(View.GONE);
+                pendingContainer.setVisibility(View.GONE);
+                rejectedContainer.setVisibility(View.VISIBLE);
             }
         });
     }

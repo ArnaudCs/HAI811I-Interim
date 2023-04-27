@@ -308,7 +308,7 @@
                                 android:stateListAnimator="@null"
                                 android:text="@string/updateBtn"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold">
 
                             </Button>
@@ -368,7 +368,7 @@
                                 android:stateListAnimator="@null"
                                 android:text="@string/updateBtn"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold"></Button>
                         </LinearLayout>
 

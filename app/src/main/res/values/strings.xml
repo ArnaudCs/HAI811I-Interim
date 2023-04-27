@@ -216,4 +216,8 @@
     <string name="uploadResumeRegister">Add your Resume</string>
     <string name="uploadCoverRegister">Add your letter</string>
     <string name="updateBtn">Update</string>
+    <string name="acceptedBtn">Accepted</string>
+    <string name="rejectedBtn">Rejected</string>
+    <string name="pendingBtn">Pending</string>
+    <string name="statusApplication">"Status "</string>
 </resources>

@@ -206,4 +206,8 @@
     <string name="uploadResumeRegister">Ajoutez votre CV</string>
     <string name="uploadCoverRegister">Ajoutez votre lettre</string>
     <string name="updateBtn">Maj</string>
+    <string name="acceptedBtn">Accepté</string>
+    <string name="rejectedBtn">Refusé</string>
+    <string name="pendingBtn">En cours</string>
+    <string name="statusApplication">"État "</string>
 </resources>
