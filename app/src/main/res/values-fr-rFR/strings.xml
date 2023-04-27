@@ -205,4 +205,5 @@
     <string name="coverNotFound">Ajouter une lettre</string>
     <string name="uploadResumeRegister">Ajoutez votre CV</string>
     <string name="uploadCoverRegister">Ajoutez votre lettre</string>
+    <string name="updateBtn">Maj</string>
 </resources>

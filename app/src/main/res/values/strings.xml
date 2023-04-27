@@ -215,4 +215,5 @@
     <string name="coverNotFound">Upload a cover letter</string>
     <string name="uploadResumeRegister">Add your Resume</string>
     <string name="uploadCoverRegister">Add your letter</string>
+    <string name="updateBtn">Update</string>
 </resources>
