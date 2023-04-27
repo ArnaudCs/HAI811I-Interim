@@ -70,6 +70,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
     TextView coverLetterDisplay, resumeDisplay;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +82,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
         Button registerButton = findViewById(R.id.createAccount);
         TextInputEditText name = findViewById(R.id.textName);
         TextInputEditText firstName = findViewById(R.id.textFirstName);
-        Spinner nationality =  findViewById(R.id.nationalitySpinner);
+        Spinner nationality = findViewById(R.id.nationalitySpinner);
         TextInputEditText email = findViewById(R.id.textMail);
         TextInputEditText phoneNumber = findViewById(R.id.textNumber);
         TextInputEditText birthdate = findViewById(R.id.textBirthdate);
@@ -89,36 +90,10 @@ public class UserRegistrationActivity extends AppCompatActivity {
         TextInputEditText confirmPassword = findViewById(R.id.textConfirmPassword);
         TextInputEditText city = findViewById(R.id.textCity);
 
-        uploadCoverLetter = findViewById(R.id.uploadCoverLetter);
-        uploadResume = findViewById(R.id.uploadResume);
-
-        storageRef = FirebaseStorage.getInstance().getReference();
-        databaseRefResume = FirebaseDatabase.getInstance().getReference("uploadResume");
-        databaseRefCover = FirebaseDatabase.getInstance().getReference("uploadCover");
-
-        coverLetterDisplay = findViewById(R.id.coverLetterDisplay);
-        resumeDisplay = findViewById(R.id.resumeDisplay);
-
-        uploadResume.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectFiles();
-                resume = true;
-            }
-        });
-
-        uploadCoverLetter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectFiles();
-                resume = false;
-            }
-        });
-
         registerButton.setOnClickListener(v -> {
-            if(email.getText().toString().trim().equals("") || password.getText().toString().trim().equals("") || confirmPassword.getText().toString().trim().equals("")
-                    || name.getText().toString().trim().equals("")  || firstName.getText().toString().trim().equals("") || nationality.getSelectedItem().toString().trim().equals("")
-                    || phoneNumber.getText().toString().trim().equals("") || birthdate.getText().toString().trim().equals("")  || city.getText().toString().trim().equals("")) {
+            if (email.getText().toString().trim().equals("") || password.getText().toString().trim().equals("") || confirmPassword.getText().toString().trim().equals("")
+                    || name.getText().toString().trim().equals("") || firstName.getText().toString().trim().equals("") || nationality.getSelectedItem().toString().trim().equals("")
+                    || phoneNumber.getText().toString().trim().equals("") || birthdate.getText().toString().trim().equals("") || city.getText().toString().trim().equals("")) {
                 Toast.makeText(UserRegistrationActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -128,10 +103,11 @@ public class UserRegistrationActivity extends AppCompatActivity {
             String passwordText = password.getText().toString();
             String confirmPasswordText = confirmPassword.getText().toString();
 
-            if(!checkPasswords(passwordText, confirmPasswordText)) {
+            if (!checkPasswords(passwordText, confirmPasswordText)) {
                 Toast.makeText(UserRegistrationActivity.this, "Passwords does not match !", Toast.LENGTH_SHORT).show();
                 return;
-            };
+            }
+            ;
 
             mAuth.createUserWithEmailAndPassword(emailText, passwordText)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -147,46 +123,17 @@ public class UserRegistrationActivity extends AppCompatActivity {
                                         .addOnSuccessListener(documentReference -> {
                                             // User data saved successfully
                                             Toast.makeText(UserRegistrationActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                                            StorageReference storageRefResume = FirebaseStorage.getInstance().getReference().child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
-                                            storageRefResume.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-                                                @Override
-                                                public void onSuccess(StorageMetadata storageMetadata) {
-                                                    String fileName = storageMetadata.getName();
-                                                    resumeDisplay.setText(getApplicationContext().getResources().getString(R.string.resumeInDatabase));
-                                                    // Utiliser le nom du fichier récupéré pour afficher le nom du fichier sur votre interface utilisateur
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    resumeDisplay.setText(getApplicationContext().getResources().getString(R.string.resumeNotFound));
-                                                }
-                                            });
 
-                                            StorageReference storageRefCover = FirebaseStorage.getInstance().getReference().child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
-                                            storageRefCover.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-                                                @Override
-                                                public void onSuccess(StorageMetadata storageMetadata) {
-                                                    String fileName = storageMetadata.getName();
-                                                    coverLetterDisplay.setText(getApplicationContext().getResources().getString(R.string.coverLetterinDatabase));
-                                                    // Utiliser le nom du fichier récupéré pour afficher le nom du fichier sur votre interface utilisateur
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    coverLetterDisplay.setText(getApplicationContext().getResources().getString(R.string.coverNotFound));
-                                                }
-                                            });
                                             finish();
-                                            Intent phone = new Intent(UserRegistrationActivity.this, PhoneValidation.class);
-                                            startActivity(phone);
+                                            Intent files = new Intent(UserRegistrationActivity.this, uploadFilesRegistrationUser.class);
+                                            startActivity(files);
                                         })
                                         .addOnFailureListener(e -> {
                                             // Error saving user data
                                             Toast.makeText(UserRegistrationActivity.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                         });
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(UserRegistrationActivity.this, "Failed during user registration", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -225,6 +172,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 //            // Show file selector dialog
 //        });
     }
+
     private boolean checkPasswords(String password, String passwordConfirmation) {
         return password.equals(passwordConfirmation);
     }
@@ -273,94 +221,5 @@ public class UserRegistrationActivity extends AppCompatActivity {
             ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(UserRegistrationActivity.this, android.R.layout.simple_dropdown_item_1line, cities);
         }
     }
-
-    private void selectFiles() {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, getApplicationContext().getResources().getString(R.string.selectPDF)), 12);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode==12 && resultCode==RESULT_OK && data!=null &&data.getData()!=null){
-            if(resume) {
-                UploadFiles(data.getData());
-            } else {
-                UploadFilesCover(data.getData());
-            }
-        }
-    }
-
-    private void UploadFiles(Uri data) {
-        final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
-        progressDialog.setTitle("Uploading ...");
-        progressDialog.show();
-
-        StorageReference reference = storageRef.child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
-        reference.putFile(data)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete());
-                        Uri url = uriTask.getResult();
-
-                        String fileName = "Resume_" + FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-
-                        PDFClass pdf = new PDFClass(fileName, url.toString());
-
-                        databaseRefResume.child(databaseRefResume.push().getKey()).setValue(pdf);
-
-                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.fileUploaded), Toast.LENGTH_SHORT).show();
-
-                        progressDialog.dismiss();
-                        resumeDisplay.setText(getApplicationContext().getResources().getString(R.string.resumeInDatabase));
-                    }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                        double progress = (100.0 * snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                        progressDialog.setMessage(" Uploaded : " + (int)progress+"%");
-                    }
-                });
-    }
-
-    private void UploadFilesCover(Uri data) {
-        final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
-        progressDialog.setTitle("Uploading ...");
-        progressDialog.show();
-
-        StorageReference reference = storageRef.child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
-        reference.putFile(data)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete());
-                        Uri url = uriTask.getResult();
-
-                        String fileName = "CoverLetter_" + FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-
-                        PDFClass pdf = new PDFClass(fileName, url.toString());
-
-                        databaseRefCover.child(databaseRefCover.push().getKey()).setValue(pdf);
-
-                        Toast.makeText(getApplicationContext(),getApplicationContext().getResources().getString(R.string.fileUploaded), Toast.LENGTH_SHORT).show();
-
-                        progressDialog.dismiss();
-                        coverLetterDisplay.setText(getApplicationContext().getResources().getString(R.string.coverLetterinDatabase));
-                    }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                        double progress = (100.0 * snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                        progressDialog.setMessage(" Uploaded : " + (int)progress+"%");
-                    }
-                });
-    }
-
-
 }
+

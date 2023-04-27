@@ -88,7 +88,7 @@
     <string name="prevBtn">Préc</string>
     <string name="firstSlideTitle">Créez un compte et choisissez votre plan</string>
     <string name="secondSlideTitle">Une fois réglé, commencez à recruter du personnel</string>
-    <string name="thirdSlideTitle">Trouvez et choisissez les meilleurs profiles</string>
+    <string name="thirdSlideTitle">Trouvez et choisissez les meilleurs profils</string>
     <string name="firstSlideDescription">Trouvez le meilleur plan qui convient à votre entreprise et votre stratégie pour recruter plus de travailleurs qualifiés</string>
     <string name="secondSlideDescription">"Commencer à poster des offres juste après le paiement (toutes les fonctions sont automatiquement activées) "</string>
     <string name="thirdSlideDescription">"Tous les outils nécessaires pour prendre un bon rendez-vous sont inclus dans chaque pack "</string>
@@ -102,7 +102,7 @@
     <string name="createGroup">Créer groupe</string>
     <string name="modifyProfile">Modifier le profil</string>
     <string name="conversationPageTitle">Conversations</string>
-    <string name="exampleSearch">Manager, Carleur ...</string>
+    <string name="exampleSearch">Manager, Carreleur ...</string>
     <string name="startDateFilter">Date Début</string>
     <string name="endDateFilter">Date Fin</string>
     <string name="areaFilter">"Zone : "</string>
@@ -211,4 +211,8 @@
     <string name="pendingBtn">En cours</string>
     <string name="statusApplication">"État "</string>
     <string name="noUserWithEmailErr">Aucun utilisateur trouvé avec cette adresse mail</string>
+    <string name="uploadYourFiles">Envoyez vos documents</string>
+    <string name="continueWithoutUploading">"Voulez-vous vraiment continuer sans avoir ajouté de fichiers ? "</string>
+    <string name="continueBtn">Continuer</string>
+    <string name="cancelBtn">Annuler</string>
 </resources>

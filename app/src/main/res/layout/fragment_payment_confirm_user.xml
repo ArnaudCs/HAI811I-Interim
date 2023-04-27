@@ -79,6 +79,7 @@
         </TextView>
 
         <Button
+            android:id="@+id/celebrationNextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/navigation_bar"

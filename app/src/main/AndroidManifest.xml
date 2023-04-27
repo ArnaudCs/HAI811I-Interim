@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Interim"
         tools:targetApi="31">
         <activity
+            android:name=".authentication.uploadFilesRegistrationUser"
+            android:exported="false" />
+        <activity
             android:name=".discussion.NewMessageConversationActivity"
             android:exported="false" />
         <activity

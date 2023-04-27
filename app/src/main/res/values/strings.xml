@@ -221,4 +221,8 @@
     <string name="pendingBtn">Pending</string>
     <string name="statusApplication">"Status "</string>
     <string name="noUserWithEmailErr">No user found with this email</string>
+    <string name="uploadYourFiles">Upload your files</string>
+    <string name="continueWithoutUploading">Continue without uploading files ?</string>
+    <string name="continueBtn">Continue</string>
+    <string name="cancelBtn">Cancel</string>
 </resources>
