@@ -81,11 +81,11 @@ public class fragment_mission_description extends Fragment {
 
     String firstName;
 
-    Button applyBtnMission;
+    Button applyBtnMission, contactCompanyBtn;
     StorageReference mStorageRef;
     String name;
     String jobId;
-    LinearLayout applyContainer;
+    LinearLayout applyContainer, findSimilarBtnContainer, contactCompanyBtnContainer;
     public fragment_mission_description() {
         // Required empty public constructor
     }
@@ -128,6 +128,10 @@ public class fragment_mission_description extends Fragment {
         Button itinaryButtonMission = view.findViewById(R.id.itinaryButtonMission);
         Button shareBtn = view.findViewById(R.id.shareBtn);
         ImageView companyProfile = view.findViewById(R.id.companyProfile);
+        findSimilarBtnContainer = view.findViewById(R.id.findSimilarContainer);
+        contactCompanyBtnContainer = view.findViewById(R.id.contactCompanyBtnContainer);
+        contactCompanyBtn = view.findViewById(R.id.contactCompanyBtn);
+
 
         final Offer[] offer = {new Offer()};
 
@@ -150,6 +154,7 @@ public class fragment_mission_description extends Fragment {
                     } else {
                         pro = true;
                         applyContainer.setVisibility(View.GONE);
+                        findSimilarBtnContainer.setVisibility(View.GONE);
                         finalDb.collection("Pros").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {

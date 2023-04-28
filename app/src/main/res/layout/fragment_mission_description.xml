@@ -474,16 +474,18 @@
                             android:weightSum="4">
 
                             <LinearLayout
+                                android:id="@+id/findSimilarContainer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:paddingRight="10dp"
                                 android:gravity="center"
+                                android:visibility="visible"
                                 android:layout_weight="2">
 
                                 <Button
                                     android:id="@+id/findSimilarBtn"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingRight="22dp"
                                     android:paddingTop="5dp"
@@ -499,6 +501,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/contactCompanyBtnContainer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -508,7 +511,7 @@
 
                                 <Button
                                     android:id="@+id/contactCompanyBtn"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingRight="22dp"
                                     android:paddingTop="5dp"

@@ -137,6 +137,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/cardContainer"
                     android:layout_width="match_parent"
+                    android:paddingBottom="100dp"
+                    android:clipToPadding="false"
                     android:layout_height="match_parent">
 
                 </androidx.recyclerview.widget.RecyclerView>

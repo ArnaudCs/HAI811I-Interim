@@ -262,58 +262,50 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/redbutton"
+                        android:background="@drawable/redbox"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
                         android:paddingTop="10dp"
                         android:paddingRight="10dp"
-                        android:paddingBottom="10dp"
-                        android:weightSum="6">
+                        android:paddingBottom="10dp">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="4"
                             android:gravity="center">
 
                             <TextView
                                 android:id="@+id/resumeDisplay"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:maxLines="1"
-                                android:minLines="1"
                                 android:text="@string/undefinedResume"
-                                android:textAlignment="textStart"
+                                android:textAlignment="center"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"></TextView>
+                                android:textSize="14sp"></TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="right">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
                             <Button
                                 android:id="@+id/uploadResume"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
                                 android:background="@drawable/navigation_bar"
                                 android:drawableEnd="@drawable/baseline_refresh_24"
                                 android:drawablePadding="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
+                                android:paddingLeft="20dp"
+                                android:paddingRight="20dp"
                                 android:stateListAnimator="@null"
-                                android:text="@string/updateBtn"
+                                android:text="@string/updateResume"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 android:textStyle="bold">
-
                             </Button>
-
-
                         </LinearLayout>
 
                     </LinearLayout>
@@ -322,39 +314,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/redbutton"
+                        android:background="@drawable/redbox"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
                         android:paddingTop="10dp"
                         android:paddingRight="10dp"
-                        android:paddingBottom="10dp"
-                        android:weightSum="6">
+                        android:paddingBottom="10dp">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="4"
                             android:gravity="center">
 
                             <TextView
                                 android:id="@+id/coverLetterDisplay"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:maxLines="1"
-                                android:minLines="1"
                                 android:text="@string/undefinedCoverLetter"
-                                android:textAlignment="textStart"
+                                android:textAlignment="center"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"></TextView>
+                                android:textSize="14sp"></TextView>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="right">
+                            android:layout_marginTop="20dp"
+                            android:gravity="center">
 
                             <Button
                                 android:id="@+id/uploadCoverLetter"
@@ -363,10 +351,10 @@
                                 android:background="@drawable/navigation_bar"
                                 android:drawableEnd="@drawable/baseline_refresh_24"
                                 android:drawablePadding="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
+                                android:paddingLeft="20dp"
+                                android:paddingRight="20dp"
                                 android:stateListAnimator="@null"
-                                android:text="@string/updateBtn"
+                                android:text="@string/updateCoverLetter"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 android:textStyle="bold"></Button>
@@ -379,6 +367,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:layout_marginBottom="50dp"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -390,7 +379,8 @@
                             android:paddingRight="32dp"
                             android:text="@string/contactAssistance"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
+                            android:stateListAnimator="@null"
+                            android:textSize="14sp"
                             android:textStyle="bold">
 
                         </Button>
