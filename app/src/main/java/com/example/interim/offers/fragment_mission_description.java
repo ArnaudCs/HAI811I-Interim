@@ -136,7 +136,6 @@ public class fragment_mission_description extends Fragment {
         final Offer[] offer = {new Offer()};
 
         db = FirebaseFirestore.getInstance();
-        // Assuming that you have the offer ID in a variable named 'offerId'
         DocumentReference offerRef = db.collection("Offers").document(jobId);
 
         if (mAuth.getCurrentUser() != null) {
@@ -166,9 +165,6 @@ public class fragment_mission_description extends Fragment {
                 }
             });
         }
-
-        System.out.println(recruiterId + "------ id du recruter");
-
         mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + recruiterId);
         try {
             final File localFile = File.createTempFile("profilePic", "jpg");
