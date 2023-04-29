@@ -73,8 +73,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Barman [M/F]"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="@id/layoutMain" />
             </LinearLayout>
