@@ -14,7 +14,31 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Interim"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+            <meta-data
+                android:name="android.provider.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+            <meta-data
+                android:name="androidx.core.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+
+            <!-- Ajoutez ici tous les autres chemins d'accès dont vous avez besoin -->
+        </provider>
+
+        <activity
+            android:name=".offers.LetterGeneratorActivity"
+            android:exported="false" />
         <activity
             android:name=".offers.ApplicationManagerActivity"
             android:exported="false" />

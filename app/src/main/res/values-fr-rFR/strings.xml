@@ -219,4 +219,13 @@
     <string name="downloadCover">Télécharger la lettre</string>
     <string name="applicationPage">Candidatures</string>
     <string name="manageApplicationsBtn">Candidatures</string>
+    <string name="coverLetterGenerator">Créateur</string>
+    <string name="letterGeneratorTitle">Bienvenue dans notre générateur de lettre choisissez un style</string>
+    <string name="generatorMyInfosTitle">Entrez vos informations</string>
+    <string name="generatedToast">"Votre lettre de motivation est générée ! "</string>
+    <string name="generateLetterBtn">Créer la lettre</string>
+    <string name="companyCity">Ville (entreprise)</string>
+    <string name="genderChoiceMale">"Homme "</string>
+    <string name="genderChoiceFemale">Femme</string>
+    <string name="chooseStyle">Choisissez le style</string>
 </resources>

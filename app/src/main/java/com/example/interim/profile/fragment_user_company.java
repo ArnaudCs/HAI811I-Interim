@@ -225,7 +225,7 @@ public class fragment_user_company extends Fragment {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     Uri fileUri = Uri.fromFile(localFile);
                     String imageUrl = fileUri.toString();
-                    Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(profileCompanyPic);
+                    Picasso.get().load(imageUrl).fit().centerCrop().into(profileCompanyPic);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

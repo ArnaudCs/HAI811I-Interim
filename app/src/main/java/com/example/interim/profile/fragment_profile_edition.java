@@ -188,7 +188,7 @@ public class fragment_profile_edition extends Fragment {
         public void onActivityResult(Uri result) {
             if (result != null) {
                 mImageUri = result;
-                Picasso.with(getContext()).load(mImageUri).fit().into(profilePic);
+                Picasso.get().load(mImageUri).fit().into(profilePic);
             }
         }
     });

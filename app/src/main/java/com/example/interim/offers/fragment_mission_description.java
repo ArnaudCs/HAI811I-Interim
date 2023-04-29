@@ -177,7 +177,7 @@ public class fragment_mission_description extends Fragment {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     Uri fileUri = Uri.fromFile(localFile);
                     String imageUrl = fileUri.toString();
-                    Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(companyProfile);
+                    Picasso.get().load(imageUrl).fit().centerCrop().into(companyProfile);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

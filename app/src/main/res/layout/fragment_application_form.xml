@@ -33,10 +33,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:paddingTop="20dp"
-                    android:padding="20dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:paddingTop="20dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -45,16 +45,15 @@
                         android:text="@string/yourApplicationTitle"
                         android:textAlignment="center"
                         android:textSize="25sp"
-                        android:textStyle="bold">
-                    </TextView>
+                        android:textStyle="bold"></TextView>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutApplicantName"
                         android:layout_width="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:hint="@string/Name"
                         app:boxBackgroundColor="#FFFFFF"
                         app:boxBackgroundMode="outline"
@@ -79,9 +78,9 @@
                         android:id="@+id/layoutApplicantFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="40dp"
                         android:hint="@string/Firstname"
                         app:boxBackgroundColor="#FFFFFF"
                         app:boxBackgroundMode="outline"
@@ -106,14 +105,14 @@
                         android:id="@+id/layoutApplicantNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:hint="@string/PhoneNumber"
                         app:boxBackgroundColor="#FFFFFF"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="@color/primary_red"
                         app:boxStrokeErrorColor="#DC0303"
-                        android:layout_marginBottom="10dp"
                         app:endIconMode="clear_text"
                         app:endIconTint="@color/primary_red"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -133,8 +132,9 @@
                         android:id="@+id/layoutApplicantMail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:hint="@string/Mail"
                         app:boxBackgroundColor="#FFFFFF"
                         app:boxBackgroundMode="outline"
@@ -144,7 +144,6 @@
                         app:endIconTint="@color/primary_red"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginBottom="10dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:startIconDrawable="@drawable/baseline_email_24"
                         app:startIconTint="@color/primary_red">
@@ -160,10 +159,10 @@
                         android:id="@+id/layoutApplicantAdress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:hint="@string/placeInput"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="10dp"
+                        android:hint="@string/placeInput"
                         app:boxBackgroundColor="#FFFFFF"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="@color/primary_red"
@@ -187,15 +186,15 @@
                         android:id="@+id/layoutApplicantBirth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:hint="@string/Birthdate"
                         app:boxBackgroundColor="#FFFFFF"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="@color/primary_red"
                         app:boxStrokeErrorColor="#DC0303"
                         app:endIconMode="clear_text"
-                        android:layout_marginBottom="10dp"
                         app:endIconTint="@color/primary_red"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -266,8 +265,8 @@
                     android:background="@drawable/redbox"
                     android:paddingRight="20dp"
                     android:paddingLeft="20dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
                     android:weightSum="4"
                     android:layout_marginBottom="20dp"
                     android:paddingBottom="20dp"
@@ -353,8 +352,8 @@
                     android:paddingRight="20dp"
                     android:paddingLeft="20dp"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
                     android:weightSum="4"
                     android:paddingBottom="20dp"
                     android:orientation="vertical">
@@ -471,8 +470,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginBottom="100dp"
                     android:background="@drawable/greybox">
 
@@ -508,6 +507,7 @@
                         </LinearLayout>
 
                         <Button
+                            android:id="@+id/coverLetterGeneratorBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"

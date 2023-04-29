@@ -164,7 +164,7 @@ public class fragment_profil_user extends Fragment {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     Uri fileUri = Uri.fromFile(localFile);
                     String imageUrl = fileUri.toString();
-                    Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(profileUserPic);
+                    Picasso.get().load(imageUrl).fit().centerCrop().into(profileUserPic);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

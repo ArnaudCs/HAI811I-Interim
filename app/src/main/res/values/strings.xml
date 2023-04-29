@@ -229,4 +229,13 @@
     <string name="downloadCover">Download Cover Letter</string>
     <string name="applicationPage">Applications</string>
     <string name="manageApplicationsBtn">Applications</string>
+    <string name="coverLetterGenerator">Generator</string>
+    <string name="letterGeneratorTitle">Welcome to our letter generator, choose a style</string>
+    <string name="generatorMyInfosTitle">Enter your informations</string>
+    <string name="generatedToast">Your cover letter is generated !</string>
+    <string name="generateLetterBtn">Generate Letter</string>
+    <string name="companyCity">Company City</string>
+    <string name="genderChoiceMale">Male</string>
+    <string name="genderChoiceFemale">Female</string>
+    <string name="chooseStyle">Choose a style</string>
 </resources>

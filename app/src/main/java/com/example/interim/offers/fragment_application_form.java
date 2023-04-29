@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.interim.AppActivity;
 import com.example.interim.PDFClass;
 import com.example.interim.R;
 import com.example.interim.models.Offer;
@@ -71,7 +72,7 @@ public class fragment_application_form extends Fragment {
 
     StorageReference storageRef;
     DatabaseReference databaseRefResume, databaseRefCover;
-    Button uploadResume, uploadCoverLetter;
+    Button uploadResume, uploadCoverLetter, coverLetterGeneratorBtn;
 
     TextView coverLetterDisplay, resumeDisplay;
 
@@ -102,6 +103,7 @@ public class fragment_application_form extends Fragment {
         TextInputEditText textApplicantMail = view.findViewById(R.id.textApplicantMail);
         TextInputEditText textApplicantAdress = view.findViewById(R.id.textApplicantAdress);
         TextInputEditText textApplicantBirth = view.findViewById(R.id.textApplicantBirth);
+        coverLetterGeneratorBtn = view.findViewById(R.id.coverLetterGeneratorBtn);
 
         backBtnApplication.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +165,14 @@ public class fragment_application_form extends Fragment {
             public void onClick(View view) {
                 selectFiles();
                 resume = false;
+            }
+        });
+
+        coverLetterGeneratorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LetterGeneratorActivity.class);
+                startActivity(intent);
             }
         });
 

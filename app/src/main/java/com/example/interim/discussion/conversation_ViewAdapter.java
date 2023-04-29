@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.interim.R;
 import com.example.interim.models.Conversation;
+import com.squareup.picasso.Picasso;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,7 +75,7 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     Uri fileUri = Uri.fromFile(localFile);
                     String imageUrl = fileUri.toString();
-                    Picasso.with(context).load(imageUrl).fit().centerCrop().into(holder.profilePic);
+                    Picasso.get().load(imageUrl).fit().centerCrop().into(holder.profilePic);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
