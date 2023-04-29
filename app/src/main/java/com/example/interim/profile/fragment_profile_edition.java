@@ -40,6 +40,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 public class fragment_profile_edition extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -75,16 +77,28 @@ public class fragment_profile_edition extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextInputEditText textNameModification = view.findViewById(R.id.text1NameModification);
+        TextInputEditText textFirstNameModification = view.findViewById(R.id.textUserFirstnameModification);
         TextInputEditText textCompanyNameModification = view.findViewById(R.id.textCompanyNameModification);
         TextInputEditText textNationalNumberModification = view.findViewById(R.id.textNationalNumberModification);
         TextInputEditText textMailModification = view.findViewById(R.id.text1MailModification);
         TextInputEditText textNumberModification = view.findViewById(R.id.textContact1NumberModification);
         TextInputEditText textCompanyAdressModification = view.findViewById(R.id.textCompanyAdressModification);
         TextInputEditText textWebsiteModification = view.findViewById(R.id.textWebsiteModification);
+        TextInputEditText textBirthdateModification = view.findViewById(R.id.textBirthdateModification);
+        TextInputEditText textUserPhoneNumberModification = view.findViewById(R.id.textSimpleUserNumberModification);
+        TextInputEditText textUserMailModification = view.findViewById(R.id.textMailAdressModification);
+        TextInputEditText textUserNameModification = view.findViewById(R.id.textSimpleUserNameModification);
+        TextInputEditText textContact2Name = view.findViewById(R.id.text2NameModification);
+        TextInputEditText textContact2Number = view.findViewById(R.id.textContact2NumberModification);
+        TextInputEditText textContact2Email = view.findViewById(R.id.textContact2MailAdressModification);
+        TextInputEditText textServiceModification = view.findViewById(R.id.textServiceModification);
+        TextInputEditText textSubserviceModification = view.findViewById(R.id.textSubServiceModification);
+
 
         Button backBtnProfileModification = view.findViewById(R.id.backBtnProfileModification);
         Button choosePic = view.findViewById(R.id.choosePicBtn);
         Button uploadFile = view.findViewById(R.id.uploadBtn);
+        Button editProfile = view.findViewById(R.id.createAccount);
         profilePic = view.findViewById(R.id.imageVisualizer);
         progressBarFile = view.findViewById(R.id.progressBarPic);
 
@@ -106,7 +120,7 @@ public class fragment_profile_edition extends Fragment {
         TextInputLayout layoutContact1NumberModification = view.findViewById(R.id.layoutContact1NumberModification);
 
         TextInputLayout layoutBirthdateModification = view.findViewById(R.id.layoutSimpleUserBirthdateModification);
-        TextInputLayout layoutUserFirstnameModification = view.findViewById(R.id.layoutServiceModification);
+        TextInputLayout layoutUserFirstnameModification = view.findViewById(R.id.layoutSimpleUserFirstnameModification);
         TextInputLayout layoutUserNameModification = view.findViewById(R.id.layoutSimpleUserNameModification);
         TextInputLayout layoutMailAdressModification = view.findViewById(R.id.layoutMailAdressModification);
         TextInputLayout layoutNumberModification = view.findViewById(R.id.layoutSimpleUserNumberModification);
@@ -134,23 +148,127 @@ public class fragment_profile_edition extends Fragment {
                         layoutContact1MailAdressModification.setVisibility(View.GONE);
                         layoutContact1NameModification.setVisibility(View.GONE);
 
+
                         layoutBirthdateModification.setVisibility(View.VISIBLE);
                         layoutUserFirstnameModification.setVisibility(View.VISIBLE);
                         layoutUserNameModification.setVisibility(View.VISIBLE);
                         layoutMailAdressModification.setVisibility(View.VISIBLE);
                         layoutNumberModification.setVisibility(View.VISIBLE);
+                        String name = document.getString("name");
+                        String firstname = document.getString("firstName");
+                        String email = document.getString("email");
+                        String phoneNumber = document.getString("phoneNumber");
+                        String birthdate = document.getString("birthdate");
+
+                        textUserNameModification.setText(name);
+                        textBirthdateModification.setText(birthdate);
+                        textFirstNameModification.setText(firstname);
+                        textUserMailModification.setText(email);
+                        textUserPhoneNumberModification.setText(phoneNumber);
+
 
                     } else {
                         pro = true;
-                        layoutBirthdateModification.setVisibility(View.GONE);
-                        layoutUserFirstnameModification.setVisibility(View.GONE);
-                        layoutUserNameModification.setVisibility(View.GONE);
-                        layoutMailAdressModification.setVisibility(View.GONE);
-                        layoutNumberModification.setVisibility(View.GONE);
+                        DocumentReference profRef = db.collection("Pros").document(userId);
+                        profRef.get().addOnCompleteListener(taskPro -> {
+                            if (taskPro.isSuccessful()) {
+                                DocumentSnapshot documentPro = taskPro.getResult();
+                                if (documentPro.exists()) {
+                                    System.out.println(documentPro.toString());
+                                    String companyName = documentPro.getString("companyName");
+                                    String nationalNumber = documentPro.getString("nationalNumber");
+                                    String contactName = documentPro.getString("name");
+                                    String email = documentPro.getString("email");
+                                    String contactNumber = documentPro.getString("phoneNumber");
+                                    String companyAddress = documentPro.getString("companyAddress");
+                                    String website = documentPro.getString("website");
+                                    String contact2Name = documentPro.getString("contact2Name");
+                                    String contact2Phone = documentPro.getString("contact2Phone");
+                                    String contact2Email = documentPro.getString("contact2Email");
+                                    String service = documentPro.getString("service");
+                                    String subservice = documentPro.getString("subservice");
+
+                                    textCompanyNameModification.setText(companyName);
+                                    textNationalNumberModification.setText(nationalNumber);
+                                    textNameModification.setText(contactName);
+                                    textMailModification.setText(email);
+                                    textNumberModification.setText(contactNumber);
+                                    textCompanyAdressModification.setText(companyAddress);
+                                    textWebsiteModification.setText(website);
+                                    textContact2Name.setText(contact2Name);
+                                    textContact2Email.setText(contact2Email);
+                                    textContact2Number.setText(contact2Phone);
+                                    textServiceModification.setText(service);
+                                    textSubserviceModification.setText(subservice);
+
+
+                                    layoutBirthdateModification.setVisibility(View.GONE);
+                                    layoutUserFirstnameModification.setVisibility(View.GONE);
+                                    layoutUserNameModification.setVisibility(View.GONE);
+                                    layoutMailAdressModification.setVisibility(View.GONE);
+                                    layoutNumberModification.setVisibility(View.GONE);
+                                }
+                            }
+                        });
                     }
                 }
             });
         }
+
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userId = mAuth.getCurrentUser().getUid();
+                DocumentReference userRef;
+                if (pro) {
+                    userRef = db.collection("Pros").document(userId);
+                    userRef.update(
+                            "companyName", textCompanyNameModification.getText().toString(),
+                            "nationalNumber", textNationalNumberModification.getText().toString(),
+                            "name", textNameModification.getText().toString(),
+                            "email", textMailModification.getText().toString(),
+                            "phoneNumber", textNumberModification.getText().toString(),
+                            "companyAddress", textCompanyAdressModification.getText().toString(),
+                            "website", textWebsiteModification.getText().toString(),
+                            "contact2Name", textContact2Name.getText().toString(),
+                            "contact2Phone", textContact2Number.getText().toString(),
+                            "contact2Email", textContact2Email.getText().toString(),
+                            "service", textServiceModification.getText().toString(),
+                            "subservice", textSubserviceModification.getText().toString()
+                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getContext(), "Profile updated successfully.", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Failed to update profile.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    userRef = db.collection("Users").document(userId);
+                    userRef.update(
+                            "name", textUserNameModification.getText().toString(),
+                            "firstName", textFirstNameModification.getText().toString(),
+                            "email", textUserMailModification.getText().toString(),
+                            "phoneNumber", textUserPhoneNumberModification.getText().toString(),
+                            "birthdate", textBirthdateModification.getText().toString()
+                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getContext(), "Profile updated successfully.", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Failed to update profile.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+
 
         backBtnProfileModification.setOnClickListener(new View.OnClickListener() {
             @Override

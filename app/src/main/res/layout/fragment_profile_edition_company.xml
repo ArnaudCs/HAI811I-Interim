@@ -292,8 +292,8 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:hint="@string/Firstname"
-                app:boxBackgroundColor="#FFFFFF"
                 android:visibility="gone"
+                app:boxBackgroundColor="#FFFFFF"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/primary_red"
                 app:boxStrokeErrorColor="#DC0303"
@@ -307,7 +307,7 @@
                 tools:ignore="MissingConstraints">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TextUserFirstnameModification"
+                    android:id="@+id/textUserFirstnameModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
@@ -582,7 +582,7 @@
                 tools:ignore="MissingConstraints">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textContact12MailAdressModification"
+                    android:id="@+id/textContact2MailAdressModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
@@ -634,6 +634,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName|text" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

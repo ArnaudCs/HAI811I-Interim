@@ -136,7 +136,6 @@ public class fragment_mission_description extends Fragment {
         final Offer[] offer = {new Offer()};
 
         db = FirebaseFirestore.getInstance();
-        // Assuming that you have the offer ID in a variable named 'offerId'
         DocumentReference offerRef = db.collection("Offers").document(jobId);
 
         if (mAuth.getCurrentUser() != null) {
@@ -166,28 +165,68 @@ public class fragment_mission_description extends Fragment {
                 }
             });
         }
+        offerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    // Convert the document snapshot to an Offer object
+                    offer[0] = documentSnapshot.toObject(Offer.class);
+                    assert offer[0] != null;
+                    jobTitle.setText(offer[0].getJobTitle());
+                    companyName.setText(offer[0].getCompanyName());
+                    dateText.setText(getResources().getString(R.string.dateIndicationsStart) + offer[0].getStartDate()
+                            + getResources().getString(R.string.dateIndicationsEnd) + offer[0].getEndDate());
+                    salary.setText(offer[0].getSalaryMax() + "€" + getResources().getString(R.string.moneyMonthIndicator));
+                    postedDate.setText(getResources().getString(R.string.postedDateSuffix) + offer[0].getPostDate());
+                    moreInfosText.setText(offer[0].getLabel());
+                    missionText.setText(offer[0].getDescription());
+                    offerLocation = offer[0].getLocation();
+                    offerCategory = offer[0].getCategory();
+                    recruiterId = offer[0].getRecruiter();
 
-        System.out.println(recruiterId + "------ id du recruter");
 
-        mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + recruiterId);
-        try {
-            final File localFile = File.createTempFile("profilePic", "jpg");
-            mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    Uri fileUri = Uri.fromFile(localFile);
-                    String imageUrl = fileUri.toString();
-                    Picasso.get().load(imageUrl).fit().centerCrop().into(companyProfile);
+                    itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
+                            intent.setPackage("com.google.android.apps.maps");
+                            startActivity(intent);
+                        }
+                    });
+                    mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + recruiterId);
+                    try {
+                        final File localFile = File.createTempFile("profilePic", "jpg");
+                        mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                Uri fileUri = Uri.fromFile(localFile);
+                                String imageUrl = fileUri.toString();
+                                Picasso.with(getContext()).load(imageUrl).fit().centerCrop().into(companyProfile);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+                    } catch (
+                            IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
+                else {
+                    System.err.println("NO OFFER FOUND WITH THIS ID !");
                 }
-            });
-        } catch (
-                IOException e) {
-            throw new RuntimeException(e);
-        }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle the error case
+            }
+        });
+
+
+
 
 
         findSimilarBtn.setOnClickListener(new View.OnClickListener() {
