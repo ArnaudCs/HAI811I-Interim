@@ -12,7 +12,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.interim.AppActivity;
 import com.example.interim.R;
@@ -84,8 +87,16 @@ public class MainActivity extends AppCompatActivity {
         TextInputEditText textPassword = findViewById(R.id.textPassword);
         Button loginButton = findViewById(R.id.loginButton);
         TextInputEditText textEmail = findViewById(R.id.textUsername);
-        TextView register = findViewById(R.id.goRegisterUser);
-        TextView registerPro = findViewById(R.id.goRegisterCorp);
+        LinearLayout register = findViewById(R.id.goRegisterUser);
+        LinearLayout registerPro = findViewById(R.id.goRegisterCorp);
+        ImageView adminLoginBtn = findViewById(R.id.adminLoginBtn);
+
+        adminLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Interface gestionnaire en developpement", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override

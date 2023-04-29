@@ -9,6 +9,28 @@
     android:outlineProvider="none"
     tools:context=".authentication.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/adminLoginBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_build_circle_24"
+            app:tint="@color/white"
+            android:backgroundTint="@color/white">
+
+        </ImageView>
+
+
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/personLogin"
         android:layout_width="350dp"
@@ -76,7 +98,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
         android:hint="@string/Password"
         app:boxBackgroundColor="#FFFFFF"
@@ -105,35 +127,56 @@
         android:id="@+id/loginButton"
         android:layout_width="200dp"
         android:layout_height="55dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/gradient"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/redbutton"
         android:text="@string/loginBtn"
         android:textColor="#F6F3F3"
         android:textColorHint="#F6F3F3"
-        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutPassword" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/goRegisterUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/goRegister"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/greybox"
         app:layout_constraintEnd_toEndOf="@+id/loginButton"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="@+id/loginButton"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        android:layout_marginTop="20dp">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/goRegister"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/goRegisterCorp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/goRegisterCorp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/greybox"
         app:layout_constraintEnd_toEndOf="@+id/loginButton"
         app:layout_constraintStart_toStartOf="@+id/loginButton"
-        app:layout_constraintTop_toBottomOf="@+id/goRegisterUser" />
+        app:layout_constraintTop_toBottomOf="@+id/goRegisterUser" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/goRegisterCorp"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
