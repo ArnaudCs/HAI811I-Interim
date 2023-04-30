@@ -236,4 +236,5 @@
     <string name="adminDashboardTitle">DashBoard Gestionnaire</string>
     <string name="statsCardTitle">Statistiques</string>
     <string name="manageBtn">Gérer</string>
+    <string name="blockedUserTitle">Utilisateurs signalés ou bloqués</string>
 </resources>
