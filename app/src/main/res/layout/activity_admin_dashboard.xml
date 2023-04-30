@@ -110,6 +110,7 @@
                                     android:layout_height="match_parent">
 
                                     <Button
+                                        android:id="@+id/statActivityBtn"
                                         android:layout_width="180dp"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/redbutton"
@@ -192,6 +193,7 @@
                                     android:layout_height="match_parent">
 
                                     <Button
+                                        android:id="@+id/usersManagement"
                                         android:layout_width="180dp"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/redbutton"
@@ -245,17 +247,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left">
-
-            <Button
-                android:id="@+id/backBtnSettings"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/baseline_arrow_circle_left_24"
-                android:backgroundTint="#FFFFFF"
-                android:drawableTint="#FBFAFA"
-                android:foregroundTint="#FFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
         <LinearLayout
@@ -282,6 +273,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right">
+
+            <Button
+                android:id="@+id/logoutBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/baseline_logout_24"
+                android:backgroundTint="#FFFFFF"
+                android:drawableTint="#FBFAFA"
+                android:foregroundTint="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
     </LinearLayout>
 

@@ -247,4 +247,7 @@
     <string name="statsCardTitle">Statistics and Graphs</string>
     <string name="manageBtn">Manage</string>
     <string name="blockedUserTitle">Blocked and signaled Users</string>
+    <string name="blockTitle">Blocked/Signaled</string>
+    <string name="blockedTab">Blocked</string>
+    <string name="SignaledTab">Signaled</string>
 </resources>
