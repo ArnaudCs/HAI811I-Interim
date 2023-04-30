@@ -228,4 +228,12 @@
     <string name="genderChoiceMale">"Homme "</string>
     <string name="genderChoiceFemale">Femme</string>
     <string name="chooseStyle">Choisissez le style</string>
+    <string name="deleteBtn">Supprimer</string>
+    <string name="deleteMessageWarning">Êtes vous sur de vouloir supprimer la conversation ? L\'action est irréversible.</string>
+    <string name="yesBtn">Oui</string>
+    <string name="noBtn">Non</string>
+    <string name="adminConnexionPageTitle">Connexion Gestionnaire</string>
+    <string name="adminDashboardTitle">DashBoard Gestionnaire</string>
+    <string name="statsCardTitle">Statistiques</string>
+    <string name="manageBtn">Gérer</string>
 </resources>

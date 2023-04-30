@@ -238,4 +238,13 @@
     <string name="genderChoiceMale">Male</string>
     <string name="genderChoiceFemale">Female</string>
     <string name="chooseStyle">Choose a style</string>
+    <string name="deleteBtn">Delete</string>
+    <string name="deleteMessageWarning">Are you sure you want to delete the conversation? This action is irreversible.</string>
+    <string name="yesBtn">Yes</string>
+    <string name="noBtn">No</string>
+    <string name="adminConnexionPageTitle">Admin Connection</string>
+    <string name="adminDashboardTitle">Admin DashBoard</string>
+    <string name="statsCardTitle">Statistics and Graphs</string>
+    <string name="manageBtn">Manage</string>
+    <string name="blockedUserTitle">Blocked and signaled Users</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.example.interim.discussion;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -56,6 +58,8 @@ public class fragment_message_discussion extends Fragment {
     private int numMessages;
 
     RecyclerView recyclerView;
+
+    Button deleteBtn;
     private Runnable mRunnable;
     public fragment_message_discussion() {
         // Required empty public constructor
@@ -83,10 +87,12 @@ public class fragment_message_discussion extends Fragment {
         recyclerView = view.findViewById(R.id.messagesContainer);
         LottieAnimationView sendMsg = view.findViewById(R.id.sendMessage);
         EditText messageText = view.findViewById(R.id.messageText);
+        deleteBtn = view.findViewById(R.id.deleteBtn);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-// Get the list of message IDs from the conversation document
+
+        // Get the list of message IDs from the conversation document
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
         convName.setText("Participant names");
         final String[] type = new String[1];
@@ -179,6 +185,30 @@ public class fragment_message_discussion extends Fragment {
                     }
                 } else {
                 }
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                infosContainer.setVisibility(View.GONE);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Confirmation");
+                builder.setMessage(getContext().getResources().getString(R.string.deleteMessageWarning));
+                builder.setPositiveButton(getContext().getResources().getString(R.string.yesBtn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton(getContext().getResources().getString(R.string.noBtn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

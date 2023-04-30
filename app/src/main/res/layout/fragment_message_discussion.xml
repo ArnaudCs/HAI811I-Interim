@@ -147,10 +147,10 @@
                 android:layout_weight="2">
 
                 <Button
-                    android:id="@+id/muteBtn"
+                    android:id="@+id/deleteBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/muteBtn"
+                    android:text="@string/deleteBtn"
                     android:textStyle="bold"
                     android:stateListAnimator="@null"
                     android:background="@drawable/navigation_bar">

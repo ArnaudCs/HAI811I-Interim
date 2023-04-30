@@ -94,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
         adminLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Interface gestionnaire en developpement", Toast.LENGTH_SHORT).show();
+                Intent loginAdmin = new Intent(MainActivity.this, adminLoginPage.class);
+                startActivity(loginAdmin);
             }
         });
 
