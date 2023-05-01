@@ -27,11 +27,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -156,6 +158,24 @@ public class fragment_new_message_conversation extends Fragment {
                 .addOnSuccessListener(documentReference -> {
                     // the document was successfully created
                     Log.d(TAG, "New conversation document created with ID: " + documentReference.getId());
+                    // Create new message document
+                    Map<String, Object> messageData = new HashMap<>();
+                    messageData.put("date", new Date());
+                    messageData.put("sender", userRef.getId());
+                    messageData.put("text", firstMessageText.getText().toString());
+                    db.collection("Messages").add(messageData)
+                            .addOnSuccessListener(messageDocumentReference -> {
+                                // the document was successfully created
+                                Log.d(TAG, "New message document created with ID: " + messageDocumentReference.getId());
+                                // Add reference to message document to Conversation document
+                                documentReference.update("messages", FieldValue.arrayUnion(messageDocumentReference));
+                                // Add reference to contactRef to unRead array in Conversation document
+                                documentReference.update("unRead", FieldValue.arrayUnion(contactRef));
+                            })
+                            .addOnFailureListener(e -> {
+                                // an error occurred while creating the document
+                                Log.w(TAG, "Error creating new message document", e);
+                            });
                 })
                 .addOnFailureListener(e -> {
                     // an error occurred while creating the document
@@ -170,4 +190,5 @@ public class fragment_new_message_conversation extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
 }

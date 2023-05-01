@@ -1,5 +1,7 @@
 package com.example.interim.discussion;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -199,6 +203,36 @@ public class fragment_message_discussion extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        db.collection("Conversations").document(conversationId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+
+                                        List<DocumentReference> messagesRef = (List<DocumentReference>) document.get("messages");
+                                        if (messagesRef != null) {
+                                            for (DocumentReference message : messagesRef) {
+                                                message.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d(TAG, "Message deleted successfully!");
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                        db.collection("Conversations").document(conversationId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Log.d(TAG, "Conversation deleted !");
+                                                getActivity().finish();
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton(getContext().getResources().getString(R.string.noBtn), new DialogInterface.OnClickListener() {
@@ -266,7 +300,6 @@ public class fragment_message_discussion extends Fragment {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            // Add a reference to the message in the unRead array for each participant
                                             conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -275,6 +308,9 @@ public class fragment_message_discussion extends Fragment {
                                                         if (document.exists()) {
                                                             List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
                                                             List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
+                                                            if (unReadRefs == null) {
+                                                                unReadRefs = new ArrayList<>();
+                                                            }
                                                             for (DocumentReference participantRef : participantsRefs) {
                                                                 String participantId = participantRef.getId();
                                                                 if (!participantId.equals(userId)) {
@@ -292,6 +328,7 @@ public class fragment_message_discussion extends Fragment {
                                                             }
                                                         }
                                                     }
+
                                                 }
                                             });
 
