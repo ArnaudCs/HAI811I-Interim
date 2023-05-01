@@ -246,4 +246,5 @@
     <string name="alreadyAdmin">Vous êtes déjà un admin</string>
     <string name="notAdminToast">Mauvais code, vous ne pouvez pas être admin</string>
     <string name="errogettingId">Erreur de récupération de l\'ID</string>
+    <string name="applicationCelebration">"Votre candidature à été envoyée ! Retrouvez vos candidatures dans l'onglet \"Mes candidatures\". Bonne chance ! "</string>
 </resources>

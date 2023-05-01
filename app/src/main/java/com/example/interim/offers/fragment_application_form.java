@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import android.text.TextUtils;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +68,9 @@ public class fragment_application_form extends Fragment {
 
     boolean resume = false;
 
+    boolean resumeUploaded = false;
+    boolean coverUploaded = false;
+
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
 
@@ -82,7 +86,7 @@ public class fragment_application_form extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_application_form, container, false);
         // Get the value of myValue from the arguments
         Bundle bundle = getArguments();
@@ -122,13 +126,16 @@ public class fragment_application_form extends Fragment {
         coverLetterDisplay = view.findViewById(R.id.coverLetterDisplay);
         resumeDisplay = view.findViewById(R.id.resumeDisplay);
 
-        StorageReference storageRefResume = FirebaseStorage.getInstance().getReference().child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
+        StorageReference storageRefResume = FirebaseStorage.getInstance().getReference()
+                .child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
         storageRefResume.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override
             public void onSuccess(StorageMetadata storageMetadata) {
                 String fileName = storageMetadata.getName();
                 resumeDisplay.setText(getContext().getResources().getString(R.string.resumeInDatabase));
-                // Utiliser le nom du fichier récupéré pour afficher le nom du fichier sur votre interface utilisateur
+                resumeUploaded = true;
+                // Utiliser le nom du fichier récupéré pour afficher le nom du fichier sur votre
+                // interface utilisateur
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -137,13 +144,16 @@ public class fragment_application_form extends Fragment {
             }
         });
 
-        StorageReference storageRefCover = FirebaseStorage.getInstance().getReference().child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
+        StorageReference storageRefCover = FirebaseStorage.getInstance().getReference()
+                .child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
         storageRefCover.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override
             public void onSuccess(StorageMetadata storageMetadata) {
                 String fileName = storageMetadata.getName();
                 coverLetterDisplay.setText(getContext().getResources().getString(R.string.coverLetterinDatabase));
-                // Utiliser le nom du fichier récupéré pour afficher le nom du fichier sur votre interface utilisateur
+                coverUploaded = true;
+                // Utiliser le nom du fichier récupéré pour afficher le nom du fichier sur votre
+                // interface utilisateur
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -197,7 +207,8 @@ public class fragment_application_form extends Fragment {
 
                                     // Set the input fields with the last application data
                                     textApplicantName.setText(lastApplication.get("applicantName").toString());
-                                    textApplicantFirstName.setText(lastApplication.get("applicantFirstName").toString());
+                                    textApplicantFirstName
+                                            .setText(lastApplication.get("applicantFirstName").toString());
                                     textApplicantPhone.setText(lastApplication.get("applicantPhone").toString());
                                     textApplicantMail.setText(lastApplication.get("applicantMail").toString());
                                     textApplicantAdress.setText(lastApplication.get("applicantAdress").toString());
@@ -212,85 +223,97 @@ public class fragment_application_form extends Fragment {
             }
         });
 
-
-
         applyConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get input data
-                String applicantName = textApplicantName.getText().toString();
-                String applicantFirstName = textApplicantFirstName.getText().toString();
-                String applicantPhone = textApplicantPhone.getText().toString();
-                String applicantMail = textApplicantMail.getText().toString();
-                String applicantAdress = textApplicantAdress.getText().toString();
-                String applicantBirth = textApplicantBirth.getText().toString();
 
-                // Get Firestore instance and reference to "Applications" collection
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                CollectionReference applicationsRef = db.collection("Applications");
+                if (!TextUtils.isEmpty(textApplicantName.getText()) &&
+                        !TextUtils.isEmpty(textApplicantFirstName.getText()) &&
+                        !TextUtils.isEmpty(textApplicantPhone.getText()) &&
+                        !TextUtils.isEmpty(textApplicantMail.getText()) &&
+                        !TextUtils.isEmpty(textApplicantAdress.getText()) &&
+                        !TextUtils.isEmpty(textApplicantBirth.getText()) &&
+                        resumeUploaded && coverUploaded) {
 
-                // Create new document in "Applications" collection
-                DocumentReference newApplicationRef = applicationsRef.document();
+                    String applicantName = textApplicantName.getText().toString();
+                    String applicantFirstName = textApplicantFirstName.getText().toString();
+                    String applicantPhone = textApplicantPhone.getText().toString();
+                    String applicantMail = textApplicantMail.getText().toString();
+                    String applicantAdress = textApplicantAdress.getText().toString();
+                    String applicantBirth = textApplicantBirth.getText().toString();
 
-                // Set data for new document
-                Map<String, Object> data = new HashMap<>();
-                data.put("applicantName", applicantName);
-                data.put("applicantId",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                data.put("applicantFirstName", applicantFirstName);
-                data.put("applicantPhone", applicantPhone);
-                data.put("applicantMail", applicantMail);
-                data.put("applicantAdress", applicantAdress);
-                data.put("applicantBirth", applicantBirth);
-                data.put("offerId", offerId);
-                data.put("status",0);
+                    // Set data for new document
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("applicantName", applicantName);
+                    data.put("applicantId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    data.put("applicantFirstName", applicantFirstName);
+                    data.put("applicantPhone", applicantPhone);
+                    data.put("applicantMail", applicantMail);
+                    data.put("applicantAdress", applicantAdress);
+                    data.put("applicantBirth", applicantBirth);
+                    data.put("offerId", offerId);
+                    data.put("status", 0);
 
-                newApplicationRef.set(data)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Document has been added successfully
-                                textApplicantName.setText("");
-                                textApplicantFirstName.setText("");
-                                textApplicantPhone.setText("");
-                                textApplicantMail.setText("");
-                                textApplicantAdress.setText("");
-                                textApplicantBirth.setText("");
+                    // Create new document in "Applications" collection
+                    DocumentReference newApplicationRef = applicationsRef.document();
 
-                                // Get reference to the user's document
-                                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                DocumentReference userRef = db.collection("Users").document(userId);
+                    newApplicationRef.set(data)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Document has been added successfully
+                                    textApplicantName.setText("");
+                                    textApplicantFirstName.setText("");
+                                    textApplicantPhone.setText("");
+                                    textApplicantMail.setText("");
+                                    textApplicantAdress.setText("");
+                                    textApplicantBirth.setText("");
 
-                                // Add the new application data to the user's document
-                                Map<String, Object> applicationData = new HashMap<>();
-                                applicationData.put("applicantName", applicantName);
-                                applicationData.put("applicantFirstName", applicantFirstName);
-                                applicationData.put("applicantPhone", applicantPhone);
-                                applicationData.put("applicantMail", applicantMail);
-                                applicationData.put("applicantAdress", applicantAdress);
-                                applicationData.put("applicantBirth", applicantBirth);
-                                applicationData.put("offerId", offerId);
+                                    // Get reference to the user's document
+                                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    DocumentReference userRef = db.collection("Users").document(userId);
 
-                                userRef.update("lastApplication", applicationData)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                // User's document has been updated successfully
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // Handle any exceptions that may occur during the process
-                                            }
-                                        });
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Handle any exceptions that may occur during the process
-                            }
-                        });
+                                    // Add the new application data to the user's document
+                                    Map<String, Object> applicationData = new HashMap<>();
+                                    applicationData.put("applicantName", applicantName);
+                                    applicationData.put("applicantFirstName", applicantFirstName);
+                                    applicationData.put("applicantPhone", applicantPhone);
+                                    applicationData.put("applicantMail", applicantMail);
+                                    applicationData.put("applicantAdress", applicantAdress);
+                                    applicationData.put("applicantBirth", applicantBirth);
+                                    applicationData.put("offerId", offerId);
+
+                                    userRef.update("lastApplication", applicationData)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    // User's document has been updated successfully
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    // Handle any exceptions that may occur during the process
+                                                }
+                                            });
+
+                                    Intent applicationCelebration = new Intent(getActivity(),
+                                            applicationCelebration.class);
+                                    startActivity(applicationCelebration);
+                                    getActivity().finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle any exceptions that may occur during the process
+                                }
+                            });
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.missingFieldsErroToast),
+                            Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -299,15 +322,16 @@ public class fragment_application_form extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, getContext().getResources().getString(R.string.selectPDF)), 12);
+        startActivityForResult(Intent.createChooser(intent, getContext().getResources().getString(R.string.selectPDF)),
+                12);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==12 && resultCode==RESULT_OK && data!=null &&data.getData()!=null){
-            if(resume) {
+        if (requestCode == 12 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            if (resume) {
                 UploadFiles(data.getData());
             } else {
                 UploadFilesCover(data.getData());
@@ -320,13 +344,15 @@ public class fragment_application_form extends Fragment {
         progressDialog.setTitle("Uploading ...");
         progressDialog.show();
 
-        StorageReference reference = storageRef.child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
+        StorageReference reference = storageRef
+                .child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
         reference.putFile(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete());
+                        while (!uriTask.isComplete())
+                            ;
                         Uri url = uriTask.getResult();
 
                         String fileName = "Resume_" + FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
@@ -335,16 +361,18 @@ public class fragment_application_form extends Fragment {
 
                         databaseRefResume.child(databaseRefResume.push().getKey()).setValue(pdf);
 
-                        Toast.makeText(getContext(), getContext().getResources().getString(R.string.fileUploaded), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getContext().getResources().getString(R.string.fileUploaded),
+                                Toast.LENGTH_SHORT).show();
 
                         progressDialog.dismiss();
                         resumeDisplay.setText(getContext().getResources().getString(R.string.resumeInDatabase));
+                        resumeUploaded = true;
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                        double progress = (100.0 * snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                        progressDialog.setMessage(" Uploaded : " + (int)progress+"%");
+                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                        progressDialog.setMessage(" Uploaded : " + (int) progress + "%");
                     }
                 });
     }
@@ -354,13 +382,15 @@ public class fragment_application_form extends Fragment {
         progressDialog.setTitle("Uploading ...");
         progressDialog.show();
 
-        StorageReference reference = storageRef.child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
+        StorageReference reference = storageRef
+                .child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
         reference.putFile(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete());
+                        while (!uriTask.isComplete())
+                            ;
                         Uri url = uriTask.getResult();
 
                         String fileName = "CoverLetter_" + FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
@@ -369,16 +399,19 @@ public class fragment_application_form extends Fragment {
 
                         databaseRefCover.child(databaseRefCover.push().getKey()).setValue(pdf);
 
-                        Toast.makeText(getContext(), getContext().getResources().getString(R.string.fileUploaded), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getContext().getResources().getString(R.string.fileUploaded),
+                                Toast.LENGTH_SHORT).show();
 
                         progressDialog.dismiss();
-                        coverLetterDisplay.setText(getContext().getResources().getString(R.string.coverLetterinDatabase));
+                        coverLetterDisplay
+                                .setText(getContext().getResources().getString(R.string.coverLetterinDatabase));
+                        coverUploaded = true;
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                        double progress = (100.0 * snapshot.getBytesTransferred())/snapshot.getTotalByteCount();
-                        progressDialog.setMessage(" Uploaded : " + (int)progress+"%");
+                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                        progressDialog.setMessage(" Uploaded : " + (int) progress + "%");
                     }
                 });
     }
