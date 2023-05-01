@@ -37,6 +37,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class fragment_my_applications extends Fragment {
     String userId;
@@ -88,9 +89,9 @@ public class fragment_my_applications extends Fragment {
         pendingContainer = view.findViewById(R.id.pendingContainer);
         rejectedContainer = view.findViewById(R.id.rejectedContainer);
 
-        pendingOffers = new ArrayList<>();
-        acceptedOffers = new ArrayList<>();
-        rejectedOffers = new ArrayList<>();
+        HashMap<Offer, Integer> pendingOffers = new HashMap<>();
+        HashMap<Offer, Integer> acceptedOffers = new HashMap<>();
+        HashMap<Offer, Integer> rejectedOffers = new HashMap<>();
 
         if(userId != null) {
             db.collection("Applications")
@@ -112,48 +113,55 @@ public class fragment_my_applications extends Fragment {
                                     acceptedOfferIds.add(documentSnapshot.getString("offerId"));
                                 }
                             }
-                            db.collection("Offers")
-                                .whereIn(FieldPath.documentId(), pendingOfferIds)
-                                .get()
-                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onSuccess(QuerySnapshot querySnapshot) {
-                                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                                            Offer offer = documentSnapshot.toObject(Offer.class);
-                                            pendingOffers.add(offer);
-                                        }
-                                        recyclerViewPending.setLayoutManager(new LinearLayoutManager(getContext()));
-                                        recyclerViewPending.setAdapter(new applicationCard_ViewAdapter(getContext(), pendingOffers));
-                                    }
-                                });
-                            db.collection("Offers")
-                                    .whereIn(FieldPath.documentId(), acceptedOfferIds)
-                                    .get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onSuccess(QuerySnapshot querySnapshot) {
-                                            for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                                                Offer offer = documentSnapshot.toObject(Offer.class);
-                                                acceptedOffers.add(offer);
+                            if(pendingOfferIds.size() > 0) {
+                                db.collection("Offers")
+                                        .whereIn(FieldPath.documentId(), pendingOfferIds)
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot querySnapshot) {
+                                                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                                    Offer offer = documentSnapshot.toObject(Offer.class);
+                                                    pendingOffers.put(offer, 0);
+                                                }
+                                                recyclerViewPending.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                recyclerViewPending.setAdapter(new applicationCard_ViewAdapter(getContext(), pendingOffers));
                                             }
-                                            recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getContext()));
-                                            recyclerViewAccepted.setAdapter(new applicationCard_ViewAdapter(getContext(), acceptedOffers));
-                                        }
-                                    });
-                            db.collection("Offers")
-                                    .whereIn(FieldPath.documentId(), rejectedOfferIds)
-                                    .get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onSuccess(QuerySnapshot querySnapshot) {
-                                            for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                                                Offer offer = documentSnapshot.toObject(Offer.class);
-                                                rejectedOffers.add(offer);
+                                        });
+                            }
+                            if (acceptedOfferIds.size() > 0) {
+                                db.collection("Offers")
+                                        .whereIn(FieldPath.documentId(), acceptedOfferIds)
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot querySnapshot) {
+                                                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                                    Offer offer = documentSnapshot.toObject(Offer.class);
+                                                    acceptedOffers.put(offer, 2);
+                                                }
+                                                recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                recyclerViewAccepted.setAdapter(new applicationCard_ViewAdapter(getContext(), acceptedOffers));
                                             }
-                                            recyclerViewRejected.setLayoutManager(new LinearLayoutManager(getContext()));
-                                            recyclerViewRejected.setAdapter(new applicationCard_ViewAdapter(getContext(), rejectedOffers));
-                                        }
-                                    });
+                                        });
+                            }
+                            if(rejectedOfferIds.size() > 0) {
+                                db.collection("Offers")
+                                        .whereIn(FieldPath.documentId(), rejectedOfferIds)
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot querySnapshot) {
+                                                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+
+                                                    Offer offer = documentSnapshot.toObject(Offer.class);
+                                                    rejectedOffers.put(offer,1);
+                                                }
+                                                recyclerViewRejected.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                recyclerViewRejected.setAdapter(new applicationCard_ViewAdapter(getContext(), rejectedOffers));
+                                            }
+                                        });
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

@@ -2,6 +2,7 @@ package com.example.interim.offers;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class applicationCard_ViewHolder extends RecyclerView.ViewHolder {
     TextView postDate;
     TextView jobLocation;
     TextView jobSalary;
+    ImageView statusIcon;
 
     LinearLayout seeMore, modifyBtn, deleteBtn;
 
@@ -37,5 +39,6 @@ public class applicationCard_ViewHolder extends RecyclerView.ViewHolder {
         seeMore = itemView.findViewById(R.id.seeMoreApplicationBtn);
         modifyBtn = itemView.findViewById(R.id.modifyApplicationBtn);
         deleteBtn = itemView.findViewById(R.id.deleteApplicationBtn);
+        statusIcon = itemView.findViewById(R.id.statusIcon);
     }
 }

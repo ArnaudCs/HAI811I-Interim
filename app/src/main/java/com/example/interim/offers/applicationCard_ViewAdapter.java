@@ -3,6 +3,7 @@ package com.example.interim.offers;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicationCard_ViewHolder> {
 
     Context context;
     List<Offer> offers;
+    HashMap<Offer, Integer> offersMap;
 
     String firstName;
     String name;
@@ -37,9 +40,11 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
 
     boolean pro = false;
 
-    public applicationCard_ViewAdapter(Context context, List<Offer> offers) {
+    public applicationCard_ViewAdapter(Context context, HashMap<Offer, Integer> offersMap) {
         this.context = context;
-        this.offers = offers;
+        this.offersMap = offersMap;
+
+        offers = new ArrayList<Offer>(offersMap.keySet());
     }
 
     @NonNull
@@ -62,6 +67,13 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
         holder.jobLocation.setText(offers.get(position).getLocation());
         //holder.postDate.setText(offers.get(position).getPostDate().toString());
 
+        if(offersMap.get(offersMap.keySet().toArray()[position]) == Integer.valueOf(2)) {
+            holder.statusIcon.setImageResource(R.drawable.baseline_check_circle_24);
+            holder.statusIcon.setColorFilter(Color.GREEN);
+        } else if (offersMap.get(offersMap.keySet().toArray()[position]) == Integer.valueOf(1)) {
+            holder.statusIcon.setImageResource(R.drawable.baseline_cancel_24);
+            holder.statusIcon.setColorFilter(Color.RED);
+        }
         FirebaseFirestore db;
         FirebaseAuth mAuth;
 
