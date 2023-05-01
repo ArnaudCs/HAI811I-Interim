@@ -256,4 +256,5 @@
     <string name="alreadyAdmin">You are already an admin</string>
     <string name="notAdminToast">Wrong code, you can\'t be an admin</string>
     <string name="errogettingId">Error getting ID</string>
+    <string name="applicationCelebration">Your application has been sent ! See all your aplplications in the \"My Applications\" tab. Good Luck !</string>
 </resources>
