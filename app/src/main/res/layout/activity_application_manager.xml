@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView8"
-        android:name="com.example.interim.fragment_application_manager"
+        android:name="com.example.interim.offers.fragment_application_manager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,5 +1,7 @@
 package com.example.interim.offers;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +20,10 @@ import android.widget.Toast;
 
 import com.example.interim.R;
 import com.example.interim.models.Offer;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,12 +40,16 @@ import java.util.ArrayList;
 
 public class fragment_my_applications extends Fragment {
     String userId;
+    Boolean isPro;
     RecyclerView recyclerViewAccepted;
     RecyclerView recyclerViewRejected;
     RecyclerView recyclerViewPending;
-
+    FirebaseFirestore db;
+    FirebaseAuth mAuth;
     LinearLayout acceptedContainer, pendingContainer, rejectedContainer;
-    ArrayList<Offer> offers;
+    ArrayList<Offer> pendingOffers;
+    ArrayList<Offer> acceptedOffers;
+    ArrayList<Offer> rejectedOffers;
 
     Button acceptedBtn, pendingBtn, rejectedBtn;
 
@@ -51,7 +60,18 @@ public class fragment_my_applications extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        isPro = false;
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null) {
+            userId = mAuth.getCurrentUser().getUid();
+        }
+        else {
+            Log.d(TAG, "User is not logged in !");
+            return null;
+        }
+
         return inflater.inflate(R.layout.fragment_my_applications, container, false);
     }
 
@@ -59,11 +79,6 @@ public class fragment_my_applications extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button backButtonApplications = view.findViewById(R.id.backButtonApplications);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null) {
-            userId = mAuth.getCurrentUser().getUid();
-        }
-
 
         recyclerViewAccepted = view.findViewById(R.id.acceptedDisplay);
         recyclerViewPending = view.findViewById(R.id.pendingDisplay);
@@ -73,6 +88,10 @@ public class fragment_my_applications extends Fragment {
         pendingContainer = view.findViewById(R.id.pendingContainer);
         rejectedContainer = view.findViewById(R.id.rejectedContainer);
 
+        pendingOffers = new ArrayList<>();
+        acceptedOffers = new ArrayList<>();
+        rejectedOffers = new ArrayList<>();
+
         if(userId != null) {
             db.collection("Applications")
                     .whereEqualTo("applicantId", userId)
@@ -80,30 +99,59 @@ public class fragment_my_applications extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot querySnapshot) {
-                            ArrayList<String> offerIds = new ArrayList<>();
+                            ArrayList<String> pendingOfferIds = new ArrayList<>();
+                            ArrayList<String> acceptedOfferIds = new ArrayList<>();
+                            ArrayList<String> rejectedOfferIds = new ArrayList<>();
                             for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                                offerIds.add(documentSnapshot.getString("offerId"));
+                                if (documentSnapshot.get("status",Integer.class) == 0) {
+                                    pendingOfferIds.add(documentSnapshot.getString("offerId"));
+                                } else if (documentSnapshot.get("status",Integer.class) == 1) {
+                                    rejectedOfferIds.add(documentSnapshot.getString("offerId"));
+                                }
+                                else {
+                                    acceptedOfferIds.add(documentSnapshot.getString("offerId"));
+                                }
                             }
                             db.collection("Offers")
-                                    .whereIn(FieldPath.documentId(), offerIds)
+                                .whereIn(FieldPath.documentId(), pendingOfferIds)
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                            Offer offer = documentSnapshot.toObject(Offer.class);
+                                            pendingOffers.add(offer);
+                                        }
+                                        recyclerViewPending.setLayoutManager(new LinearLayoutManager(getContext()));
+                                        recyclerViewPending.setAdapter(new applicationCard_ViewAdapter(getContext(), pendingOffers));
+                                    }
+                                });
+                            db.collection("Offers")
+                                    .whereIn(FieldPath.documentId(), acceptedOfferIds)
                                     .get()
                                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                         @Override
                                         public void onSuccess(QuerySnapshot querySnapshot) {
-                                            offers = new ArrayList<>();
                                             for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
                                                 Offer offer = documentSnapshot.toObject(Offer.class);
-                                                offer.setId(documentSnapshot.getId());
-                                                offers.add(offer);
+                                                acceptedOffers.add(offer);
                                             }
                                             recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getContext()));
-                                            recyclerViewAccepted.setAdapter(new applicationCard_ViewAdapter(getContext(), offers));
+                                            recyclerViewAccepted.setAdapter(new applicationCard_ViewAdapter(getContext(), acceptedOffers));
                                         }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
+                                    });
+                            db.collection("Offers")
+                                    .whereIn(FieldPath.documentId(), rejectedOfferIds)
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                         @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            // Handle the error
+                                        public void onSuccess(QuerySnapshot querySnapshot) {
+                                            for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                                Offer offer = documentSnapshot.toObject(Offer.class);
+                                                rejectedOffers.add(offer);
+                                            }
+                                            recyclerViewRejected.setLayoutManager(new LinearLayoutManager(getContext()));
+                                            recyclerViewRejected.setAdapter(new applicationCard_ViewAdapter(getContext(), rejectedOffers));
                                         }
                                     });
                         }

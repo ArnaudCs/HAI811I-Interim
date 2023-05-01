@@ -242,6 +242,7 @@ public class fragment_application_form extends Fragment {
                 data.put("applicantAdress", applicantAdress);
                 data.put("applicantBirth", applicantBirth);
                 data.put("offerId", offerId);
+                data.put("status",0);
 
                 newApplicationRef.set(data)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

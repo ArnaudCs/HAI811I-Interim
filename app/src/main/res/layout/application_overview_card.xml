@@ -102,7 +102,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/appplicantBirthdate"
+                        android:id="@+id/applicantEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -133,7 +133,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/offerName"
+                    android:id="@+id/jobTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -275,6 +275,7 @@
                         android:layout_weight="3">
 
                         <Button
+                            android:id="@+id/seeMore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/redbutton"
@@ -304,19 +305,19 @@
                         android:layout_weight="3">
 
                         <LinearLayout
+                            android:id="@+id/messageApplicant"
                             android:layout_width="50dp"
-                            android:gravity="center"
+                            android:layout_height="50dp"
                             android:background="@drawable/redbutton"
-                            android:layout_height="50dp">
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/baseline_message_24"
-                                android:paddingLeft="10dp"
                                 android:backgroundTint="@color/white"
-                                android:paddingRight="10dp">
-                            </ImageView>
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"></ImageView>
 
                         </LinearLayout>
 
@@ -329,19 +330,19 @@
                         android:layout_weight="3">
 
                         <LinearLayout
+                            android:id="@+id/rejectApplicant"
                             android:layout_width="50dp"
-                            android:gravity="center"
+                            android:layout_height="50dp"
                             android:background="@drawable/redbutton"
-                            android:layout_height="50dp">
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/baseline_cancel_24"
-                                android:paddingLeft="10dp"
                                 android:backgroundTint="@color/white"
-                                android:paddingRight="10dp">
-                            </ImageView>
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"></ImageView>
 
                         </LinearLayout>
 
@@ -354,19 +355,19 @@
                         android:layout_weight="3">
 
                         <LinearLayout
+                            android:id="@+id/acceptApplicant"
                             android:layout_width="50dp"
-                            android:gravity="center"
+                            android:layout_height="50dp"
                             android:background="@drawable/redbutton"
-                            android:layout_height="50dp">
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/baseline_check_circle_24"
-                                android:paddingLeft="10dp"
                                 android:backgroundTint="@color/white"
-                                android:paddingRight="10dp">
-                            </ImageView>
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"></ImageView>
 
                         </LinearLayout>
 
