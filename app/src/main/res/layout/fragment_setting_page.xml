@@ -423,7 +423,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right">
+            android:gravity="right|top">
+
+            <Button
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:foregroundTint="@color/primary_red"
+                android:backgroundTint="@color/primary_red"
+                android:drawableTint="@color/primary_red"
+                android:background="@drawable/baseline_person_2_24"
+                android:id="@+id/adminFormBtn">
+            </Button>
         </LinearLayout>
     </LinearLayout>
 

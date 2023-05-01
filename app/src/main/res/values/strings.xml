@@ -250,4 +250,10 @@
     <string name="blockTitle">Blocked/Signaled</string>
     <string name="blockedTab">Blocked</string>
     <string name="SignaledTab">Signaled</string>
+    <string name="finaliseAccount">Complete your inscription on the regular page</string>
+    <string name="adminAccountValidator">Admin Account Validator</string>
+    <string name="nowAdmin">You are now an admin</string>
+    <string name="alreadyAdmin">You are already an admin</string>
+    <string name="notAdminToast">Wrong code, you can\'t be an admin</string>
+    <string name="errogettingId">Error getting ID</string>
 </resources>

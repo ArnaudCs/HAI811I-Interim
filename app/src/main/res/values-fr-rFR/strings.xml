@@ -240,4 +240,10 @@
     <string name="blockTitle">Bloqués/Signalés</string>
     <string name="blockedTab">Bloqués</string>
     <string name="SignaledTab">Signalés</string>
+    <string name="finaliseAccount">Terminez votre inscription sur la page de connexion classique</string>
+    <string name="adminAccountValidator">Validation de compte admin</string>
+    <string name="nowAdmin">Vous êtes maintenant un admin</string>
+    <string name="alreadyAdmin">Vous êtes déjà un admin</string>
+    <string name="notAdminToast">Mauvais code, vous ne pouvez pas être admin</string>
+    <string name="errogettingId">Erreur de récupération de l\'ID</string>
 </resources>

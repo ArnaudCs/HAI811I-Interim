@@ -2,6 +2,7 @@ package com.example.interim;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +24,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
@@ -37,12 +43,19 @@ public class fragment_setting_page extends Fragment {
 
     boolean resume = false;
 
+    boolean admin = false;
+
+    boolean pro = false;
+
+    FirebaseFirestore db;
+    FirebaseAuth mAuth;
+
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
 
     StorageReference storageRef;
     DatabaseReference databaseRefResume, databaseRefCover;
-    Button uploadResume, uploadCoverLetter;
+    Button uploadResume, uploadCoverLetter, adminFormBtn;
 
     TextView coverLetterDisplay, resumeDisplay;
 
@@ -77,6 +90,11 @@ public class fragment_setting_page extends Fragment {
 
         coverLetterDisplay = view.findViewById(R.id.coverLetterDisplay);
         resumeDisplay = view.findViewById(R.id.resumeDisplay);
+
+        adminFormBtn = view.findViewById(R.id.adminFormBtn);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         StorageReference storageRefResume = FirebaseStorage.getInstance().getReference().child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
         storageRefResume.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
@@ -115,6 +133,151 @@ public class fragment_setting_page extends Fragment {
             public void onClick(View view) {
                 selectFiles();
                 resume = true;
+            }
+        });
+
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            DocumentReference userRef = db.collection("Users").document(userId);
+            DocumentReference proRef = db.collection("Pros").document(userId);
+            userRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        admin = document.getBoolean("admin");
+                        pro = false;
+                        System.out.println("le user est admin ?" + admin );
+                    } else {
+                        pro = true;
+                    }
+                }
+            });
+
+            proRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        admin = document.getBoolean("admin");
+                        System.out.println("le user est admin ?" + admin );
+                    } else {
+                    }
+                }
+            });
+        }
+
+        adminFormBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Créer un dialogue personnalisé
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.custom_dialog);
+                dialog.setTitle("Entrer le code à 4 chiffres");
+
+                // Récupérer le champ d'édition du code
+                final EditText codeEditText = (EditText) dialog.findViewById(R.id.codeEditText);
+
+                // Ajouter un bouton pour valider le code
+                Button validerButton = (Button) dialog.findViewById(R.id.validerButton);
+                validerButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String code = codeEditText.getText().toString();
+
+                        // Vérifier si le code est valide
+                        if (code.equals("3400")) {
+                            // Récupérer l'utilisateur actuel
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                            // Vérifier si l'utilisateur est connecté
+                            if (currentUser != null) {
+                                String userId = currentUser.getUid();
+                                DocumentReference userRef = db.collection("Users").document(userId);
+                                DocumentReference proRef = db.collection("Pros").document(userId);
+
+                                // Récupérer le champ admin de l'utilisateur
+                                if(!pro){
+                                    userRef.get().addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                Boolean admin = document.getBoolean("admin");
+                                                if (admin == null || !admin) {
+                                                    // Mettre à jour le champ admin de l'utilisateur
+                                                    userRef.update("admin", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(getContext(), getResources().getString(R.string.nowAdmin), Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                        }
+                                                    });
+                                                } else {
+                                                    Toast.makeText(getContext(), getResources().getString(R.string.alreadyAdmin), Toast.LENGTH_SHORT).show();
+                                                    dialog.dismiss();
+                                                }
+                                            } else {
+                                                Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                            }
+                                        } else {
+                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                } else {
+                                    proRef.get().addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                Boolean admin = document.getBoolean("admin");
+                                                if (admin == null || !admin) {
+                                                    // Mettre à jour le champ admin de l'utilisateur
+                                                    userRef.update("admin", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(getContext(), getResources().getString(R.string.nowAdmin), Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                        }
+                                                    });
+                                                } else {
+                                                    Toast.makeText(getContext(), getResources().getString(R.string.alreadyAdmin), Toast.LENGTH_SHORT).show();
+                                                    dialog.dismiss();
+                                                }
+                                            } else {
+                                                Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                            }
+                                        } else {
+                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                }
+
+                            } else {
+                                Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        } else {
+                            // Le code est invalide, afficher un message d'erreur
+                            Toast.makeText(getContext(), getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                // Afficher le dialogue
+                dialog.show();
             }
         });
 
