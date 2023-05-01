@@ -242,6 +242,10 @@ public class fragment_application_form extends Fragment {
                     String applicantAdress = textApplicantAdress.getText().toString();
                     String applicantBirth = textApplicantBirth.getText().toString();
 
+                    // Get Firestore instance and reference to "Applications" collection
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    CollectionReference applicationsRef = db.collection("Applications");
+
                     // Set data for new document
                     Map<String, Object> data = new HashMap<>();
                     data.put("applicantName", applicantName);
