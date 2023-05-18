@@ -3,7 +3,7 @@
     <string name="Mail">Mail</string>
     <string name="Password">Password</string>
     <string name="StrongIndication">Enter a strong password</string>
-    <string name="minPass">Enter minimum 8 characters</string>
+    <string name="minPass">Password is too short, enter a minimum of 8 characters</string>
     <string name="badPass">Weak password, include minimum 1 special character</string>
     <string name="loginBtn">Login</string>
     <string name="title_activity_registration">Registration</string>
@@ -173,7 +173,7 @@
     <string name="searchApplications">Search Through applications</string>
     <string name="myApplicationsTitle">My Applications</string>
     <string name="connectionWarning">You must be connected to make this operation</string>
-    <string name="shareofferTitle">I found an offer that might interrest you</string>
+    <string name="shareofferTitle">I found an offer that might interest you</string>
     <string name="shareofferHook">Hey it\'s</string>
     <string name="shareOfferDetails">Offer details :</string>
     <string name="shareofferActionCall">To see more about this offer, or find similar offers, visit the Jobrr App ! See you soon ..</string>
@@ -260,6 +260,10 @@
     <string name="downloadBtn">Download</string>
     <string name="errorRetrievingFiles">File download error</string>
     <string name="successfulFileDownload">File downloaded successfully in your Download Directory</string>
+    <string name="incorrectLogin">Incorrect e-mail or password</string>
+    <string name="invalidLogin">Please enter a valid e-mail address / password</string>
+    <string name="emptyFields">Please fill all fields</string>
+    <string name="incorrectFields">Please correctly fill all the fields</string>
     <string name="addMemberError">Add a member email first</string>
     <string name="invalidEmailError">PLease enter an email</string>
 </resources>

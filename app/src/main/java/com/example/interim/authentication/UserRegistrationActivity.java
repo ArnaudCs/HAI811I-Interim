@@ -1,15 +1,18 @@
 package com.example.interim.authentication;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,9 +47,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -70,6 +76,8 @@ public class UserRegistrationActivity extends AppCompatActivity {
     TextView coverLetterDisplay, resumeDisplay;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
+    private Calendar calendar;
+    private TextInputEditText birthdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,16 +93,42 @@ public class UserRegistrationActivity extends AppCompatActivity {
         Spinner nationality = findViewById(R.id.nationalitySpinner);
         TextInputEditText email = findViewById(R.id.textMail);
         TextInputEditText phoneNumber = findViewById(R.id.textNumber);
-        TextInputEditText birthdate = findViewById(R.id.textBirthdate);
+        birthdate = findViewById(R.id.textBirthdate);
         TextInputEditText password = findViewById(R.id.textPassword);
         TextInputEditText confirmPassword = findViewById(R.id.textConfirmPassword);
         TextInputEditText city = findViewById(R.id.textCity);
+
+        calendar = Calendar.getInstance();
+        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDateEditText();
+            }
+        };
+
+        birthdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(UserRegistrationActivity.this, dateSetListener, year, month, day);
+                datePickerDialog.show();
+            }
+        });
 
         registerButton.setOnClickListener(v -> {
             if (email.getText().toString().trim().equals("") || password.getText().toString().trim().equals("") || confirmPassword.getText().toString().trim().equals("")
                     || name.getText().toString().trim().equals("") || firstName.getText().toString().trim().equals("") || nationality.getSelectedItem().toString().trim().equals("")
                     || phoneNumber.getText().toString().trim().equals("") || birthdate.getText().toString().trim().equals("") || city.getText().toString().trim().equals("")) {
-                Toast.makeText(UserRegistrationActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserRegistrationActivity.this, R.string.emptyFields, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!Patterns.PHONE.matcher(phoneNumber.getText()).matches() || !Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
+                Toast.makeText(UserRegistrationActivity.this, R.string.incorrectFields, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -103,8 +137,13 @@ public class UserRegistrationActivity extends AppCompatActivity {
             String passwordText = password.getText().toString();
             String confirmPasswordText = confirmPassword.getText().toString();
 
+            if (passwordText.length() < 8 || confirmPasswordText.length() < 8){
+                Toast.makeText(UserRegistrationActivity.this, R.string.minPass, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (!checkPasswords(passwordText, confirmPasswordText)) {
-                Toast.makeText(UserRegistrationActivity.this, "Passwords does not match !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserRegistrationActivity.this, R.string.passwordMismatch, Toast.LENGTH_SHORT).show();
                 return;
             }
             ;
@@ -171,6 +210,11 @@ public class UserRegistrationActivity extends AppCompatActivity {
 //        cvButton.setOnClickListener(v -> {
 //            // Show file selector dialog
 //        });
+    }
+    private void updateDateEditText() {
+        String dateFormat = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+        birthdate.setText(simpleDateFormat.format(calendar.getTime()));
     }
 
     private boolean checkPasswords(String password, String passwordConfirmation) {

@@ -4,7 +4,7 @@
     <string name="Mail">E-mail</string>
     <string name="Password">Mot de passe</string>
     <string name="StrongIndication">Choisissez un mot de passe complexe</string>
-    <string name="minPass">Utilisez au moins 8 caractères</string>
+    <string name="minPass">Le mot de passe doit contenir au moins 8 caractères</string>
     <string name="badPass">Mot de passe faible, utilisez au moins 1 caractère spécial</string>
     <string name="loginBtn">Se connecter</string>
     <string name="title_activity_registration">Création de compte</string>
@@ -252,4 +252,8 @@
     <string name="successfulFileDownload">Fichier téléchargé dans votre dossier Téléchargements</string>
     <string name="addMemberError">Veuillez ajouter un mail d\'utilisateur</string>
     <string name="invalidEmailError">Veuillez entrer un mail</string>
+    <string name="incorrectLogin">Votre e-mail ou mot de passe est incorrect</string>
+    <string name="invalidLogin">Veuillez entrer une adresse e-mail / mot de passe valide</string>
+    <string name="emptyFields">Veuillez remplir tous les champs</string>
+    <string name="incorrectFields">Veuillez remplir correctement remplir tous les champs</string>
 </resources>

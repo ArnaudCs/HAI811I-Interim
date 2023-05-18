@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -120,8 +123,13 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!TextUtils.isEmpty(textEmail.getText()) && !TextUtils.isEmpty(textPassword.getText())){
+
+                if(!TextUtils.isEmpty(textEmail.getText()) && !TextUtils.isEmpty(textPassword.getText())
+                    && Patterns.EMAIL_ADDRESS.matcher(textEmail.getText()).matches()){
                     signInUser(textEmail.getText().toString(), textPassword.getText().toString());
+                }
+                else {
+                    Toast.makeText(MainActivity.this, R.string.invalidLogin, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -194,7 +202,11 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         System.out.println("Login error");
                     }
+                })
+                .addOnFailureListener(this, task -> {
+                    Toast.makeText(this, R.string.incorrectLogin, Toast.LENGTH_SHORT).show();
                 });
+        ;
     }
 
 
