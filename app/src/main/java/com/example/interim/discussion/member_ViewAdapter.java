@@ -1,5 +1,6 @@
 package com.example.interim.discussion;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -38,9 +39,36 @@ public class member_ViewAdapter extends RecyclerView.Adapter<member_ViewHolder> 
         holder.deleteMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                membersList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, membersList.size());
+                holder.deleteMember.setVisibility(View.GONE);
+                holder.deleteAnimation.setVisibility(View.VISIBLE);
+                holder.deleteAnimation.setSpeed(2);
+                holder.deleteAnimation.playAnimation();
+                holder.deleteAnimation.addAnimatorListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+                        // Animation start event
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        // Animation end event
+                        membersList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, membersList.size());
+                        holder.deleteMember.setVisibility(View.VISIBLE);
+                        holder.deleteAnimation.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+                        // Animation cancel event
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+                        // Animation repeat event
+                    }
+                });
             }
         });
     }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.airbnb.lottie.Lottie;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.R;
 
@@ -23,12 +24,14 @@ import java.util.ArrayList;
 
 public class member_ViewHolder extends RecyclerView.ViewHolder {
     private TextView memberMail;
+    LottieAnimationView deleteAnimation;
     LinearLayout deleteMember;
 
     public member_ViewHolder(@NonNull View itemView) {
         super(itemView);
         memberMail = itemView.findViewById(R.id.memberMail);
         deleteMember = itemView.findViewById(R.id.deleteMember);
+        deleteAnimation = itemView.findViewById(R.id.deleteAnimation);
     }
 
     public void bind(String memberName) {
