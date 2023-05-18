@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -118,17 +119,20 @@ public class fragment_new_message_conversation extends Fragment {
                                     // Get document ID of user with given email from Users collection
                                     String contactUserId = usersSnapshot.getDocuments().get(0).getId();
                                     DocumentReference contactRef = db.collection("Users").document(contactUserId);
-                                    createNewConversation(db,finalUserRef, contactRef);
+
+                                    // Check if conversation already exists between the participants
+                                    checkConversationExists(db, finalUserRef, contactRef);
                                 } else if (!prosSnapshot.isEmpty()) {
                                     // Get document ID of user with given email from Pros collection
                                     String contactUserId = prosSnapshot.getDocuments().get(0).getId();
                                     DocumentReference contactRef = db.collection("Pros").document(contactUserId);
-                                    createNewConversation(db,finalUserRef, contactRef);
+
+                                    // Check if conversation already exists between the participants
+                                    checkConversationExists(db, finalUserRef, contactRef);
                                 } else {
                                     // User with given email not found in both collections
                                     Log.e(TAG, "User with email " + contactEmail + " not found in Users or Pros collection");
                                     Toast.makeText(getContext(), getContext().getResources().getString(R.string.noUserWithEmailErr), Toast.LENGTH_SHORT).show();
-
                                 }
                             } else {
                                 // Query failed
@@ -142,12 +146,59 @@ public class fragment_new_message_conversation extends Fragment {
                 } else {
                     Toast.makeText(getContext(), getContext().getResources().getString(R.string.missingFieldsErroToast), Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
     }
+
+    private void checkConversationExists(FirebaseFirestore db, DocumentReference userRef, DocumentReference contactRef) {
+        CollectionReference conversationsRef = db.collection("Conversations");
+        // Query for conversations involving the current user
+        Query userConversationQuery = conversationsRef.whereArrayContains("participants", userRef);
+
+        // Query for conversations involving the contact
+        Query contactConversationQuery = conversationsRef.whereArrayContains("participants", contactRef);
+
+        Task<QuerySnapshot> userConversationsTask = userConversationQuery.get();
+        Task<QuerySnapshot> contactConversationsTask = contactConversationQuery.get();
+
+        Task<List<QuerySnapshot>> combinedTask = Tasks.whenAllSuccess(userConversationsTask, contactConversationsTask);
+
+        combinedTask.addOnSuccessListener(querySnapshots -> {
+            QuerySnapshot userConversationsSnapshot = querySnapshots.get(0);
+            QuerySnapshot contactConversationsSnapshot = querySnapshots.get(1);
+
+            List<DocumentSnapshot> userConversations = userConversationsSnapshot.getDocuments();
+            List<DocumentSnapshot> contactConversations = contactConversationsSnapshot.getDocuments();
+
+            // Check if there is an intersection of conversations between the two participants
+            boolean conversationExists = false;
+            for (DocumentSnapshot userConversation : userConversations) {
+                for (DocumentSnapshot contactConversation : contactConversations) {
+                    if (userConversation.getId().equals(contactConversation.getId())) {
+                        conversationExists = true;
+                        break;
+                    }
+                }
+                if (conversationExists) {
+                    break;
+                }
+            }
+
+            if (conversationExists) {
+                // Conversation already exists between the participants
+                Log.e(TAG, "Conversation already exists between the participants");
+                Toast.makeText(getContext(), "Conversation already exists", Toast.LENGTH_SHORT).show();
+            } else {
+                // Create a new conversation
+                createNewConversation(db, userRef, contactRef);
+            }
+        }).addOnFailureListener(e -> {
+            // Query failed
+            Log.e(TAG, "Error querying for conversations", e);
+        });
+    }
+
 
     private void createNewConversation(FirebaseFirestore db, DocumentReference userRef, DocumentReference contactRef) {
         // Create new conversation document
