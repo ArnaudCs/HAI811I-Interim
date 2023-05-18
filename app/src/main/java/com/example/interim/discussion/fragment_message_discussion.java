@@ -122,86 +122,92 @@ public class fragment_message_discussion extends Fragment {
                     } else {
                         type[0] = "Pros";
                     }
-                }
-            }
-        });
-        conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        List<String> messageIds = (List<String>) document.get("messages");
-                        List<DocumentReference> participants = (List<DocumentReference>) document.get("participants");
-                        if (participants != null) {
-                            getParticipantsNames(participants, convName, userId);
-                            List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
-                            if (unReadRefs != null) {
-                                for (int i = unReadRefs.size() - 1; i >= 0; i--) {
-                                    if (unReadRefs.get(i).equals(db.collection(type[0]).document(userId))) {
-                                        unReadRefs.remove(i);
-                                    }
-                                }
-                                conversationRef.update("unRead", unReadRefs);
-                            }
-                        }
 
-                        // Get the list of messages using the message IDs
-                        if(messageIds != null) {
-                            CollectionReference messagesRef = db.collection("Messages");
-
-
-                            List<List<String>> messageIdChunks = chunkList(messageIds, 10);
-
-                            List<Task<QuerySnapshot>> tasks = new ArrayList<>();
-                            for (List<String> chunk : messageIdChunks) {
-                                Query query = messagesRef.whereIn(FieldPath.documentId(), chunk);
-                                tasks.add(query.get());
-                            }
-
-                            Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
-                                @Override
-                                public void onComplete(@NonNull Task<List<Object>> task) {
-                                    messages = new ArrayList<>();
-                                    for (Object result : task.getResult()) {
-                                        QuerySnapshot querySnapshot = (QuerySnapshot) result;
-                                        for (QueryDocumentSnapshot document : querySnapshot) {
-                                            String senderId = document.getString("sender");
-                                            String text = document.getString("text");
-                                            Date date = document.getDate("date");
-                                            Message message = new Message(senderId, date, text);
-                                            messages.add(message);
+                    // Retrieve conversation using the updated type value
+                    conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    List<String> messageIds = (List<String>) document.get("messages");
+                                    List<DocumentReference> participants = (List<DocumentReference>) document.get("participants");
+                                    if (participants != null) {
+                                        getParticipantsNames(participants, convName, userId);
+                                        List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
+                                        if (unReadRefs != null) {
+                                            for (int i = unReadRefs.size() - 1; i >= 0; i--) {
+                                                if (unReadRefs.get(i).equals(db.collection(type[0]).document(userId))) {
+                                                    unReadRefs.remove(i);
+                                                }
+                                            }
+                                            conversationRef.update("unRead", unReadRefs);
                                         }
                                     }
-                                    messages.sort(new Comparator<Message>() {
-                                        @Override
-                                        public int compare(Message m1, Message m2) {
-                                            return m1.getDate().compareTo(m2.getDate());
+
+                                    // Get the list of messages using the message IDs
+                                    if (messageIds != null) {
+                                        CollectionReference messagesRef = db.collection("Messages");
+
+                                        List<List<String>> messageIdChunks = chunkList(messageIds, 10);
+
+                                        List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+                                        for (List<String> chunk : messageIdChunks) {
+                                            Query query = messagesRef.whereIn(FieldPath.documentId(), chunk);
+                                            tasks.add(query.get());
                                         }
-                                    });
 
-                                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                                    layoutManager.setStackFromEnd(true);
-                                    recyclerView.setLayoutManager(layoutManager);
-                                    recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+                                        Tasks.whenAllSuccess(tasks).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<List<Object>> task) {
+                                                messages = new ArrayList<>();
+                                                for (Object result : task.getResult()) {
+                                                    QuerySnapshot querySnapshot = (QuerySnapshot) result;
+                                                    for (QueryDocumentSnapshot document : querySnapshot) {
+                                                        String senderId = document.getString("sender");
+                                                        String text = document.getString("text");
+                                                        Date date = document.getDate("date");
+                                                        Message message = new Message(senderId, date, text);
+                                                        messages.add(message);
+                                                    }
+                                                }
+                                                messages.sort(new Comparator<Message>() {
+                                                    @Override
+                                                    public int compare(Message m1, Message m2) {
+                                                        return m1.getDate().compareTo(m2.getDate());
+                                                    }
+                                                });
 
-                                    recyclerView.smoothScrollToPosition(messages.size());
-                                    startRefreshingMessages();
-                                    // Do something with the list of messages
+                                                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                                                layoutManager.setStackFromEnd(true);
+                                                recyclerView.setLayoutManager(layoutManager);
+                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+
+                                                recyclerView.smoothScrollToPosition(messages.size());
+                                                startRefreshingMessages();
+                                                // Do something with the list of messages
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                System.out.println("ERROR: " + e.getMessage());
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    // The conversation document does not exist
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    System.out.println("ERROR: " + e.getMessage());
-                                }
-                            });
+                            } else {
+                                // Handle failure to retrieve the conversation document
+                            }
                         }
-                    } else {
-                    }
+                    });
                 } else {
+                    // Handle failure to retrieve the user document
                 }
             }
         });
+
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,50 +390,68 @@ public class fragment_message_discussion extends Fragment {
 
     private void getLastMessage() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference messagesRef = db.collection("Messages");
-
-        messagesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
+        conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    int numMessages = task.getResult().size();
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        List<String> messageIds = (List<String>) document.get("messages");
 
-                    Query lastMessageQuery = messagesRef.orderBy("date", Query.Direction.DESCENDING).limit(1);
-                    lastMessageQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                List<DocumentSnapshot> documents = task.getResult().getDocuments();
-                                if (!documents.isEmpty()) {
-                                    DocumentSnapshot lastMessageDoc = documents.get(0);
-                                    String senderId = lastMessageDoc.getString("sender");
-                                    String text = lastMessageDoc.getString("text");
-                                    Date date = lastMessageDoc.getDate("date");
-                                    Message lastMessage = new Message(senderId, date, text);
+                        // Get the list of messages using the message IDs
+                        if (messageIds != null) {
+                            CollectionReference messagesRef = db.collection("Messages");
 
-                                    boolean isDuplicate = false;
-                                    for (Message message : messages) {
-                                        if (message.getmId() == lastMessage.getmId() &&
-                                                message.getDate().equals(lastMessage.getDate()) &&
-                                                message.getText().equals(lastMessage.getText())) {
-                                            isDuplicate = true;
-                                            break;
+                            Query query = messagesRef.whereIn(FieldPath.documentId(), messageIds)
+                                    .orderBy("date", Query.Direction.DESCENDING)
+                                    .limit(1);
+
+                            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                                        // Do something with the last message
+                                        if (!documents.isEmpty()) {
+                                            DocumentSnapshot lastMessageDoc = documents.get(0);
+                                            String senderId = lastMessageDoc.getString("sender");
+                                            String text = lastMessageDoc.getString("text");
+                                            Date date = lastMessageDoc.getDate("date");
+                                            Message lastMessage = new Message(senderId, date, text);
+
+                                            boolean isDuplicate = false;
+                                            for (Message message : messages) {
+                                                if (message.getmId() == lastMessage.getmId() &&
+                                                        message.getDate().equals(lastMessage.getDate()) &&
+                                                        message.getText().equals(lastMessage.getText())) {
+                                                    isDuplicate = true;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (!isDuplicate) {
+                                                messages.add(lastMessage);
+                                                int position = recyclerView.getAdapter().getItemCount();
+                                                recyclerView.getAdapter().notifyItemInserted(position);
+                                                recyclerView.smoothScrollToPosition(messages.size());
+                                            }
                                         }
                                     }
-
-                                    if (!isDuplicate) {
-                                        messages.add(lastMessage);
-                                        int position = recyclerView.getAdapter().getItemCount();
-                                        recyclerView.getAdapter().notifyItemInserted(position);
-                                        recyclerView.smoothScrollToPosition(messages.size());
-                                    }
                                 }
-                            }
+                            });
+                        } else {
+                            // There are no messages in the conversation
                         }
-                    });
+                    } else {
+                        // The conversation document does not exist
+                    }
+                } else {
+                    // Handle failure to retrieve the conversation document
                 }
             }
         });
+
     }
 
 
