@@ -21,6 +21,7 @@ import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class fragment_favorite_offers extends Fragment {
+    RecyclerView favoriteContainer;
+    FirebaseFirestore db;
     public fragment_favorite_offers() {
         // Required empty public constructor
     }
@@ -49,17 +52,23 @@ public class fragment_favorite_offers extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button favoriteFilterBtn = view.findViewById(R.id.filterBtnFavorites);
         Button closeFilterFavorite = view.findViewById(R.id.closeFilterFavorites);
-        Button validateAndSearchFavoriteBtn = view.findViewById(R.id.validateAndSearchFavoriteBtn);
+        Button filtersSearchBtn = view.findViewById(R.id.validateAndSearchFavoriteBtn);
         LinearLayout filterFavoriteContainer = view.findViewById(R.id.filterFavoriteContainer);
-        RecyclerView favoriteContainer = view.findViewById(R.id.favoriteContainer);
+        favoriteContainer = view.findViewById(R.id.favoriteContainer);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
+        TextInputEditText cityChoice = view.findViewById(R.id.textCityInput);
+        TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
+        TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
+        TextInputEditText startDate = view.findViewById(R.id.textStartDate);
+        TextInputEditText endDate = view.findViewById(R.id.textEndDate);
 
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+        String userId = mAuth.getCurrentUser().getUid();
         if(mAuth.getCurrentUser() != null) {
-            String userId = mAuth.getCurrentUser().getUid();
+
 
             DocumentReference userRef = db.collection("Users").document(userId);
             userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -184,14 +193,93 @@ public class fragment_favorite_offers extends Fragment {
             }
         });
 
-        validateAndSearchFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+        filtersSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TransitionManager.beginDelayedTransition(filterFavoriteContainer);
-                filterFavoriteContainer.setVisibility(view.GONE);
-                closeFilterFavorite.setVisibility(view.GONE);
-                favoriteFilterBtn.setVisibility(view.VISIBLE);
+                filterFavoriteContainer.setVisibility(View.GONE);
+                closeFilterFavorite.setVisibility(View.GONE);
+                favoriteFilterBtn.setVisibility(View.VISIBLE);
+
+                String city = cityChoice.getText().toString();
+                String minSalaryString = startPrice.getText().toString();
+                String maxSalaryString = endPrice.getText().toString();
+
+                final List<String>[] likedOffersIds = new List[]{null};
+                DocumentReference userRef = db.collection("Users").document(userId);
+                userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            likedOffersIds[0] = (List<String>) documentSnapshot.get("likedOffers");
+                        } else {
+                            // user document does not exist, query likedOffers from Pros collection
+                            DocumentReference prosRef = db.collection("Pros").document(userId);
+                            prosRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    if (documentSnapshot.exists()) {
+                                        likedOffersIds[0] = (List<String>) documentSnapshot.get("likedOffers");
+                                        filterOffers(city, minSalaryString, maxSalaryString, likedOffersIds[0]);
+                                    }
+                                }
+                            });
+                        }
+
+                        // Call the filtering function with the retrieved likedOffersIds
+                        if (likedOffersIds[0] != null && likedOffersIds[0].size() >= 1) {
+                            filterOffers(city, minSalaryString, maxSalaryString, likedOffersIds[0]);
+                        }
+                    }
+                });
             }
         });
+
+    }
+
+
+    private void filterOffers(String city, String minSalaryString, String maxSalaryString, List<String> likedOffersIds) {
+        db.collection("Offers")
+                .whereIn(FieldPath.documentId(), likedOffersIds)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        ArrayList<Offer> offers = new ArrayList<>();
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                            Offer offer = documentSnapshot.toObject(Offer.class);
+                            offer.setId(documentSnapshot.getId());
+
+                            // Apply filtering locally
+                            boolean matchesFilter = true;
+
+                            if (!city.isEmpty() && !offer.getLocation().equals(city)) {
+                                matchesFilter = false;
+                            }
+
+                            if (!minSalaryString.isEmpty() && offer.getSalaryMin() < Float.parseFloat(minSalaryString)) {
+                                matchesFilter = false;
+                            }
+
+                            if (!maxSalaryString.isEmpty() && offer.getSalaryMax() > Float.parseFloat(maxSalaryString)) {
+                                matchesFilter = false;
+                            }
+
+                            if (matchesFilter) {
+                                offers.add(offer);
+                            }
+                        }
+
+                        favoriteContainer.setLayoutManager(new LinearLayoutManager(getContext()));
+                        favoriteContainer.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+                        favoriteContainer.getAdapter().notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                    }
+                });
     }
 }
