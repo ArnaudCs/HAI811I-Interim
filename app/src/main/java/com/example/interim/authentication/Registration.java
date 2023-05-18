@@ -53,7 +53,7 @@ public class Registration extends AppCompatActivity {
         TextInputEditText textNationalNumber = findViewById(R.id.textNationalNumber);
         TextInputEditText textMail = findViewById(R.id.text1Mail);
         TextInputEditText textNumber = findViewById(R.id.textContact1Number);
-        TextInputEditText textCompanyAdress = findViewById(R.id.textCompanyAdress);
+        TextInputEditText textCompanyAddress = findViewById(R.id.textCompanyAdress);
         TextInputEditText textWebsite = findViewById(R.id.textWebsite);
         Button registerCompanyBtn = findViewById(R.id.createAccount);
 
@@ -79,7 +79,7 @@ public class Registration extends AppCompatActivity {
                     String nationalNumber = textNationalNumber.getText().toString();
                     String email = textMail.getText().toString();
                     String phoneNumber = textNumber.getText().toString();
-                    String companyAddress = textCompanyAdress.getText().toString();
+                    String companyAddress = textCompanyAddress.getText().toString();
                     String website = textWebsite.getText().toString();
                     String password = textPassword.getText().toString();
                     String service = layoutService.getEditText().getText().toString();
