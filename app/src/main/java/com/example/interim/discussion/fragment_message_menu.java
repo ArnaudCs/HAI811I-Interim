@@ -88,7 +88,6 @@ public class fragment_message_menu extends Fragment {
                 getContext().startActivity(newConversation);
             }
         });
-        
 
         cancelDelete.setOnClickListener(new View.OnClickListener() {
             @Override

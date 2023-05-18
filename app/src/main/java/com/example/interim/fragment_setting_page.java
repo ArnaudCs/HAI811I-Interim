@@ -378,8 +378,6 @@ public class fragment_setting_page extends Fragment {
         }
     }
 
-
-
     private void selectFiles() {
         Intent intent = new Intent();
         intent.setType("application/pdf");

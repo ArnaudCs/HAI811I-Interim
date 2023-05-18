@@ -33,6 +33,7 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
     HashMap<Offer, Integer> offersMap;
 
     String firstName;
+
     String name;
 
     String companyNameText;
