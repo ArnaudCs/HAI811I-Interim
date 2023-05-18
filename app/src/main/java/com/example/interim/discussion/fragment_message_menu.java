@@ -55,7 +55,6 @@ public class fragment_message_menu extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
-        //startRefreshingConversation();
         if(mAuth.getCurrentUser() == null){
             Intent mainActivity = new Intent(getActivity(), MainActivity.class);
             startActivity(mainActivity);
@@ -77,6 +76,7 @@ public class fragment_message_menu extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new conversation_ViewAdapter(getContext(), conversations);
         recyclerView.setAdapter(mAdapter);
+        startRefreshingConversation();
         type = "Pros";
         db.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
            @Override
