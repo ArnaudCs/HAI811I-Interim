@@ -250,4 +250,6 @@
     <string name="downloadBtn">Télécharger</string>
     <string name="errorRetrievingFiles">Erreur lors du téléchargement</string>
     <string name="successfulFileDownload">Fichier téléchargé dans votre dossier Téléchargements</string>
+    <string name="addMemberError">Veuillez ajouter un mail d\'utilisateur</string>
+    <string name="invalidEmailError">Veuillez entrer un mail</string>
 </resources>

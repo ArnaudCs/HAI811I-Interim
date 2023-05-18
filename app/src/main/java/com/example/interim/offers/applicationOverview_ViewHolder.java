@@ -35,7 +35,6 @@ public class applicationOverview_ViewHolder extends RecyclerView.ViewHolder {
         applicantAdress = itemView.findViewById(R.id.applicantAdress);
         acceptApplicant = itemView.findViewById(R.id.acceptApplicant);
         rejectApplicant = itemView.findViewById(R.id.rejectApplicant);
-        seeMore = itemView.findViewById(R.id.seeMore);
         downloadCoverLetterBtn = itemView.findViewById(R.id.downloadCoverLetterBtn);
         downloadResumeBtn = itemView.findViewById(R.id.downloadResumeBtn);
     }

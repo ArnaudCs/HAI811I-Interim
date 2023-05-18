@@ -260,4 +260,6 @@
     <string name="downloadBtn">Download</string>
     <string name="errorRetrievingFiles">File download error</string>
     <string name="successfulFileDownload">File downloaded successfully in your Download Directory</string>
+    <string name="addMemberError">Add a member email first</string>
+    <string name="invalidEmailError">PLease enter an email</string>
 </resources>

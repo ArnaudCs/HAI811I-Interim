@@ -39,7 +39,7 @@ public class fragment_message_menu extends Fragment {
     private Runnable mRunnable;
     private Handler mHandler;
     RecyclerView recyclerView;
-    Button deleteMessages, cancelDelete, newConvBtn;
+    Button deleteMessages, cancelDelete, newConvBtn, groupMaking;
     String type, userId;
     FirebaseFirestore db;
     List<Conversation> conversations;
@@ -68,6 +68,7 @@ public class fragment_message_menu extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         deleteMessages = view.findViewById(R.id.deleteMessages);
         cancelDelete = view.findViewById(R.id.cancelDelete);
+        groupMaking = view.findViewById(R.id.groupMaking);
         db = FirebaseFirestore.getInstance();
         userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
@@ -197,6 +198,14 @@ public class fragment_message_menu extends Fragment {
             @Override
             public void onClick(View view) {
                 mAdapter.cancelDelete();
+            }
+        });
+
+        groupMaking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent groupCreation = new Intent(getContext(), GroupActivity.class);
+                getContext().startActivity(groupCreation);
             }
         });
     }
