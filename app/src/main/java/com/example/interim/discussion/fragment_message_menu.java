@@ -193,13 +193,6 @@ public class fragment_message_menu extends Fragment {
             }
         });
 
-//        deleteMessages.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mAdapter.deleteConversation();
-//            }
-//        });
-
         cancelDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

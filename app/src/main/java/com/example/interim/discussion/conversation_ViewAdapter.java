@@ -3,6 +3,7 @@ package com.example.interim.discussion;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,9 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
     String participantId;
 
     String participant;
+
+    private Runnable mRunnable;
+    private Handler mHandler;
 
     conversation_ViewHolder holder;
 
