@@ -250,9 +250,10 @@ public class fragment_search_page extends Fragment {
             labelChoice.setSelection(0);
             cityChoice.setText(offerForFilter.getLocation());
             startPrice.setText(String.valueOf(offerForFilter.getSalaryMin()));
-            endPrice.setText(String.valueOf(offerForFilter.getSalaryMax()));
-            startDate.setText(offerForFilter.getStartDate().toString());
-            endDate.setText(offerForFilter.getEndDate().toString());
+//            endPrice.setText(String.valueOf(offerForFilter.getSalaryMax()));
+            System.out.println(offerForFilter.toString());
+//            startDate.setText(offerForFilter.getStartDate().toString());
+//            endDate.setText(offerForFilter.getEndDate().toString());
             TransitionManager.beginDelayedTransition(filterContainer);
             filterContainer.setVisibility(View.VISIBLE);
             closeFilter.setVisibility(View.VISIBLE);
@@ -266,55 +267,59 @@ public class fragment_search_page extends Fragment {
             @Override
             public void onClick(View view) {
                 TransitionManager.beginDelayedTransition(filterContainer);
-                filterContainer.setVisibility(view.GONE);
-                closeFilter.setVisibility(view.GONE);
-                filterBtn.setVisibility(view.VISIBLE);
+                filterContainer.setVisibility(View.GONE);
+                closeFilter.setVisibility(View.GONE);
+                filterBtn.setVisibility(View.VISIBLE);
                 bottomNav.animate().translationY(0).setDuration(200);
 
-//                String category = categoryChoice.getSelectedItem().toString();
-//                String label = labelChoice.getSelectedItem().toString();
-//                String city = cityChoice.getSelectedItem().toString();
-//
-//                FirebaseFirestore db = FirebaseFirestore.getInstance();
-//                CollectionReference offersRef = db.collection("Offers");
-//
-//                Query query = offersRef;
-//
-//                if (city != null) {
-//                    query = query.whereEqualTo("location", city);
-//                }
-//
-//                if (startPriceValue != null && endPriceValue != null) {
-//                    Query priceQuery = offersRef.whereGreaterThanOrEqualTo("priceMax", startPriceValue)
-//                            .whereLessThanOrEqualTo("priceMin", endPriceValue);
-//                    queries.add(priceQuery);
-//                }
-//
-//                Task<List<QuerySnapshot>> task = Tasks.whenAllSuccess(queries);
-//                task.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
-//                    @Override
-//                    public void onSuccess(List<QuerySnapshot> querySnapshots) {
-//                        List<Offer> offers = new ArrayList<>();
-//                        for (QuerySnapshot querySnapshot : querySnapshots) {
-//                            for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-//                                Offer offer = documentSnapshot.toObject(Offer.class);
-//                                offer.setId(documentSnapshot.getId());
-//                                offers.add(offer);
-//                            }
-//                        }
-//                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//                        recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.d("Error", "Failed to search for offers with filters");
-//                    }
-//                });
-//
-            }
+                String city = cityChoice.getText().toString();
+                String minSalaryString = startPrice.getText().toString();
+                String maxSalaryString = endPrice.getText().toString();
 
-            });
+                db.collection("Offers")
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot querySnapshot) {
+                                ArrayList<Offer> offers = new ArrayList<>();
+                                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                    Offer offer = documentSnapshot.toObject(Offer.class);
+                                    offer.setId(documentSnapshot.getId());
+
+                                    // Apply filtering locally
+                                    boolean matchesFilter = true;
+
+                                    if (!city.isEmpty() && !offer.getLocation().equals(city)) {
+                                        matchesFilter = false;
+                                    }
+
+                                    if (!minSalaryString.isEmpty() && offer.getSalaryMin() < Float.parseFloat(minSalaryString)) {
+                                        matchesFilter = false;
+                                    }
+
+                                    if (!maxSalaryString.isEmpty() && offer.getSalaryMax() > Float.parseFloat(maxSalaryString)) {
+                                        matchesFilter = false;
+                                    }
+
+                                    if (matchesFilter) {
+                                        offers.add(offer);
+                                    }
+                                }
+
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                recyclerView.setAdapter(new searchCard_ViewAdapter(getContext(), offers));
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle failure
+                            }
+                        });
+            }
+        });
+
     }
 
 //    private void loadFiltersFromDataHolder(filterDataHolder dataHolder) {
