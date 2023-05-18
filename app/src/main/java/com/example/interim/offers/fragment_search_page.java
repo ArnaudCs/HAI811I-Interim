@@ -21,6 +21,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.interim.CategoryRepository;
 import com.example.interim.R;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 public class fragment_search_page extends Fragment {
@@ -83,27 +86,38 @@ public class fragment_search_page extends Fragment {
         //Initialisation de la valeur par défaut du progress de la barre de sélection
         areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf((areaChoice.getProgress() + 1) * 10) + " Km");
 
-        List<String> spinnerArray =  new ArrayList<String>();
+        List<String> spinnerArray = new ArrayList<>();
         spinnerArray.add(getResources().getString(R.string.chooseCat));
-        spinnerArray.add("Chantier et BTP");
-        spinnerArray.add("Nettoyage");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+        String deviceLanguage = Locale.getDefault().getLanguage();
+        CategoryRepository categoryMapInstance = new CategoryRepository();
+        Map<Integer, List<String>> categories = categoryMapInstance.getCategoryMap();
 
+        if (categories != null) {
+            List<String> frenchCategories = new ArrayList<>();
+            List<String> englishCategories = new ArrayList<>();
+
+            for (Map.Entry<Integer, List<String>> entry : categories.entrySet()) {
+                List<String> translations = entry.getValue();
+                if (translations.size() >= 2) {
+                    frenchCategories.add(translations.get(0));
+                    englishCategories.add(translations.get(1));
+                }
+            }
+
+            if (frenchCategories != null && deviceLanguage.equals("fr")) {
+                spinnerArray.addAll(frenchCategories);
+            } else if (englishCategories != null) {
+                spinnerArray.addAll(englishCategories);
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryChoice.setAdapter(adapter);
+
         labelChoice.setAdapter(adapter);
-
-        List<String> spinnerCity =  new ArrayList<String>();
-        spinnerArray.add("Marseille");
-        spinnerArray.add("Montpellier");
         RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
-
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
-
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         clearFiltersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
