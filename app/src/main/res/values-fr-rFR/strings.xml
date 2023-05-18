@@ -247,4 +247,7 @@
     <string name="notAdminToast">Mauvais code, vous ne pouvez pas être admin</string>
     <string name="errogettingId">Erreur de récupération de l\'ID</string>
     <string name="applicationCelebration">"Votre candidature à été envoyée ! Retrouvez vos candidatures dans l'onglet \"Mes candidatures\". Bonne chance ! "</string>
+    <string name="downloadBtn">Télécharger</string>
+    <string name="errorRetrievingFiles">Erreur lors du téléchargement</string>
+    <string name="successfulFileDownload">Fichier téléchargé dans votre dossier Téléchargements</string>
 </resources>

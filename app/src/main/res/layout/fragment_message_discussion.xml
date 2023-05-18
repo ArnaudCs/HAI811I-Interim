@@ -114,6 +114,7 @@
                     android:text="@string/signalBtn"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:textSize="12sp"
                     android:stateListAnimator="@null"
                     android:background="@drawable/navigation_bar">
 
@@ -133,6 +134,7 @@
                     android:text="@string/blockButton"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:textSize="12sp"
                     android:stateListAnimator="@null"
                     android:background="@drawable/navigation_bar">
 
@@ -152,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/deleteBtn"
                     android:textStyle="bold"
+                    android:textSize="12sp"
                     android:stateListAnimator="@null"
                     android:background="@drawable/navigation_bar">
                 </Button>

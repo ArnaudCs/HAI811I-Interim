@@ -55,6 +55,8 @@ public class fragment_message_discussion extends Fragment {
     String conversationId;
 
     List<Message> messages;
+    private boolean isRefreshing = false;
+
 
     private Handler mHandler;
 
@@ -74,6 +76,15 @@ public class fragment_message_discussion extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_message_discussion, container, false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Arrêter le rafraîchissement si l'état est en cours de rafraîchissement
+        if (isRefreshing) {
+            stopRefreshingConversation();
+        }
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -227,6 +238,7 @@ public class fragment_message_discussion extends Fragment {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 Log.d(TAG, "Conversation deleted !");
                                                 getActivity().finish();
+                                                stopRefreshingConversation();
                                             }
                                         });
                                     }
@@ -250,7 +262,7 @@ public class fragment_message_discussion extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
-                mHandler.removeCallbacks(mRunnable);
+                stopRefreshingConversation();
             }
         });
 
@@ -347,15 +359,25 @@ public class fragment_message_discussion extends Fragment {
 
     // Fonction pour initialiser le Handler et le Runnable
     private void startRefreshingMessages() {
+        isRefreshing = true;
         mHandler = new Handler();
+        //System.out.println("Start refresh");
         mRunnable = new Runnable() {
             @Override
             public void run() {
                 getLastMessage();
+                //System.out.println("refresh");
                 mHandler.postDelayed(this, 3000); // Actualisation toutes les 3 secondes
             }
         };
         mHandler.post(mRunnable);
+    }
+
+
+    private void stopRefreshingConversation() {
+        isRefreshing = false;
+        //System.out.println("Stopping du refresh");
+        mHandler.removeCallbacks(mRunnable);
     }
 
     // Fonction pour actualiser les messages depuis la base de données
@@ -369,7 +391,6 @@ public class fragment_message_discussion extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     int numMessages = task.getResult().size();
-                    System.out.println("Nombre de messages dans la base de données : " + numMessages);
 
                     Query lastMessageQuery = messagesRef.orderBy("date", Query.Direction.DESCENDING).limit(1);
                     lastMessageQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -449,4 +470,5 @@ public class fragment_message_discussion extends Fragment {
         }
         return chunks;
     }
+
 }

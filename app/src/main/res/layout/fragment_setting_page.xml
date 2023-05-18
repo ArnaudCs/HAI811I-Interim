@@ -260,6 +260,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/resumeDisplayBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/redbox"
@@ -308,9 +309,32 @@
                             </Button>
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <Button
+                                android:id="@+id/downloadResumeSettings"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:background="@drawable/navigation_bar"
+                                android:drawableEnd="@drawable/baseline_cloud_download_24"
+                                android:drawablePadding="5dp"
+                                android:paddingLeft="15dp"
+                                android:paddingRight="15dp"
+                                android:stateListAnimator="@null"
+                                android:text="@string/downloadBtn"
+                                android:textColor="@color/black"
+                                android:textSize="11sp"
+                                android:textStyle="bold">
+                            </Button>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/coverDisplayBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -358,6 +382,28 @@
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 android:textStyle="bold"></Button>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <Button
+                                android:id="@+id/downloadCoverSettings"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:background="@drawable/navigation_bar"
+                                android:drawableEnd="@drawable/baseline_cloud_download_24"
+                                android:drawablePadding="5dp"
+                                android:paddingLeft="15dp"
+                                android:paddingRight="15dp"
+                                android:stateListAnimator="@null"
+                                android:text="@string/downloadBtn"
+                                android:textColor="@color/black"
+                                android:textSize="11sp"
+                                android:textStyle="bold">
+                            </Button>
                         </LinearLayout>
 
                     </LinearLayout>

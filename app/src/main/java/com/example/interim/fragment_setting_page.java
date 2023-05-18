@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +33,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class fragment_setting_page extends Fragment {
@@ -42,10 +49,13 @@ public class fragment_setting_page extends Fragment {
     private Button backBtnSettings;
 
     boolean resume = false;
+    boolean downResume = false; //permet de choisir quel fichier télécharger
 
     boolean admin = false;
 
     boolean pro = false;
+
+    String name, firstName;
 
     FirebaseFirestore db;
     FirebaseAuth mAuth;
@@ -55,9 +65,10 @@ public class fragment_setting_page extends Fragment {
 
     StorageReference storageRef;
     DatabaseReference databaseRefResume, databaseRefCover;
-    Button uploadResume, uploadCoverLetter, adminFormBtn;
+    Button uploadResume, uploadCoverLetter, adminFormBtn, downloadCoverSettings, downloadResumeSettings;
 
     TextView coverLetterDisplay, resumeDisplay;
+    LinearLayout resumeDisplayBox, coverDisplayBox;
 
     public fragment_setting_page() {
         // Required empty public constructor
@@ -83,6 +94,8 @@ public class fragment_setting_page extends Fragment {
 
         uploadCoverLetter = view.findViewById(R.id.uploadCoverLetter);
         uploadResume = view.findViewById(R.id.uploadResume);
+        downloadCoverSettings = view.findViewById(R.id.downloadCoverSettings);
+        downloadResumeSettings = view.findViewById(R.id.downloadResumeSettings);
 
         storageRef = FirebaseStorage.getInstance().getReference();
         databaseRefResume = FirebaseDatabase.getInstance().getReference("uploadResume");
@@ -92,6 +105,9 @@ public class fragment_setting_page extends Fragment {
         resumeDisplay = view.findViewById(R.id.resumeDisplay);
 
         adminFormBtn = view.findViewById(R.id.adminFormBtn);
+
+        resumeDisplayBox = view.findViewById(R.id.resumeDisplayBox);
+        coverDisplayBox = view.findViewById(R.id.coverDisplayBox);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -131,8 +147,8 @@ public class fragment_setting_page extends Fragment {
         uploadResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectFiles();
                 resume = true;
+                selectFiles();
             }
         });
 
@@ -146,9 +162,13 @@ public class fragment_setting_page extends Fragment {
                     if (document.exists()) {
                         admin = document.getBoolean("admin");
                         pro = false;
+                        firstName = document.getString("firstName");
+                        name = document.getString("name");
                         System.out.println("le user est admin ?" + admin );
                     } else {
                         pro = true;
+                        resumeDisplayBox.setVisibility(View.GONE);
+                        coverDisplayBox.setVisibility(View.GONE);
                     }
                 }
             });
@@ -284,11 +304,81 @@ public class fragment_setting_page extends Fragment {
         uploadCoverLetter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                downResume = false;
                 selectFiles();
-                resume = false;
+
+            }
+        });
+
+        downloadCoverSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downResume = true;
+                downloadPdf();
+            }
+        });
+
+        downloadResumeSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadPdf();
             }
         });
     }
+
+    private void downloadPdf() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference resumeRef = storageRef.child("Resume/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_Resume.pdf");
+        StorageReference coverRef = storageRef.child("CoverLetters/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_CoverLetter.pdf");
+
+        // Déterminer le répertoire de destination sur le téléphone
+        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        if (!directory.exists()) {
+            // Créer le répertoire s'il n'existe pas
+            directory.mkdirs();
+        }
+
+        // Télécharger le CV
+        if (downResume) {
+            File localFile = new File(directory, "resume_" + name + "_" + firstName + ".pdf");
+            resumeRef.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Le téléchargement du fichier CV est terminé
+                            Toast.makeText(getActivity(), R.string.successfulFileDownload , Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Une erreur s'est produite lors du téléchargement du fichier CV
+                            Toast.makeText(getActivity(), R.string.errorRetrievingFiles, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            File localFile = new File(directory,  name + "_" + firstName + "letter.pdf");
+            coverRef.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Le téléchargement du fichier de lettre de motivation est terminé
+                            Toast.makeText(getActivity(), R.string.successfulFileDownload, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Une erreur s'est produite lors du téléchargement du fichier de lettre de motivation
+                            Toast.makeText(getActivity(), R.string.errorRetrievingFiles, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+
 
     private void selectFiles() {
         Intent intent = new Intent();
