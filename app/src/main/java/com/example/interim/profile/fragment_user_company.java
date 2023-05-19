@@ -50,15 +50,16 @@ public class fragment_user_company extends Fragment {
     private String sirenNumText;
     private String contactNameText;
     private String phoneNumText;
-    private String emailText;
+    private String emailText, userId;
+    boolean externalProfileView = false;
 
     private ImageView profileCompanyPic;
 
     private LottieAnimationView settingsBtn;
 
-    private LinearLayout editProfileCompany;
+    private LinearLayout editProfileCompany, backProfileContainer;
 
-    private Button favoriteBtnCompany;
+    private Button favoriteBtnCompany, backProfileBtn, editprofileBtn, deconnectionBtn;
 
 
     public fragment_user_company() {
@@ -72,53 +73,85 @@ public class fragment_user_company extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            userId = bundle.getString("userId");
+            System.out.println("Vue externe");
+        }
         if(mAuth.getCurrentUser() == null){
             Intent mainActivity = new Intent(getActivity(), MainActivity.class);
             startActivity(mainActivity);
             this.getActivity().finish();
             return null;
         }
-        db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                boolean verified = documentSnapshot.getBoolean("verified");
-                if(!verified) {
-                    Intent mainActivity = new Intent(getActivity(), PhoneValidation.class);
-                    startActivity(mainActivity);
-                    getActivity().finish();
-                }
-                else {
-                    db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
-                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                if (documentSnapshot.exists()) {
-                                    subPlanText = documentSnapshot.getString("plan");
-                                    Date endDate = documentSnapshot.getDate("endDate");
-                                    Date startDate = documentSnapshot.getDate("startDate");
-                                    boolean isUnlimited = subPlanText.contains("One Time");
+        if (userId != null && mAuth.getCurrentUser().getUid() != userId) {
+            externalProfileView = true;
+            System.out.println("Vue externe");
+        }
 
-                                    if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date()))) {
-                                        // User has an active subscription
-
-                                    } else {
-                                        // User does not have an active subscription
-                                        Intent subscription = new Intent(getActivity(), PaymentAndSubscription.class);
-                                        startActivity(subscription);
-                                        getActivity().finish();
-                                    }
-                                } else {
-                                    // User does not have a subscription
-                                    Intent subscription = new Intent(getActivity(), PaymentAndSubscription.class);
-                                    startActivity(subscription);
-                                    getActivity().finish();
-                                }
+        if(externalProfileView){
+            db.collection("Pros").document(userId).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                if (documentSnapshot.exists()) {
+                                                    subPlanText = documentSnapshot.getString("plan");
+                                                    Date endDate = documentSnapshot.getDate("endDate");
+                                                    Date startDate = documentSnapshot.getDate("startDate");
+                                                    boolean isUnlimited = subPlanText.contains("One Time");
+                                                }
+                                            }
+                                        });
                             }
-                        });
-                }
-            }
-        });
+                    });
+        } else {
+            db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            boolean verified = documentSnapshot.getBoolean("verified");
+                            if(!verified) {
+                                Intent mainActivity = new Intent(getActivity(), PhoneValidation.class);
+                                startActivity(mainActivity);
+                                getActivity().finish();
+                            }
+                            else {
+                                db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                if (documentSnapshot.exists()) {
+                                                    subPlanText = documentSnapshot.getString("plan");
+                                                    Date endDate = documentSnapshot.getDate("endDate");
+                                                    Date startDate = documentSnapshot.getDate("startDate");
+                                                    boolean isUnlimited = subPlanText.contains("One Time");
+
+                                                    if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date()))) {
+                                                        // User has an active subscription
+
+                                                    } else {
+                                                        // User does not have an active subscription
+                                                        Intent subscription = new Intent(getActivity(), PaymentAndSubscription.class);
+                                                        startActivity(subscription);
+                                                        getActivity().finish();
+                                                    }
+                                                } else {
+                                                    // User does not have a subscription
+                                                    Intent subscription = new Intent(getActivity(), PaymentAndSubscription.class);
+                                                    startActivity(subscription);
+                                                    getActivity().finish();
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    });
+
+        }
 
         return inflater.inflate(R.layout.fragment_user_company, container, false);
     }
@@ -126,6 +159,26 @@ public class fragment_user_company extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        favoriteBtnCompany = view.findViewById(R.id.favoriteBtnCompany);
+        backProfileContainer = view.findViewById(R.id.backProfileContainer);
+        backProfileBtn = view.findViewById(R.id.backProfileBtn);
+        settingsBtn = view.findViewById(R.id.settingsBtn);
+        editProfileCompany = view.findViewById(R.id.editProfileCompanyContainer);
+        editprofileBtn = view.findViewById(R.id.editProfileCompanyBtn);
+        deconnectionBtn = view.findViewById(R.id.decoBtn);
+
+
+
+        if (userId != null && mAuth.getCurrentUser().getUid() != userId){
+            externalProfileView = true;
+            favoriteBtnCompany.setVisibility(View.GONE);
+            backProfileContainer.setVisibility(View.GONE);
+            editProfileCompany.setVisibility(View.GONE);
+            editprofileBtn.setVisibility(View.GONE);
+            deconnectionBtn.setVisibility(View.GONE);
+
+        }
+
         db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -161,10 +214,44 @@ public class fragment_user_company extends Fragment {
                         }
                 });
 
-        super.onViewCreated(view, savedInstanceState);
-        Button deconnectionBtn = view.findViewById(R.id.decoBtn);
+        if(externalProfileView){
+            db.collection("Pros").document(userId).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-        favoriteBtnCompany = view.findViewById(R.id.favoriteBtnCompany);
+                            companyNameText = documentSnapshot.getString("companyName");
+                            sirenNumText = documentSnapshot.getString("nationalNumber");
+                            contactNameText = documentSnapshot.getString("name");
+                            phoneNumText = documentSnapshot.getString("phoneNumber");
+                            emailText = documentSnapshot.getString("email");
+                            TextView companyName = view.findViewById(R.id.companyName);
+                            TextView subPlan = view.findViewById(R.id.subPlan);
+                            TextView sirenNum = view.findViewById(R.id.sirenNum);
+                            TextView contactName = view.findViewById(R.id.contactName);
+                            TextView phoneNum = view.findViewById(R.id.phoneNum);
+                            TextView email = view.findViewById(R.id.email);
+                            companyName.setText(companyNameText);
+                            subPlan.setText(subPlanText);
+                            sirenNum.setText(sirenNumText);
+                            contactName.setText(contactNameText);
+                            phoneNum.setText(phoneNumText);
+                            email.setText(emailText);
+                        }
+                    });
+        }
+
+
+
+        super.onViewCreated(view, savedInstanceState);
+
+        backProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+                userId = null;
+            }
+        });
 
         favoriteBtnCompany.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +261,6 @@ public class fragment_user_company extends Fragment {
             }
         });
 
-        settingsBtn = view.findViewById(R.id.settingsBtn);
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,10 +281,6 @@ public class fragment_user_company extends Fragment {
                 startActivity(profile);
             }
         });
-
-        editProfileCompany = view.findViewById(R.id.editProfileCompanyContainer);
-        Button editprofileBtn = view.findViewById(R.id.editProfileCompanyBtn);
-
         editProfileCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -235,6 +317,30 @@ public class fragment_user_company extends Fragment {
             });
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        if(externalProfileView){
+            profileCompanyPic = view.findViewById(R.id.profileCompanyPic);
+
+            mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + userId);
+            try {
+                final File localFile = File.createTempFile("profilePic", "jpg");
+                mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        Uri fileUri = Uri.fromFile(localFile);
+                        String imageUrl = fileUri.toString();
+                        Picasso.get().load(imageUrl).fit().centerCrop().into(profileCompanyPic);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Error while retrieving picture", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

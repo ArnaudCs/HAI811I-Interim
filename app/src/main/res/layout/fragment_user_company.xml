@@ -374,12 +374,33 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/settingsBtn"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 app:lottie_speed="4"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
+                android:visibility="visible"
                 app:lottie_rawRes="@raw/settings">
 
             </com.airbnb.lottie.LottieAnimationView>
+
+            <LinearLayout
+                android:id="@+id/backProfileContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:gravity="left">
+
+                <Button
+                    android:id="@+id/backProfileBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/baseline_arrow_circle_left_24"
+                    android:backgroundTint="#FFFFFF"
+                    android:drawableTint="#FBFAFA"
+                    android:foregroundTint="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -34,6 +34,7 @@ import com.example.interim.AppActivity;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
+import com.example.interim.profile.CompanyProfileViewer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -81,7 +82,7 @@ public class fragment_mission_description extends Fragment {
 
     String firstName;
 
-    Button applyBtnMission, contactCompanyBtn;
+    Button applyBtnMission, contactCompanyBtn, seeProfile;
     StorageReference mStorageRef;
     String name;
     String jobId;
@@ -131,6 +132,7 @@ public class fragment_mission_description extends Fragment {
         findSimilarBtnContainer = view.findViewById(R.id.findSimilarContainer);
         contactCompanyBtnContainer = view.findViewById(R.id.contactCompanyBtnContainer);
         contactCompanyBtn = view.findViewById(R.id.contactCompanyBtn);
+        seeProfile = view.findViewById(R.id.seeProfile);
 
 
         final Offer[] offer = {new Offer()};
@@ -238,6 +240,15 @@ public class fragment_mission_description extends Fragment {
                 getActivity().finish();
                 startActivity(intent);
 
+            }
+        });
+
+        seeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CompanyProfileViewer.class);
+                intent.putExtra("userId", recruiterId);
+                startActivity(intent);
             }
         });
 
