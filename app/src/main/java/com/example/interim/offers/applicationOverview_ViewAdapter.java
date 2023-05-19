@@ -1,6 +1,7 @@
 package com.example.interim.offers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.interim.R;
 import com.example.interim.models.Application;
 import com.example.interim.models.Offer;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -58,8 +64,8 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
             @Override
             public void onClick(View view) {
                 downResume = true;
-                applicantName = applications.get(position).getApplicantName();
-                applicantId = applications.get(position).getApplicantId();
+                applicantName = applications.get(holder.getAdapterPosition()).getApplicantName();
+                applicantId = applications.get(holder.getAdapterPosition()).getApplicantId();
                 downloadPdf();
             }
         });
@@ -68,9 +74,31 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
             @Override
             public void onClick(View view) {
                 downResume = false;
-                applicantName = applications.get(position).getApplicantName();
-                applicantId = applications.get(position).getApplicantId();
+                applicantName = applications.get(holder.getAdapterPosition()).getApplicantName();
+                applicantId = applications.get(holder.getAdapterPosition()).getApplicantId();
                 downloadPdf();
+            }
+        });
+
+        holder.acceptApplicant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the offer ID from the applications list at the given position
+                String applicationId = applications.get(holder.getAdapterPosition()).getId();
+
+                // Update the status of the offer in the database to 2
+                updateOfferStatus(applicationId, 2);
+            }
+        });
+
+        holder.rejectApplicant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the offer ID from the applications list at the given position
+                String applicationId = applications.get(holder.getAdapterPosition()).getId();
+
+                // Update the status of the offer in the database to 2
+                updateOfferStatus(applicationId, 1);
             }
         });
 
@@ -127,6 +155,56 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
                     });
         }
     }
+
+    private void updateOfferStatus(String applicationId, int newStatus) {
+        // Access the database and update the offer status
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        System.out.println("APP ID "+ applicationId);
+        DocumentReference offerRef = db.collection("Applications").document(applicationId);
+
+        // Fetch the current offer document
+        offerRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        int currentStatus = document.getLong("status").intValue();
+
+                        // Check if the offer already has the new status value
+                        if (currentStatus == newStatus) {
+                            Toast.makeText(context, "Application already has the new status", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        // Update the offer status in the database
+                        offerRef.update("status", newStatus)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        // Offer status updated successfully
+                                        Toast.makeText(context, "Application status updated", Toast.LENGTH_SHORT).show();
+
+                                        // Refresh the layout
+                                        notifyDataSetChanged();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Error occurred while updating offer status
+                                        Toast.makeText(context, "Failed to update application status", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                } else {
+                    // Error occurred while fetching offer document
+                    Toast.makeText(context, "Failed to fetch offer details", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
 
     @Override
     public int getItemCount() {

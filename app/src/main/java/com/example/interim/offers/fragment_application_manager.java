@@ -105,6 +105,7 @@ public class fragment_application_manager extends Fragment {
                             ArrayList<Application> rejectedApp = new ArrayList<>();
                             for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
                                 Application app = documentSnapshot.toObject(Application.class);
+                                app.setId(documentSnapshot.getId());
                                 if(app.getStatus() == 0) {
                                     pendingApp.add(app);
                                 } else if (app.getStatus() == 1) {
