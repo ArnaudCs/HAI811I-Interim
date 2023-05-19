@@ -57,7 +57,7 @@ public class fragment_user_company extends Fragment {
 
     private LottieAnimationView settingsBtn;
 
-    private LinearLayout editProfileCompany, backProfileContainer;
+    private LinearLayout editProfileCompany, backProfileContainer, statsBtn;
 
     private Button favoriteBtnCompany, backProfileBtn, editprofileBtn, deconnectionBtn;
 
@@ -73,10 +73,10 @@ public class fragment_user_company extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            userId = bundle.getString("userId");
-            System.out.println("Vue externe");
+        Bundle args = getArguments();
+        if (args != null) {
+            userId = args.getString("recruiterId");
+            externalProfileView = true;
         }
         if(mAuth.getCurrentUser() == null){
             Intent mainActivity = new Intent(getActivity(), MainActivity.class);
@@ -84,37 +84,15 @@ public class fragment_user_company extends Fragment {
             this.getActivity().finish();
             return null;
         }
-        if (userId != null && mAuth.getCurrentUser().getUid() != userId) {
-            externalProfileView = true;
-            System.out.println("Vue externe");
-        }
 
-        if(externalProfileView){
-            db.collection("Pros").document(userId).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                if (documentSnapshot.exists()) {
-                                                    subPlanText = documentSnapshot.getString("plan");
-                                                    Date endDate = documentSnapshot.getDate("endDate");
-                                                    Date startDate = documentSnapshot.getDate("startDate");
-                                                    boolean isUnlimited = subPlanText.contains("One Time");
-                                                }
-                                            }
-                                        });
-                            }
-                    });
-        } else {
+        else {
+            System.out.println("²²²²²²²²²²²²²²²²²²²²²²²²²² Je vais vérifier l'abonnement +++++++++++");
             db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            boolean verified = documentSnapshot.getBoolean("verified");
-                            if(!verified) {
+                            Boolean verified = documentSnapshot.getBoolean("verified");
+                            if(verified != null && !verified) {
                                 Intent mainActivity = new Intent(getActivity(), PhoneValidation.class);
                                 startActivity(mainActivity);
                                 getActivity().finish();
@@ -166,8 +144,7 @@ public class fragment_user_company extends Fragment {
         editProfileCompany = view.findViewById(R.id.editProfileCompanyContainer);
         editprofileBtn = view.findViewById(R.id.editProfileCompanyBtn);
         deconnectionBtn = view.findViewById(R.id.decoBtn);
-
-
+        statsBtn = view.findViewById(R.id.statsBtn);
 
         if (userId != null && mAuth.getCurrentUser().getUid() != userId){
             externalProfileView = true;
@@ -176,43 +153,8 @@ public class fragment_user_company extends Fragment {
             editProfileCompany.setVisibility(View.GONE);
             editprofileBtn.setVisibility(View.GONE);
             deconnectionBtn.setVisibility(View.GONE);
-
+            statsBtn.setVisibility(View.GONE);
         }
-
-        db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                        companyNameText = documentSnapshot.getString("companyName");
-                        sirenNumText = documentSnapshot.getString("nationalNumber");
-                        contactNameText = documentSnapshot.getString("name");
-                        phoneNumText = documentSnapshot.getString("phoneNumber");
-                        emailText = documentSnapshot.getString("email");
-                        TextView companyName = view.findViewById(R.id.companyName);
-                        TextView subPlan = view.findViewById(R.id.subPlan);
-                        TextView sirenNum = view.findViewById(R.id.sirenNum);
-                        TextView contactName = view.findViewById(R.id.contactName);
-                        TextView phoneNum = view.findViewById(R.id.phoneNum);
-                        TextView email = view.findViewById(R.id.email);
-                        companyName.setText(companyNameText);
-                        subPlan.setText(subPlanText);
-                        sirenNum.setText(sirenNumText);
-                        contactName.setText(contactNameText);
-                        phoneNum.setText(phoneNumText);
-                        email.setText(emailText);
-
-                        db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
-                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    if (documentSnapshot.exists()) {
-                                        subPlanText = documentSnapshot.getString("plan");
-                                    }
-                                }
-                            });
-                        }
-                });
 
         if(externalProfileView){
             db.collection("Pros").document(userId).get()
@@ -239,9 +181,43 @@ public class fragment_user_company extends Fragment {
                             email.setText(emailText);
                         }
                     });
+        } else {
+            db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                            companyNameText = documentSnapshot.getString("companyName");
+                            sirenNumText = documentSnapshot.getString("nationalNumber");
+                            contactNameText = documentSnapshot.getString("name");
+                            phoneNumText = documentSnapshot.getString("phoneNumber");
+                            emailText = documentSnapshot.getString("email");
+                            TextView companyName = view.findViewById(R.id.companyName);
+                            TextView subPlan = view.findViewById(R.id.subPlan);
+                            TextView sirenNum = view.findViewById(R.id.sirenNum);
+                            TextView contactName = view.findViewById(R.id.contactName);
+                            TextView phoneNum = view.findViewById(R.id.phoneNum);
+                            TextView email = view.findViewById(R.id.email);
+                            companyName.setText(companyNameText);
+                            subPlan.setText(subPlanText);
+                            sirenNum.setText(sirenNumText);
+                            contactName.setText(contactNameText);
+                            phoneNum.setText(phoneNumText);
+                            email.setText(emailText);
+
+                            db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()) {
+                                                subPlanText = documentSnapshot.getString("plan");
+                                            }
+                                        }
+                                    });
+                        }
+                    });
+
         }
-
-
 
         super.onViewCreated(view, savedInstanceState);
 

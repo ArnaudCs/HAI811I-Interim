@@ -7,7 +7,7 @@
     tools:context=".profile.CompanyProfileViewer">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView10"
+        android:id="@+id/companyProfileViewer"
         android:name="com.example.interim.profile.fragment_user_company"
         android:layout_width="0dp"
         android:layout_height="0dp"

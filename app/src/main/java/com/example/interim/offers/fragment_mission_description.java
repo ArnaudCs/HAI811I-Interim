@@ -248,6 +248,7 @@ public class fragment_mission_description extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CompanyProfileViewer.class);
                 intent.putExtra("userId", recruiterId);
+                System.out.println("Envoi du user id depuis la mission ---------------------------------" + recruiterId);
                 startActivity(intent);
             }
         });
