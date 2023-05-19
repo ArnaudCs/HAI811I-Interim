@@ -35,6 +35,7 @@ public class fragment_application_manager extends Fragment {
 
     Button pendingApplicationsBtn, acceptedApplications, rejectedApplications, backButtonApplications;
     String userId;
+    String jobId;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     LinearLayout acceptedContainer, pendingContainer, rejectedContainer;
@@ -50,18 +51,31 @@ public class fragment_application_manager extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_application_manager, container, false);
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null) {
+
+        if (mAuth.getCurrentUser() != null) {
             userId = mAuth.getCurrentUser().getUid();
-        }
-        else {
+        } else {
             Log.d(TAG, "User is not logged in !");
             return null;
         }
-        return inflater.inflate(R.layout.fragment_application_manager, container, false);
+
+        // Retrieve the argument value
+        Bundle args = getArguments();
+        if (args != null) {
+            jobId = args.getString("id");
+        }
+        else {
+            System.out.println("ID IS NULL");
+        }
+
+        return view;
     }
 
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -78,51 +92,34 @@ public class fragment_application_manager extends Fragment {
         rejectedDisplay = view.findViewById(R.id.rejectedDisplay);
         backButtonApplications = view.findViewById(R.id.backButtonApplications);
 
+
         if (userId != null) {
-            db.collection("Offers")
-                    .whereEqualTo("recruiter", userId)
+            db.collection("Applications")
+                    .whereEqualTo("offerId", jobId)
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot querySnapshot) {
-                            ArrayList<String> offerIds = new ArrayList<>();
+                            ArrayList<Application> pendingApp = new ArrayList<>();
+                            ArrayList<Application> acceptedApp = new ArrayList<>();
+                            ArrayList<Application> rejectedApp = new ArrayList<>();
                             for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                                offerIds.add(documentSnapshot.getId());
+                                Application app = documentSnapshot.toObject(Application.class);
+                                if(app.getStatus() == 0) {
+                                    pendingApp.add(app);
+                                } else if (app.getStatus() == 1) {
+                                    rejectedApp.add(app);
+                                }
+                                else {
+                                    acceptedApp.add(app);
+                                }
                             }
-                            db.collection("Applications")
-                                    .whereIn("offerId", offerIds)
-                                    .get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onSuccess(QuerySnapshot querySnapshot) {
-                                            ArrayList<Application> pendingApp = new ArrayList<>();
-                                            ArrayList<Application> acceptedApp = new ArrayList<>();
-                                            ArrayList<Application> rejectedApp = new ArrayList<>();
-                                            for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                                                Application app = documentSnapshot.toObject(Application.class);
-                                                if(app.getStatus() == 0) {
-                                                    pendingApp.add(app);
-                                                } else if (app.getStatus() == 1) {
-                                                    rejectedApp.add(app);
-                                                }
-                                                else {
-                                                    acceptedApp.add(app);
-                                                }
-                                            }
-                                            pendingDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
-                                            pendingDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), pendingApp));
-                                            rejectedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
-                                            rejectedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), rejectedApp));
-                                            acceptedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
-                                            acceptedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), acceptedApp));
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            // Handle the error
-                                        }
-                                    });
+                            pendingDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
+                            pendingDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), pendingApp));
+                            rejectedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
+                            rejectedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), rejectedApp));
+                            acceptedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
+                            acceptedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), acceptedApp));
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
