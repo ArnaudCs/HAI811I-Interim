@@ -57,7 +57,7 @@ public class fragment_user_company extends Fragment {
 
     private LottieAnimationView settingsBtn;
 
-    private LinearLayout editProfileCompany, backProfileContainer, statsBtn;
+    private LinearLayout editProfileCompany, backProfileContainer, statsBtn, applySpontaneousContainer;
 
     private Button favoriteBtnCompany, backProfileBtn, editprofileBtn, deconnectionBtn;
 
@@ -149,11 +149,13 @@ public class fragment_user_company extends Fragment {
         if (userId != null && mAuth.getCurrentUser().getUid() != userId){
             externalProfileView = true;
             favoriteBtnCompany.setVisibility(View.GONE);
-            backProfileContainer.setVisibility(View.GONE);
+            backProfileContainer.setVisibility(View.VISIBLE);
+            applySpontaneousContainer.setVisibility(View.VISIBLE);
             editProfileCompany.setVisibility(View.GONE);
             editprofileBtn.setVisibility(View.GONE);
             deconnectionBtn.setVisibility(View.GONE);
             statsBtn.setVisibility(View.GONE);
+            settingsBtn.setVisibility(View.GONE);
         }
 
         if(externalProfileView){

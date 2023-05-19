@@ -209,6 +209,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/applySpontaneousContainer"
             android:layout_width="match_parent"
             android:gravity="center"
             android:visibility="gone"
@@ -219,7 +220,7 @@
                 android:id="@+id/applySpontaneous"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gradient"
+                android:background="@drawable/redbutton"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="@string/spontaneousApplyBtn"

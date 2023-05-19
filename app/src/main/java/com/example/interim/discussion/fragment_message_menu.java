@@ -37,6 +37,8 @@ public class fragment_message_menu extends Fragment {
 
     private conversation_ViewAdapter mAdapter;
     private Runnable mRunnable;
+    private boolean refreshing = false;
+
     private Handler mHandler;
     RecyclerView recyclerView;
     Button deleteMessages, cancelDelete, newConvBtn, groupMaking;
@@ -206,6 +208,23 @@ public class fragment_message_menu extends Fragment {
                 mHandler.postDelayed(this, 6000);
             }
         };
+        refreshing = true;
+        mHandler.post(mRunnable);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        refreshing = false;
+        System.out.println("Arrêt du refresh des conversations");
+        mHandler.removeCallbacks(mRunnable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshing = true;
+        System.out.println("Reprise du refresh des conversations");
         mHandler.post(mRunnable);
     }
 }

@@ -89,8 +89,6 @@ public class fragment_message_discussion extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         conversationId = DataHolder.getInstance().getConversationId();
         TextView convName = view.findViewById(R.id.convName);
         Button infosBtn = view.findViewById(R.id.infosBtn);

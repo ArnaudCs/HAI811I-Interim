@@ -8,178 +8,180 @@
     android:background="?colorPrimary"
     android:foregroundTint="#AEAEAE">
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/bottomDeckUserProfile"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:padding="30dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/bottom2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userProfileNavbar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="#AFAFAF"
-                android:foregroundTint="#B5B5B5"
-                android:src="@drawable/baseline_person_2_24"
-                app:tint="@color/primary_red">
-
-            </ImageView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bottom2"
             android:orientation="vertical"
-            android:background="@drawable/greybox">
+            android:padding="30dp">
 
-            <TextView
-                android:id="@+id/nameDisplay"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:gravity="center"
-                android:textSize="30sp"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:text="Utilisateur">
-            </TextView>
+                android:gravity="right">
 
-            <com.google.android.material.divider.MaterialDivider
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:backgroundTint="#AFAFAF"
+                    android:foregroundTint="#B5B5B5"
+                    android:src="@drawable/baseline_person_2_24"
+                    app:tint="@color/primary_red">
+
+                </ImageView>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="50dp"
-                app:dividerColor="@color/grey">
-
-            </com.google.android.material.divider.MaterialDivider>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="30dp"
+                android:background="@drawable/greybox"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <TextView
-                    android:id="@+id/birthDate"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/nameDisplay"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginEnd="40dp"
-                    android:drawableStart="@drawable/baseline_cake_24"
-                    android:drawablePadding="10dp"
-                    android:textSize="18sp"
+                    android:gravity="center"
                     android:padding="10dp"
-                    android:textStyle="bold"
-                    android:text="">
-                </TextView>
+                    android:text="Utilisateur"
+                    android:textSize="30sp"
+                    android:textStyle="bold"></TextView>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="10dp"
+                    app:dividerColor="@color/grey">
+
+                </com.google.android.material.divider.MaterialDivider>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/birthDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:drawableStart="@drawable/baseline_cake_24"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"
+                        android:text=""
+                        android:textSize="18sp"
+                        android:textStyle="bold"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/savedOffers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:drawableStart="@drawable/baseline_favorite_border_24"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"
+                        android:text="06587496956263"
+                        android:textSize="18sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/phoneNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:drawableStart="@drawable/baseline_phone_iphone_24"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"
+                        android:text="06 15 47 89 65"
+                        android:textSize="18sp"
+                        android:textStyle="bold"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/mailAdress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:autoSizeTextType="uniform"
+                        android:drawableStart="@drawable/baseline_alternate_email_24"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"
+                        android:text="john.doe@gmail.com"
+                        android:textSize="15sp"
+                        android:textStyle="bold"></TextView>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
                 android:gravity="center"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/savedOffers"
+                <Button
+                    android:id="@+id/myApplicationsButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:drawableStart="@drawable/baseline_favorite_border_24"
-                    android:drawablePadding="10dp"
-                    android:padding="10dp"
-                    android:text="06587496956263"
-                    android:textSize="18sp"
+                    android:background="@drawable/redbutton"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/myApplicationsBtn"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
                     android:textStyle="bold">
 
-                </TextView>
-
+                </Button>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/phoneNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:drawableStart="@drawable/baseline_phone_iphone_24"
-                    android:drawablePadding="10dp"
-                    android:padding="10dp"
-                    android:text="06 15 47 89 65"
-                    android:textSize="18sp"
-                    android:textStyle="bold">
-                </TextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/mailAdress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:autoSizeTextType="uniform"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:drawableStart="@drawable/baseline_alternate_email_24"
-                    android:drawablePadding="10dp"
-                    android:padding="10dp"
-                    android:text="john.doe@gmail.com"
-                    android:textSize="18sp"
-                    android:textStyle="bold">
-                </TextView>
-            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="30sp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/myApplicationsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:stateListAnimator="@null"
-                android:text="@string/myApplicationsBtn"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:background="@drawable/redbutton"
-                >
-
-            </Button>
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profilePicCompanyContainer"
@@ -300,8 +302,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/settingsBtnUser"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:lottie_speed="4"
                 app:lottie_rawRes="@raw/settings">
 
@@ -326,6 +328,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
