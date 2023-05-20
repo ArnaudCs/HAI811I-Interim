@@ -271,4 +271,11 @@
     <string name="postPerPros">Posts per Pros</string>
     <string name="failedAuth">Authentication failed</string>
     <string name="strongPass">Strong password</string>
+    <string name="addOffersWithFile">Use Offer File</string>
+    <string name="wrongJson">Error or missing elements in file</string>
+    <string name="downTemplates">Download Template</string>
+    <string name="downloadedFileSuccess">Downloaded</string>
+    <string name="downloadSuccessText">File downloaded successfully</string>
+    <string name="DownloadErro">Download Erro</string>
+    <string name="downloadErrorText">Error while downloading file</string>
 </resources>

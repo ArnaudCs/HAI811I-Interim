@@ -1,8 +1,13 @@
 package com.example.interim.offers;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +36,19 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +59,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class fragment_post_offers extends Fragment {
+    private static final int PICK_JSON_FILE_REQUEST_CODE = 1;
+
     public fragment_post_offers() {
         // Required empty public constructor
     }
@@ -69,7 +89,8 @@ public class fragment_post_offers extends Fragment {
         EditText textOfferDescription = view.findViewById(R.id.offerDescriptionText);
         EditText textOfferDetails = view.findViewById(R.id.offerDetailsText);
         Button addOfferButton = view.findViewById(R.id.addOfferButton);
-
+        Button addMultipleOffers = view.findViewById(R.id.addMultipleOffers);
+        Button downloadTemplate = view.findViewById(R.id.downloadTemplate);
 
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
         DatePickerDialog.OnDateSetListener setListener;
@@ -110,6 +131,14 @@ public class fragment_post_offers extends Fragment {
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DATE);
 
+        addMultipleOffers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("application/json");
+                startActivityForResult(intent, PICK_JSON_FILE_REQUEST_CODE);
+            }
+        });
 
         addOfferButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +217,12 @@ public class fragment_post_offers extends Fragment {
             }
         });
 
-
+        downloadTemplate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadJsonTemplate();
+            }
+        });
 
         formScrollContainer.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             private int scrollThreshold = 10;
@@ -256,5 +290,175 @@ public class fragment_post_offers extends Fragment {
                 datePickerDialog.show();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_JSON_FILE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            // Récupérer l'URI du fichier sélectionné
+            Uri fileUri = data.getData();
+
+            try {
+                // Lire le contenu du fichier JSON
+                InputStream inputStream = getContext().getContentResolver().openInputStream(fileUri);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+                inputStream.close();
+
+                // Parser le contenu JSON
+                Object json = new JSONTokener(stringBuilder.toString()).nextValue();
+
+                if (json instanceof JSONArray) {
+                    // Le contenu JSON est un tableau
+                    JSONArray offersArray = (JSONArray) json;
+                    int offersCount = offersArray.length();
+
+                    List<Offer> offerList = new ArrayList<>(); // Liste pour stocker les offres
+
+                    for (int i = 0; i < offersCount; i++) {
+                        JSONObject offer = offersArray.getJSONObject(i);
+
+                        // Extraire les informations de chaque offre
+                        String category = offer.optString("category");
+                        String companyName = offer.optString("companyName");
+                        String description = offer.optString("description");
+                        String details = offer.optString("details");
+                        String jobTitle = offer.optString("jobTitle");
+                        String keywords = offer.optString("keywords");
+                        String label = offer.optString("label");
+                        String location = offer.optString("location");
+                        int salaryMax = offer.optInt("salaryMax");
+                        int salaryMin = offer.optInt("salaryMin");
+                        String startD = offer.optString("startDate");
+                        String endD = offer.optString("endDate");
+                        String url = offer.optString("url");
+
+                        // Vérifier si les éléments requis sont présents
+                        if (category == "" || companyName == "" || description == "" || details == "" ||
+                                jobTitle == "" || keywords == "" || label == "" || location == "" ||
+                                startD == "" || endD == "" || url == "") {
+                            showDialogError(getString(R.string.wrongJson));
+                            return;
+                        } else if (category.equals("") || companyName.equals("") || description.equals("") || details.equals("") ||
+                                jobTitle.equals("") || keywords.equals("") || label.equals("") || location.equals("") ||
+                                startD.equals("") || endD.equals("") || url.equals("")) {
+                            showDialogError(getString(R.string.wrongJson));
+                            return;
+                        }
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+                        Date startDate = null, endDate = null, today = null, expDate = null;
+                        try {
+                            startDate = sdf.parse(startD);
+                            endDate = sdf.parse(endD);
+                            today = new Date();
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(today);
+                            c.add(Calendar.DATE, 30);
+                            expDate = c.getTime();
+
+                        } catch (ParseException e) {
+                        }
+
+                        Offer offerObj = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
+                        offerObj.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        offerList.add(offerObj);
+                    }
+
+                    for(Offer offers : offerList){
+                        System.out.println("Offre multiple : " + offers.getCompanyName() + offers.getJobTitle());
+                    }
+
+                } else if (json instanceof JSONObject) { // si une seule offre dans le json
+                    JSONObject offerObject = (JSONObject) json;
+                    String category = offerObject.optString("category");
+                    String companyName = offerObject.optString("companyName");
+                    String description = offerObject.optString("description");
+                    String details = offerObject.optString("details");
+                    String jobTitle = offerObject.optString("jobTitle");
+                    String keywords = offerObject.optString("keywords");
+                    String label = offerObject.optString("label");
+                    String location = offerObject.optString("location");
+                    int salaryMax = offerObject.optInt("salaryMax");
+                    int salaryMin = offerObject.optInt("salaryMin");
+                    String startD = offerObject.optString("startDate");
+                    String endD = offerObject.optString("endDate");
+                    String url = offerObject.optString("url");
+
+                    if (category == "" || companyName == "" || description == "" || details == "" ||
+                            jobTitle == "" || keywords == "" || label == "" || location == "" ||
+                            startD == "" || endD == "" || url == "") {
+                        showDialogError("Champs requis manquants dans l'objet JSON");
+                        return;
+                    } else if (category.equals("") || companyName.equals("") || description.equals("") || details.equals("") ||
+                            jobTitle.equals("") || keywords.equals("") || label.equals("") || location.equals("") ||
+                            startD.equals("") || endD.equals("") || url.equals("")) {
+                        showDialogError(getString(R.string.wrongJson));
+                        return;
+                    }
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+                    Date startDate = null, endDate = null, today = null, expDate = null;
+                    try {
+                        startDate = sdf.parse(startD);
+                        endDate = sdf.parse(endD);
+                        today = new Date();
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(today);
+                        c.add(Calendar.DATE, 30);
+                        expDate = c.getTime();
+
+                    } catch (ParseException e) {
+                    }
+
+                    Offer offerObj = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
+                    offerObj.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    System.out.println("Offre unique : " + offerObj.getCompanyName() + offerObj.getJobTitle());
+
+                } else {
+                    showDialogError("Invalid JSON Format");
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+                showDialogError("Error parsing JSON");
+            }
+        }
+    }
+
+    private void showDialogError(String errorMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Erreur");
+        builder.setMessage(errorMessage);
+        builder.setPositiveButton("OK", null);
+        builder.show();
+    }
+
+    private void downloadJsonTemplate() {
+        String fileName = "offersTemplate.json";
+        String folderPath = "jsontemplate/";
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(folderPath + fileName);
+        File localFile = new File(Environment.getExternalStorageDirectory().getPath(), fileName);
+
+        storageRef.getFile(localFile)
+                .addOnSuccessListener(taskSnapshot -> {
+                    showDialog(getString(R.string.downloadedFileSuccess), getString(R.string.downloadSuccessText) + localFile.getPath());
+                })
+                .addOnFailureListener(exception -> {
+                    showDialog(getString(R.string.DownloadErro), getString(R.string.downloadErrorText) + exception.getMessage());
+                });
+    }
+
+    private void showDialog(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", null);
+        builder.show();
     }
 }

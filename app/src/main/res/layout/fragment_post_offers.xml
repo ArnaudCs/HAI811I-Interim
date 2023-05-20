@@ -509,7 +509,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="100dp"
+                    android:layout_marginBottom="50dp"
                     android:gravity="center">
 
                     <Button
@@ -528,6 +528,48 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/downloadTemplate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/greybutton"
+                        android:paddingLeft="32dp"
+                        android:stateListAnimator="@null"
+                        android:paddingRight="32dp"
+                        android:textColor="@color/primary_red"
+                        android:textStyle="italic"
+                        android:textSize="10sp"
+                        android:text="@string/downTemplates">
+                    </Button>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="100dp"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/addMultipleOffers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/redbutton"
+                        android:paddingLeft="32dp"
+                        android:stateListAnimator="@null"
+                        android:paddingRight="32dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:text="@string/addOffersWithFile">
+                    </Button>
+
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

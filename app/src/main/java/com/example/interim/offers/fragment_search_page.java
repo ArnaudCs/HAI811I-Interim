@@ -83,6 +83,7 @@ public class fragment_search_page extends Fragment {
         SeekBar areaChoice = view.findViewById(R.id.areaChoice);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
         TextView searchText = view.findViewById(R.id.searchText);
+        Button downloadTemplate = view.findViewById(R.id.downloadTemplate);
         //Initialisation de la valeur par défaut du progress de la barre de sélection
         areaDisplay.setText(getResources().getString(R.string.areaFilter) + String.valueOf((areaChoice.getProgress() + 1) * 10) + " Km");
 

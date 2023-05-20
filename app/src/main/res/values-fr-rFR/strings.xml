@@ -261,4 +261,11 @@
     <string name="postPerPros">Posts par entreprise</string>
     <string name="failedAuth">Echec de l\'authentification</string>
     <string name="strongPass">Mot de passe fort</string>
+    <string name="addOffersWithFile">Utiliser fichier d\'offres</string>
+    <string name="wrongJson">Erreur ou élément manquant dans le fichier</string>
+    <string name="downTemplates">Télécharger template</string>
+    <string name="downloadedFileSuccess">Téléchargement terminé</string>
+    <string name="downloadSuccessText">Fichier téléchargé avec succés</string>
+    <string name="DownloadErro">Erreur téléchargement</string>
+    <string name="downloadErrorText">Erreur lors du téléchargement du fichier</string>
 </resources>
