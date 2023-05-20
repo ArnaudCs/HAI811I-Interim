@@ -259,4 +259,6 @@
     <string name="resume">CV</string>
     <string name="cover">Lettre</string>
     <string name="postPerPros">Posts par entreprise</string>
+    <string name="failedAuth">Echec de l\'authentification</string>
+    <string name="strongPass">Mot de passe fort</string>
 </resources>

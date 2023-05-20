@@ -269,4 +269,6 @@
     <string name="resume">Resume</string>
     <string name="cover">Cover Letter</string>
     <string name="postPerPros">Posts per Pros</string>
+    <string name="failedAuth">Authentication failed</string>
+    <string name="strongPass">Strong password</string>
 </resources>

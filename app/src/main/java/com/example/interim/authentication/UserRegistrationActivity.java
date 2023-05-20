@@ -3,9 +3,12 @@ package com.example.interim.authentication;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.interim.PDFClass;
 import com.example.interim.R;
@@ -30,6 +34,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,6 +58,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -94,7 +101,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
         TextInputEditText email = findViewById(R.id.textMail);
         TextInputEditText phoneNumber = findViewById(R.id.textNumber);
         birthdate = findViewById(R.id.textBirthdate);
+        TextInputLayout layoutPassword = findViewById(R.id.layoutPassword);
         TextInputEditText password = findViewById(R.id.textPassword);
+        TextInputLayout layoutConfirmPassword = findViewById(R.id.layoutConfirmPassword);
         TextInputEditText confirmPassword = findViewById(R.id.textConfirmPassword);
         TextInputEditText city = findViewById(R.id.textCity);
 
@@ -117,6 +126,68 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(UserRegistrationActivity.this, dateSetListener, year, month, day);
                 datePickerDialog.show();
+            }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String pass = charSequence.toString();
+                if(pass.length() >= 8){
+                    Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+                    Matcher matcher = pattern.matcher(pass);
+                    boolean isPwdContainsSpeChar = matcher.find();
+                    if(isPwdContainsSpeChar){
+                        layoutPassword.setHelperText(getString(R.string.strongPass));
+                        layoutPassword.setError("");
+                    } else {
+                        layoutPassword.setHelperText("");
+                        layoutPassword.setError(getString(R.string.badPass));
+                    }
+                } else {
+                    layoutPassword.setHelperText(getString(R.string.minPass));
+                    layoutPassword.setError("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        confirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                String masterpass = password.getText().toString();
+                String confirmpassword = charSequence.toString();
+                if(confirmpassword.equals(masterpass)){
+                    int color = ContextCompat.getColor(getApplicationContext(), R.color.teal_700);
+                    layoutConfirmPassword.setHelperTextColor(ColorStateList.valueOf(color));
+                    layoutConfirmPassword.setHelperText(getString(R.string.passwordMatching));
+                    layoutConfirmPassword.setError("");
+                } else {
+                    int color = ContextCompat.getColor(getApplicationContext(), R.color.primary_red);
+                    layoutConfirmPassword.setHelperTextColor(ColorStateList.valueOf(color));
+                    layoutConfirmPassword.setHelperText("");
+                    layoutConfirmPassword.setError(getString(R.string.passwordMismatch));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
