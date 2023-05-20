@@ -76,4 +76,34 @@ public class CategoryRepository {
         }
         return 0; // Default category ID if not found
     }
+
+    public boolean isValidCategory(String category){
+        for (Map.Entry<Integer, List<String>> entry : this.categories.entrySet()) {
+            List<String> categoryList = entry.getValue();
+            if (categoryList.contains(category)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getFrench(String category) {
+        for (Map.Entry<Integer, List<String>> entry : this.categories.entrySet()) {
+            List<String> categoryList = entry.getValue();
+            if (categoryList.contains(category)) {
+                return categoryList.get(0);
+            }
+        }
+        return "Not Found";
+    }
+
+    public String getEnglish(String category) {
+        for (Map.Entry<Integer, List<String>> entry : this.categories.entrySet()) {
+            List<String> categoryList = entry.getValue();
+            if (categoryList.contains(category)) {
+                return categoryList.get(1);
+            }
+        }
+        return "Not Found";
+    }
 }

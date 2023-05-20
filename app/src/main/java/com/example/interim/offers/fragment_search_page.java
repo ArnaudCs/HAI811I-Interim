@@ -394,8 +394,15 @@ public class fragment_search_page extends Fragment {
                 String city = cityChoice.getText().toString();
                 String minSalaryString = startPrice.getText().toString();
                 String maxSalaryString = endPrice.getText().toString();
-                String catFilter = categoryChoice.getSelectedItem().toString();
 
+                String extractedCategory = categoryChoice.getSelectedItem().toString();
+                CategoryRepository categoryRepository = new CategoryRepository();
+
+                String deviceLanguage = Locale.getDefault().getLanguage();
+                if (deviceLanguage.equals("fr")) {
+                    extractedCategory = categoryRepository.getEnglish(extractedCategory);
+                }
+                String catFilter = extractedCategory;
 
                 db.collection("Offers")
                         .get()

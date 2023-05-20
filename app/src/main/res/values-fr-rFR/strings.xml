@@ -269,4 +269,5 @@
     <string name="DownloadErro">Erreur téléchargement</string>
     <string name="downloadErrorText">Erreur lors du téléchargement du fichier</string>
     <string name="incorrectDate">La date entrée est incorrecte</string>
+    <string name="CategoryNotfound">Catégorie non trouvée</string>
 </resources>

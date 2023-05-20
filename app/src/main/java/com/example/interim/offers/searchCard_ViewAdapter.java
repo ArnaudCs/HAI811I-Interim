@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.interim.CategoryRepository;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_ViewHolder> {
 
@@ -53,7 +55,19 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
         holder.jobId = offers.get(position).getId();
         holder.jobTitle.setText(offers.get(position).getJobTitle());
         holder.companyName.setText(offers.get(position).getCompanyName());
-        holder.jobCategory.setText(offers.get(position).getCategory());
+
+        String extractedCategory = offers.get(position).getCategory();
+        CategoryRepository categoryRepository = new CategoryRepository();
+
+        String deviceLanguage = Locale.getDefault().getLanguage();
+        if (deviceLanguage.equals("fr")) {
+            extractedCategory = categoryRepository.getFrench(extractedCategory);
+            if(extractedCategory.equals("Not Found")){
+                extractedCategory = context.getString(R.string.CategoryNotfound);
+            }
+        }
+        holder.jobCategory.setText(extractedCategory);
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String startDate = formatter.format(offers.get(position).getStartDate());
         String endDate = formatter.format(offers.get(position).getEndDate());
