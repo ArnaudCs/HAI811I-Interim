@@ -124,7 +124,10 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(UserRegistrationActivity.this, dateSetListener, year, month, day);
+                Calendar maxDate = (Calendar) calendar.clone();
+                maxDate.set(Calendar.YEAR, year - 18);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(UserRegistrationActivity.this, dateSetListener, year - 18, month, day);
+                datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
                 datePickerDialog.show();
             }
         });

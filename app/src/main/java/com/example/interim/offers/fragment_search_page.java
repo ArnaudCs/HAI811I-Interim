@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.interim.CategoryRepository;
 import com.example.interim.R;
@@ -52,7 +53,9 @@ public class fragment_search_page extends Fragment {
     boolean liked = false;
     ScrollView filterContainer;
     TextInputEditText cityChoice;
-    private Calendar calendar;
+    private Calendar calendarStart;
+    private Calendar calendarEnd;
+    private Calendar today;
     private TextInputEditText startDate;
     private TextInputEditText endDate;
     public fragment_search_page() {
@@ -128,43 +131,94 @@ public class fragment_search_page extends Fragment {
         labelChoice.setAdapter(adapter);
         RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
 
-        calendar = Calendar.getInstance();
+        today = Calendar.getInstance();
+        calendarStart = Calendar.getInstance();
+        calendarEnd = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener dateSetListener1 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDateEditText(startDate);
+                calendarStart.set(Calendar.YEAR, year);
+                calendarStart.set(Calendar.MONTH, monthOfYear);
+                calendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                if (!endDate.getText().toString().trim().equals("")) {
+                    if (calendarStart.after(calendarEnd)) {
+                        Toast.makeText(getActivity(), R.string.incorrectDate, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                String dateFormat = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+                startDate.setText(simpleDateFormat.format(calendarStart.getTime()));
             }
         };
         final DatePickerDialog.OnDateSetListener dateSetListener2 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDateEditText(endDate);
+                calendarEnd.set(Calendar.YEAR, year);
+                calendarEnd.set(Calendar.MONTH, monthOfYear);
+                calendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                if (!startDate.getText().toString().trim().equals("")) {
+                    if (calendarEnd.before(calendarStart)) {
+                        Toast.makeText(getActivity(), R.string.incorrectDate, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                String dateFormat = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+                endDate.setText(simpleDateFormat.format(calendarEnd.getTime()));
             }
         };
 
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int year = today.get(Calendar.YEAR);
+                int month = today.get(Calendar.MONTH);
+                int day = today.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener1, year, month, day);
+
+                datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
+                if (!endDate.getText().toString().trim().equals("")) {
+                    datePickerDialog.getDatePicker().setMaxDate(calendarEnd.getTimeInMillis() - 1000);
+                }
+                else {
+                    Calendar maxDate = (Calendar) today.clone();
+                    int newMonth = (month + 3) % 12;
+                    if (newMonth < month)
+                        maxDate.set(Calendar.YEAR, year + 1);
+                    maxDate.set(Calendar.MONTH, newMonth);
+                    datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
+                }
                 datePickerDialog.show();
             }
         });
         endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener2, year, month, day);
+                int year;
+                int month;
+                int day;
+                DatePickerDialog datePickerDialog;
+                if (!startDate.getText().toString().trim().equals("")) {
+                    year = calendarStart.get(Calendar.YEAR);
+                    month = calendarStart.get(Calendar.MONTH);
+                    day = calendarStart.get(Calendar.DAY_OF_MONTH);
+                    datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener2, year, month, day);
+                    datePickerDialog.getDatePicker().setMinDate(calendarStart.getTimeInMillis() + 1000);
+                }
+                else {
+                    year = today.get(Calendar.YEAR);
+                    month = today.get(Calendar.MONTH);
+                    day = today.get(Calendar.DAY_OF_MONTH);
+                    datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener2, year, month, day);
+                    datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
+                }
+                Calendar maxDate = (Calendar) today.clone();
+                int newMonth = (month + 3) % 12;
+                if (newMonth < month)
+                    maxDate.set(Calendar.YEAR, year + 1);
+                maxDate.set(Calendar.MONTH, newMonth);
+                datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
                 datePickerDialog.show();
             }
         });
@@ -385,12 +439,6 @@ public class fragment_search_page extends Fragment {
             }
         });
 
-    }
-
-    private void updateDateEditText(TextInputEditText date) {
-        String dateFormat = "dd/MM/yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
-        date.setText(simpleDateFormat.format(calendar.getTime()));
     }
 
 //    private void loadFiltersFromDataHolder(filterDataHolder dataHolder) {
