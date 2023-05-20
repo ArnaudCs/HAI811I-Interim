@@ -71,7 +71,7 @@ public class fragment_mission_description extends Fragment {
     private MapView map;
     private static final int REQUEST_LOCATION = 1;
     LocationManager lm;
-    float latitude, longitude;
+
     boolean pro = false;
     String offerLocation;
     String offerCategory;
@@ -111,6 +111,8 @@ public class fragment_mission_description extends Fragment {
         applyContainer = view.findViewById(R.id.applyContainer);
         FirebaseFirestore db;
         FirebaseAuth mAuth;
+        final String[] latitude = {"0.0"};
+        final String[] longitude = {"0.0"};
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         super.onViewCreated(view, savedInstanceState);
@@ -135,10 +137,10 @@ public class fragment_mission_description extends Fragment {
         seeProfile = view.findViewById(R.id.seeProfile);
 
 
-        final Offer[] offer = {new Offer()};
+        final Offer[][] offer = {{new Offer()}};
 
         db = FirebaseFirestore.getInstance();
-        DocumentReference offerRef = db.collection("Offers").document(jobId);
+        final DocumentReference[] offerRef = {db.collection("Offers").document(jobId)};
 
         if (mAuth.getCurrentUser() != null) {
             String userId = mAuth.getCurrentUser().getUid();
@@ -167,31 +169,35 @@ public class fragment_mission_description extends Fragment {
                 }
             });
         }
-        offerRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        offerRef[0].get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     // Convert the document snapshot to an Offer object
-                    offer[0] = documentSnapshot.toObject(Offer.class);
-                    assert offer[0] != null;
-                    jobTitle.setText(offer[0].getJobTitle());
-                    companyName.setText(offer[0].getCompanyName());
-                    dateText.setText(getResources().getString(R.string.dateIndicationsStart) + offer[0].getStartDate()
-                            + getResources().getString(R.string.dateIndicationsEnd) + offer[0].getEndDate());
-                    salary.setText(offer[0].getSalaryMax() + "€" + getResources().getString(R.string.moneyMonthIndicator));
-                    postedDate.setText(getResources().getString(R.string.postedDateSuffix) + offer[0].getPostDate());
-                    moreInfosText.setText(offer[0].getLabel());
-                    missionText.setText(offer[0].getDescription());
-                    offerLocation = offer[0].getLocation();
-                    offerCategory = offer[0].getCategory();
-                    recruiterId = offer[0].getRecruiter();
+                    offer[0][0] = documentSnapshot.toObject(Offer.class);
+
+                    assert offer[0][0] != null;
+                    jobTitle.setText(offer[0][0].getJobTitle());
+                    companyName.setText(offer[0][0].getCompanyName());
+                    dateText.setText(getResources().getString(R.string.dateIndicationsStart) + offer[0][0].getStartDate()
+                            + getResources().getString(R.string.dateIndicationsEnd) + offer[0][0].getEndDate());
+                    salary.setText(offer[0][0].getSalaryMax() + "€" + getResources().getString(R.string.moneyMonthIndicator));
+                    postedDate.setText(getResources().getString(R.string.postedDateSuffix) + offer[0][0].getPostDate());
+                    moreInfosText.setText(offer[0][0].getLabel());
+                    missionText.setText(offer[0][0].getDescription());
+                    offerLocation = offer[0][0].getLocation();
+                    offerCategory = offer[0][0].getCategory();
+                    recruiterId = offer[0][0].getRecruiter();
+                    latitude[0] = offer[0][0].getPosX();
+                    longitude[0] = offer[0][0].getPosY();
+
 
 
                     itinaryButtonMission.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=43.63178,3.86347&mode=d"));
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q="+ latitude[0] + ","+ longitude[0] +"&mode=d"));
                             intent.setPackage("com.google.android.apps.maps");
                             startActivity(intent);
                         }
@@ -219,7 +225,45 @@ public class fragment_mission_description extends Fragment {
                 else {
                     System.err.println("NO OFFER FOUND WITH THIS ID !");
                 }
+
+                org.osmdroid.config.Configuration.getInstance().load(getContext(), PreferenceManager.getDefaultSharedPreferences(getContext()));
+
+                map = view.findViewById(R.id.map);
+                map.setTileSource(TileSourceFactory.MAPNIK);
+                map.setBuiltInZoomControls(false);
+                map.setMultiTouchControls(true);
+
+                GeoPoint startPoint = null;
+                if(latitude[0] != null && longitude[0] != null) {
+                    startPoint = new GeoPoint(Double.parseDouble(offer[0][0].getPosX()), Double.parseDouble(offer[0][0].getPosY()));
+                }
+                else {
+                    startPoint = new GeoPoint(43.63178, 3.86347);
+                }
+
+                IMapController mapController = map.getController();
+                mapController.setCenter(startPoint);
+                mapController.setZoom(7.0);
+                ArrayList<OverlayItem> items = new ArrayList<>();
+                OverlayItem position = new OverlayItem("Lieu de l'offre", "", startPoint);
+                Drawable m = position.getMarker(0);
+                items.add(position);
+                ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                    @Override
+                    public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onItemLongPress(int index, OverlayItem item) {
+                        return false;
+                    }
+                });
+
+                mOverlay.setFocusItemsOnTap(true);
+                map.getOverlays().add(mOverlay);
             }
+
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -230,7 +274,7 @@ public class fragment_mission_description extends Fragment {
         findSimilarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Offer offerToGive = offer[0];
+                Offer offerToGive = offer[0][0];
                 Intent intent = new Intent(getActivity(), AppActivity.class);
                 intent.putExtra("offerFilters", offerToGive);
                 getActivity().finish();
@@ -336,35 +380,7 @@ public class fragment_mission_description extends Fragment {
             }
         });
 
-        org.osmdroid.config.Configuration.getInstance().load(getContext(), PreferenceManager.getDefaultSharedPreferences(getContext()));
 
-        map = view.findViewById(R.id.map);
-        map.setTileSource(TileSourceFactory.MAPNIK);
-        map.setBuiltInZoomControls(false);
-        map.setMultiTouchControls(true);
-
-        GeoPoint startPoint = new GeoPoint(43.63178, 3.86347);
-        IMapController mapController = map.getController();
-        mapController.setCenter(startPoint);
-        mapController.setZoom(20.0);
-        ArrayList<OverlayItem> items = new ArrayList<>();
-        OverlayItem position = new OverlayItem("Lieu de l'offre", "", new GeoPoint(43.63178, 3.86347));
-        Drawable m = position.getMarker(0);
-        items.add(position);
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-            @Override
-            public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return true;
-            }
-
-            @Override
-            public boolean onItemLongPress(int index, OverlayItem item) {
-                return false;
-            }
-        });
-
-        mOverlay.setFocusItemsOnTap(true);
-        map.getOverlays().add(mOverlay);
 
     }
 }
