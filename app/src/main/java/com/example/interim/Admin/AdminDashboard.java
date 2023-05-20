@@ -54,6 +54,7 @@ public class AdminDashboard extends AppCompatActivity {
                 mAuth.signOut();
                 Intent profile = new Intent(AdminDashboard.this, adminLoginPage.class);
                 startActivity(profile);
+                finish();
             }
         });
     }
