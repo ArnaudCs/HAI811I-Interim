@@ -258,4 +258,6 @@
     <string name="incorrectFields">Veuillez remplir correctement remplir tous les champs</string>
     <string name="resume">CV</string>
     <string name="cover">Lettre</string>
+    <string name="failedAuth">Echec de l\'authentification</string>
+    <string name="strongPass">Mot de passe fort</string>
 </resources>
