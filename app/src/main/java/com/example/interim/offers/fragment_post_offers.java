@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.interim.CategoryRepository;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
@@ -37,6 +38,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class fragment_post_offers extends Fragment {
     public fragment_post_offers() {
@@ -74,18 +76,32 @@ public class fragment_post_offers extends Fragment {
         Spinner categoryOfferChoice = view.findViewById(R.id.categoryOfferChoice);
         ScrollView formScrollContainer = view.findViewById(R.id.formScrollContainer);
 
-
-        List<String> spinnerArray =  new ArrayList<String>();
+        List<String> spinnerArray = new ArrayList<>();
         spinnerArray.add(getResources().getString(R.string.chooseCat));
-        spinnerArray.add("Chantier et BTP");
-        spinnerArray.add("Nettoyage");
-        spinnerArray.add("Informatique");
-        spinnerArray.add("Nettoyage");
-        spinnerArray.add("Manutention");
-        spinnerArray.add("Automobile");
+        String deviceLanguage = Locale.getDefault().getLanguage();
+        CategoryRepository categoryMapInstance = new CategoryRepository();
+        Map<Integer, List<String>> categories = categoryMapInstance.getCategoryMap();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+        if (categories != null) {
+            List<String> frenchCategories = new ArrayList<>();
+            List<String> englishCategories = new ArrayList<>();
 
+            for (Map.Entry<Integer, List<String>> entry : categories.entrySet()) {
+                List<String> translations = entry.getValue();
+                if (translations.size() >= 2) {
+                    frenchCategories.add(translations.get(0));
+                    englishCategories.add(translations.get(1));
+                }
+            }
+
+            if (frenchCategories != null && deviceLanguage.equals("fr")) {
+                spinnerArray.addAll(frenchCategories);
+            } else if (englishCategories != null) {
+                spinnerArray.addAll(englishCategories);
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryOfferChoice.setAdapter(adapter);
 

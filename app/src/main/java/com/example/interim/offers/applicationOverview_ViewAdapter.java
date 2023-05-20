@@ -1,14 +1,19 @@
 package com.example.interim.offers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.interim.R;
@@ -31,8 +36,12 @@ import java.util.List;
 
 public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applicationOverview_ViewHolder> {
     Context context;
+
+    int status;
+    String phone;
     List<Application> applications;
     String applicantName, applicantId;
+
 
     boolean downResume = false; //permet de choisir quel fichier télécharger
 
@@ -59,6 +68,28 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
         holder.applicantAdress.setText(applications.get(position).getApplicantAdress());
         holder.applicantId = applications.get(position).getApplicantId();
         holder.appId = applications.get(position).getId();
+        status = applications.get(position).getStatus();
+        phone = applications.get(position).getApplicantPhone();
+
+        if (status == 2){
+            holder.messageContainer.setVisibility(View.VISIBLE);
+            holder.acceptContainer.setVisibility(View.GONE);
+            holder.rejectContainer.setVisibility(View.VISIBLE);
+            holder.smsContainer.setVisibility(View.VISIBLE);
+            holder.phoneContainer.setVisibility(View.VISIBLE);
+        } else if (status == 1) {
+            holder.messageContainer.setVisibility(View.VISIBLE);
+            holder.acceptContainer.setVisibility(View.VISIBLE);
+            holder.rejectContainer.setVisibility(View.GONE);
+            holder.smsContainer.setVisibility(View.GONE);
+            holder.phoneContainer.setVisibility(View.GONE);
+        } else if (status == 0) {
+            holder.messageContainer.setVisibility(View.VISIBLE);
+            holder.acceptContainer.setVisibility(View.VISIBLE);
+            holder.rejectContainer.setVisibility(View.VISIBLE);
+            holder.smsContainer.setVisibility(View.GONE);
+            holder.phoneContainer.setVisibility(View.GONE);
+        }
 
         holder.downloadResumeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,13 +111,28 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
             }
         });
 
+        holder.smsApplicant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri smsUri = Uri.parse("smsto:" + phone);
+                Intent sms = new Intent(Intent.ACTION_SENDTO, smsUri);
+                context.startActivity(sms);
+            }
+        });
+
+        holder.phoneApplicant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri callUri = Uri.parse("tel:" + phone);
+                Intent intent = new Intent(Intent.ACTION_DIAL, callUri);
+                context.startActivity(intent);
+            }
+        });
+
         holder.acceptApplicant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get the offer ID from the applications list at the given position
                 String applicationId = applications.get(holder.getAdapterPosition()).getId();
-
-                // Update the status of the offer in the database to 2
                 updateOfferStatus(applicationId, 2);
             }
         });

@@ -63,9 +63,10 @@
                             android:layout_weight="1">
 
                             <Button
+                                android:id="@+id/deleteOffer"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:background="@drawable/baseline_language_24"
+                                android:background="@drawable/baseline_delete_24"
                                 android:backgroundTint="#FFFFFF"
                                 android:foregroundTint="@color/white" />
 

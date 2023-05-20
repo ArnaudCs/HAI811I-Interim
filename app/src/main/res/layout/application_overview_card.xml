@@ -214,7 +214,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:layout_weight="4">
 
                     <Button
@@ -222,12 +222,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/navigation_bar"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
                         android:stateListAnimator="@null"
-                        android:text="@string/downloadResume"
+                        android:text="@string/resume"
                         android:textColor="@color/primary_red"
-                        android:textSize="12sp"
+                        android:drawableTint="@color/primary_red"
+                        android:drawablePadding="10dp"
+                        android:drawableEnd="@drawable/baseline_cloud_download_24"
+                        android:textSize="14sp"
                         android:textStyle="bold"></Button>
 
                 </LinearLayout>
@@ -236,19 +239,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:gravity="right">
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/downloadCoverLetterBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/navigation_bar"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/primary_red"
+                        android:drawableEnd="@drawable/baseline_cloud_download_24"
                         android:stateListAnimator="@null"
-                        android:text="@string/downloadCover"
+                        android:text="@string/cover"
                         android:textColor="@color/primary_red"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"></Button>
 
                 </LinearLayout>
@@ -260,107 +266,137 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="20dp"
-                android:gravity="center"
+                android:gravity="right"
                 android:orientation="horizontal"
-                android:weightSum="8">
+                android:weightSum="5">
 
                 <LinearLayout
+                    android:id="@+id/smsContainer"
                     android:layout_width="0dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3">
+                    android:layout_weight="1">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
+                        android:id="@+id/smsApplicant"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/redbutton"
+                        android:gravity="center">
 
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/baseline_sms_24"
+                            android:backgroundTint="@color/white"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"></ImageView>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/phoneContainer"
                     android:layout_width="0dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:weightSum="9"
-                    android:gravity="right">
+                    android:layout_weight="1">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
+                        android:id="@+id/phoneApplicant"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/redbutton"
+                        android:gravity="center">
 
-                        <LinearLayout
-                            android:id="@+id/messageApplicant"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/redbutton"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/baseline_message_24"
-                                android:backgroundTint="@color/white"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"></ImageView>
-
-                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/baseline_phone_24"
+                            android:backgroundTint="@color/white"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"></ImageView>
 
                     </LinearLayout>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/messageContainer"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
+                        android:id="@+id/messageApplicant"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/redbutton"
+                        android:gravity="center">
 
-                        <LinearLayout
-                            android:id="@+id/rejectApplicant"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/redbutton"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/baseline_cancel_24"
-                                android:backgroundTint="@color/white"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"></ImageView>
-
-                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/baseline_message_24"
+                            android:backgroundTint="@color/white"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"></ImageView>
 
                     </LinearLayout>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rejectContainer"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
+                        android:id="@+id/rejectApplicant"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/redbutton"
+                        android:gravity="center">
 
-                        <LinearLayout
-                            android:id="@+id/acceptApplicant"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/redbutton"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/baseline_check_circle_24"
-                                android:backgroundTint="@color/white"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"></ImageView>
-
-                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/baseline_cancel_24"
+                            android:backgroundTint="@color/white"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"></ImageView>
 
                     </LinearLayout>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/acceptContainer"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/acceptApplicant"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/redbutton"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/baseline_check_circle_24"
+                            android:backgroundTint="@color/white"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"></ImageView>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

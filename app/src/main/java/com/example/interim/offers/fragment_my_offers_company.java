@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.interim.R;
 import com.example.interim.models.Offer;
@@ -33,6 +34,8 @@ public class fragment_my_offers_company extends Fragment {
     }
     RecyclerView recyclerView ;
 
+    Button deleteOffer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class fragment_my_offers_company extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
+        deleteOffer = view.findViewById(R.id.deleteOffer);
         recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             private int scrollThreshold = 10;
             private int scrolledDistance = 0;
@@ -70,6 +74,13 @@ public class fragment_my_offers_company extends Fragment {
                 if ((isScrollingDown && scrollY > oldScrollY) || (!isScrollingDown && scrollY < oldScrollY)) {
                     scrolledDistance += (scrollY - oldScrollY);
                 }
+            }
+        });
+
+        deleteOffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //mettre ici la suppression d'une offres, voir pour supprimer les candidatures associées
             }
         });
 

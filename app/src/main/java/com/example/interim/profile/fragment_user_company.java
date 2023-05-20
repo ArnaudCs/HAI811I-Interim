@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.interim.Admin.ActivityStat;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.authentication.PaymentAndSubscription;
 import com.example.interim.authentication.PhoneValidation;
@@ -157,6 +158,14 @@ public class fragment_user_company extends Fragment {
             statsBtn.setVisibility(View.GONE);
             settingsBtn.setVisibility(View.GONE);
         }
+
+        statsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent stats = new Intent(getActivity(), ActivityStat.class);
+                startActivity(stats);
+            }
+        });
 
         if(externalProfileView){
             db.collection("Pros").document(userId).get()

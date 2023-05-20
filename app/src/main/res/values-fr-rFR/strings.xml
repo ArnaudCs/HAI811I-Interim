@@ -256,4 +256,6 @@
     <string name="invalidLogin">Veuillez entrer une adresse e-mail / mot de passe valide</string>
     <string name="emptyFields">Veuillez remplir tous les champs</string>
     <string name="incorrectFields">Veuillez remplir correctement remplir tous les champs</string>
+    <string name="resume">CV</string>
+    <string name="cover">Lettre</string>
 </resources>

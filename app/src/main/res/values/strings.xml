@@ -266,4 +266,6 @@
     <string name="incorrectFields">Please correctly fill all the fields</string>
     <string name="addMemberError">Add a member email first</string>
     <string name="invalidEmailError">PLease enter an email</string>
+    <string name="resume">Resume</string>
+    <string name="cover">Cover Letter</string>
 </resources>
