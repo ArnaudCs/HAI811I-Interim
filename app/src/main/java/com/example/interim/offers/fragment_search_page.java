@@ -365,7 +365,7 @@ public class fragment_search_page extends Fragment {
 
         if (bundle != null && bundle.getSerializable("offerForFilters") != null) {
             Offer offerForFilter = (Offer) bundle.getSerializable("offerForFilters");
-            categoryChoice.setSelection(0);
+            categoryChoice.setSelection(categoryMapInstance.findCategoryIdByCategoryString(offerForFilter.getCategory()));
             labelChoice.setSelection(0);
             cityChoice.setText(offerForFilter.getLocation());
             startPrice.setText(String.valueOf(offerForFilter.getSalaryMin()));
@@ -394,6 +394,8 @@ public class fragment_search_page extends Fragment {
                 String city = cityChoice.getText().toString();
                 String minSalaryString = startPrice.getText().toString();
                 String maxSalaryString = endPrice.getText().toString();
+                String catFilter = categoryChoice.getSelectedItem().toString();
+
 
                 db.collection("Offers")
                         .get()
@@ -417,6 +419,10 @@ public class fragment_search_page extends Fragment {
                                     }
 
                                     if (!maxSalaryString.isEmpty() && offer.getSalaryMax() > Float.parseFloat(maxSalaryString)) {
+                                        matchesFilter = false;
+                                    }
+
+                                    if (categoryChoice.getSelectedItemId() != 0 && !offer.getCategory().equals(catFilter)) {
                                         matchesFilter = false;
                                     }
 

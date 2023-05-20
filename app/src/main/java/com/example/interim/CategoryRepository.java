@@ -66,4 +66,14 @@ public class CategoryRepository {
     public Map<Integer, List<String>> getCategoryMap() {
         return categories;
     }
+
+    public int findCategoryIdByCategoryString(String categoryString) {
+        for (Map.Entry<Integer, List<String>> entry : this.categories.entrySet()) {
+            List<String> categoryList = entry.getValue();
+            if (categoryList.contains(categoryString)) {
+                return entry.getKey();
+            }
+        }
+        return 0; // Default category ID if not found
+    }
 }

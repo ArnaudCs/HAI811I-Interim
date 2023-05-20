@@ -6,8 +6,10 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.interim.CategoryRepository;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
@@ -33,6 +36,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class fragment_favorite_offers extends Fragment {
     RecyclerView favoriteContainer;
@@ -61,6 +66,37 @@ public class fragment_favorite_offers extends Fragment {
         TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
         TextInputEditText startDate = view.findViewById(R.id.textStartDate);
         TextInputEditText endDate = view.findViewById(R.id.textEndDate);
+        Spinner categoryChoice = view.findViewById(R.id.categoryChoice);
+
+        List<String> spinnerArray = new ArrayList<>();
+        spinnerArray.add(getResources().getString(R.string.chooseCat));
+
+        String deviceLanguage = Locale.getDefault().getLanguage();
+        CategoryRepository categoryMapInstance = new CategoryRepository();
+        Map<Integer, List<String>> categories = categoryMapInstance.getCategoryMap();
+
+        if (categories != null) {
+            List<String> frenchCategories = new ArrayList<>();
+            List<String> englishCategories = new ArrayList<>();
+
+            for (Map.Entry<Integer, List<String>> entry : categories.entrySet()) {
+                List<String> translations = entry.getValue();
+                if (translations.size() >= 2) {
+                    frenchCategories.add(translations.get(0));
+                    englishCategories.add(translations.get(1));
+                }
+            }
+
+            if (frenchCategories != null && deviceLanguage.equals("fr")) {
+                spinnerArray.addAll(frenchCategories);
+            } else if (englishCategories != null) {
+                spinnerArray.addAll(englishCategories);
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoryChoice.setAdapter(adapter);
 
 
         db = FirebaseFirestore.getInstance();
@@ -204,6 +240,7 @@ public class fragment_favorite_offers extends Fragment {
                 String city = cityChoice.getText().toString();
                 String minSalaryString = startPrice.getText().toString();
                 String maxSalaryString = endPrice.getText().toString();
+                String catFilter = categoryChoice.getSelectedItem().toString();
 
                 final List<String>[] likedOffersIds = new List[]{null};
                 DocumentReference userRef = db.collection("Users").document(userId);
@@ -220,7 +257,7 @@ public class fragment_favorite_offers extends Fragment {
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     if (documentSnapshot.exists()) {
                                         likedOffersIds[0] = (List<String>) documentSnapshot.get("likedOffers");
-                                        filterOffers(city, minSalaryString, maxSalaryString, likedOffersIds[0]);
+                                        filterOffers(city, minSalaryString, maxSalaryString, likedOffersIds[0], catFilter);
                                     }
                                 }
                             });
@@ -228,7 +265,7 @@ public class fragment_favorite_offers extends Fragment {
 
                         // Call the filtering function with the retrieved likedOffersIds
                         if (likedOffersIds[0] != null && likedOffersIds[0].size() >= 1) {
-                            filterOffers(city, minSalaryString, maxSalaryString, likedOffersIds[0]);
+                            filterOffers(city, minSalaryString, maxSalaryString, likedOffersIds[0], catFilter);
                         }
                     }
                 });
@@ -238,7 +275,7 @@ public class fragment_favorite_offers extends Fragment {
     }
 
 
-    private void filterOffers(String city, String minSalaryString, String maxSalaryString, List<String> likedOffersIds) {
+    private void filterOffers(String city, String minSalaryString, String maxSalaryString, List<String> likedOffersIds, String categoryFilter) {
         db.collection("Offers")
                 .whereIn(FieldPath.documentId(), likedOffersIds)
                 .get()
@@ -249,6 +286,7 @@ public class fragment_favorite_offers extends Fragment {
                         for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
                             Offer offer = documentSnapshot.toObject(Offer.class);
                             offer.setId(documentSnapshot.getId());
+
 
                             // Apply filtering locally
                             boolean matchesFilter = true;
@@ -262,6 +300,10 @@ public class fragment_favorite_offers extends Fragment {
                             }
 
                             if (!maxSalaryString.isEmpty() && offer.getSalaryMax() > Float.parseFloat(maxSalaryString)) {
+                                matchesFilter = false;
+                            }
+
+                            if (!offer.getCategory().equals(categoryFilter)) {
                                 matchesFilter = false;
                             }
 
