@@ -271,10 +271,6 @@ public class fragment_mission_description extends Fragment {
             }
         });
 
-
-
-
-
         findSimilarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
