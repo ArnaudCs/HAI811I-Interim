@@ -41,7 +41,7 @@ public class fragment_payment_adress extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_payment_adress, container, false);
+        View view = inflater.inflate(R.layout.fragment_payment_address, container, false);
         // Inflate the layout for this fragment
         return view;
     }
@@ -52,8 +52,8 @@ public class fragment_payment_adress extends Fragment {
         mUserEmail = mAuth.getCurrentUser().getEmail();
         mUserId = mAuth.getCurrentUser().getUid();
         super.onViewCreated(view, savedInstanceState);
-        Button useAdress = view.findViewById(R.id.useAdressBtn);
-        Button backButtonAdressInfos = view.findViewById(R.id.backAdressBtn);
+        Button useAdress = view.findViewById(R.id.useAddressBtn);
+        Button backButtonAdressInfos = view.findViewById(R.id.backAddressBtn);
         TextInputEditText street = view.findViewById(R.id.textStreet);
         TextInputEditText appartment = view.findViewById(R.id.textApt);
         TextInputEditText country = view.findViewById(R.id.textCountry);

@@ -1,5 +1,6 @@
 package com.example.interim.profile;
 
+import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,17 +13,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.interim.R;
+import com.example.interim.authentication.UserRegistrationActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -42,6 +46,10 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class fragment_profile_edition extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -60,7 +68,7 @@ public class fragment_profile_edition extends Fragment {
     private DatabaseReference mDatabaseRef;
 
     private StorageTask muploadTask;
-
+    private Calendar calendar;
     public fragment_profile_edition() {
         // Required empty public constructor
     }
@@ -82,7 +90,7 @@ public class fragment_profile_edition extends Fragment {
         TextInputEditText textNationalNumberModification = view.findViewById(R.id.textNationalNumberModification);
         TextInputEditText textMailModification = view.findViewById(R.id.text1MailModification);
         TextInputEditText textNumberModification = view.findViewById(R.id.textContact1NumberModification);
-        TextInputEditText textCompanyAdressModification = view.findViewById(R.id.textCompanyAdressModification);
+        TextInputEditText textCompanyAddressModification = view.findViewById(R.id.textCompanyAdressModification);
         TextInputEditText textWebsiteModification = view.findViewById(R.id.textWebsiteModification);
         TextInputEditText textBirthdateModification = view.findViewById(R.id.textBirthdateModification);
         TextInputEditText textUserPhoneNumberModification = view.findViewById(R.id.textSimpleUserNumberModification);
@@ -107,13 +115,13 @@ public class fragment_profile_edition extends Fragment {
 
         TextInputLayout layoutCompanyModification = view.findViewById(R.id.layoutCompanyModification);
         TextInputLayout layoutRegistrationNumberModification = view.findViewById(R.id.layoutRegistrationNumberModification);
-        TextInputLayout layoutCompanyAdressModification = view.findViewById(R.id.layoutCompanyAdressModification);
+        TextInputLayout layoutCompanyAddressModification = view.findViewById(R.id.layoutCompanyAdressModification);
         TextInputLayout layoutCompanyWebsiteModification = view.findViewById(R.id.layoutCompanyWebsiteModification);
         LinearLayout contactModificationDivider = view.findViewById(R.id.contactModificationDivider);
-        LinearLayout layoutContact1MailAdressModification = view.findViewById(R.id.layoutContact1MailAdressModification);
+        LinearLayout layoutContact1MailAddressModification = view.findViewById(R.id.layoutContact1MailAdressModification);
         LinearLayout layoutContact1NameModification = view.findViewById(R.id.layoutContact1NameModification);
         TextInputLayout layoutContact2NameModification = view.findViewById(R.id.layoutContact2NameModification);
-        TextInputLayout layoutContact2MailAdressModification = view.findViewById(R.id.layoutContact2MailAdressModification);
+        TextInputLayout layoutContact2MailAddressModification = view.findViewById(R.id.layoutContact2MailAdressModification);
         TextInputLayout layoutContact2NumberModification = view.findViewById(R.id.layoutContact2NumberModification);
         TextInputLayout layoutServiceModification = view.findViewById(R.id.layoutServiceModification);
         TextInputLayout layoutSubServiceModification = view.findViewById(R.id.layoutSubServiceModification);
@@ -122,7 +130,7 @@ public class fragment_profile_edition extends Fragment {
         TextInputLayout layoutBirthdateModification = view.findViewById(R.id.layoutSimpleUserBirthdateModification);
         TextInputLayout layoutUserFirstnameModification = view.findViewById(R.id.layoutSimpleUserFirstnameModification);
         TextInputLayout layoutUserNameModification = view.findViewById(R.id.layoutSimpleUserNameModification);
-        TextInputLayout layoutMailAdressModification = view.findViewById(R.id.layoutMailAdressModification);
+        TextInputLayout layoutMailAddressModification = view.findViewById(R.id.layoutMailAdressModification);
         TextInputLayout layoutNumberModification = view.findViewById(R.id.layoutSimpleUserNumberModification);
 
         if (mAuth.getCurrentUser() != null) {
@@ -135,24 +143,24 @@ public class fragment_profile_edition extends Fragment {
                         pro = false;
                         layoutCompanyModification.setVisibility(View.GONE);
                         layoutRegistrationNumberModification.setVisibility(View.GONE);
-                        layoutCompanyAdressModification.setVisibility(View.GONE);
+                        layoutCompanyAddressModification.setVisibility(View.GONE);
                         layoutCompanyWebsiteModification.setVisibility(View.GONE);
                         contactModificationDivider.setVisibility(View.GONE);
                         layoutSubServiceModification.setVisibility(View.GONE);
                         layoutContact2NameModification.setVisibility(View.GONE);
-                        layoutContact2MailAdressModification.setVisibility(View.GONE);
+                        layoutContact2MailAddressModification.setVisibility(View.GONE);
                         layoutContact2NumberModification.setVisibility(View.GONE);
                         layoutServiceModification.setVisibility(View.GONE);
                         layoutSubServiceModification.setVisibility(View.GONE);
                         layoutContact1NumberModification.setVisibility(View.GONE);
-                        layoutContact1MailAdressModification.setVisibility(View.GONE);
+                        layoutContact1MailAddressModification.setVisibility(View.GONE);
                         layoutContact1NameModification.setVisibility(View.GONE);
 
 
                         layoutBirthdateModification.setVisibility(View.VISIBLE);
                         layoutUserFirstnameModification.setVisibility(View.VISIBLE);
                         layoutUserNameModification.setVisibility(View.VISIBLE);
-                        layoutMailAdressModification.setVisibility(View.VISIBLE);
+                        layoutMailAddressModification.setVisibility(View.VISIBLE);
                         layoutNumberModification.setVisibility(View.VISIBLE);
                         String name = document.getString("name");
                         String firstname = document.getString("firstName");
@@ -193,7 +201,7 @@ public class fragment_profile_edition extends Fragment {
                                     textNameModification.setText(contactName);
                                     textMailModification.setText(email);
                                     textNumberModification.setText(contactNumber);
-                                    textCompanyAdressModification.setText(companyAddress);
+                                    textCompanyAddressModification.setText(companyAddress);
                                     textWebsiteModification.setText(website);
                                     textContact2Name.setText(contact2Name);
                                     textContact2Email.setText(contact2Email);
@@ -205,7 +213,7 @@ public class fragment_profile_edition extends Fragment {
                                     layoutBirthdateModification.setVisibility(View.GONE);
                                     layoutUserFirstnameModification.setVisibility(View.GONE);
                                     layoutUserNameModification.setVisibility(View.GONE);
-                                    layoutMailAdressModification.setVisibility(View.GONE);
+                                    layoutMailAddressModification.setVisibility(View.GONE);
                                     layoutNumberModification.setVisibility(View.GONE);
                                 }
                             }
@@ -215,12 +223,70 @@ public class fragment_profile_edition extends Fragment {
             });
         }
 
+
+        calendar = Calendar.getInstance();
+        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String dateFormat = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+                textBirthdateModification.setText(simpleDateFormat.format(calendar.getTime()));
+            }
+        };
+        textBirthdateModification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                Calendar maxDate = (Calendar) calendar.clone();
+                maxDate.set(Calendar.YEAR, year - 18);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, year - 18, month, day);
+                datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
+
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String userId = mAuth.getCurrentUser().getUid();
                 DocumentReference userRef;
                 if (pro) {
+                    if (textCompanyNameModification.getText().toString().isEmpty() || textNationalNumberModification.getText().toString().isEmpty() ||
+                            textNameModification.getText().toString().isEmpty() || textNameModification.getText().toString().isEmpty() ||
+                            textNumberModification.getText().toString().isEmpty() || textCompanyAddressModification.getText().toString().isEmpty() ||
+                            textWebsiteModification.getText().toString().isEmpty() || textNameModification.getText().toString().isEmpty()) {
+                        Toast.makeText(getActivity(), R.string.emptyFields, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (!Patterns.EMAIL_ADDRESS.matcher(textMailModification.getText().toString()).matches() ||
+                            !Patterns.PHONE.matcher(textNumberModification.getText().toString()).matches() ||
+                            !Patterns.WEB_URL.matcher(textWebsiteModification.getText().toString()).matches()) {
+                        Toast.makeText(getActivity(), R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    // si au moins un champ du contact 2 est rempli, on s'assure qu'ils le soient tous (correctement)
+                    if (!textContact2Name.getText().toString().isEmpty() || !textContact2Number.getText().toString().isEmpty() ||
+                            !textContact2Email.getText().toString().isEmpty() || !textServiceModification.getText().toString().isEmpty() ||
+                            !textSubserviceModification.getText().toString().isEmpty()) {
+
+                        if (textContact2Name.getText().toString().isEmpty() || textContact2Number.getText().toString().isEmpty() ||
+                                textContact2Email.getText().toString().isEmpty() || textServiceModification.getText().toString().isEmpty() ||
+                                textSubserviceModification.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), R.string.emptyFields, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (!Patterns.PHONE.matcher(textContact2Number.getText().toString()).matches() ||
+                                !Patterns.EMAIL_ADDRESS.matcher(textContact2Email.getText().toString()).matches()) {
+                            Toast.makeText(getActivity(), R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
                     userRef = db.collection("Pros").document(userId);
                     userRef.update(
                             "companyName", textCompanyNameModification.getText().toString(),
@@ -228,7 +294,7 @@ public class fragment_profile_edition extends Fragment {
                             "name", textNameModification.getText().toString(),
                             "email", textMailModification.getText().toString(),
                             "phoneNumber", textNumberModification.getText().toString(),
-                            "companyAddress", textCompanyAdressModification.getText().toString(),
+                            "companyAddress", textCompanyAddressModification.getText().toString(),
                             "website", textWebsiteModification.getText().toString(),
                             "contact2Name", textContact2Name.getText().toString(),
                             "contact2Phone", textContact2Number.getText().toString(),
@@ -238,15 +304,29 @@ public class fragment_profile_edition extends Fragment {
                     ).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getContext(), "Profile updated successfully.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.profileUpdated, Toast.LENGTH_LONG).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Failed to update profile.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.profileUpdateFailure, Toast.LENGTH_LONG).show();
                         }
                     });
                 } else {
+
+                    if (textUserNameModification.getText().toString().isEmpty() || textFirstNameModification.getText().toString().isEmpty() ||
+                            textUserMailModification.getText().toString().isEmpty() || textUserPhoneNumberModification.getText().toString().isEmpty() ||
+                            textBirthdateModification.getText().toString().isEmpty()) {
+                        Toast.makeText(getActivity(), R.string.emptyFields, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (!Patterns.EMAIL_ADDRESS.matcher(textUserMailModification.getText().toString()).matches() ||
+                            !Patterns.PHONE.matcher(textUserPhoneNumberModification.getText().toString()).matches()) {
+                        Toast.makeText(getActivity(), R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     userRef = db.collection("Users").document(userId);
                     userRef.update(
                             "name", textUserNameModification.getText().toString(),
@@ -257,12 +337,12 @@ public class fragment_profile_edition extends Fragment {
                     ).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getContext(), "Profile updated successfully.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.profileUpdated, Toast.LENGTH_LONG).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Failed to update profile.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.profileUpdateFailure, Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -288,7 +368,7 @@ public class fragment_profile_edition extends Fragment {
             @Override
             public void onClick(View view) {
                 if(muploadTask != null && muploadTask.isInProgress()){
-                    Toast.makeText(getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.uploading, Toast.LENGTH_SHORT).show();
                 } else {
                     uploadFile();
                 }
@@ -334,7 +414,7 @@ public class fragment_profile_edition extends Fragment {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Toast.makeText(getContext(), "File sent", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), R.string.fileSent, Toast.LENGTH_SHORT).show();
                                      upload = new Upload("ProfilePic", uri.toString());
                                 }
                             });
@@ -354,7 +434,7 @@ public class fragment_profile_edition extends Fragment {
                         }
                     });
         } else {
-            Toast.makeText(getContext(), "No file selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.noFileSelected, Toast.LENGTH_SHORT).show();
         }
     }
 

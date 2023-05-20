@@ -11,8 +11,8 @@
     <string name="nationalNumber">National Registration Number</string>
     <string name="ContactName">Contact Name</string>
     <string name="contactNumber">Contact Number</string>
-    <string name="contactAdress">Contact Mail Adress</string>
-    <string name="companyAdress">Company Adress</string>
+    <string name="contactAddress">Contact Mail Address</string>
+    <string name="companyAddress">Company Address</string>
     <string name="CompanyLink">Website or Linkedin</string>
     <string name="companySub">Company Sub Service</string>
     <string name="companyService">Company Service</string>
@@ -76,11 +76,11 @@
     <string name="countryInputLabel">Country</string>
     <string name="stateInputLabel">State/Province</string>
     <string name="postalCodeInput">Postal Code</string>
-    <string name="dafaultAdress">Set as default adress</string>
-    <string name="useAdressBtn">Use this adress</string>
+    <string name="defaultAddress">Set as default address</string>
+    <string name="useAddressBtn">Use this address</string>
     <string name="missingFieldsErroToast">Missing fields, please verify informations</string>
     <string name="payBtn">Pay</string>
-    <string name="adressInformationPage">Complete all the informations for the order adress</string>
+    <string name="addressInformationPage">Complete all the informations for the order address</string>
     <string name="orderSummaryPage">Time to pay ! Here is your basket</string>
     <string name="useThisCard">Use card</string>
     <string name="goRegister">Don\'t have an account ?</string>
@@ -280,4 +280,12 @@
     <string name="downloadErrorText">Error while downloading file</string>
     <string name="incorrectDate">Entered date is incorrect</string>
     <string name="CategoryNotfound">Category Not Found</string>
+    <string name="profileUpdated">Your profile has been updated successfully</string>
+    <string name="profileUpdateFailure">Failed to update your profile</string>
+    <string name="uploading">Upload in progress</string>
+    <string name="fileSent">File sent</string>
+    <string name="noFileSelected">No file selected</string>
+    <string name="offerAdded">Offer successfully added</string>
+    <string name="offerNotAdded">Couldn\'t add offer</string>
+    <string name="incorrectCity">Please enter a valid city</string>
 </resources>

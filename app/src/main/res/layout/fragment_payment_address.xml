@@ -46,13 +46,13 @@
             android:layout_marginTop="30dp"
             android:layout_marginRight="32dp"
             android:gravity="center"
-            android:text="@string/adressInformationPage"
+            android:text="@string/addressInformationPage"
             android:textColor="@color/primary_red"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/layoutAppartmentInformations"
@@ -255,13 +255,13 @@
                 android:layout_marginBottom="10dp"
                 android:buttonTint="@color/primary_red"
                 android:textColorHighlight="@color/primary_red"
-                android:textColorLink="@color/primary_red"></CheckBox>
+                android:textColorLink="@color/primary_red" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dafaultAdress"
-                android:textSize="16sp"></TextView>
+                android:text="@string/defaultAddress"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -274,15 +274,15 @@
             app:layout_constraintTop_toBottomOf="@id/rememberLayout">
 
             <Button
-                android:id="@+id/useAdressBtn"
+                android:id="@+id/useAddressBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gradient"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="@string/useAdressBtn"
+                android:text="@string/useAddressBtn"
                 android:textColor="@color/white"
-                android:textSize="20sp"></Button>
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -290,7 +290,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/backAdressBtn"
+        android:id="@+id/backAddressBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,9 @@ import java.util.Map;
 
 public class fragment_post_offers extends Fragment {
     private static final int PICK_JSON_FILE_REQUEST_CODE = 1;
+    private Calendar today;
+    private Calendar calendarStart;
+    private Calendar calendarEnd;
 
     public fragment_post_offers() {
         // Required empty public constructor
@@ -127,10 +131,97 @@ public class fragment_post_offers extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryOfferChoice.setAdapter(adapter);
 
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DATE);
+        today = Calendar.getInstance();
+        calendarStart = Calendar.getInstance();
+        calendarEnd = Calendar.getInstance();
+        final DatePickerDialog.OnDateSetListener dateSetListener1 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendarStart.set(Calendar.YEAR, year);
+                calendarStart.set(Calendar.MONTH, monthOfYear);
+                calendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                if (!textDateEndOffer.getText().toString().trim().equals("")) {
+                    if (calendarStart.after(calendarEnd)) {
+                        Toast.makeText(getActivity(), R.string.incorrectDate, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                String dateFormat = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+                textDateStartOffer.setText(simpleDateFormat.format(calendarStart.getTime()));
+            }
+        };
+        final DatePickerDialog.OnDateSetListener dateSetListener2 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendarEnd.set(Calendar.YEAR, year);
+                calendarEnd.set(Calendar.MONTH, monthOfYear);
+                calendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                if (!textDateStartOffer.getText().toString().trim().equals("")) {
+                    if (calendarEnd.before(calendarStart)) {
+                        Toast.makeText(getActivity(), R.string.incorrectDate, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                String dateFormat = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+                textDateEndOffer.setText(simpleDateFormat.format(calendarEnd.getTime()));
+            }
+        };
+
+        textDateStartOffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int year = today.get(Calendar.YEAR);
+                int month = today.get(Calendar.MONTH);
+                int day = today.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener1, year, month, day);
+
+                datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
+                if (!textDateEndOffer.getText().toString().trim().equals("")) {
+                    datePickerDialog.getDatePicker().setMaxDate(calendarEnd.getTimeInMillis() - 1000);
+                }
+                else {
+                    Calendar maxDate = (Calendar) today.clone();
+                    int newMonth = (month + 3) % 12;
+                    if (newMonth < month)
+                        maxDate.set(Calendar.YEAR, year + 1);
+                    maxDate.set(Calendar.MONTH, newMonth);
+                    datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
+                }
+                datePickerDialog.show();
+            }
+        });
+        textDateEndOffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int year;
+                int month;
+                int day;
+                DatePickerDialog datePickerDialog;
+                if (!textDateStartOffer.getText().toString().trim().equals("")) {
+                    year = calendarStart.get(Calendar.YEAR);
+                    month = calendarStart.get(Calendar.MONTH);
+                    day = calendarStart.get(Calendar.DAY_OF_MONTH);
+                    datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener2, year, month, day);
+                    datePickerDialog.getDatePicker().setMinDate(calendarStart.getTimeInMillis() + 1000);
+                }
+                else {
+                    year = today.get(Calendar.YEAR);
+                    month = today.get(Calendar.MONTH);
+                    day = today.get(Calendar.DAY_OF_MONTH);
+                    datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener2, year, month, day);
+                    datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
+                }
+                Calendar maxDate = (Calendar) today.clone();
+                int newMonth = (month + 3) % 12;
+                if (newMonth < month)
+                    maxDate.set(Calendar.YEAR, year + 1);
+                maxDate.set(Calendar.MONTH, newMonth);
+                datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
 
         addMultipleOffers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,6 +249,16 @@ public class fragment_post_offers extends Fragment {
                 String details = textOfferDetails.getText().toString();
                 String category = categoryOfferChoice.getSelectedItem().toString();
 
+                if (jobTitle.isEmpty() || companyName.isEmpty() || salaryStr.isEmpty() || location.isEmpty() ||
+                url.isEmpty() || keywords.isEmpty() || label.isEmpty() || category.equals(getString(R.string.chooseCat))) {
+                    Toast.makeText(getActivity(), R.string.emptyFields, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!Patterns.WEB_URL.matcher(url).matches()) {
+                    Toast.makeText(getActivity(), R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // Parse salary
                 int salaryMin = Integer.parseInt(salaryStr), salaryMax = Integer.parseInt(salaryStr);
                 if (!TextUtils.isEmpty(salaryStr)) {
@@ -218,7 +319,7 @@ public class fragment_post_offers extends Fragment {
                                         layoutDateEndOffer.setError(null);
                                         textDateStartOffer.setText("");
                                         textDateEndOffer.setText("");
-
+                                        Toast.makeText(getActivity(), R.string.offerAdded, Toast.LENGTH_SHORT).show();
                                         Intent mainActivity = new Intent(getActivity(), CelebrationActivity.class);
                                         startActivity(mainActivity);
                                         getActivity().finish();
@@ -248,7 +349,7 @@ public class fragment_post_offers extends Fragment {
                                                         layoutDateEndOffer.setError(null);
                                                         textDateStartOffer.setText("");
                                                         textDateEndOffer.setText("");
-
+                                                        Toast.makeText(getActivity(), R.string.offerAdded, Toast.LENGTH_SHORT).show();
                                                         Intent mainActivity = new Intent(getActivity(), CelebrationActivity.class);
                                                         startActivity(mainActivity);
                                                         getActivity().finish();
@@ -257,6 +358,7 @@ public class fragment_post_offers extends Fragment {
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getActivity(), R.string.offerNotAdded, Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                     }
@@ -265,7 +367,8 @@ public class fragment_post_offers extends Fragment {
 
                     @Override
                     public void onFailure() {
-                        System.out.println("Failed to obtain coordinates");
+//                        System.out.println("Failed to obtain coordinates");
+                        Toast.makeText(getActivity(), R.string.incorrectCity, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -309,45 +412,6 @@ public class fragment_post_offers extends Fragment {
             }
         });
 
-        setListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month+1;
-                String date = day+"/"+month+"/"+year;
-            }
-        };
-
-        textDateStartOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        month = month+1;
-                        String date = day+"/"+month+"/"+year;
-                        textDateStartOffer.setText(date);
-                    }
-                }, year,month,day);
-                datePickerDialog.show();
-            }
-        });
-
-        textDateEndOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        month = month+1;
-                        String date = day+"/"+month+"/"+year;
-                        textDateEndOffer.setText(date);
-                    }
-                }, year,month,day);
-                datePickerDialog.show();
-            }
-        });
     }
 
     @Override

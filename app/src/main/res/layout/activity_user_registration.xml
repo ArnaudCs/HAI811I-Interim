@@ -66,6 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,6 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +136,9 @@
                 android:id="@+id/textCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="50"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -194,6 +200,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -223,6 +231,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="12"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -254,6 +264,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="30"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -284,6 +296,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="30"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 

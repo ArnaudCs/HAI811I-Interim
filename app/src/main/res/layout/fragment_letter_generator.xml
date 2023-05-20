@@ -203,7 +203,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:hint="@string/companyAdress"
+                            android:hint="@string/companyAddress"
                             app:boxBackgroundColor="#FFFFFF"
                             app:boxBackgroundMode="outline"
                             app:boxStrokeColor="@color/primary_red"

@@ -12,8 +12,8 @@
     <string name="nationalNumber">Numéro National</string>
     <string name="ContactName">Nom du contact</string>
     <string name="contactNumber">Numéro du contact</string>
-    <string name="contactAdress">Adresse Mail du contact</string>
-    <string name="companyAdress">Adresse de l\'entreprise</string>
+    <string name="contactAddress">Adresse Mail du contact</string>
+    <string name="companyAddress">Adresse de l\'entreprise</string>
     <string name="CompanyLink">Site Web ou Linkedin</string>
     <string name="companySub">Sous département</string>
     <string name="companyService">Département</string>
@@ -75,11 +75,11 @@
     <string name="countryInputLabel">Pays</string>
     <string name="stateInputLabel">Etat/Province</string>
     <string name="postalCodeInput">Code Postal</string>
-    <string name="dafaultAdress">Définir comme adresse par défaut</string>
-    <string name="useAdressBtn">Utiliser cette adresse</string>
+    <string name="defaultAddress">Définir comme adresse par défaut</string>
+    <string name="useAddressBtn">Utiliser cette adresse</string>
     <string name="missingFieldsErroToast">Informations manquantes</string>
     <string name="payBtn">Payer</string>
-    <string name="adressInformationPage">Complétez les informations nécessaires pour l\'adresse de facturation</string>
+    <string name="addressInformationPage">Complétez les informations nécessaires pour l\'adresse de facturation</string>
     <string name="orderSummaryPage">Page de paiement, voici votre panier</string>
     <string name="useThisCard">Utiliser cette carte</string>
     <string name="goRegister">Pas encore inscrit ?</string>
@@ -270,4 +270,12 @@
     <string name="downloadErrorText">Erreur lors du téléchargement du fichier</string>
     <string name="incorrectDate">La date entrée est incorrecte</string>
     <string name="CategoryNotfound">Catégorie non trouvée</string>
+    <string name="profileUpdated">Votre profil a été mis à jour</string>
+    <string name="profileUpdateFailure">Votre profil n\'a pu être mis à jour</string>
+    <string name="uploading">Upload en cours</string>
+    <string name="fileSent">Fichier envoyé</string>
+    <string name="noFileSelected">Aucun fichier sélectionné</string>
+    <string name="offerAdded">Offre ajoutée avec succès</string>
+    <string name="offerNotAdded">L\'offre n\'a pas pu être ajoutée</string>
+    <string name="incorrectCity">Veuilez entrer une ville valide</string>
 </resources>

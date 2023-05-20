@@ -56,7 +56,7 @@
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:textSize="20sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
             </LinearLayout>
             <LinearLayout
@@ -200,6 +200,9 @@
                     android:id="@+id/textCompanyNameModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -227,6 +230,9 @@
                     android:id="@+id/textNationalNumberModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -254,6 +260,9 @@
                     android:id="@+id/text1NameModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -280,6 +289,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textSimpleUserNameModification"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
@@ -310,6 +322,9 @@
                     android:id="@+id/textUserFirstnameModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -319,7 +334,7 @@
                 android:layout_height="70dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
-                android:hint="@string/contactAdress"
+                android:hint="@string/contactAddress"
                 app:boxBackgroundColor="#FFFFFF"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/primary_red"
@@ -337,6 +352,9 @@
                     android:id="@+id/text1MailModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -364,6 +382,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textMailAdressModification"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
@@ -393,6 +414,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textBirthdateModification"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date" />
@@ -420,6 +445,9 @@
                     android:id="@+id/textContact1NumberModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="12"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -444,6 +472,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textSimpleUserNumberModification"
                     android:layout_width="match_parent"
+                    android:maxLength="12"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -455,7 +486,7 @@
                 android:layout_height="70dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
-                android:hint="@string/companyAdress"
+                android:hint="@string/companyAddress"
                 app:boxBackgroundColor="#FFFFFF"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/primary_red"
@@ -470,6 +501,9 @@
                     android:id="@+id/textCompanyAdressModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textPostalAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -494,6 +528,9 @@
                     android:id="@+id/textWebsiteModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textUri" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -561,6 +598,9 @@
                     android:id="@+id/text2NameModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -570,7 +610,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:hint="@string/contactAdress"
+                android:hint="@string/contactAddress"
                 app:boxBackgroundColor="#FFFFFF"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/primary_red"
@@ -585,6 +625,9 @@
                     android:id="@+id/textContact2MailAdressModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -609,6 +652,9 @@
                     android:id="@+id/textContact2NumberModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="12"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -633,6 +679,9 @@
                     android:id="@+id/textServiceModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textPersonName|text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -661,6 +710,9 @@
                     android:id="@+id/textSubServiceModification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:inputType="textPersonName|text" />
             </com.google.android.material.textfield.TextInputLayout>
 

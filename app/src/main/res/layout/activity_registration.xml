@@ -65,6 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +95,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="30"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,6 +125,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,7 +136,7 @@
             android:layout_height="70dp"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
-            android:hint="@string/contactAdress"
+            android:hint="@string/contactAddress"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/primary_red"
@@ -149,6 +155,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -178,6 +186,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="12"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -187,7 +197,7 @@
             android:layout_height="70dp"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
-            android:hint="@string/companyAdress"
+            android:hint="@string/companyAddress"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/primary_red"
@@ -206,6 +216,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="50"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPostalAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -234,6 +246,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="50"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textUri" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -265,6 +279,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="30"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -295,6 +311,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="30"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -335,6 +353,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -345,7 +365,7 @@
             android:visibility="gone"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:hint="@string/contactAdress"
+            android:hint="@string/contactAddress"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/primary_red"
@@ -364,6 +384,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -393,6 +415,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -422,6 +446,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPersonName|text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -451,6 +477,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:maxLines="1"
+                android:minLines="1"
                 android:inputType="textPersonName|text" />
         </com.google.android.material.textfield.TextInputLayout>
 
