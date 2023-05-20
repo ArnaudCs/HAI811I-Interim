@@ -1,5 +1,6 @@
 package com.example.interim.offers;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.interim.CategoryRepository;
 import com.example.interim.R;
+import com.example.interim.authentication.UserRegistrationActivity;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,8 +36,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -47,6 +52,9 @@ public class fragment_search_page extends Fragment {
     boolean liked = false;
     ScrollView filterContainer;
     TextInputEditText cityChoice;
+    private Calendar calendar;
+    private TextInputEditText startDate;
+    private TextInputEditText endDate;
     public fragment_search_page() {
         // Required empty public constructor
     }
@@ -76,8 +84,8 @@ public class fragment_search_page extends Fragment {
         cityChoice = view.findViewById(R.id.textCityInput);
         TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
         TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
-        TextInputEditText startDate = view.findViewById(R.id.textStartDate);
-        TextInputEditText endDate = view.findViewById(R.id.textEndDate);
+        startDate = view.findViewById(R.id.textStartDate);
+        endDate = view.findViewById(R.id.textEndDate);
         filterContainer = view.findViewById(R.id.filterContainer);
         TextView areaDisplay = view.findViewById(R.id.areaDisplay);
         SeekBar areaChoice = view.findViewById(R.id.areaChoice);
@@ -118,6 +126,48 @@ public class fragment_search_page extends Fragment {
 
         labelChoice.setAdapter(adapter);
         RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
+
+        calendar = Calendar.getInstance();
+        final DatePickerDialog.OnDateSetListener dateSetListener1 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDateEditText(startDate);
+            }
+        };
+        final DatePickerDialog.OnDateSetListener dateSetListener2 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDateEditText(endDate);
+            }
+        };
+
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener1, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener2, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
         clearFiltersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -334,6 +384,12 @@ public class fragment_search_page extends Fragment {
             }
         });
 
+    }
+
+    private void updateDateEditText(TextInputEditText date) {
+        String dateFormat = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+        date.setText(simpleDateFormat.format(calendar.getTime()));
     }
 
 //    private void loadFiltersFromDataHolder(filterDataHolder dataHolder) {
