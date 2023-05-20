@@ -62,7 +62,7 @@ public class fragment_user_company extends Fragment {
 
     private LinearLayout editProfileCompany, backProfileContainer, statsBtn, applySpontaneousContainer;
 
-    private Button favoriteBtnCompany, backProfileBtn, editprofileBtn, deconnectionBtn;
+    private Button favoriteBtnCompany, backProfileBtn, editprofileBtn, deconnectionBtn, applySpontaneous;
 
 
     public fragment_user_company() {
@@ -139,7 +139,7 @@ public class fragment_user_company extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        super.onViewCreated(view, savedInstanceState);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         favoriteBtnCompany = view.findViewById(R.id.favoriteBtnCompany);
         backProfileContainer = view.findViewById(R.id.backProfileContainer);
@@ -149,6 +149,7 @@ public class fragment_user_company extends Fragment {
         editprofileBtn = view.findViewById(R.id.editProfileCompanyBtn);
         deconnectionBtn = view.findViewById(R.id.decoBtn);
         statsBtn = view.findViewById(R.id.statsBtn);
+        applySpontaneous = view.findViewById(R.id.applySpontaneous);
         applySpontaneousContainer = view.findViewById(R.id.applySpontaneousContainer);
 
         if (userId != null && mAuth.getCurrentUser().getUid() != userId){
@@ -162,8 +163,6 @@ public class fragment_user_company extends Fragment {
             statsBtn.setVisibility(View.GONE);
             settingsBtn.setVisibility(View.GONE);
         }
-
-        System.out.println("Le boollllllééééééennnnnn est à : " + externalProfileView);
 
         statsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,18 +214,23 @@ public class fragment_user_company extends Fragment {
                                         }
                                     });
                         }
-
-
                     }
                 });
-
-        super.onViewCreated(view, savedInstanceState);
 
         backProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
                 userId = null;
+            }
+        });
+
+        applySpontaneous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:" + emailText));
+                startActivity(emailIntent);
             }
         });
 

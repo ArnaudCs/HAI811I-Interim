@@ -416,6 +416,7 @@ public class fragment_post_offers extends Fragment {
                         expDate = c.getTime();
 
                     } catch (ParseException e) {
+
                     }
 
                     Offer offerObj = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
