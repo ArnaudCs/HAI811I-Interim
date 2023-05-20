@@ -54,6 +54,8 @@ public class fragment_user_company extends Fragment {
     private String emailText, userId;
     boolean externalProfileView = false;
 
+    String proId;
+
     private ImageView profileCompanyPic;
 
     private LottieAnimationView settingsBtn;
@@ -86,8 +88,9 @@ public class fragment_user_company extends Fragment {
             return null;
         }
 
-        else {
-            System.out.println("²²²²²²²²²²²²²²²²²²²²²²²²²² Je vais vérifier l'abonnement +++++++++++");
+        if(externalProfileView){
+
+        } else {
             db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
@@ -146,6 +149,7 @@ public class fragment_user_company extends Fragment {
         editprofileBtn = view.findViewById(R.id.editProfileCompanyBtn);
         deconnectionBtn = view.findViewById(R.id.decoBtn);
         statsBtn = view.findViewById(R.id.statsBtn);
+        applySpontaneousContainer = view.findViewById(R.id.applySpontaneousContainer);
 
         if (userId != null && mAuth.getCurrentUser().getUid() != userId){
             externalProfileView = true;
@@ -159,6 +163,8 @@ public class fragment_user_company extends Fragment {
             settingsBtn.setVisibility(View.GONE);
         }
 
+        System.out.println("Le boollllllééééééennnnnn est à : " + externalProfileView);
+
         statsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,54 +174,37 @@ public class fragment_user_company extends Fragment {
         });
 
         if(externalProfileView){
-            db.collection("Pros").document(userId).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                            companyNameText = documentSnapshot.getString("companyName");
-                            sirenNumText = documentSnapshot.getString("nationalNumber");
-                            contactNameText = documentSnapshot.getString("name");
-                            phoneNumText = documentSnapshot.getString("phoneNumber");
-                            emailText = documentSnapshot.getString("email");
-                            TextView companyName = view.findViewById(R.id.companyName);
-                            TextView subPlan = view.findViewById(R.id.subPlan);
-                            TextView sirenNum = view.findViewById(R.id.sirenNum);
-                            TextView contactName = view.findViewById(R.id.contactName);
-                            TextView phoneNum = view.findViewById(R.id.phoneNum);
-                            TextView email = view.findViewById(R.id.email);
-                            companyName.setText(companyNameText);
-                            subPlan.setText(subPlanText);
-                            sirenNum.setText(sirenNumText);
-                            contactName.setText(contactNameText);
-                            phoneNum.setText(phoneNumText);
-                            email.setText(emailText);
-                        }
-                    });
+            proId = userId;
         } else {
-            db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+            proId = mAuth.getCurrentUser().getUid();
+        }
 
-                            companyNameText = documentSnapshot.getString("companyName");
-                            sirenNumText = documentSnapshot.getString("nationalNumber");
-                            contactNameText = documentSnapshot.getString("name");
-                            phoneNumText = documentSnapshot.getString("phoneNumber");
-                            emailText = documentSnapshot.getString("email");
-                            TextView companyName = view.findViewById(R.id.companyName);
-                            TextView subPlan = view.findViewById(R.id.subPlan);
-                            TextView sirenNum = view.findViewById(R.id.sirenNum);
-                            TextView contactName = view.findViewById(R.id.contactName);
-                            TextView phoneNum = view.findViewById(R.id.phoneNum);
-                            TextView email = view.findViewById(R.id.email);
-                            companyName.setText(companyNameText);
-                            subPlan.setText(subPlanText);
-                            sirenNum.setText(sirenNumText);
-                            contactName.setText(contactNameText);
-                            phoneNum.setText(phoneNumText);
-                            email.setText(emailText);
+        db.collection("Pros").document(proId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
 
+                        companyNameText = documentSnapshot.getString("companyName");
+                        sirenNumText = documentSnapshot.getString("nationalNumber");
+                        contactNameText = documentSnapshot.getString("name");
+                        phoneNumText = documentSnapshot.getString("phoneNumber");
+                        emailText = documentSnapshot.getString("email");
+                        TextView companyName = view.findViewById(R.id.companyName);
+                        TextView subPlan = view.findViewById(R.id.subPlan);
+                        TextView sirenNum = view.findViewById(R.id.sirenNum);
+                        TextView contactName = view.findViewById(R.id.contactName);
+                        TextView phoneNum = view.findViewById(R.id.phoneNum);
+                        TextView email = view.findViewById(R.id.email);
+                        companyName.setText(companyNameText);
+                        subPlan.setText(subPlanText);
+                        sirenNum.setText(sirenNumText);
+                        contactName.setText(contactNameText);
+                        phoneNum.setText(phoneNumText);
+                        email.setText(emailText);
+
+                        if(externalProfileView) {
+
+                        } else {
                             db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
@@ -226,9 +215,10 @@ public class fragment_user_company extends Fragment {
                                         }
                                     });
                         }
-                    });
 
-        }
+
+                    }
+                });
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -285,10 +275,15 @@ public class fragment_user_company extends Fragment {
         });
 
         profileCompanyPic = view.findViewById(R.id.profileCompanyPic);
+        if(externalProfileView){
+            mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + userId);
+        } else {
+            mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + mAuth.getCurrentUser().getUid());
+        }
 
-        mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + mAuth.getCurrentUser().getUid());
         try {
             final File localFile = File.createTempFile("profilePic", "jpg");
+
             mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
@@ -304,30 +299,6 @@ public class fragment_user_company extends Fragment {
             });
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-
-        if(externalProfileView){
-            profileCompanyPic = view.findViewById(R.id.profileCompanyPic);
-
-            mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads/" + userId);
-            try {
-                final File localFile = File.createTempFile("profilePic", "jpg");
-                mStorageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        Uri fileUri = Uri.fromFile(localFile);
-                        String imageUrl = fileUri.toString();
-                        Picasso.get().load(imageUrl).fit().centerCrop().into(profileCompanyPic);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), "Error while retrieving picture", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }
