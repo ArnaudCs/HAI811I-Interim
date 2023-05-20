@@ -64,19 +64,18 @@ public class fragment_new_message_conversation extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle args = getArguments();
-        if (args != null) {
-            mail = args.getString("mail");
-            if(mail != null){
-                textContactMailMessage.setText(mail);
-            }
-        }
-
         backBtnNewConv = view.findViewById(R.id.backBtnNewConv);
         sendFirstMessageBtn = view.findViewById(R.id.sendFirstMessageBtn);
         firstMessageText = view.findViewById(R.id.firstMessageText);
         textContactMailMessage = view.findViewById(R.id.textContactMailMessage);
 
+        Bundle args = getArguments();
+        if (args != null) {
+            mail = args.getString("mail");
+            if(mail != null) {
+                textContactMailMessage.setText(mail);
+            }
+        }
         backBtnNewConv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

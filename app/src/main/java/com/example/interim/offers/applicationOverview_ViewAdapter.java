@@ -161,7 +161,6 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
                 newConversation.putExtra("mail", mail);
                 context.startActivity(newConversation);
                 mActivity.finish();
-                System.out.println("Mail de l'utilsiateur ------------" + mail);
             }
         });
 

@@ -34,9 +34,9 @@
             android:layout_width="0dp"
             android:background="@drawable/messagebox"
             android:weightSum="8"
-            android:layout_marginTop="20dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:layout_weight="5"
             android:layout_height="wrap_content">
 
@@ -48,8 +48,8 @@
                 android:layout_weight="2">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     app:cardCornerRadius="25dp">
 
                     <ImageView
@@ -66,13 +66,10 @@
 
             </LinearLayout>
 
-
-
-
             <LinearLayout
                 android:layout_width="0dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:orientation="vertical"
                 android:layout_height="wrap_content"
                 android:layout_weight="4">
@@ -83,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:text="Florian"
                     android:textColor="@color/black"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
@@ -94,7 +91,7 @@
                     android:maxLines="1"
                     android:text="Il faudrait que tu m'envoi le dernierrelevé"
                     android:textColor="@color/black"
-                    android:textSize="17sp"></TextView>
+                    android:textSize="14sp"></TextView>
 
             </LinearLayout>
 
@@ -121,8 +118,8 @@
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
                     app:lottie_rawRes="@raw/newmessage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"></com.airbnb.lottie.LottieAnimationView>
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"></com.airbnb.lottie.LottieAnimationView>
 
             </LinearLayout>
 

@@ -19,10 +19,7 @@ public class NewMessageConversationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            String mail = intent.getStringExtra("mail");
-            if (mail != null) {
-                mail = mail;
-            }
+            mail = intent.getStringExtra("mail");
         }
 
         fragment_new_message_conversation fragment = new fragment_new_message_conversation();
