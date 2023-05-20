@@ -203,98 +203,62 @@ public class fragment_setting_page extends Fragment {
                     public void onClick(View v) {
                         String code = codeEditText.getText().toString();
 
-                        // Vérifier si le code est valide
+                        // Check if the code is valid
                         if (code.equals("3400")) {
-                            // Récupérer l'utilisateur actuel
+                            // Get the current user
                             FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                            // Vérifier si l'utilisateur est connecté
+                            // Check if the user is connected
                             if (currentUser != null) {
                                 String userId = currentUser.getUid();
-                                DocumentReference userRef = db.collection("Users").document(userId);
-                                DocumentReference proRef = db.collection("Pros").document(userId);
+                                DocumentReference userRef;
 
-                                // Récupérer le champ admin de l'utilisateur
-                                if(!pro){
-                                    userRef.get().addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            if (document.exists()) {
-                                                Boolean admin = document.getBoolean("admin");
-                                                if (admin == null || !admin) {
-                                                    // Mettre à jour le champ admin de l'utilisateur
-                                                    userRef.update("admin", true).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(getContext(), getResources().getString(R.string.nowAdmin), Toast.LENGTH_SHORT).show();
-                                                            dialog.dismiss();
-                                                        }
-                                                    }).addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
-                                                            dialog.dismiss();
-                                                        }
-                                                    });
-                                                } else {
-                                                    Toast.makeText(getContext(), getResources().getString(R.string.alreadyAdmin), Toast.LENGTH_SHORT).show();
-                                                    dialog.dismiss();
-                                                }
-                                            } else {
-                                                Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        } else {
-                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
-                                            dialog.dismiss();
-                                        }
-                                    });
+                                if (!pro) {
+                                    userRef = db.collection("Users").document(userId);
                                 } else {
-                                    proRef.get().addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            if (document.exists()) {
-                                                Boolean admin = document.getBoolean("admin");
-                                                if (admin == null || !admin) {
-                                                    // Mettre à jour le champ admin de l'utilisateur
-                                                    userRef.update("admin", true).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(getContext(), getResources().getString(R.string.nowAdmin), Toast.LENGTH_SHORT).show();
-                                                            dialog.dismiss();
-                                                        }
-                                                    }).addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
-                                                            dialog.dismiss();
-                                                        }
-                                                    });
-                                                } else {
-                                                    Toast.makeText(getContext(), getResources().getString(R.string.alreadyAdmin), Toast.LENGTH_SHORT).show();
-                                                    dialog.dismiss();
-                                                }
-                                            } else {
-                                                Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        } else {
-                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
-                                            dialog.dismiss();
-                                        }
-                                    });
+                                    userRef = db.collection("Pros").document(userId);
                                 }
 
+                                userRef.get().addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            Boolean admin = document.getBoolean("admin");
+                                            if (admin == null || !admin) {
+                                                // Update the admin field of the user
+                                                userRef.update("admin", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getContext(), getResources().getString(R.string.nowAdmin), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            } else {
+                                                Toast.makeText(getContext(), getResources().getString(R.string.alreadyAdmin), Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
+                                    }
+                                    dialog.dismiss();
+                                });
                             } else {
                                 Toast.makeText(getContext(), getResources().getString(R.string.errogettingId), Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         } else {
-                            // Le code est invalide, afficher un message d'erreur
+                            // The code is invalid, display an error message
                             Toast.makeText(getContext(), getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
 
                 // Afficher le dialogue
                 dialog.show();

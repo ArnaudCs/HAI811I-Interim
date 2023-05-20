@@ -295,6 +295,7 @@ public class fragment_post_offers extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         if (requestCode == PICK_JSON_FILE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             // Récupérer l'URI du fichier sélectionné
@@ -372,7 +373,7 @@ public class fragment_post_offers extends Fragment {
                     }
 
                     for(Offer offers : offerList){
-                        System.out.println("Offre multiple : " + offers.getCompanyName() + offers.getJobTitle());
+                        db.collection("Offers").add(offers);
                     }
 
                 } else if (json instanceof JSONObject) { // si une seule offre dans le json
@@ -420,6 +421,7 @@ public class fragment_post_offers extends Fragment {
                     Offer offerObj = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
                     offerObj.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     System.out.println("Offre unique : " + offerObj.getCompanyName() + offerObj.getJobTitle());
+                    db.collection("Offers").add(offerObj);
 
                 } else {
                     showDialogError("Invalid JSON Format");

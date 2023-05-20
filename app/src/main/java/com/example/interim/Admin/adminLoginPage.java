@@ -80,12 +80,12 @@ public class adminLoginPage extends AppCompatActivity {
                                             if (!documentSnapshot.getBoolean("verified")) {
                                                 Toast.makeText(adminLoginPage.this, getResources().getString(R.string.finaliseAccount), Toast.LENGTH_SHORT).show();
                                             }
-                                            else if (documentSnapshot.getBoolean("verified") && documentSnapshot.getBoolean("admin") == true) {
+                                            else if (documentSnapshot.getBoolean("admin")) {
                                                 // User is a regular user
                                                 Intent adminDash = new Intent(adminLoginPage.this, AdminDashboard.class);
                                                 startActivity(adminDash);
                                                 finish();
-                                            } else if (documentSnapshot.getBoolean("verified") && documentSnapshot.getBoolean("admin") == false) {
+                                            } else if (!documentSnapshot.getBoolean("admin")) {
                                                 // User is a regular user
                                                 Toast.makeText(adminLoginPage.this, getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
                                             }
@@ -102,8 +102,15 @@ public class adminLoginPage extends AppCompatActivity {
                                                                 else {
                                                                     // User is a Pro
                                                                     Pro pro = documentSnapshot.toObject(Pro.class);
-                                                                    isAdmin = true;
-                                                                    isSubscribed(user.getUid());
+                                                                    if(documentSnapshot.getBoolean("admin")) {
+                                                                        Intent adminDash = new Intent(adminLoginPage.this, AdminDashboard.class);
+                                                                        startActivity(adminDash);
+                                                                        finish();
+                                                                    }
+                                                                    else {
+                                                                        Toast.makeText(adminLoginPage.this, getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
+                                                                    }
+
                                                                 }
                                                             }
                                                         }
@@ -113,41 +120,6 @@ public class adminLoginPage extends AppCompatActivity {
                                 });
                     } else {
                         System.out.println("Login error");
-                    }
-                });
-    }
-
-
-    private void isSubscribed(String uid) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("Subscriptions")
-                .document(uid)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            String plan = document.getString("plan");
-                            Date endDate = document.getDate("endDate");
-                            Date startDate = document.getDate("startDate");
-                            boolean isUnlimited = plan.contains("One Time");
-
-                            if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date())) && isAdmin) {
-                                // User has an active subscription
-                                Intent profile = new Intent(adminLoginPage.this, AdminDashboard.class);
-                                startActivity(profile);
-                                finish();
-                            } else {
-                                Toast.makeText(adminLoginPage.this, getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            // User does not have a subscription
-                            Toast.makeText(adminLoginPage.this, getResources().getString(R.string.finaliseAccount), Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        // Error retrieving subscription info
-                        Log.w(TAG, "Error getting subscription info", task.getException());
                     }
                 });
     }
