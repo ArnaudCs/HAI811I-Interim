@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.interim.CategoryRepository;
+import com.example.interim.GeocodingUtils;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
@@ -181,39 +182,96 @@ public class fragment_post_offers extends Fragment {
                 } catch (ParseException e) {
                 }
 
+                Date finalStartDate = startDate;
+                Date finalEndDate = endDate;
+                Date finalToday = today;
+                Date finalExpDate = expDate;
+                int finalSalaryMin = salaryMin;
+                int finalSalaryMax = salaryMax;
+                Date finalStartDate1 = startDate;
+                Date finalEndDate1 = endDate;
+                Date finalToday1 = today;
+                Date finalExpDate1 = expDate;
+                int finalSalaryMin1 = salaryMin;
+                int finalSalaryMax1 = salaryMax;
+                GeocodingUtils.getCoordinates(location, new GeocodingUtils.GeocodingListener() {
+                    @Override
+                    public void onCoordinatesObtained(double latitude, double longitude) {
+                        Offer offer = new Offer(jobTitle, companyName, location, finalStartDate, finalEndDate, finalToday, finalExpDate, keywords, category, label, finalSalaryMin, finalSalaryMax, description, details, url, String.valueOf(latitude), String.valueOf(longitude));
+                        offer.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        db.collection("Offers")
+                                .add(offer)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        textOfferName.setText("");
+                                        textOfferCompanyName.setText("");
+                                        textOfferSalary.setText("");
+                                        textOfferCity.setText("");
+                                        textOfferWebsite.setText("");
+                                        textOfferTags.setText("");
+                                        textOfferLabels.setText("");
+                                        textOfferDescription.setText("");
+                                        textOfferDetails.setText("");
+                                        categoryOfferChoice.setSelection(0);
+                                        layoutDateStartOffer.setError(null);
+                                        layoutDateEndOffer.setError(null);
+                                        textDateStartOffer.setText("");
+                                        textDateEndOffer.setText("");
 
-                Offer offer = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
-                offer.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                db.collection("Offers")
-                        .add(offer)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                textOfferName.setText("");
-                                textOfferCompanyName.setText("");
-                                textOfferSalary.setText("");
-                                textOfferCity.setText("");
-                                textOfferWebsite.setText("");
-                                textOfferTags.setText("");
-                                textOfferLabels.setText("");
-                                textOfferDescription.setText("");
-                                textOfferDetails.setText("");
-                                categoryOfferChoice.setSelection(0);
-                                layoutDateStartOffer.setError(null);
-                                layoutDateEndOffer.setError(null);
-                                textDateStartOffer.setText("");
-                                textDateEndOffer.setText("");
+                                        Intent mainActivity = new Intent(getActivity(), CelebrationActivity.class);
+                                        startActivity(mainActivity);
+                                        getActivity().finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Offer offer = new Offer(jobTitle, companyName, location, finalStartDate1, finalEndDate1, finalToday1, finalExpDate1, keywords, category, label, finalSalaryMin1, finalSalaryMax1, description, details, url, "0.0", "0.0");
+                                        offer.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        db.collection("Offers")
+                                                .add(offer)
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentReference documentReference) {
+                                                        textOfferName.setText("");
+                                                        textOfferCompanyName.setText("");
+                                                        textOfferSalary.setText("");
+                                                        textOfferCity.setText("");
+                                                        textOfferWebsite.setText("");
+                                                        textOfferTags.setText("");
+                                                        textOfferLabels.setText("");
+                                                        textOfferDescription.setText("");
+                                                        textOfferDetails.setText("");
+                                                        categoryOfferChoice.setSelection(0);
+                                                        layoutDateStartOffer.setError(null);
+                                                        layoutDateEndOffer.setError(null);
+                                                        textDateStartOffer.setText("");
+                                                        textDateEndOffer.setText("");
 
-                                Intent mainActivity = new Intent(getActivity(), CelebrationActivity.class);
-                                startActivity(mainActivity);
-                                getActivity().finish();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                            }
-                        });
+                                                        Intent mainActivity = new Intent(getActivity(), CelebrationActivity.class);
+                                                        startActivity(mainActivity);
+                                                        getActivity().finish();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        System.out.println("Failed to obtain coordinates");
+                    }
+                });
+
+
+
+
             }
         });
 
@@ -420,7 +478,6 @@ public class fragment_post_offers extends Fragment {
 
                     Offer offerObj = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
                     offerObj.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    System.out.println("Offre unique : " + offerObj.getCompanyName() + offerObj.getJobTitle());
                     db.collection("Offers").add(offerObj);
 
                 } else {

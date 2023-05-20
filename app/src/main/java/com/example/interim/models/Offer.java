@@ -21,6 +21,45 @@ public class Offer implements Serializable {
     private String description;
     private String url;
     private String details;
+    private String posX;
+    private String posY;
+
+    public String getPosX() {
+        return posX;
+    }
+
+    public void setPosX(String posX) {
+        this.posX = posX;
+    }
+
+    public String getPosY() {
+        return posY;
+    }
+
+    public void setPosY(String posY) {
+        this.posY = posY;
+    }
+
+    public Offer(String jobTitle, String companyName, String location, Date startDate, Date endDate, Date postDate, Date expDate, String keywords, String category, String label, float salaryMin, float salaryMax, String description, String url, String details, String posX, String posY) {
+        this.recruiter = recruiter;
+        this.jobTitle = jobTitle;
+        this.companyName = companyName;
+        this.location = location;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.postDate = postDate;
+        this.expDate = expDate;
+        this.keywords = keywords;
+        this.category = category;
+        this.label = label;
+        this.salaryMin = salaryMin;
+        this.salaryMax = salaryMax;
+        this.description = description;
+        this.url = url;
+        this.details = details;
+        this.posX = posX;
+        this.posY = posY;
+    }
 
     public Offer(String jobTitle, String companyName, String location, Date startDate, Date endDate, Date postDate, Date expDate, String keywords, String category, String label, float salaryMin, float salaryMax, String description, String details, String url) {
         this.jobTitle = jobTitle;
