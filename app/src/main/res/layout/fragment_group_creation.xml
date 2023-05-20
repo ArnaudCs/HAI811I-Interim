@@ -79,133 +79,139 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
+        android:background="@drawable/bottom2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/bottom2"
-        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/topDeckGroupCreation">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="6"
-            android:gravity="center"
-            android:paddingRight="30dp"
-            android:paddingLeft="30dp"
-            android:paddingTop="30dp"
-            android:paddingBottom="30dp"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_weight="4">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutUser1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Mail User 1"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/primary_red"
-                    app:boxStrokeErrorColor="@color/strokeError"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/primary_red"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:placeholderText="abc@df.com"
-                    app:startIconDrawable="@drawable/baseline_person_24"
-                    app:startIconTint="@color/primary_red"
-                    tools:layout_editor_absoluteY="374dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textMember1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:gravity="right|center"
-                android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:orientation="horizontal"
+                android:paddingLeft="30dp"
+                android:paddingTop="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="30dp"
+                android:weightSum="6">
 
                 <LinearLayout
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/greybox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
                     android:gravity="center">
 
-                    <Button
-                        android:id="@+id/addMemberButton"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutUser1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/baseline_add_24"
+                        android:layout_height="wrap_content"
+                        android:hint="Mail User 1"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/primary_red"
+                        app:boxStrokeErrorColor="@color/strokeError"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/primary_red"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:placeholderText="abc@df.com"
+                        app:startIconDrawable="@drawable/baseline_person_24"
+                        app:startIconTint="@color/primary_red"
+                        tools:layout_editor_absoluteY="374dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textMember1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right|center">
+
+                    <LinearLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/greybox"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/addMemberButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/baseline_add_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="6"
-            android:gravity="center"
-            android:paddingRight="30dp"
-            android:paddingLeft="30dp"
-            android:layout_height="wrap_content">
-
-            <androidx.recyclerview.widget.RecyclerView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/userRecycler">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:paddingTop="30dp"
-            android:paddingBottom="30dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/createGroupButton"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:background="@drawable/redbutton"
-                android:text="@string/createGroup"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:stateListAnimator="@null"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutUser1" />
+                android:weightSum="6">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/userRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp">
+
+                <Button
+                    android:id="@+id/createGroupButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/redbutton"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/createGroup"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutUser1" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.interim.authentication;
+package com.example.interim.Admin;
 
 import static android.content.ContentValues.TAG;
 
@@ -13,9 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.interim.Admin.AdminDashboard;
 import com.example.interim.AppActivity;
 import com.example.interim.R;
+import com.example.interim.authentication.PhoneValidation;
 import com.example.interim.models.Pro;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -30,6 +30,8 @@ public class adminLoginPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
 
+    Boolean isAdmin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,95 +43,8 @@ public class adminLoginPage extends AppCompatActivity {
         ImageView backToLogin = findViewById(R.id.backToLogin);
 
         mAuth = FirebaseAuth.getInstance();
+
         currentUser = mAuth.getCurrentUser();
-
-        if(currentUser != null) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Users").document(currentUser.getUid()).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                if (!documentSnapshot.getBoolean("verified") && documentSnapshot.getBoolean("admin")) {
-                                    Toast.makeText(adminLoginPage.this, getResources().getString(R.string.finaliseAccount), Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    // User is a regular user
-                                    Intent profile = new Intent(adminLoginPage.this, AdminDashboard.class);
-                                    startActivity(profile);
-                                    finish();
-                                }
-
-                            } else {
-                                db.collection("Pros").document(currentUser.getUid()).get()
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                if (documentSnapshot.exists()) {
-                                                    if (!documentSnapshot.getBoolean("verified") && documentSnapshot.getBoolean("admin")) {
-                                                        Toast.makeText(adminLoginPage.this, getResources().getString(R.string.finaliseAccount), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                    else {
-                                                        // User is a Pro
-                                                        Pro pro = documentSnapshot.toObject(Pro.class);
-                                                        isSubscribed(currentUser.getUid());
-                                                    }
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    });
-        }
-
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-
-        if(currentUser != null) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Users").document(currentUser.getUid()).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                if (!documentSnapshot.getBoolean("verified")) {
-                                    Intent profile = new Intent(adminLoginPage.this, PhoneValidation.class);
-                                    startActivity(profile);
-                                    finish();
-                                }
-                                else {
-                                    // User is a regular user
-                                    Intent profile = new Intent(adminLoginPage.this, AppActivity.class);
-                                    startActivity(profile);
-                                    finish();
-                                }
-
-                            } else {
-                                db.collection("Pros").document(currentUser.getUid()).get()
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                if (documentSnapshot.exists()) {
-                                                    if (!documentSnapshot.getBoolean("verified")) {
-                                                        Intent profile = new Intent(adminLoginPage.this, PhoneValidation.class);
-                                                        startActivity(profile);
-                                                        finish();
-                                                    }
-                                                    else {
-                                                        // User is a Pro
-                                                        Pro pro = documentSnapshot.toObject(Pro.class);
-
-                                                        isSubscribed(currentUser.getUid());
-                                                    }
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    });
-        }
-
-
 
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +57,7 @@ public class adminLoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!TextUtils.isEmpty(username.getText()) && !TextUtils.isEmpty(password.getText())){
-
+                    signInUser(username.getText().toString(), password.getText().toString());
                 } else {
                     Toast.makeText(adminLoginPage.this, getResources().getString(R.string.missingFieldsErroToast), Toast.LENGTH_SHORT).show();
                 }
@@ -162,14 +77,17 @@ public class adminLoginPage extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         if (documentSnapshot.exists()) {
-                                            if (!documentSnapshot.getBoolean("verified") && documentSnapshot.getBoolean("admin")) {
+                                            if (!documentSnapshot.getBoolean("verified")) {
                                                 Toast.makeText(adminLoginPage.this, getResources().getString(R.string.finaliseAccount), Toast.LENGTH_SHORT).show();
                                             }
-                                            else {
+                                            else if (documentSnapshot.getBoolean("verified") && documentSnapshot.getBoolean("admin") == true) {
                                                 // User is a regular user
                                                 Intent adminDash = new Intent(adminLoginPage.this, AdminDashboard.class);
                                                 startActivity(adminDash);
                                                 finish();
+                                            } else if (documentSnapshot.getBoolean("verified") && documentSnapshot.getBoolean("admin") == false) {
+                                                // User is a regular user
+                                                Toast.makeText(adminLoginPage.this, getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
                                             }
 
                                         } else {
@@ -178,12 +96,13 @@ public class adminLoginPage extends AppCompatActivity {
                                                         @Override
                                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                             if (documentSnapshot.exists()) {
-                                                                if (!documentSnapshot.getBoolean("verified") && documentSnapshot.getBoolean("admin")) {
+                                                                if (!documentSnapshot.getBoolean("verified")) {
                                                                     Toast.makeText(adminLoginPage.this, getResources().getString(R.string.finaliseAccount), Toast.LENGTH_SHORT).show();
                                                                 }
                                                                 else {
                                                                     // User is a Pro
                                                                     Pro pro = documentSnapshot.toObject(Pro.class);
+                                                                    isAdmin = true;
                                                                     isSubscribed(user.getUid());
                                                                 }
                                                             }
@@ -214,13 +133,13 @@ public class adminLoginPage extends AppCompatActivity {
                             Date startDate = document.getDate("startDate");
                             boolean isUnlimited = plan.contains("One Time");
 
-                            if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date()))) {
+                            if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date())) && isAdmin) {
                                 // User has an active subscription
                                 Intent profile = new Intent(adminLoginPage.this, AdminDashboard.class);
                                 startActivity(profile);
                                 finish();
                             } else {
-                                Toast.makeText(adminLoginPage.this, getResources().getString(R.string.finaliseAccount), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(adminLoginPage.this, getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             // User does not have a subscription

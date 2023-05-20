@@ -38,7 +38,7 @@
             android:name=".Admin.AdminDashboard"
             android:exported="true" />
         <activity
-            android:name=".authentication.adminLoginPage"
+            android:name=".Admin.adminLoginPage"
             android:exported="true" />
 
         <provider

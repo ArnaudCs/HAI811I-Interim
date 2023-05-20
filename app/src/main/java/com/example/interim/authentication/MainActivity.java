@@ -15,9 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.interim.Admin.adminLoginPage;
 import com.example.interim.AppActivity;
 import com.example.interim.R;
 import com.example.interim.models.Pro;
@@ -30,8 +30,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
