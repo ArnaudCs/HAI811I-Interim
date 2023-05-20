@@ -258,4 +258,5 @@
     <string name="incorrectFields">Veuillez remplir correctement remplir tous les champs</string>
     <string name="resume">CV</string>
     <string name="cover">Lettre</string>
+    <string name="postPerPros">Posts par entreprise</string>
 </resources>

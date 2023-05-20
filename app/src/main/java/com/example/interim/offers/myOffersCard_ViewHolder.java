@@ -23,7 +23,7 @@ public class myOffersCard_ViewHolder extends RecyclerView.ViewHolder {
     TextView jobLocation;
     TextView jobSalary;
     TextView jobUrl;
-    Button likeInit, manageAplications, shareBtn;
+    Button likeInit, manageAplications, shareBtn, deleteOffer;
 
     Boolean liked = false;
 
@@ -43,5 +43,6 @@ public class myOffersCard_ViewHolder extends RecyclerView.ViewHolder {
         likeInit = itemView.findViewById(R.id.likeInit);
         manageAplications = itemView.findViewById(R.id.manageAplicationsBtn);
         shareBtn = itemView.findViewById(R.id.shareBtn);
+        deleteOffer = itemView.findViewById(R.id.deleteOffer);
     }
 }

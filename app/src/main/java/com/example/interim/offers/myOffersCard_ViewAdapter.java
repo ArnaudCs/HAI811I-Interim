@@ -124,6 +124,14 @@ public class myOffersCard_ViewAdapter extends RecyclerView.Adapter<myOffersCard_
             holder.liked = false;
         }
 
+
+        holder.deleteOffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //mettre ici la suppression d'une offres, voir pour supprimer les candidatures associées
+            }
+        });
+
         if(mAuth.getCurrentUser() != null){
             db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
