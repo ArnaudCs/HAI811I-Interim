@@ -278,4 +278,5 @@
     <string name="downloadSuccessText">File downloaded successfully</string>
     <string name="DownloadErro">Download Erro</string>
     <string name="downloadErrorText">Error while downloading file</string>
+    <string name="incorrectDate">Entered date is incorrect</string>
 </resources>
