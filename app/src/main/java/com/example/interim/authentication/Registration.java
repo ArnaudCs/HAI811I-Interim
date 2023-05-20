@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -82,6 +83,7 @@ public class Registration extends AppCompatActivity {
                     String companyAddress = textCompanyAddress.getText().toString();
                     String website = textWebsite.getText().toString();
                     String password = textPassword.getText().toString();
+                    String passwordConfirm = textConfirmPassword.getText().toString();
                     String service = layoutService.getEditText().getText().toString();
                     String subService = layoutSub.getEditText().getText().toString();
                     String contact2Name = layoutContact2Name.getEditText().getText().toString();
@@ -93,26 +95,41 @@ public class Registration extends AppCompatActivity {
                             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(companyAddress)
                             && !TextUtils.isEmpty(website) && !TextUtils.isEmpty(password)) {
 
+                        if (!(Patterns.EMAIL_ADDRESS.matcher(email).matches() && Patterns.PHONE.matcher(phoneNumber).matches()
+                                && Patterns.WEB_URL.matcher(website).matches())) {
+                            Toast.makeText(Registration.this, R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         if (addContact.isChecked()) {
                             if (TextUtils.isEmpty(service) || TextUtils.isEmpty(subService) || TextUtils.isEmpty(contact2Name) || TextUtils.isEmpty(contact2Email) || TextUtils.isEmpty(contact2Phone)) {
                                 Toast.makeText(Registration.this, R.string.missingFieldsErroToast, Toast.LENGTH_SHORT).show();
                                 return;
                             }
+                            if (!Patterns.EMAIL_ADDRESS.matcher(contact2Email).matches() || !Patterns.PHONE.matcher(contact2Phone).matches()) {
+                                Toast.makeText(Registration.this, R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                        if (password.length() < 8 || passwordConfirm.length() < 8){
+                            Toast.makeText(Registration.this, R.string.minPass, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (!password.equals(passwordConfirm)){
+                            Toast.makeText(Registration.this, R.string.passwordMismatch, Toast.LENGTH_SHORT).show();
+                            return;
                         }
                         // Create a new instance of the Pro model with all the input values
                         Pro pro = new Pro();
 
-                        if(addContact.isChecked()) {
-                           pro = new Pro(name, companyName, nationalNumber, email, phoneNumber, companyAddress, website, service, subService, contact2Name, contact2Email, contact2Phone);
-                        }
-                        else {
+                        if (addContact.isChecked()) {
+                            pro = new Pro(name, companyName, nationalNumber, email, phoneNumber, companyAddress, website, service, subService, contact2Name, contact2Email, contact2Phone);
+                        } else {
                             pro = new Pro(name, companyName, nationalNumber, email, phoneNumber, companyAddress, website);
                         }
 
                         Pro newPro = pro;
                         // Add the Pro object to Firestore database
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
 
                         // Create user account with Firebase Authentication
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -144,12 +161,11 @@ public class Registration extends AppCompatActivity {
                                         } else {
                                             // If sign in fails, display a message to the user.
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(Registration.this, "Authentication failed.",
+                                            Toast.makeText(Registration.this, R.string.failedAuth,
                                                     Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
-
                     } else {
                         Toast.makeText(Registration.this, R.string.missingFieldsErroToast, Toast.LENGTH_SHORT).show();
                     }
@@ -190,7 +206,7 @@ public class Registration extends AppCompatActivity {
                     Matcher matcher = pattern.matcher(password);
                     boolean isPwdContainsSpeChar = matcher.find();
                     if(isPwdContainsSpeChar){
-                        layoutPassword.setHelperText("Strong Password");
+                        layoutPassword.setHelperText(getString(R.string.strongPass));
                         layoutPassword.setError("");
                     } else {
                         layoutPassword.setHelperText("");

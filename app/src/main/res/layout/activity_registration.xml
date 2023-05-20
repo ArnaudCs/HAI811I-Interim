@@ -64,6 +64,7 @@
                 android:id="@+id/textCompanyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="40"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,6 +92,7 @@
                 android:id="@+id/textNationalNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="30"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,6 +120,7 @@
                 android:id="@+id/text1Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="40"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,6 +148,7 @@
                 android:id="@+id/text1Mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="40"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -173,6 +177,7 @@
                 android:id="@+id/textContact1Number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="12"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,6 +205,7 @@
                 android:id="@+id/textCompanyAdress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="50"
                 android:inputType="textPostalAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -227,6 +233,7 @@
                 android:id="@+id/textWebsite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="50"
                 android:inputType="textUri" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -257,6 +264,7 @@
                 android:id="@+id/textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="30"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -286,6 +294,7 @@
                 android:id="@+id/textConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="30"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -325,6 +334,7 @@
                 android:id="@+id/text2Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="40"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -353,6 +363,7 @@
                 android:id="@+id/textContact12MailAdress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="40"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -381,6 +392,7 @@
                 android:id="@+id/textContact2Number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="40"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -409,6 +421,7 @@
                 android:id="@+id/textService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="40"
                 android:inputType="textPersonName|text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -437,6 +450,7 @@
                 android:id="@+id/textSubService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="40"
                 android:inputType="textPersonName|text" />
         </com.google.android.material.textfield.TextInputLayout>
 
