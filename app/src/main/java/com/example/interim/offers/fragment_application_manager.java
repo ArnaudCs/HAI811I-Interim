@@ -116,11 +116,11 @@ public class fragment_application_manager extends Fragment {
                                 }
                             }
                             pendingDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
-                            pendingDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), pendingApp));
+                            pendingDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), pendingApp, getActivity()));
                             rejectedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
-                            rejectedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), rejectedApp));
+                            rejectedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), rejectedApp, getActivity()));
                             acceptedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
-                            acceptedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), acceptedApp));
+                            acceptedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), acceptedApp, getActivity()));
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

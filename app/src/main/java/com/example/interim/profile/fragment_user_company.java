@@ -54,7 +54,7 @@ public class fragment_user_company extends Fragment {
     private String emailText, userId;
     boolean externalProfileView = false;
 
-    String proId;
+    String proId = "";
 
     private ImageView profileCompanyPic;
 
@@ -172,10 +172,10 @@ public class fragment_user_company extends Fragment {
             }
         });
 
+        proId = mAuth.getCurrentUser().getUid();
+
         if(externalProfileView){
             proId = userId;
-        } else {
-            proId = mAuth.getCurrentUser().getUid();
         }
 
         db.collection("Pros").document(proId).get()

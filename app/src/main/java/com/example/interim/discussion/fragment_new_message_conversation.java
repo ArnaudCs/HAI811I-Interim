@@ -48,6 +48,8 @@ public class fragment_new_message_conversation extends Fragment {
 
     EditText firstMessageText;
 
+    String mail;
+
     public fragment_new_message_conversation() {
         // Required empty public constructor
     }
@@ -61,6 +63,14 @@ public class fragment_new_message_conversation extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            mail = args.getString("mail");
+            if(mail != null){
+                textContactMailMessage.setText(mail);
+            }
+        }
 
         backBtnNewConv = view.findViewById(R.id.backBtnNewConv);
         sendFirstMessageBtn = view.findViewById(R.id.sendFirstMessageBtn);

@@ -16,7 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.interim.Admin.ActivityStat;
 import com.example.interim.R;
+import com.example.interim.discussion.NewMessageConversationActivity;
 import com.example.interim.models.Application;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,16 +41,20 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
 
     int status;
     String phone;
+
+    String mail;
     List<Application> applications;
     String applicantName, applicantId;
+    Activity mActivity;
 
 
     boolean downResume = false; //permet de choisir quel fichier télécharger
 
 
-    public applicationOverview_ViewAdapter(Context context, List<Application> applications) {
+    public applicationOverview_ViewAdapter(Context context, List<Application> applications, Activity activity) {
         this.context = context;
         this.applications = applications;
+        this.mActivity = activity;
     }
 
 
@@ -63,13 +69,13 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
         holder.applicantName.setText(applications.get(position).getApplicantName());
         holder.applicantEmail.setText(applications.get(position).getApplicantMail());
         holder.applicantNumber.setText(applications.get(position).getApplicantPhone());
-//        holder.jobTitle.setText(applications.get(position).getOffer().getJobTitle());
         holder.applicationDate.setText(applications.get(position).getApplicantBirth());
         holder.applicantAdress.setText(applications.get(position).getApplicantAdress());
         holder.applicantId = applications.get(position).getApplicantId();
         holder.appId = applications.get(position).getId();
         status = applications.get(position).getStatus();
         phone = applications.get(position).getApplicantPhone();
+        mail = applications.get(position).getApplicantMail();
 
         if (status == 2){
             holder.messageContainer.setVisibility(View.VISIBLE);
@@ -145,6 +151,17 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
 
                 // Update the status of the offer in the database to 2
                 updateOfferStatus(applicationId, 1);
+            }
+        });
+
+        holder.messageApplicant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newConversation = new Intent(context, NewMessageConversationActivity.class);
+                newConversation.putExtra("mail", mail);
+                context.startActivity(newConversation);
+                mActivity.finish();
+                System.out.println("Mail de l'utilsiateur ------------" + mail);
             }
         });
 
