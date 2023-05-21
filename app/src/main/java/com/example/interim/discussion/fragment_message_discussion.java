@@ -466,12 +466,19 @@ public class fragment_message_discussion extends Fragment {
                     if (documentSnapshot.exists()) {
                         String name = documentSnapshot.getString("name");
                         String uid = documentSnapshot.getId();
-                        if(!uid.equals(userId)) {
+                        if (!uid.equals(userId)) {
                             if (name != null) {
                                 sb.append(name);
                                 if (finalI < participants.size() - 1) {
                                     sb.append(", ");
                                 }
+
+
+                                // Remove trailing ", " if it exists
+                                if (sb.length() >= 2 && sb.substring(sb.length() - 2).equals(", ")) {
+                                    sb.delete(sb.length() - 2, sb.length());
+                                }
+
                                 convName.setText(sb.toString());
                             }
                         }
@@ -479,7 +486,11 @@ public class fragment_message_discussion extends Fragment {
                 }
             });
         }
+
+
     }
+
+
 
 
 
