@@ -1,12 +1,15 @@
 package com.example.interim.offers;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,7 +35,7 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
     Context context;
     List<Offer> offers;
     HashMap<Offer, Integer> offersMap;
-
+    List<String> applicationIds;
     String firstName;
 
     String name;
@@ -41,10 +45,11 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
 
     boolean pro = false;
 
-    public applicationCard_ViewAdapter(Context context, HashMap<Offer, Integer> offersMap) {
+
+    public applicationCard_ViewAdapter(Context context, HashMap<Offer, Integer> offersMap, List<String> appIds) {
         this.context = context;
         this.offersMap = offersMap;
-
+        applicationIds = appIds;
         offers = new ArrayList<Offer>(offersMap.keySet());
     }
 
@@ -57,6 +62,8 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
     @Override
     public void onBindViewHolder(@NonNull applicationCard_ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.jobId = offers.get(position).getId();
+        holder.applicationId = applicationIds.get(position);
+        System.out.println("ID " + holder.applicationId);
         holder.jobTitle.setText(offers.get(position).getJobTitle());
         holder.companyName.setText(offers.get(position).getCompanyName());
         holder.jobCategory.setText(offers.get(position).getCategory());
@@ -66,9 +73,10 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
         holder.jobDate.setText(context.getString(R.string.dateIndicationsStart) + startDate + context.getString(R.string.dateIndicationsEnd) + endDate);
         holder.jobSalary.setText(String.valueOf(offers.get(position).getSalaryMax()) + "€");
         holder.jobLocation.setText(offers.get(position).getLocation());
+
         //holder.postDate.setText(offers.get(position).getPostDate().toString());
 
-        if(offersMap.get(offersMap.keySet().toArray()[position]) == Integer.valueOf(2)) {
+        if (offersMap.get(offersMap.keySet().toArray()[position]) == Integer.valueOf(2)) {
             holder.statusIcon.setImageResource(R.drawable.baseline_check_circle_24);
             holder.statusIcon.setColorFilter(Color.GREEN);
         } else if (offersMap.get(offersMap.keySet().toArray()[position]) == Integer.valueOf(1)) {
@@ -107,10 +115,52 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
             });
         } else {
         }
+
+
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Confirmation");
+                builder.setMessage("Are you sure you want to delete this application?");
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String applicationId = holder.applicationId;
+
+                        // Delete the application from the Applications collection
+                        db.collection("Applications").document(applicationId)
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        // Application deleted successfully
+                                        // Handle any additional logic or UI updates after successful deletion
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Failed to delete application
+                                        // Handle the failure scenario if needed
+                                    }
+                                });
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 
-    @Override
+
+        @Override
     public int getItemCount() {
         return offers.size();
     }
+
+
+
 }

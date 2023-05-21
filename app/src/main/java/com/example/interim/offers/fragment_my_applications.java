@@ -38,6 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class fragment_my_applications extends Fragment {
     String userId;
@@ -92,6 +93,9 @@ public class fragment_my_applications extends Fragment {
         HashMap<Offer, Integer> pendingOffers = new HashMap<>();
         HashMap<Offer, Integer> acceptedOffers = new HashMap<>();
         HashMap<Offer, Integer> rejectedOffers = new HashMap<>();
+        List<String> pendingApplicationsIds = new ArrayList<>();
+        List<String> rejectedApplicationsIds = new ArrayList<>();
+        List<String> acceptedApplicationsIds = new ArrayList<>();
 
         if(userId != null) {
             db.collection("Applications")
@@ -106,11 +110,14 @@ public class fragment_my_applications extends Fragment {
                             for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
                                 if (documentSnapshot.get("status",Integer.class) == 0) {
                                     pendingOfferIds.add(documentSnapshot.getString("offerId"));
+                                    pendingApplicationsIds.add(documentSnapshot.getId());
                                 } else if (documentSnapshot.get("status",Integer.class) == 1) {
                                     rejectedOfferIds.add(documentSnapshot.getString("offerId"));
+                                    rejectedApplicationsIds.add(documentSnapshot.getId());
                                 }
                                 else {
                                     acceptedOfferIds.add(documentSnapshot.getString("offerId"));
+                                    acceptedApplicationsIds.add(documentSnapshot.getId());
                                 }
                             }
                             if(pendingOfferIds.size() > 0) {
@@ -125,7 +132,7 @@ public class fragment_my_applications extends Fragment {
                                                     pendingOffers.put(offer, 0);
                                                 }
                                                 recyclerViewPending.setLayoutManager(new LinearLayoutManager(getContext()));
-                                                recyclerViewPending.setAdapter(new applicationCard_ViewAdapter(getContext(), pendingOffers));
+                                                recyclerViewPending.setAdapter(new applicationCard_ViewAdapter(getContext(), pendingOffers, pendingApplicationsIds));
                                             }
                                         });
                             }
@@ -141,7 +148,7 @@ public class fragment_my_applications extends Fragment {
                                                     acceptedOffers.put(offer, 2);
                                                 }
                                                 recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getContext()));
-                                                recyclerViewAccepted.setAdapter(new applicationCard_ViewAdapter(getContext(), acceptedOffers));
+                                                recyclerViewAccepted.setAdapter(new applicationCard_ViewAdapter(getContext(), acceptedOffers, acceptedApplicationsIds));
                                             }
                                         });
                             }
@@ -158,7 +165,7 @@ public class fragment_my_applications extends Fragment {
                                                     rejectedOffers.put(offer,1);
                                                 }
                                                 recyclerViewRejected.setLayoutManager(new LinearLayoutManager(getContext()));
-                                                recyclerViewRejected.setAdapter(new applicationCard_ViewAdapter(getContext(), rejectedOffers));
+                                                recyclerViewRejected.setAdapter(new applicationCard_ViewAdapter(getContext(), rejectedOffers, rejectedApplicationsIds));
                                             }
                                         });
                             }
