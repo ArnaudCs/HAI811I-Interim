@@ -24,7 +24,7 @@ public class applicationCard_ViewHolder extends RecyclerView.ViewHolder {
     TextView jobSalary;
     ImageView statusIcon;
 
-    LinearLayout seeMore, modifyBtn, deleteBtn;
+    LinearLayout modifyBtn, deleteBtn;
 
     public applicationCard_ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -36,7 +36,6 @@ public class applicationCard_ViewHolder extends RecyclerView.ViewHolder {
         postDate = itemView.findViewById(R.id.postDate);
         jobLocation = itemView.findViewById(R.id.jobLocation);
         jobSalary = itemView.findViewById(R.id.jobSalary);
-        seeMore = itemView.findViewById(R.id.seeMoreApplicationBtn);
         modifyBtn = itemView.findViewById(R.id.modifyApplicationBtn);
         deleteBtn = itemView.findViewById(R.id.deleteApplicationBtn);
         statusIcon = itemView.findViewById(R.id.statusIcon);

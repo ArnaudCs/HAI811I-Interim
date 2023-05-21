@@ -292,4 +292,10 @@
     <string name="offerDetail">Offer Detail</string>
     <string name="offersDetailsMulti">Offers details</string>
     <string name="erroDateJson">Error, please verify dates</string>
+    <string name="noitifcationApplication">Your application for the job</string>
+    <string name="atNotificationLinkWord">at</string>
+    <string name="notifDeclinedApplication">has been declined. Find more offers on the search page, good luck !</string>
+    <string name="notifAcceptedApplication">has been accepted. Congratulations !</string>
+    <string name="acceptedTitle">Application Accepted</string>
+    <string name="declinedTitle">Application Declined</string>
 </resources>

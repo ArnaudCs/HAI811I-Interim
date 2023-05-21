@@ -34,7 +34,7 @@
             android:layout_width="0dp"
             android:paddingLeft="20dp"
             android:background="@drawable/messagebox"
-            android:weightSum="8"
+            android:weightSum="10"
             android:layout_marginTop="20dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
@@ -47,50 +47,50 @@
                 android:paddingBottom="10dp"
                 android:orientation="vertical"
                 android:layout_height="wrap_content"
-                android:layout_weight="6">
+                android:layout_weight="7">
 
                 <TextView
-                    android:id="@+id/notificationTitle"
+                    android:id="@+id/notifTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nouvelles Stats"
                     android:textColor="@color/black"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/notificationDateDisplay"
+                    android:id="@+id/notifDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="08/12/2023 - 18h11"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
-                    android:id="@+id/lastMsg"
+                    android:id="@+id/notifText"
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
                     android:minLines="1"
-                    android:maxLines="3"
+                    android:maxLines="4"
                     android:text="Il faudrait que tu m'envoi le dernierrelevé test de ,otiifjvnvjnvjnvvnndfsjdnfsdjfndjvnsdjvsndcsdj"
                     android:textColor="@color/black"
-                    android:textSize="17sp"></TextView>
+                    android:textSize="15sp"></TextView>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:gravity="center"
-                android:padding="20dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_weight="3">
 
                 <LinearLayout
+                    android:id="@+id/deleteNotif"
                     android:padding="8dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/redbutton">
 
                     <ImageView

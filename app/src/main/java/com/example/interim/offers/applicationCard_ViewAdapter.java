@@ -107,17 +107,6 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
             });
         } else {
         }
-
-
-        holder.seeMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent discussion = new Intent(context, MissionsActivity.class);
-                discussion.putExtra("id",holder.jobId);
-                context.startActivity(discussion);
-
-            }
-        });
     }
 
     @Override

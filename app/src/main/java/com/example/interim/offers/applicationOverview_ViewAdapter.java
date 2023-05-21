@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.example.interim.Admin.ActivityStat;
 import com.example.interim.R;
 import com.example.interim.discussion.NewMessageConversationActivity;
 import com.example.interim.models.Application;
+import com.example.interim.models.Notification;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,23 +31,32 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applicationOverview_ViewHolder> {
     Context context;
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     int status;
     String phone;
 
     String mail;
     List<Application> applications;
-    String applicantName, applicantId;
+    String applicantName, userId;
+    String jobTitle;
+    String companyName;
     Activity mActivity;
+    String applicationId;
 
 
     boolean downResume = false; //permet de choisir quel fichier télécharger
@@ -76,6 +87,8 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
         status = applications.get(position).getStatus();
         phone = applications.get(position).getApplicantPhone();
         mail = applications.get(position).getApplicantMail();
+        applicationId = applications.get(position).getOfferId();
+        userId = applications.get(position).getApplicantId();
 
         if (status == 2){
             holder.messageContainer.setVisibility(View.VISIBLE);
@@ -102,7 +115,7 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
             public void onClick(View view) {
                 downResume = true;
                 applicantName = applications.get(holder.getAdapterPosition()).getApplicantName();
-                applicantId = applications.get(holder.getAdapterPosition()).getApplicantId();
+                userId = applications.get(holder.getAdapterPosition()).getApplicantId();
                 downloadPdf();
             }
         });
@@ -112,7 +125,7 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
             public void onClick(View view) {
                 downResume = false;
                 applicantName = applications.get(holder.getAdapterPosition()).getApplicantName();
-                applicantId = applications.get(holder.getAdapterPosition()).getApplicantId();
+                userId = applications.get(holder.getAdapterPosition()).getApplicantId();
                 downloadPdf();
             }
         });
@@ -138,8 +151,32 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
         holder.acceptApplicant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String applicationId = applications.get(holder.getAdapterPosition()).getId();
-                updateOfferStatus(applicationId, 2);
+                String appId = applications.get(holder.getAdapterPosition()).getId();
+                updateOfferStatus(appId, 2);
+
+                db.collection("Offers")
+                        .document(applicationId)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        String companyName = document.getString("companyName");
+                                        String jobTitle = document.getString("jobTitle");
+
+                                        String title = context.getString(R.string.acceptedTitle);
+                                        String text = context.getString(R.string.noitifcationApplication)
+                                                + jobTitle + " " + context.getString(R.string.atNotificationLinkWord) +
+                                                companyName + " " + context.getString(R.string.notifAcceptedApplication);
+                                        Date date = new Date();
+                                        Notification notification = new Notification(text, title, date, userId);
+                                        db.collection("Notifications").add(notification);
+                                    } else {Log.d("TAG", "Le document n'existe pas");}
+                                } else {Log.e("TAG", "Erreur lors de la récupération du document : ", task.getException());}
+                            }
+                        });
             }
         });
 
@@ -147,10 +184,34 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
             @Override
             public void onClick(View view) {
                 // Get the offer ID from the applications list at the given position
-                String applicationId = applications.get(holder.getAdapterPosition()).getId();
+                String appId = applications.get(holder.getAdapterPosition()).getId();
 
                 // Update the status of the offer in the database to 2
-                updateOfferStatus(applicationId, 1);
+                updateOfferStatus(appId, 1);
+
+                db.collection("Offers")
+                        .document(applicationId)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        String companyName = document.getString("companyName");
+                                        String jobTitle = document.getString("jobTitle");
+
+                                        String title = context.getString(R.string.declinedTitle);
+                                        String text = context.getString(R.string.noitifcationApplication)
+                                                + jobTitle + " " + context.getString(R.string.atNotificationLinkWord) +
+                                                companyName + " " + context.getString(R.string.notifDeclinedApplication);
+                                        Date date = new Date();
+                                        Notification notification = new Notification(text, title, date, userId);
+                                        db.collection("Notifications").add(notification);
+                                    } else {Log.d("TAG", "Le document n'existe pas");}
+                                } else {Log.e("TAG", "Erreur lors de la récupération du document : ", task.getException());}
+                            }
+                        });
             }
         });
 
@@ -169,8 +230,8 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
     private void downloadPdf() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference resumeRef = storageRef.child("Resume/" + applicantId + "_Resume.pdf");
-        StorageReference coverRef = storageRef.child("CoverLetters/" + applicantId + "_CoverLetter.pdf");
+        StorageReference resumeRef = storageRef.child("Resume/" + userId + "_Resume.pdf");
+        StorageReference coverRef = storageRef.child("CoverLetters/" + userId + "_CoverLetter.pdf");
 
         // Déterminer le répertoire de destination sur le téléphone
         File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);

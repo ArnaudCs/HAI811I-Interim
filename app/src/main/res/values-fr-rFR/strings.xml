@@ -146,7 +146,7 @@
     <string name="postedDateSuffix">"Postée le : "</string>
     <string name="jobrrFooter">Postée avec l\'application Jobrr</string>
     <string name="seeMore">Voir Plus</string>
-    <string name="notificationCenterTitle">Centre de notification</string>
+    <string name="notificationCenterTitle">Centre de notifications</string>
     <string name="postOffersPageTitle">Ajouter une offre</string>
     <string name="offerTitle">Titre de l\'offre</string>
     <string name="salaryPrice">Salaire par mois</string>
@@ -282,4 +282,10 @@
     <string name="offerDetail">Détail de l\'offre</string>
     <string name="offersDetailsMulti">Détails des offres</string>
     <string name="erroDateJson">Erreur, vérifiez les dates</string>
+    <string name="noitifcationApplication">"Votre candidature pour le poste de "</string>
+    <string name="atNotificationLinkWord">"chez "</string>
+    <string name="notifDeclinedApplication">a été refusée, trouvez d\'autres offres sur la page de recherche. Bonne chance !</string>
+    <string name="notifAcceptedApplication">a été acceptée. Félicitations !</string>
+    <string name="acceptedTitle">Candidature acceptée</string>
+    <string name="declinedTitle">Candidature refusée</string>
 </resources>
