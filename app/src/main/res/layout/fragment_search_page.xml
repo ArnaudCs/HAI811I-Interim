@@ -150,29 +150,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="30dp"
-                        android:paddingTop="20dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:background="@drawable/navigation_bar"
-                            android:layout_height="wrap_content">
-
-                            <Spinner
-                                android:id="@+id/labelChoice"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:foregroundTint="@color/white"
-                                android:padding="15dp"
-                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Spinner>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="4"
                         android:paddingBottom="20dp"
