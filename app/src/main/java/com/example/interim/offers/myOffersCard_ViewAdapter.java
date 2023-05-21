@@ -1,7 +1,9 @@
 package com.example.interim.offers;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -128,9 +134,84 @@ public class myOffersCard_ViewAdapter extends RecyclerView.Adapter<myOffersCard_
         holder.deleteOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mettre ici la suppression d'une offres, voir pour supprimer les candidatures associées
+                String jobId = holder.jobId;
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Confirmation")
+                        .setMessage("Are you sure you want to delete this offer?")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Delete the offer from the Offers collection
+                                db.collection("Offers").document(jobId)
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                // Offer deleted successfully, now delete the associated applications
+
+                                                // Delete the applications from the Applications collection
+                                                db.collection("Applications")
+                                                        .whereEqualTo("offerId", jobId)
+                                                        .get()
+                                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                                List<DocumentSnapshot> applicationSnapshots = queryDocumentSnapshots.getDocuments();
+                                                                List<Task<Void>> deleteTasks = new ArrayList<>();
+
+                                                                // Create a batch delete operation for the applications
+                                                                WriteBatch batch = db.batch();
+                                                                for (DocumentSnapshot applicationSnapshot : applicationSnapshots) {
+                                                                    batch.delete(applicationSnapshot.getReference());
+                                                                }
+
+                                                                // Execute the batch delete operation
+                                                                batch.commit()
+                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                notifyDataSetChanged();
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                // Failed to delete applications
+                                                                                // Handle the failure scenario if needed
+                                                                            }
+                                                                        });
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                // Failed to fetch applications
+                                                                // Handle the failure scenario if needed
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Failed to delete offer
+                                                // Handle the failure scenario if needed
+                                            }
+                                        });
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // Cancelled, do nothing
+                            }
+                        })
+                        .show();
             }
         });
+
+
 
         if(mAuth.getCurrentUser() != null){
             db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
