@@ -2,15 +2,19 @@ package com.example.interim.Admin;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.interim.R;
+import com.example.interim.discussion.NewMessageConversationActivity;
 import com.example.interim.discussion.conversation_ViewHolder;
+import com.example.interim.models.Notification;
 import com.example.interim.models.Signal;
 import com.example.interim.models.SignaledOffer;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class signaledUser_ViewAdapter extends RecyclerView.Adapter<signaledUser_ViewHolder> {
@@ -28,7 +33,7 @@ public class signaledUser_ViewAdapter extends RecyclerView.Adapter<signaledUser_
     List<Signal> signaled;
 
     Activity mActivity;
-    String signaledId, signalerId;
+    String signaledId, signalerId, signaledMail;
     FirebaseFirestore db = FirebaseFirestore.getInstance();;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -55,8 +60,41 @@ public class signaledUser_ViewAdapter extends RecyclerView.Adapter<signaledUser_
         holder.signalReason.setText(signal.getReason());
         signaledId = signal.getSignaledId();
         signalerId = signal.getSignalerId();
+        signaledMail = signal.getSignalerMail();
         holder.signalerMail.setText(context.getString(R.string.signaledBy) + signal.getSignalerMail());
         holder.signaledMail.setText(context.getString(R.string.signaled) + signal.getSignaledMail());
+
+        holder.deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        holder.sendWarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String warningMessage = context.getString(R.string.signaledUser);
+                Intent newConversation = new Intent(context, NewMessageConversationActivity.class);
+                newConversation.putExtra("mail", signaledMail);
+                newConversation.putExtra("message", warningMessage);
+                context.startActivity(newConversation);
+                Date today = new Date();
+                Notification notification = new Notification(warningMessage, context.getString(R.string.signaledReceived), today, signaledId);
+                db.collection("Notifications").add(notification);
+                mActivity.finish();
+            }
+        });
+
+        holder.messageUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newConversation = new Intent(context, NewMessageConversationActivity.class);
+                newConversation.putExtra("mail", signaledMail);
+                context.startActivity(newConversation);
+                mActivity.finish();
+            }
+        });
     }
 
     @Override

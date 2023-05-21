@@ -208,7 +208,7 @@
                         android:layout_weight="3">
 
                         <LinearLayout
-                            android:id="@+id/UnblockUser"
+                            android:id="@+id/deleteAccount"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:background="@drawable/redbutton"

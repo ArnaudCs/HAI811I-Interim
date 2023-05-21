@@ -22,7 +22,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public class signaledUser_ViewHolder extends RecyclerView.ViewHolder {
 
     TextView signalerMail, signaledMail, signaledDate, signalReason;
-    LinearLayout messageUser, UnblockUser, sendWarning;
+    LinearLayout messageUser, deleteAccount, sendWarning;
 
     public signaledUser_ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -31,7 +31,7 @@ public class signaledUser_ViewHolder extends RecyclerView.ViewHolder {
         signaledMail = itemView.findViewById(R.id.signaledMail);
         signaledDate = itemView.findViewById(R.id.signaledDate);
         signalerMail = itemView.findViewById(R.id.signalerMail);
-        UnblockUser = itemView.findViewById(R.id.UnblockUser);
+        deleteAccount = itemView.findViewById(R.id.deleteAccount);
         messageUser = itemView.findViewById(R.id.messageUser);
         sendWarning = itemView.findViewById(R.id.sendWarning);
     }

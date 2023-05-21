@@ -300,4 +300,6 @@
     <string name="signalTitle">Signaler l\'utilisateur</string>
     <string name="signaledBy">"Signalé par : "</string>
     <string name="signaled">"Signalé : "</string>
+    <string name="signaledUser">Un utilisateur vous a récemment signalé. Si la raison est valide, après 10 demandes de signalement, votre compte sera supprimé.</string>
+    <string name="signaledReceived">Avertissement Signalement</string>
 </resources>
