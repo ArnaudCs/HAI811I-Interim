@@ -229,12 +229,44 @@ public class fragment_message_discussion extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String signalReason = input.getText().toString();
-
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         Date today = new Date();
+                        db.collection("Users").document(senderId).get().addOnCompleteListener(
+                                new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                String email = document.getString("email");
+                                                Signal signal = new Signal(mAuth.getCurrentUser().getUid(), senderId, mAuth.getCurrentUser().getEmail(), email, signalReason, today);
+                                                db.collection("Signaled").add(signal);
+                                            }
+                                            else {
+                                                db.collection("Pros").document(senderId).get().addOnCompleteListener(
+                                                        new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    DocumentSnapshot document = task.getResult();
+                                                                    if (document.exists()) {
+                                                                        String email = document.getString("email");
+                                                                        Signal signal = new Signal(mAuth.getCurrentUser().getUid(), senderId, mAuth.getCurrentUser().getEmail(), email, signalReason, today);
+                                                                        db.collection("Signaled").add(signal);
+                                                                    }
+                                                                    else {
+                                                                        Log.e(TAG, "Email not found ! ", task.getException());
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                );
+                                            }
+                                        }
+                                    }
+                                }
+                        );
 
-                        Signal signal = new Signal(mAuth.getCurrentUser().getUid(), senderId, mAuth.getCurrentUser().getEmail(), signalReason, today);
-                        db.collection("Signaled").add(signal);
                         Toast.makeText(getContext(), getString(R.string.signaledUserToast), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -542,8 +574,6 @@ public class fragment_message_discussion extends Fragment {
 
 
     }
-
-
 
 
 
