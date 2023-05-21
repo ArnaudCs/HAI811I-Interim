@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,10 @@ public class fragment_new_message_conversation extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(firstMessageText.getText()) && !TextUtils.isEmpty(textContactMailMessage.getText())) {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(textContactMailMessage.getText().toString()).matches()) {
+                        Toast.makeText(getActivity(), R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     String userId = mAuth.getCurrentUser().getUid();
