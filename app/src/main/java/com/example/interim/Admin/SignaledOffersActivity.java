@@ -43,32 +43,21 @@ public class SignaledOffersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signaled_offers);
-    }
-
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         backSignaledOffersBtn = findViewById(R.id.backSignaledOffersBtn);
         recycler = findViewById(R.id.signaledOffesView);
         signaledOffers = new ArrayList<>(); // Initialisation de la liste ici
 
-        recycler = view.findViewById(R.id.notificationContainer);
-
+        recycler = findViewById(R.id.signaledOffesView);
         db.collection("SignaledOffers")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Récupération des données ici
-                                Date signalDate = document.getDate("signaledoffersDate");
-                                String signalText = document.getString("signaledoffersText");
-                                String userId = document.getString("signaledoffersUserId");
-                                String offerId = document.getString("signaledoffersOfferId");
-                                String userMail = document.getString("signaledoffersUserMail");
-
-                                SignaledOffer signOffer = new SignaledOffer(signalDate, userId, offerId, signalText, userMail);
+                                SignaledOffer signOffer = document.toObject(SignaledOffer.class);
                                 signaledOffers.add(signOffer);
-                                System.out.println("Je suis dans la boucle : " + signOffer.toString());
                             }
 
                             mAdapter = new signaledOffers_ViewAdapter(SignaledOffersActivity.this, signaledOffers);
@@ -77,9 +66,11 @@ public class SignaledOffersActivity extends AppCompatActivity {
                         } else {
                             Log.e("TAG", "Error getting notifications: ", task.getException());
                         }
+
                     }
                 });
 
         recycler.setLayoutManager(new LinearLayoutManager(SignaledOffersActivity.this));
     }
+
 }

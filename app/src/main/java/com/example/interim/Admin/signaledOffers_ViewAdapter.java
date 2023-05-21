@@ -81,6 +81,7 @@ public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOff
                                                     DocumentSnapshot document = task.getResult();
                                                     if (document.exists()) {
                                                         companyName = document.getString("companyName");
+                                                        holder.companyName.setText(companyName);
                                                     } else {
                                                         Log.e("TAG", "Document does not exist");
                                                     }
@@ -91,7 +92,6 @@ public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOff
                                         });
 
                                 jobTitle = document.getString("jobTitle");
-                                holder.companyName.setText(companyName);
                                 holder.jobTitle.setText(jobTitle);
                             } else {
                                 Log.e("TAG", "Document does not exist");

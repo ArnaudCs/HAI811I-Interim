@@ -19,6 +19,14 @@ public class SignaledOffer {
         this.userMail = userMail;
     }
 
+    public String getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.offerId = offerId;
+    }
+
     public SignaledOffer() {
     }
 
@@ -60,5 +68,16 @@ public class SignaledOffer {
 
     public void setSignalText(String signalText) {
         this.signalText = signalText;
+    }
+
+    @Override
+    public String toString() {
+        return "SignaledOffer{" +
+                "signalDate=" + signalDate +
+                ", userID='" + userID + '\'' +
+                ", offerId='" + offerId + '\'' +
+                ", signalText='" + signalText + '\'' +
+                ", userMail='" + userMail + '\'' +
+                '}';
     }
 }
