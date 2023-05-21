@@ -20,6 +20,14 @@ public class Signal {
         this.signalDate = date;
     }
 
+    public Signal(String signalerId, String signaledId, String signalerMail, String reason, Date date) {
+        this.signalerId = signalerId;
+        this.signaledId = signaledId;
+        this.signalerMail = signalerMail;
+        this.reason = reason;
+        this.signalDate = date;
+    }
+
     public Signal(String signalerId, String signaledId, String reason, Date date) {
         this.signalerId = signalerId;
         this.signaledId = signaledId;

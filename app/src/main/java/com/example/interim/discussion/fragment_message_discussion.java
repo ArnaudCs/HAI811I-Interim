@@ -233,7 +233,7 @@ public class fragment_message_discussion extends Fragment {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         Date today = new Date();
 
-                        Signal signal = new Signal(mAuth.getCurrentUser().getUid(), senderId, signalReason, today);
+                        Signal signal = new Signal(mAuth.getCurrentUser().getUid(), senderId, mAuth.getCurrentUser().getEmail(), signalReason, today);
                         db.collection("Signaled").add(signal);
                         Toast.makeText(getContext(), getString(R.string.signaledUserToast), Toast.LENGTH_SHORT).show();
                     }
