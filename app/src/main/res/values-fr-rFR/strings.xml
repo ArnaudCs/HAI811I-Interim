@@ -298,4 +298,6 @@
     <string name="adminDeleteOfferTitle">Supprimer l\'offre ?</string>
     <string name="signaledUserToast">Utilisateur signalé</string>
     <string name="signalTitle">Signaler l\'utilisateur</string>
+    <string name="signaledBy">"Signalé par : "</string>
+    <string name="signaled">"Signalé : "</string>
 </resources>

@@ -55,7 +55,8 @@ public class signaledUser_ViewAdapter extends RecyclerView.Adapter<signaledUser_
         holder.signalReason.setText(signal.getReason());
         signaledId = signal.getSignaledId();
         signalerId = signal.getSignalerId();
-        holder.signalerMail.setText(signal.getSignalerMail());
+        holder.signalerMail.setText(context.getString(R.string.signaledBy) + signal.getSignalerMail());
+        holder.signaledMail.setText(context.getString(R.string.signaled) + signal.getSignaledMail());
     }
 
     @Override

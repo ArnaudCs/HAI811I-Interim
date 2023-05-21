@@ -44,27 +44,38 @@
                             android:layout_weight="4">
 
                             <TextView
-                                android:id="@+id/signalerMail"
+                                android:id="@+id/signaledMail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="John Doe"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/white"
-                                android:textSize="26sp"
+                                android:textSize="15sp"
+                                android:maxLines="1"
+                                android:minLines="1"
                                 android:maxLength="35"
                                 android:textStyle="bold"></TextView>
                         </LinearLayout>
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/signaledMail"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="john.doe@gmail.com"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:textStyle="bold"></TextView>
+                        android:gravity="left">
+
+                        <TextView
+                            android:id="@+id/signalerMail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="textStart"
+                            android:text="john.doe@gmail.com"
+                            android:maxLines="1"
+                            android:minLines="1"
+                            android:textColor="@color/white"
+                            android:textSize="15dp"
+                            android:textStyle="bold"></TextView>
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/signaledDate"
@@ -77,7 +88,7 @@
                         android:paddingTop="10dp"
                         android:text=""
                         android:textColor="@color/white"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="15dp"></TextView>
 
                 </LinearLayout>
             </LinearLayout>
@@ -91,24 +102,18 @@
                     android:id="@+id/signalReason"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="17dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="30dp"
                     android:drawableStart="@drawable/baseline_warning_amber_24"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/primary_red"
                     android:text="Signal Text"
+                    android:maxLines="6"
+                    android:minLines="1"
                     android:textColor="@color/black"
-                    android:textSize="16dp"></TextView>
+                    android:textSize="15dp"></TextView>
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="30dp"
-                    android:background="?android:attr/listDivider" />
 
             </LinearLayout>
 
@@ -154,14 +159,14 @@
 
                         <LinearLayout
                             android:id="@+id/sendWarning"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/redbutton"
                             android:gravity="center">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:background="@drawable/baseline_warning_amber_24"
                                 android:backgroundTint="@color/white"
                                 android:paddingLeft="10dp"
@@ -179,14 +184,14 @@
 
                         <LinearLayout
                             android:id="@+id/messageUser"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/redbutton"
                             android:gravity="center">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:background="@drawable/baseline_message_24"
                                 android:backgroundTint="@color/white"
                                 android:paddingLeft="10dp"
@@ -204,14 +209,14 @@
 
                         <LinearLayout
                             android:id="@+id/UnblockUser"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/redbutton"
                             android:gravity="center">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:background="@drawable/baseline_delete_24"
                                 android:backgroundTint="@color/white"
                                 android:paddingLeft="10dp"
