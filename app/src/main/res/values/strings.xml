@@ -298,4 +298,6 @@
     <string name="notifAcceptedApplication">has been accepted. Congratulations !</string>
     <string name="acceptedTitle">Application Accepted</string>
     <string name="declinedTitle">Application Declined</string>
+    <string name="yourNotAdmin">You are not an admin</string>
+    <string name="signaledOffers">Signaled Offers</string>
 </resources>

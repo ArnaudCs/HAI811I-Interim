@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button statActivityBtn, usersManagement, logoutBtn;
+    Button statActivityBtn, usersManagement, logoutBtn, signaledActivityBtn;
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
 
@@ -28,6 +28,7 @@ public class AdminDashboard extends AppCompatActivity {
         statActivityBtn = findViewById(R.id.statActivityBtn);
         usersManagement = findViewById(R.id.usersManagement);
         logoutBtn = findViewById(R.id.logoutBtn);
+        signaledActivityBtn = findViewById(R.id.signaledActivityBtn);
 
         statActivityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +43,14 @@ public class AdminDashboard extends AppCompatActivity {
             public void onClick(View view) {
                 Intent manager = new Intent(AdminDashboard.this, AdminManageUser.class);
                 startActivity(manager);
+            }
+        });
+
+        signaledActivityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signaledOffers = new Intent(AdminDashboard.this, SignaledOffersActivity.class);
+                startActivity(signaledOffers);
             }
         });
 

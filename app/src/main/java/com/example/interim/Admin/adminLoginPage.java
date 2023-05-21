@@ -87,7 +87,7 @@ public class adminLoginPage extends AppCompatActivity {
                                                 finish();
                                             } else if (!documentSnapshot.getBoolean("admin")) {
                                                 // User is a regular user
-                                                Toast.makeText(adminLoginPage.this, getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(adminLoginPage.this, getResources().getString(R.string.yourNotAdmin), Toast.LENGTH_SHORT).show();
                                             }
 
                                         } else {
@@ -108,7 +108,7 @@ public class adminLoginPage extends AppCompatActivity {
                                                                         finish();
                                                                     }
                                                                     else {
-                                                                        Toast.makeText(adminLoginPage.this, getResources().getString(R.string.notAdminToast), Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(adminLoginPage.this, getResources().getString(R.string.yourNotAdmin), Toast.LENGTH_SHORT).show();
                                                                     }
 
                                                                 }
