@@ -297,9 +297,16 @@ public class fragment_mission_description extends Fragment {
         applyBtnMission.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginIntent = new Intent(getContext(), ApplicationActivity.class);
-                loginIntent.putExtra("jobId",jobId);
-                getContext().startActivity(loginIntent);
+                if(mAuth.getCurrentUser() != null) {
+                    Intent loginIntent = new Intent(getContext(), ApplicationActivity.class);
+                    loginIntent.putExtra("jobId",jobId);
+                    getContext().startActivity(loginIntent);
+                }
+                else {
+                    Intent loginIntent = new Intent(getContext(), MainActivity.class);
+                    getContext().startActivity(loginIntent);
+                }
+
             }
         });
 

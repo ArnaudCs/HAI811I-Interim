@@ -237,53 +237,28 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:gravity="center"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2">
-
-                        <LinearLayout
-                            android:id="@+id/modifyApplicationBtn"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:gravity="center"
-                            android:background="@drawable/redbutton">
-
-                            <ImageView
-                                android:layout_margin="10dp"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                app:tint="@color/white"
-                                android:backgroundTint="@color/white"
-                                android:foregroundTint="@color/white"
-                                android:src="@drawable/baseline_edit_24">
-
-                            </ImageView>
-                        </LinearLayout>
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:gravity="center"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2">
+                        android:layout_weight="2"
+                        android:gravity="right">
 
                         <LinearLayout
                             android:id="@+id/deleteApplicationBtn"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:gravity="center"
-                            android:background="@drawable/redbutton">
+                            android:background="@drawable/redbutton"
+                            android:gravity="center">
 
                             <ImageView
-                                android:layout_margin="10dp"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                app:tint="@color/white"
+                                android:layout_margin="10dp"
                                 android:backgroundTint="@color/white"
                                 android:foregroundTint="@color/white"
-                                android:src="@drawable/baseline_delete_24">
+                                android:src="@drawable/baseline_delete_24"
+                                app:tint="@color/white">
 
                             </ImageView>
                         </LinearLayout>

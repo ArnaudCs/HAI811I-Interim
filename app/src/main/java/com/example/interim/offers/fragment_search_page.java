@@ -83,7 +83,6 @@ public class fragment_search_page extends Fragment {
         Button searchBtn = view.findViewById(R.id.searchBtn);
         Button clearFiltersButton = view.findViewById(R.id.clearFilterBtn);
         Spinner categoryChoice = (Spinner) view.findViewById(R.id.categoryChoice);
-        Spinner labelChoice = (Spinner) view.findViewById(R.id.labelChoice);
         cityChoice = view.findViewById(R.id.textCityInput);
         TextInputEditText startPrice = view.findViewById(R.id.textStartPrice);
         TextInputEditText endPrice = view.findViewById(R.id.textEndPrice);
@@ -124,12 +123,11 @@ public class fragment_search_page extends Fragment {
             }
         }
 
+        RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryChoice.setAdapter(adapter);
-
-        labelChoice.setAdapter(adapter);
-        RecyclerView recyclerView = view.findViewById(R.id.cardContainer);
 
         today = Calendar.getInstance();
         calendarStart = Calendar.getInstance();
@@ -227,7 +225,6 @@ public class fragment_search_page extends Fragment {
             @Override
             public void onClick(View view) {
                 categoryChoice.setSelection(0);
-                labelChoice.setSelection(0);
                 cityChoice.setText("");
                 startPrice.setText("");
                 endPrice.setText("");
@@ -366,7 +363,6 @@ public class fragment_search_page extends Fragment {
         if (bundle != null && bundle.getSerializable("offerForFilters") != null) {
             Offer offerForFilter = (Offer) bundle.getSerializable("offerForFilters");
             categoryChoice.setSelection(categoryMapInstance.findCategoryIdByCategoryString(offerForFilter.getCategory()));
-            labelChoice.setSelection(0);
             cityChoice.setText(offerForFilter.getLocation());
             startPrice.setText(String.valueOf(offerForFilter.getSalaryMin()));
 //            endPrice.setText(String.valueOf(offerForFilter.getSalaryMax()));

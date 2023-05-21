@@ -63,6 +63,13 @@ public class fragment_message_menu extends Fragment {
             this.getActivity().finish();
             return null;
         }
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
         return inflater.inflate(R.layout.fragment_message_menu, container, false);
     }
 
@@ -216,17 +223,27 @@ public class fragment_message_menu extends Fragment {
 
     @Override
     public void onPause() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null) {
+            super.onPause();
+            refreshing = false;
+            System.out.println("Arrêt du refresh des conversations");
+            mHandler.removeCallbacks(mRunnable);
+        }
         super.onPause();
-        refreshing = false;
-        System.out.println("Arrêt du refresh des conversations");
-        mHandler.removeCallbacks(mRunnable);
     }
 
     @Override
     public void onResume() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            super.onResume();
+            refreshing = true;
+            System.out.println("Reprise du refresh des conversations");
+            mHandler.post(mRunnable);
+        }
         super.onResume();
-        refreshing = true;
-        System.out.println("Reprise du refresh des conversations");
-        mHandler.post(mRunnable);
     }
 }
