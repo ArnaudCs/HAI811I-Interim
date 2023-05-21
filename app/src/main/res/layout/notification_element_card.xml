@@ -73,10 +73,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
                     android:minLines="1"
-                    android:maxLines="4"
+                    android:maxLines="5"
                     android:text="Il faudrait que tu m'envoi le dernierrelevé test de ,otiifjvnvjnvjnvvnndfsjdnfsdjfndjvnsdjvsndcsdj"
                     android:textColor="@color/black"
-                    android:textSize="15sp"></TextView>
+                    android:textSize="13sp"></TextView>
 
             </LinearLayout>
 
