@@ -55,6 +55,13 @@ public class fragment_favorite_offers extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() == null){
+            Intent mainActivity = new Intent(getActivity(), MainActivity.class);
+            startActivity(mainActivity);
+            this.getActivity().finish();
+            return;
+        }
         Button favoriteFilterBtn = view.findViewById(R.id.filterBtnFavorites);
         Button closeFilterFavorite = view.findViewById(R.id.closeFilterFavorites);
         Button filtersSearchBtn = view.findViewById(R.id.validateAndSearchFavoriteBtn);
@@ -101,7 +108,7 @@ public class fragment_favorite_offers extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         String userId = mAuth.getCurrentUser().getUid();
         if(mAuth.getCurrentUser() != null) {
 

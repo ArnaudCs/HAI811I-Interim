@@ -1,5 +1,6 @@
 package com.example.interim;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.interim.authentication.MainActivity;
 import com.example.interim.discussion.conversation_ViewAdapter;
 import com.example.interim.models.Conversation;
 import com.example.interim.models.Notification;
@@ -44,6 +46,7 @@ public class fragment_notification_center extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
     }
@@ -57,6 +60,12 @@ public class fragment_notification_center extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(mAuth.getCurrentUser() == null){
+            Intent mainActivity = new Intent(getActivity(), MainActivity.class);
+            startActivity(mainActivity);
+            this.getActivity().finish();
+            return;
+        }
 
         String userUid = mAuth.getCurrentUser().getUid();
 
