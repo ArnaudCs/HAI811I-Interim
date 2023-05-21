@@ -300,4 +300,10 @@
     <string name="declinedTitle">Application Declined</string>
     <string name="yourNotAdmin">You are not an admin</string>
     <string name="signaledOffers">Signaled Offers</string>
+    <string name="offerSignaledToast">Signaled offer</string>
+    <string name="signalDialogTitle">You need to inter the reason</string>
+    <string name="warningOfferTitle">"Your offer named "</string>
+    <string name="warningOfferText">" was recently reported by a user, please verify your information. After 10 reports, your offer will be deleted."</string>
+    <string name="deleteOfferAdmin">Do you really want to delete this offer ?</string>
+    <string name="adminDeleteOfferTitle">Delete offer ?</string>
 </resources>

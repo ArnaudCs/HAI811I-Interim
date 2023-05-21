@@ -45,7 +45,7 @@ public class SignaledOffersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signaled_offers);
         backSignaledOffersBtn = findViewById(R.id.backSignaledOffersBtn);
         recycler = findViewById(R.id.signaledOffesView);
-        signaledOffers = new ArrayList<>(); // Initialisation de la liste ici
+        signaledOffers = new ArrayList<>();
 
         recycler = findViewById(R.id.signaledOffesView);
         db.collection("SignaledOffers")
@@ -60,7 +60,7 @@ public class SignaledOffersActivity extends AppCompatActivity {
                                 signaledOffers.add(signOffer);
                             }
 
-                            mAdapter = new signaledOffers_ViewAdapter(SignaledOffersActivity.this, signaledOffers);
+                            mAdapter = new signaledOffers_ViewAdapter(SignaledOffersActivity.this, signaledOffers, SignaledOffersActivity.this);
                             recycler.setAdapter(mAdapter);
                             mAdapter.notifyDataSetChanged();
                         } else {

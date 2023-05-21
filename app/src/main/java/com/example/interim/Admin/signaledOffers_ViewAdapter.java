@@ -2,15 +2,21 @@ package com.example.interim.Admin;
 
 import static java.security.AccessController.getContext;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.interim.R;
+import com.example.interim.discussion.NewMessageConversationActivity;
 import com.example.interim.models.Notification;
 import com.example.interim.models.SignaledOffer;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,15 +34,19 @@ import java.util.List;
 public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOffers_ViewHolder> {
 
     Context context;
+
+    Activity mActivity;
+
     List<SignaledOffer> signaledOffers;
     String offerId, companyName, jobTitle, companyMail, userMail, companyId;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    public signaledOffers_ViewAdapter(Context context, List<SignaledOffer> signaledOffers) {
+    public signaledOffers_ViewAdapter(Context context, List<SignaledOffer> signaledOffers, Activity activity) {
         this.context = context;
         this.signaledOffers = signaledOffers;
+        this.mActivity = activity;
     }
 
     public void signaledOffers_ViewHolder(Context context) {
@@ -82,6 +92,7 @@ public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOff
                                                     if (document.exists()) {
                                                         companyName = document.getString("companyName");
                                                         holder.companyName.setText(companyName);
+                                                        companyMail = document.getString("email");
                                                     } else {
                                                         Log.e("TAG", "Document does not exist");
                                                     }
@@ -101,6 +112,54 @@ public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOff
                         }
                     }
                 });
+
+        holder.sendWarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String warningMessage = context.getString(R.string.warningOfferTitle) + jobTitle + context.getString(R.string.warningOfferText);
+                Intent newConversation = new Intent(context, NewMessageConversationActivity.class);
+                newConversation.putExtra("mail", companyMail);
+                newConversation.putExtra("message", warningMessage);
+                context.startActivity(newConversation);
+                mActivity.finish();
+            }
+        });
+
+        holder.messageUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newConversation = new Intent(context, NewMessageConversationActivity.class);
+                newConversation.putExtra("mail", companyMail);
+                context.startActivity(newConversation);
+                mActivity.finish();
+            }
+        });
+
+        holder.deleteOffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle(context.getString(R.string.adminDeleteOfferTitle));
+                builder.setMessage(context.getString(R.string.deleteOfferAdmin));
+
+                builder.setPositiveButton(context.getString(R.string.validateButton), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton(context.getString(R.string.cancelBtn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
     }
 

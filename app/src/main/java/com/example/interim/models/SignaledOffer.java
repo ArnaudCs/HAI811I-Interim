@@ -30,10 +30,10 @@ public class SignaledOffer {
     public SignaledOffer() {
     }
 
-    public SignaledOffer(Date signalDate, String userID, String applicationId, String signalText, String userMail) {
+    public SignaledOffer(Date signalDate, String userID, String offerId, String signalText, String userMail) {
         this.signalDate = signalDate;
         this.userID = userID;
-        this.offerId = applicationId;
+        this.offerId = offerId;
         this.signalText = signalText;
         this.userMail = userMail;
     }

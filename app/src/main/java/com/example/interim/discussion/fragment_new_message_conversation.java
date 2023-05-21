@@ -48,7 +48,7 @@ public class fragment_new_message_conversation extends Fragment {
 
     EditText firstMessageText;
 
-    String mail;
+    String mail, message;
 
     public fragment_new_message_conversation() {
         // Required empty public constructor
@@ -72,6 +72,10 @@ public class fragment_new_message_conversation extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             mail = args.getString("mail");
+            message = args.getString("message");
+            if (message != null) {
+                firstMessageText.setText(message);
+            }
             if(mail != null) {
                 textContactMailMessage.setText(mail);
             }

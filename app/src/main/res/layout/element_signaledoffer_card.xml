@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         app:cardCornerRadius="30dp">
 
         <LinearLayout
@@ -89,7 +89,7 @@
                         android:paddingTop="10dp"
                         android:text=""
                         android:textColor="@color/white"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="15dp"></TextView>
 
                 </LinearLayout>
             </LinearLayout>
@@ -103,7 +103,7 @@
                     android:id="@+id/signalReason"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="17dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="30dp"
                     android:drawableStart="@drawable/baseline_warning_amber_24"
@@ -112,15 +112,6 @@
                     android:text="Signal Text"
                     android:textColor="@color/black"
                     android:textSize="16dp"></TextView>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="30dp"
-                    android:background="?android:attr/listDivider" />
 
             </LinearLayout>
 
@@ -134,7 +125,7 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:weightSum="8">
+                android:weightSum="6">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -154,7 +145,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
+                    android:layout_weight="3"
                     android:weightSum="9"
                     android:gravity="right">
 
@@ -166,14 +157,14 @@
 
                         <LinearLayout
                             android:id="@+id/sendWarning"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/redbutton"
                             android:gravity="center">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:background="@drawable/baseline_warning_amber_24"
                                 android:backgroundTint="@color/white"
                                 android:paddingLeft="10dp"
@@ -191,14 +182,14 @@
 
                         <LinearLayout
                             android:id="@+id/messageUser"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/redbutton"
                             android:gravity="center">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="35dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:background="@drawable/baseline_message_24"
                                 android:backgroundTint="@color/white"
                                 android:paddingLeft="10dp"
@@ -216,14 +207,14 @@
 
                         <LinearLayout
                             android:id="@+id/deleteOffer"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/redbutton"
                             android:gravity="center">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:background="@drawable/baseline_delete_24"
                                 android:backgroundTint="@color/white"
                                 android:paddingLeft="10dp"

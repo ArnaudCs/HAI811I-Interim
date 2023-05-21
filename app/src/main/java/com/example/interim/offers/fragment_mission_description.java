@@ -3,7 +3,9 @@ package com.example.interim.offers;
 import static com.google.firebase.messaging.Constants.MessageNotificationKeys.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -19,12 +21,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import android.os.StrictMode;
+import android.text.InputFilter;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +38,7 @@ import com.example.interim.AppActivity;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;
+import com.example.interim.models.SignaledOffer;
 import com.example.interim.profile.CompanyProfileViewer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -82,7 +87,7 @@ public class fragment_mission_description extends Fragment {
 
     String firstName;
 
-    Button applyBtnMission, contactCompanyBtn, seeProfile;
+    Button applyBtnMission, contactCompanyBtn, seeProfile, signalPost;
     StorageReference mStorageRef;
     String name;
     String jobId;
@@ -135,6 +140,7 @@ public class fragment_mission_description extends Fragment {
         contactCompanyBtnContainer = view.findViewById(R.id.contactCompanyBtnContainer);
         contactCompanyBtn = view.findViewById(R.id.contactCompanyBtn);
         seeProfile = view.findViewById(R.id.seeProfile);
+        signalPost = view.findViewById(R.id.signalPost);
 
 
         final Offer[][] offer = {{new Offer()}};
@@ -280,6 +286,45 @@ public class fragment_mission_description extends Fragment {
                 getActivity().finish();
                 startActivity(intent);
 
+            }
+        });
+
+        signalPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Raison du signalement");
+                final EditText input = new EditText(getActivity());
+                int paddingPixels = (int) (20 * getResources().getDisplayMetrics().density);
+                input.setPadding(paddingPixels, paddingPixels, paddingPixels, paddingPixels);
+                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(250) });
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String signalReason = input.getText().toString();
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        Date today = new Date();
+
+                        SignaledOffer signaled = new SignaledOffer(today, mAuth.getCurrentUser().getUid(),
+                                jobId, signalReason, mAuth.getCurrentUser().getEmail());
+                        db.collection("SignaledOffers").add(signaled);
+                        Toast.makeText(getContext(), getString(R.string.offerSignaledToast), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                int dialogPadding = (int) (20 * getResources().getDisplayMetrics().density);
+                dialog.getWindow().getDecorView().setPadding(dialogPadding, dialogPadding, dialogPadding, dialogPadding);
             }
         });
 

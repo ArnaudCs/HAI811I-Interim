@@ -290,4 +290,10 @@
     <string name="declinedTitle">Candidature refusée</string>
     <string name="yourNotAdmin">Vous n\'êtes pas un admin</string>
     <string name="signaledOffers">Offres signalées</string>
+    <string name="offerSignaledToast">Offre signalée</string>
+    <string name="signalDialogTitle">Entrez la raison du signalement</string>
+    <string name="warningOfferTitle">"Votre offre nommée "</string>
+    <string name="warningOfferText">" à récemment été signalée par un utilisateur, veuillez vérifier vos informations. Au bout de 10 signalements, votre offre sera supprimée."</string>
+    <string name="deleteOfferAdmin">"Voulez vous vraiment supprimer cette offre ? "</string>
+    <string name="adminDeleteOfferTitle">Supprimer l\'offre ?</string>
 </resources>
