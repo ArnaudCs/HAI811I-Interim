@@ -529,9 +529,31 @@ public class fragment_post_offers extends Fragment {
                     builder.setPositiveButton(getString(R.string.continueBtn), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            for(Offer offers : offerList){
-                                db.collection("Offers").add(offers);
+                            for (Offer offer : offerList) {
+                                // Get the offer location
+                                String location = offer.getLocation();
+
+                                // Perform geocoding to obtain coordinates
+                                GeocodingUtils.getCoordinates(location, new GeocodingUtils.GeocodingListener() {
+                                    @Override
+                                    public void onCoordinatesObtained(double latitude, double longitude) {
+                                        // Update the offer with the obtained coordinates
+                                        offer.setPosX(String.valueOf(latitude));
+                                        offer.setPosY(String.valueOf(longitude));
+
+                                        // Post the offer to the database
+                                        db.collection("Offers")
+                                                .add(offer);
+                                    }
+
+                                    @Override
+                                    public void onFailure() {
+                                        db.collection("Offers")
+                                                .add(offer);
+                                    }
+                                });
                             }
+
 
                             if (offerList.size() == offerList.size()) {
                                 Intent celebrationActivity = new Intent(getActivity(), CelebrationActivity.class);
@@ -618,7 +640,27 @@ public class fragment_post_offers extends Fragment {
                     builder.setPositiveButton(getString(R.string.continueBtn), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            db.collection("Offers").add(offerObj);
+                            String location = offerObj.getLocation();
+
+                            // Perform geocoding to obtain coordinates
+                            GeocodingUtils.getCoordinates(location, new GeocodingUtils.GeocodingListener() {
+                                @Override
+                                public void onCoordinatesObtained(double latitude, double longitude) {
+                                    // Update the offer with the obtained coordinates
+                                    offerObj.setPosX(String.valueOf(latitude));
+                                    offerObj.setPosY(String.valueOf(longitude));
+
+                                    // Post the offer to the database
+                                    db.collection("Offers")
+                                            .add(offerObj);
+                                }
+                                @Override
+                                public void onFailure() {
+                                    db.collection("Offers")
+                                            .add(offerObj);
+                                }
+                            });
+
                             Intent mainActivity = new Intent(getActivity(), CelebrationActivity.class);
                             startActivity(mainActivity);
                             getActivity().finish();
