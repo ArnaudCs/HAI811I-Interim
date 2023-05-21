@@ -288,4 +288,8 @@
     <string name="offerAdded">Offer successfully added</string>
     <string name="offerNotAdded">Couldn\'t add offer</string>
     <string name="incorrectCity">Please enter a valid city</string>
+    <string name="erroCatregoryJson">Error wrong category, use provided categories</string>
+    <string name="offerDetail">Offer Detail</string>
+    <string name="offersDetailsMulti">Offers details</string>
+    <string name="erroDateJson">Error, please verify dates</string>
 </resources>

@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,6 +67,7 @@ public class fragment_post_offers extends Fragment {
     private Calendar today;
     private Calendar calendarStart;
     private Calendar calendarEnd;
+    CategoryRepository categoryMapInstance = new CategoryRepository();
 
     public fragment_post_offers() {
         // Required empty public constructor
@@ -462,6 +465,11 @@ public class fragment_post_offers extends Fragment {
                         String endD = offer.optString("endDate");
                         String url = offer.optString("url");
 
+                        if(!categoryMapInstance.isValidCategory(category)){
+                            showDialogError(getString(R.string.erroCatregoryJson));
+                            return;
+                        }
+
                         // Vérifier si les éléments requis sont présents
                         if (category == "" || companyName == "" || description == "" || details == "" ||
                                 jobTitle == "" || keywords == "" || label == "" || location == "" ||
@@ -489,14 +497,59 @@ public class fragment_post_offers extends Fragment {
                         } catch (ParseException e) {
                         }
 
+                        if(startDate == null || endDate == null || today == null || expDate == null){
+                            showDialogError(getString(R.string.erroDateJson));
+                            return;
+                        }
+
                         Offer offerObj = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
                         offerObj.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
                         offerList.add(offerObj);
                     }
 
-                    for(Offer offers : offerList){
-                        db.collection("Offers").add(offers);
+
+                    StringBuilder offerDetails = new StringBuilder();
+
+                    for (Offer offer : offerList) {
+                        offerDetails.append("Category: ").append(offer.getCategory()).append("\n");
+                        offerDetails.append("Company Name: ").append(offer.getCompanyName()).append("\n");
+                        offerDetails.append("Description: ").append(offer.getDescription()).append("\n");
+
+                        offerDetails.append("\n");
                     }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle(getString(R.string.offersDetailsMulti));
+                    ScrollView scrollView = new ScrollView(getContext());
+                    TextView textView = new TextView(getContext());
+                    textView.setText(offerDetails.toString());
+                    scrollView.addView(textView);
+                    builder.setView(scrollView);
+
+                    builder.setPositiveButton(getString(R.string.continueBtn), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            for(Offer offers : offerList){
+                                db.collection("Offers").add(offers);
+                            }
+
+                            if (offerList.size() == offerList.size()) {
+                                Intent celebrationActivity = new Intent(getActivity(), CelebrationActivity.class);
+                                startActivity(celebrationActivity);
+                                getActivity().finish();
+                            }
+                        }
+                    });
+
+                    builder.setNegativeButton(getString(R.string.cancelBtn), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
 
                 } else if (json instanceof JSONObject) { // si une seule offre dans le json
                     JSONObject offerObject = (JSONObject) json;
@@ -513,6 +566,11 @@ public class fragment_post_offers extends Fragment {
                     String startD = offerObject.optString("startDate");
                     String endD = offerObject.optString("endDate");
                     String url = offerObject.optString("url");
+
+                    if(!categoryMapInstance.isValidCategory(category)){
+                        showDialogError(getString(R.string.erroCatregoryJson));
+                        return;
+                    }
 
                     if (category == "" || companyName == "" || description == "" || details == "" ||
                             jobTitle == "" || keywords == "" || label == "" || location == "" ||
@@ -541,9 +599,35 @@ public class fragment_post_offers extends Fragment {
 
                     }
 
+                    if(startDate == null || endDate == null || today == null || expDate == null){
+                        showDialogError(getString(R.string.erroDateJson));
+                        return;
+                    }
+
                     Offer offerObj = new Offer(jobTitle, companyName, location, startDate, endDate, today, expDate, keywords, category, label, salaryMin, salaryMax, description, details, url);
                     offerObj.setRecruiter(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    db.collection("Offers").add(offerObj);
+
+                    StringBuilder offerDetails = new StringBuilder();
+                    offerDetails.append("Catégorie : ").append(category).append("\n");
+                    offerDetails.append("Nom de l'entreprise : ").append(companyName).append("\n");
+                    offerDetails.append("Description : ").append(description).append("\n");
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle(getString(R.string.offerDetail));
+                    builder.setMessage(offerDetails.toString());
+                    builder.setPositiveButton(getString(R.string.continueBtn), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.collection("Offers").add(offerObj);
+                            Intent mainActivity = new Intent(getActivity(), CelebrationActivity.class);
+                            startActivity(mainActivity);
+                            getActivity().finish();
+                        }
+                    });
+                    builder.setNegativeButton(getString(R.string.cancelBtn), null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
 
                 } else {
                     showDialogError("Invalid JSON Format");

@@ -278,4 +278,8 @@
     <string name="offerAdded">Offre ajoutée avec succès</string>
     <string name="offerNotAdded">L\'offre n\'a pas pu être ajoutée</string>
     <string name="incorrectCity">Veuilez entrer une ville valide</string>
+    <string name="erroCatregoryJson">Erreur de catégorie, utilisez les catégories reconnues</string>
+    <string name="offerDetail">Détail de l\'offre</string>
+    <string name="offersDetailsMulti">Détails des offres</string>
+    <string name="erroDateJson">Erreur, vérifiez les dates</string>
 </resources>
