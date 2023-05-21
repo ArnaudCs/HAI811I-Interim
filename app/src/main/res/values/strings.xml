@@ -306,4 +306,6 @@
     <string name="warningOfferText">" was recently reported by a user, please verify your information. After 10 reports, your offer will be deleted."</string>
     <string name="deleteOfferAdmin">Do you really want to delete this offer ?</string>
     <string name="adminDeleteOfferTitle">Delete offer ?</string>
+    <string name="signaledUserToast">Signaled user</string>
+    <string name="signalTitle">Signal User</string>
 </resources>

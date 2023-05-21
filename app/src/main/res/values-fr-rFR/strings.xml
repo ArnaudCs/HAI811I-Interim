@@ -296,4 +296,6 @@
     <string name="warningOfferText">" à récemment été signalée par un utilisateur, veuillez vérifier vos informations. Au bout de 10 signalements, votre offre sera supprimée."</string>
     <string name="deleteOfferAdmin">"Voulez vous vraiment supprimer cette offre ? "</string>
     <string name="adminDeleteOfferTitle">Supprimer l\'offre ?</string>
+    <string name="signaledUserToast">Utilisateur signalé</string>
+    <string name="signalTitle">Signaler l\'utilisateur</string>
 </resources>

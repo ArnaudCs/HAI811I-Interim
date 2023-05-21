@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.text.InputFilter;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +23,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.DataHolder;
 import com.example.interim.R;
 import com.example.interim.models.Message;
+import com.example.interim.models.Signal;
+import com.example.interim.models.SignaledOffer;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -62,10 +66,12 @@ public class fragment_message_discussion extends Fragment {
 
     Message lastMessageUnread;
     private int numMessages;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     RecyclerView recyclerView;
+    String senderId;
 
-    Button deleteBtn;
+    Button deleteBtn, signalUserBtn, blockUserBtn;
     private Runnable mRunnable;
     public fragment_message_discussion() {
         // Required empty public constructor
@@ -101,6 +107,9 @@ public class fragment_message_discussion extends Fragment {
         LottieAnimationView sendMsg = view.findViewById(R.id.sendMessage);
         EditText messageText = view.findViewById(R.id.messageText);
         deleteBtn = view.findViewById(R.id.deleteBtn);
+        signalUserBtn = view.findViewById(R.id.signalUserBtn);
+        blockUserBtn = view.findViewById(R.id.blockUserBtn);
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -162,7 +171,7 @@ public class fragment_message_discussion extends Fragment {
                                                 for (Object result : task.getResult()) {
                                                     QuerySnapshot querySnapshot = (QuerySnapshot) result;
                                                     for (QueryDocumentSnapshot document : querySnapshot) {
-                                                        String senderId = document.getString("sender");
+                                                        senderId = document.getString("sender");
                                                         String text = document.getString("text");
                                                         Date date = document.getDate("date");
                                                         Message message = new Message(senderId, date, text);
@@ -206,6 +215,50 @@ public class fragment_message_discussion extends Fragment {
             }
         });
 
+        signalUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(getString(R.string.signalTitle));
+                final EditText input = new EditText(getActivity());
+                int paddingPixels = (int) (20 * getResources().getDisplayMetrics().density);
+                input.setPadding(paddingPixels, paddingPixels, paddingPixels, paddingPixels);
+                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(250) });
+                builder.setView(input);
+                builder.setPositiveButton(getString(R.string.nextBtn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String signalReason = input.getText().toString();
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        Date today = new Date();
+
+                        Signal signal = new Signal(mAuth.getCurrentUser().getUid(), senderId, signalReason, today);
+                        db.collection("Signaled").add(signal);
+                        Toast.makeText(getContext(), getString(R.string.signaledUserToast), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.cancelBtn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                int dialogPadding = (int) (20 * getResources().getDisplayMetrics().density);
+                dialog.getWindow().getDecorView().setPadding(dialogPadding, dialogPadding, dialogPadding, dialogPadding);
+            }
+        });
+
+        blockUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
