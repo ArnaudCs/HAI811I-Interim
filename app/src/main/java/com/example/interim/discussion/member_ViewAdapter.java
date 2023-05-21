@@ -43,6 +43,9 @@ public class member_ViewAdapter extends RecyclerView.Adapter<member_ViewHolder> 
                 holder.deleteAnimation.setVisibility(View.VISIBLE);
                 holder.deleteAnimation.setSpeed(2);
                 holder.deleteAnimation.playAnimation();
+
+                final int originalPosition = position; // Store the original position
+
                 holder.deleteAnimation.addAnimatorListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animator) {
@@ -52,9 +55,9 @@ public class member_ViewAdapter extends RecyclerView.Adapter<member_ViewHolder> 
                     @Override
                     public void onAnimationEnd(Animator animator) {
                         // Animation end event
-                        membersList.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, membersList.size());
+                        membersList.remove(originalPosition); // Use the original position here
+                        notifyItemRemoved(originalPosition);
+                        notifyItemRangeChanged(originalPosition, membersList.size());
                         holder.deleteMember.setVisibility(View.VISIBLE);
                         holder.deleteAnimation.setVisibility(View.GONE);
                     }
@@ -72,6 +75,7 @@ public class member_ViewAdapter extends RecyclerView.Adapter<member_ViewHolder> 
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
