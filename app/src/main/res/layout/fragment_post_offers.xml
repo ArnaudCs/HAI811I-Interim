@@ -147,7 +147,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/offerTitle"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:maxLength="35"
                             android:maxLines="1"
                             android:minLines="1" />
@@ -181,7 +181,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/companyName"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:maxLength="30"
                             android:maxLines="1"
                             android:minLines="1" />
@@ -249,7 +249,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/placeInput"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:maxLength="30"
                             android:maxLines="1"
                             android:minLines="1" />
@@ -317,7 +317,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/offerTags"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:maxLength="50"
                             android:maxLines="1"
                             android:minLines="1" />
@@ -351,7 +351,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
                             android:hint="@string/labelTitle"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:maxLength="30"
                             android:maxLines="1"
                             android:minLines="1" />
@@ -487,6 +487,7 @@
                         android:layout_height="wrap_content"
                         android:maxLength="250"
                         android:maxHeight="300dp"
+                        android:inputType="textCapSentences"
                         android:hint="@string/postOffersDescription">
 
                     </EditText>
@@ -508,6 +509,7 @@
                         android:layout_height="wrap_content"
                         android:maxLength="250"
                         android:maxHeight="300dp"
+                        android:inputType="textCapSentences"
                         android:hint="@string/postOfferDetails">
 
                     </EditText>

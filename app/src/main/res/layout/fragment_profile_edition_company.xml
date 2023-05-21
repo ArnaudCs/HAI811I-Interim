@@ -203,7 +203,7 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -263,7 +263,7 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textPersonName|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -294,7 +294,7 @@
                     android:minLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textPersonName|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -325,7 +325,7 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textPersonName|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -504,7 +504,7 @@
                     android:maxLength="40"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:inputType="textPostalAddress" />
+                    android:inputType="textPostalAddress|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -601,7 +601,7 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -682,7 +682,7 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:inputType="textPersonName|text" />
+                    android:inputType="textPersonName|textCapSentences" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -713,7 +713,7 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:inputType="textPersonName|text" />
+                    android:inputType="textPersonName|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button

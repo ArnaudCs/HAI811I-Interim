@@ -52,11 +52,12 @@
                             android:layout_weight="5"
                             android:background="@null"
                             android:hint="@string/exampleSearch"
+                            android:inputType="textCapSentences"
                             android:maxLength="30"
                             android:singleLine="true"
                             android:textColorHint="#838383"
                             android:textSize="18sp"
-                            tools:ignore="TouchTargetSizeCheck"></EditText>
+                            tools:ignore="TouchTargetSizeCheck" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -281,7 +282,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/navigation_bar"
                                     android:hint="@string/CityofSearch"
-                                    android:inputType="text"
+                                    android:inputType="textCapSentences"
                                     android:minLines="1"
                                     android:maxLines="1"
                                     android:maxLength="30" />
