@@ -18,8 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,7 +98,8 @@ public class fragment_setting_page extends Fragment {
         uploadResume = view.findViewById(R.id.uploadResume);
         downloadCoverSettings = view.findViewById(R.id.downloadCoverSettings);
         downloadResumeSettings = view.findViewById(R.id.downloadResumeSettings);
-
+        spontaneousSwitch = view.findViewById(R.id.spontaneousSwitch);
+        Switch switchSpontaneous = view.findViewById(R.id.switch1);
         storageRef = FirebaseStorage.getInstance().getReference();
         databaseRefResume = FirebaseDatabase.getInstance().getReference("uploadResume");
         databaseRefCover = FirebaseDatabase.getInstance().getReference("uploadCover");
@@ -177,10 +180,12 @@ public class fragment_setting_page extends Fragment {
             proRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+                    if(document.exists() && document.contains("spontaneous")) {
+                        switchSpontaneous.setChecked(document.getBoolean("spontaneous"));
+                    }
+                    if (document.exists() && document.contains("admin")) {
                         admin = document.getBoolean("admin");
                         System.out.println("le user est admin ?" + admin );
-                    } else {
                     }
                 }
             });
@@ -289,6 +294,31 @@ public class fragment_setting_page extends Fragment {
                 downloadPdf();
             }
         });
+
+        switchSpontaneous.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Get the user ID of the logged-in user
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                // Update the boolean value in the Pros document
+                DocumentReference userRef = db.collection("Pros").document(userId);
+                userRef.update("spontaneous", isChecked)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // Boolean value updated successfully
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Failed to update the boolean value
+                            }
+                        });
+            }
+        });
+
     }
 
     private void downloadPdf() {

@@ -175,7 +175,7 @@
     <string name="dateDisplay">"Dates "</string>
     <string name="categoryOfferDisplay">Categorie</string>
     <string name="settingsPageTitle">Paramètres</string>
-    <string name="settingsFirstSection">"Notifications et autres : "</string>
+    <string name="settingsFirstSection">Vos paramètres</string>
     <string name="disableAllNotifications">Désactiver les notifications</string>
     <string name="contactAssistance">Contacter l\'assistance</string>
     <string name="myFavoritesBtnCompany">Mes Favoris</string>
