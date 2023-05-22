@@ -22,7 +22,7 @@ public class applicationOverview_ViewHolder extends RecyclerView.ViewHolder {
     TextView applicantAdress;
     LinearLayout acceptApplicant, rejectApplicant, phoneApplicant, smsApplicant, messageApplicant;
     LinearLayout acceptContainer, rejectContainer, messageContainer, smsContainer, phoneContainer;
-    Button seeMore, downloadCoverLetterBtn, downloadResumeBtn;
+    Button seeMore, downloadCoverLetterBtn, downloadResumeBtn, signalApplication;
 
 
 
@@ -46,6 +46,7 @@ public class applicationOverview_ViewHolder extends RecyclerView.ViewHolder {
         messageContainer = itemView.findViewById(R.id.messageContainer);
         smsContainer = itemView.findViewById(R.id.smsContainer);
         phoneContainer = itemView.findViewById(R.id.phoneContainer);
+        signalApplication = itemView.findViewById(R.id.signalApplication);
 
     }
 }

@@ -1,15 +1,21 @@
 package com.example.interim.offers;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -23,6 +29,7 @@ import com.example.interim.discussion.NewMessageConversationActivity;
 import com.example.interim.models.Application;
 import com.example.interim.models.Notification;
 import com.example.interim.models.Offer;
+import com.example.interim.models.Signal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -222,6 +229,77 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
                 newConversation.putExtra("mail", mail);
                 context.startActivity(newConversation);
                 mActivity.finish();
+            }
+        });
+
+        holder.signalApplication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Reason of your signalment");
+                final EditText input = new EditText(view.getContext());
+                int paddingPixels = (int) (20 * view.getContext().getResources().getDisplayMetrics().density);
+                input.setPadding(paddingPixels, paddingPixels, paddingPixels, paddingPixels);
+                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(250) });
+                builder.setView(input);
+                builder.setPositiveButton(view.getContext().getString(R.string.nextBtn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String signalReason = input.getText().toString();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        Date today = new Date();
+                        db.collection("Users").document(holder.applicantId).get().addOnCompleteListener(
+                                new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                String email = document.getString("email");
+                                                Signal signal = new Signal(mAuth.getCurrentUser().getUid(), holder.applicantId, mAuth.getCurrentUser().getEmail(), email, signalReason, today);
+                                                db.collection("Signaled").add(signal);
+                                            }
+                                            else {
+                                                db.collection("Pros").document(holder.applicantId).get().addOnCompleteListener(
+                                                        new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    DocumentSnapshot document = task.getResult();
+                                                                    if (document.exists()) {
+                                                                        String email = document.getString("email");
+                                                                        Signal signal = new Signal(mAuth.getCurrentUser().getUid(), holder.applicantId, mAuth.getCurrentUser().getEmail(), email, signalReason, today);
+                                                                        db.collection("Signaled").add(signal);
+                                                                    }
+                                                                    else {
+                                                                        Log.e(TAG, "Email not found ! ", task.getException());
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                );
+                                            }
+                                        }
+                                        db.collection("Applications").document(applicationId).delete();
+                                    }
+                                }
+                        );
+
+                        Toast.makeText(view.getContext(), "User signaled!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                int dialogPadding = (int) (20 * view.getContext().getResources().getDisplayMetrics().density);
+                dialog.getWindow().getDecorView().setPadding(dialogPadding, dialogPadding, dialogPadding, dialogPadding);
             }
         });
 
