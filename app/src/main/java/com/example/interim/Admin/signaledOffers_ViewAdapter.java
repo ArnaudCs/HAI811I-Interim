@@ -1,5 +1,6 @@
 package com.example.interim.Admin;
 
+import static com.google.firebase.messaging.Constants.MessageNotificationKeys.TAG;
 import static java.security.AccessController.getContext;
 
 import android.app.Activity;
@@ -20,6 +21,7 @@ import com.example.interim.discussion.NewMessageConversationActivity;
 import com.example.interim.models.Notification;
 import com.example.interim.models.SignaledOffer;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -147,6 +149,38 @@ public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOff
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         dialogInterface.dismiss();
+                        db.collection("Offers")
+                                .document(offerId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        db.collection("Applications")
+                                                .whereEqualTo("offerId", offerId)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                                        List<DocumentSnapshot> applicationDocs = querySnapshot.getDocuments();
+                                                        for (DocumentSnapshot applicationDoc : applicationDocs) {
+                                                            applicationDoc.getReference().delete();
+                                                        }
+                                                    }
+                                                });
+                                        db.collection("SignaledOffers")
+                                                .whereEqualTo("offerId", offerId)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                                        List<DocumentSnapshot> applicationDocs = querySnapshot.getDocuments();
+                                                        for (DocumentSnapshot applicationDoc : applicationDocs) {
+                                                            applicationDoc.getReference().delete();
+                                                        }
+                                                    }
+                                                });
+                                        Log.e(TAG,"Offer deleted");
+
+                                    }
+                                });
                     }
                 });
 

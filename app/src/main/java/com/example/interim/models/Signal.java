@@ -3,6 +3,7 @@ package com.example.interim.models;
 import java.util.Date;
 
 public class Signal {
+    private String signalId;
     private String signalerId;
     private String signaledId;
     private String signalerMail;
@@ -36,6 +37,14 @@ public class Signal {
     }
 
     public Signal() {
+    }
+
+    public String getSignalId() {
+        return signalId;
+    }
+
+    public void setSignalId(String signalId) {
+        this.signalId = signalId;
     }
 
     public String getReason() {

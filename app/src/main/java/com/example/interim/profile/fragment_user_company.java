@@ -210,6 +210,7 @@ public class fragment_user_company extends Fragment {
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             if (documentSnapshot.exists()) {
                                                 subPlanText = documentSnapshot.getString("plan");
+                                                subPlan.setText(subPlanText);
                                             }
                                         }
                                     });

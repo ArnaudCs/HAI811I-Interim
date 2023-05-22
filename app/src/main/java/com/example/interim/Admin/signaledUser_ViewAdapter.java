@@ -1,7 +1,11 @@
 package com.example.interim.Admin;
 
+import static com.google.firebase.messaging.Constants.TAG;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,6 +71,27 @@ public class signaledUser_ViewAdapter extends RecyclerView.Adapter<signaledUser_
         holder.deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Confirmation");
+                builder.setMessage("Are you sure you want to delete this alert?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Delete the blocked item
+                        db.collection("Signaled")
+                                .document(signal.getSignalId())
+                                .delete()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Log.e(TAG, "Signalment deleted");
+                                    }
+                                });
+                    }
+                });
+                builder.setNegativeButton("No", null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
             }
         });
