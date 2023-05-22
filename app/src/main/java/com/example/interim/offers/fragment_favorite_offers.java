@@ -76,7 +76,10 @@ public class fragment_favorite_offers extends Fragment {
         Button favoriteFilterBtn = view.findViewById(R.id.filterBtnFavorites);
         Button closeFilterFavorite = view.findViewById(R.id.closeFilterFavorites);
         Button filtersSearchBtn = view.findViewById(R.id.validateAndSearchFavoriteBtn);
+        Button backBtnFavoritePro = view.findViewById(R.id.backBtnFavoritePro);
         LinearLayout filterFavoriteContainer = view.findViewById(R.id.filterFavoriteContainer);
+        LinearLayout topDeckContainer = view.findViewById(R.id.topDeckContainer);
+        LinearLayout backBtnProContainer = view.findViewById(R.id.backBtnProContainer);
         favoriteContainer = view.findViewById(R.id.favoriteContainer);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.navbar);
         TextInputEditText cityChoice = view.findViewById(R.id.textCityInput);
@@ -92,6 +95,13 @@ public class fragment_favorite_offers extends Fragment {
         String deviceLanguage = Locale.getDefault().getLanguage();
         CategoryRepository categoryMapInstance = new CategoryRepository();
         Map<Integer, List<String>> categories = categoryMapInstance.getCategoryMap();
+
+        backBtnFavoritePro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
 
         if (categories != null) {
             List<String> frenchCategories = new ArrayList<>();
@@ -118,6 +128,11 @@ public class fragment_favorite_offers extends Fragment {
 
 
         db = FirebaseFirestore.getInstance();
+
+        if(isPro){
+            topDeckContainer.setWeightSum(7);
+            backBtnProContainer.setVisibility(View.VISIBLE);
+        }
 
 
         String userId = mAuth.getCurrentUser().getUid();

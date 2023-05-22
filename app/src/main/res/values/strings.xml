@@ -320,4 +320,5 @@
     <string name="incorrectMail">Incorrect e-mail address</string>
     <string name="incorrectWebsite">Incorrect website</string>
     <string name="incorrectPhone">Incorrect phone number</string>
+    <string name="SpontaneousSetting">Accept Spontaneous</string>
 </resources>

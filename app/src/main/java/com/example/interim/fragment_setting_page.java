@@ -68,7 +68,7 @@ public class fragment_setting_page extends Fragment {
     Button uploadResume, uploadCoverLetter, adminFormBtn, downloadCoverSettings, downloadResumeSettings;
 
     TextView coverLetterDisplay, resumeDisplay;
-    LinearLayout resumeDisplayBox, coverDisplayBox;
+    LinearLayout resumeDisplayBox, coverDisplayBox, spontaneousSwitch;
 
     public fragment_setting_page() {
         // Required empty public constructor
@@ -167,6 +167,7 @@ public class fragment_setting_page extends Fragment {
                         System.out.println("le user est admin ?" + admin );
                     } else {
                         pro = true;
+                        spontaneousSwitch.setVisibility(View.VISIBLE);
                         resumeDisplayBox.setVisibility(View.GONE);
                         coverDisplayBox.setVisibility(View.GONE);
                     }

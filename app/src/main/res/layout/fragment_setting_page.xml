@@ -48,10 +48,59 @@
                             android:text="@string/settingsFirstSection"
                             android:textAlignment="center"
                             android:textColor="@color/primary_red"
-                            android:textSize="22sp"
+                            android:textSize="19sp"
                             android:textStyle="bold">
 
                         </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/spontaneousSwitch"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:weightSum="10"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:background="@drawable/greybutton">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="8"
+                            android:paddingLeft="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:text="@string/SpontaneousSetting"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold">
+
+                            </TextView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:gravity="left|center"
+                            android:paddingRight="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2">
+
+                            <Switch
+                                android:id="@+id/switch1"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 

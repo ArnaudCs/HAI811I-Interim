@@ -315,4 +315,5 @@
     <string name="incorrectMail">Adresse e-mail incorrecte</string>
     <string name="incorrectWebsite">Site web incorrect</string>
     <string name="incorrectPhone">Numéro de téléphone incorrect</string>
+    <string name="SpontaneousSetting">Candidatures spontanées</string>
 </resources>

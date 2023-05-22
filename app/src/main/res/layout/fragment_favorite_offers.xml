@@ -23,12 +23,36 @@
             app:layout_constraintTop_toTopOf="@+id/layoutMain">
 
             <LinearLayout
+                android:id="@+id/topDeckContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
+                android:gravity="center"
                 android:weightSum="6">
 
                 <LinearLayout
+                    android:id="@+id/backBtnProContainer"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="left|center"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/backBtnFavoritePro"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/baseline_arrow_circle_left_24"
+                        android:backgroundTint="#FFFFFF"
+                        android:drawableTint="#FBFAFA"
+                        android:foregroundTint="#FFFFFF"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/navigationBarContainer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
