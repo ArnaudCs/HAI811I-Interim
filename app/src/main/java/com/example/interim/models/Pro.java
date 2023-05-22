@@ -8,7 +8,7 @@ public class Pro {
     private String phoneNumber;
     private String companyAddress;
     private String website;
-
+    private Boolean spontaneous = false;
     private String service;
     private String subService;
     private String contact2Name;
@@ -54,6 +54,14 @@ public class Pro {
 
     public Pro() {
         // Required empty constructor
+    }
+
+    public Boolean getSpontaneous() {
+        return spontaneous;
+    }
+
+    public void setSpontaneous(Boolean spontaneous) {
+        this.spontaneous = spontaneous;
     }
 
     public String getName() {
