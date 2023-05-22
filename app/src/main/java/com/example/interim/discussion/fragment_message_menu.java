@@ -75,7 +75,6 @@ public class fragment_message_menu extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        deleteMessages = view.findViewById(R.id.deleteMessages);
         cancelDelete = view.findViewById(R.id.cancelDelete);
         groupMaking = view.findViewById(R.id.groupMaking);
         db = FirebaseFirestore.getInstance();

@@ -21,8 +21,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class blockedUser_ViewHolder extends RecyclerView.ViewHolder {
 
-    TextView blockerMail, blockedMail, blockDate, blockReason;
-    LinearLayout messageUser, UnblockUser;
+    TextView blockerMail, blockedMail, blockDate;
+    LinearLayout UnblockUser;
 
     public blockedUser_ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,9 +30,7 @@ public class blockedUser_ViewHolder extends RecyclerView.ViewHolder {
         blockerMail = itemView.findViewById(R.id.blockerMail);
         blockedMail = itemView.findViewById(R.id.blockedMail);
         blockDate = itemView.findViewById(R.id.blockDate);
-        blockReason = itemView.findViewById(R.id.blockReason);
         UnblockUser = itemView.findViewById(R.id.UnblockUser);
-        messageUser = itemView.findViewById(R.id.messageUser);
 
     }
 }

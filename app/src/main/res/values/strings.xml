@@ -312,4 +312,9 @@
     <string name="signaled">Signaled :</string>
     <string name="signaledUser">A user has recently reported you. If the reason is valid, after 10 report requests, your account will be deleted.</string>
     <string name="signaledReceived">Signal Warning</string>
+    <string name="blocked">Blocked User :</string>
+    <string name="blockedBy">Blocked By :</string>
+    <string name="blockUserDialog">Block User ?</string>
+    <string name="blockDialogText">Do you really want to block this user, you will not be able to contact him again , and the conversation will be closed?</string>
+    <string name="blockedUserToast">User blocked</string>
 </resources>

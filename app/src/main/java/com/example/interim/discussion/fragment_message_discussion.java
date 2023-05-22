@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.interim.DataHolder;
 import com.example.interim.R;
+import com.example.interim.models.Blocked;
 import com.example.interim.models.Message;
 import com.example.interim.models.Signal;
 import com.example.interim.models.SignaledOffer;
@@ -288,9 +289,130 @@ public class fragment_message_discussion extends Fragment {
         blockUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle(getString(R.string.blockUserDialog));
+                builder.setMessage(getString(R.string.blockDialogText));
+                builder.setPositiveButton(getString(R.string.nextBtn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Date today = new Date();
 
+                        db.collection("Users").document(senderId).get().addOnCompleteListener(
+                                new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                String email = document.getString("email");
+                                                Blocked blocked = new Blocked(senderId, mAuth.getCurrentUser().getUid(), today, email, mAuth.getCurrentUser().getEmail());
+                                                Toast.makeText(getContext(), getString(R.string.blockedUserToast), Toast.LENGTH_SHORT).show();
+                                                db.collection("Blocked").add(blocked);
+                                                db.collection("Conversations").document(conversationId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+
+                                                                List<DocumentReference> messagesRef = (List<DocumentReference>) document.get("messages");
+                                                                if (messagesRef != null) {
+                                                                    for (DocumentReference message : messagesRef) {
+                                                                        message.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                Log.d(TAG, "Message deleted successfully!");
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                }
+
+                                                                db.collection("Conversations").document(conversationId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        Log.d(TAG, "Conversation deleted !");
+                                                                        getActivity().finish();
+                                                                        stopRefreshingConversation();
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                            else {
+                                                db.collection("Pros").document(senderId).get().addOnCompleteListener(
+                                                        new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    DocumentSnapshot document = task.getResult();
+                                                                    if (document.exists()) {
+                                                                        String email = document.getString("email");
+                                                                        Blocked blocked = new Blocked(senderId, mAuth.getCurrentUser().getUid(), today, email, mAuth.getCurrentUser().getEmail());
+                                                                        Toast.makeText(getContext(), getString(R.string.blockedUserToast), Toast.LENGTH_SHORT).show();
+                                                                        db.collection("Blocked").add(blocked);
+                                                                        db.collection("Conversations").document(conversationId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                if (task.isSuccessful()) {
+                                                                                    DocumentSnapshot document = task.getResult();
+                                                                                    if (document.exists()) {
+
+                                                                                        List<DocumentReference> messagesRef = (List<DocumentReference>) document.get("messages");
+                                                                                        if (messagesRef != null) {
+                                                                                            for (DocumentReference message : messagesRef) {
+                                                                                                message.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                    @Override
+                                                                                                    public void onSuccess(Void aVoid) {
+                                                                                                        Log.d(TAG, "Message deleted successfully!");
+                                                                                                    }
+                                                                                                });
+                                                                                            }
+                                                                                        }
+
+                                                                                        db.collection("Conversations").document(conversationId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                            @Override
+                                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                                Log.d(TAG, "Conversation deleted !");
+                                                                                                getActivity().finish();
+                                                                                                stopRefreshingConversation();
+                                                                                            }
+                                                                                        });
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        });
+
+                                                                    }
+                                                                    else {
+                                                                        Log.e(TAG, "Email not found ! ", task.getException());
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                );
+                                            }
+                                        }
+                                    }
+                                }
+                        );
+
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.cancelBtn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
+
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override

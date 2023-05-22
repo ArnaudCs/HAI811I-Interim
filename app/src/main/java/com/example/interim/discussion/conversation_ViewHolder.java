@@ -38,7 +38,6 @@ public class conversation_ViewHolder extends RecyclerView.ViewHolder {
         unRead = itemView.findViewById(R.id.unRead);
         openConv = itemView.findViewById(R.id.openConv);
         profilePic = itemView.findViewById(R.id.profilePic);
-        deleteConvBtn = itemView.findViewById(R.id.deleteMessages);
         makeGroupBtn = itemView.findViewById(R.id.groupMaking);
         cancelDelete = itemView.findViewById(R.id.cancelDelete);
         validateDelete = itemView.findViewById(R.id.validateDelete);

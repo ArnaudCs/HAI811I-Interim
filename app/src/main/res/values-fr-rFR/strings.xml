@@ -302,4 +302,9 @@
     <string name="signaled">"Signalé : "</string>
     <string name="signaledUser">Un utilisateur vous a récemment signalé. Si la raison est valide, après 10 demandes de signalement, votre compte sera supprimé.</string>
     <string name="signaledReceived">Avertissement Signalement</string>
+    <string name="blocked">"Bloqué : "</string>
+    <string name="blockedBy">"Bloqué par : "</string>
+    <string name="blockUserDialog">Bloquer l\'utilisateur ?</string>
+    <string name="blockDialogText">Voulez vous vraiment bloquer cet utilisateur ? Vous ne pourrez plus le contacter par la suite et la conversation sera supprimée.</string>
+    <string name="blockedUserToast">Utilisateur bloqué</string>
 </resources>

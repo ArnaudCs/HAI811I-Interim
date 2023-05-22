@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         app:cardCornerRadius="30dp">
 
         <LinearLayout
@@ -66,154 +66,71 @@
                         android:textSize="20dp"
                         android:textStyle="bold"></TextView>
 
-                    <TextView
-                        android:id="@+id/blockDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/baseline_date_range_24"
-                        android:drawablePadding="5dp"
-                        android:drawableTint="@color/white"
-                        android:gravity="left|center"
-                        android:paddingTop="10dp"
-                        android:text=""
-                        android:textColor="@color/white"
-                        android:textSize="20dp"></TextView>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/blockReason"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="30dp"
-                    android:drawableStart="@drawable/baseline_warning_amber_24"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/primary_red"
-                    android:text="Signal Text"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"></TextView>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="30dp"
-                    android:background="?android:attr/listDivider" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="8">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3">
-
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3">
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:weightSum="9"
-                    android:gravity="right">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
+                        android:weightSum="10"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:gravity="center">
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="7">
+
+                            <TextView
+                                android:id="@+id/blockDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/baseline_date_range_24"
+                                android:drawablePadding="5dp"
+                                android:drawableTint="@color/white"
+                                android:gravity="left|center"
+                                android:paddingTop="10dp"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="15dp"></TextView>
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
-
                         <LinearLayout
-                            android:id="@+id/messageUser"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/redbutton"
-                            android:gravity="center">
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/baseline_message_24"
-                                android:backgroundTint="@color/white"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"></ImageView>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:gravity="right"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3">
+
+                                <LinearLayout
+                                    android:id="@+id/UnblockUser"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/navigation_bar"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:background="@drawable/baseline_lock_open_24"
+                                        android:backgroundTint="@color/primary_red"
+                                        android:paddingLeft="10dp"
+                                        android:paddingRight="10dp"></ImageView>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3">
-
-                        <LinearLayout
-                            android:id="@+id/UnblockUser"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/redbutton"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:background="@drawable/baseline_lock_open_24"
-                                android:backgroundTint="@color/white"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"></ImageView>
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
 
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

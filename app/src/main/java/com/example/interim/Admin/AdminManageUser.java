@@ -53,6 +53,7 @@ public class AdminManageUser extends AppCompatActivity {
         backUserManagerBtn = findViewById(R.id.backUserManagerBtn);
 
         signaled = new ArrayList<>();
+        blockedlist = new ArrayList<>();
 
         db.collection("Signaled")
                 .get()
@@ -71,7 +72,30 @@ public class AdminManageUser extends AppCompatActivity {
                             signaledUsersView.setLayoutManager(new LinearLayoutManager(AdminManageUser.this)); // Add this line
                             mAdapter.notifyDataSetChanged();
                         } else {
-                            Log.e("TAG", "Error getting notifications: ", task.getException());
+                            Log.e("TAG", "Error getting signaled users: ", task.getException());
+                        }
+
+                    }
+                });
+
+        db.collection("Blocked")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Blocked block = document.toObject(Blocked.class);
+                                blockedlist.add(block);
+                            }
+
+                            bAdapter = new blockedUser_ViewAdapter(AdminManageUser.this, blockedlist, AdminManageUser.this);
+                            blockedUsersView.setAdapter(bAdapter);
+                            blockedUsersView.setLayoutManager(new LinearLayoutManager(AdminManageUser.this)); // Add this line
+                            bAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.e("TAG", "Error getting blocked users: ", task.getException());
                         }
 
                     }
