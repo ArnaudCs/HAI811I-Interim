@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.offers;
 
 import static androidx.core.content.res.ResourcesCompat.getDrawable;
 
@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.interim.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

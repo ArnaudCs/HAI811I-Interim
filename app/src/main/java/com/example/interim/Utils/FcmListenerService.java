@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.Utils;
 
 import android.content.pm.PackageManager;
 
@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.interim.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

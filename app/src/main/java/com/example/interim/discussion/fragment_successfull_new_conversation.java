@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.discussion;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.interim.AppActivity;
+import com.example.interim.R;
 
 public class fragment_successfull_new_conversation extends Fragment {
 

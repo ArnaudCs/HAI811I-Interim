@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.Utils;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.discussion.conversation_ViewAdapter;
 import com.example.interim.models.Conversation;

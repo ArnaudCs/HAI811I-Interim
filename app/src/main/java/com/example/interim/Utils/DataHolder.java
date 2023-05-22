@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.Utils;
 
 public class DataHolder {
     private static final DataHolder instance = new DataHolder();

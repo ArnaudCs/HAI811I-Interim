@@ -20,8 +20,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.interim.R;
-import com.example.interim.authentication.fragment_third_slide;
-import com.example.interim.fragment_successfull_new_conversation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;

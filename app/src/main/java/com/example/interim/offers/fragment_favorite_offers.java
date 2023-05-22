@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.interim.CategoryRepository;
+import com.example.interim.Utils.CategoryRepository;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
 import com.example.interim.models.Offer;

@@ -1,4 +1,4 @@
-package com.example.interim;
+package com.example.interim.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
