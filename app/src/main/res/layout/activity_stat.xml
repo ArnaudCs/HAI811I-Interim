@@ -74,6 +74,20 @@
                         android:layout_height="500dp"
                         android:orientation="vertical">
 
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/barChartSignal">
+
+                        </com.github.mikephil.charting.charts.BarChart>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp"
+                        android:orientation="vertical">
+
                         <com.github.mikephil.charting.charts.RadarChart
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

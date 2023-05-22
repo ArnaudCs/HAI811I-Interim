@@ -147,6 +147,7 @@ public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOff
                 builder.setPositiveButton(context.getString(R.string.validateButton), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
                         dialogInterface.dismiss();
                         db.collection("Offers")
                                 .document(offerId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
