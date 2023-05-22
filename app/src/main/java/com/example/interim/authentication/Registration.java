@@ -147,6 +147,7 @@ public class Registration extends AppCompatActivity {
                         }
 
                         Pro newPro = pro;
+                        pro.setSpontaneous(false);
                         // Add the Pro object to Firestore database
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

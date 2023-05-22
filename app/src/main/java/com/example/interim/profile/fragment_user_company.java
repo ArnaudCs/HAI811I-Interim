@@ -150,6 +150,7 @@ public class fragment_user_company extends Fragment {
         statsBtn.setVisibility(View.GONE);
         applySpontaneous = view.findViewById(R.id.applySpontaneous);
         applySpontaneousContainer = view.findViewById(R.id.applySpontaneousContainer);
+        applySpontaneousContainer.setVisibility(View.GONE);
         Bundle args = getArguments();
         if (args != null) {
             userId = args.getString("recruiterId");
@@ -159,7 +160,7 @@ public class fragment_user_company extends Fragment {
             externalProfileView = true;
             favoriteBtnCompany.setVisibility(View.GONE);
             backProfileContainer.setVisibility(View.VISIBLE);
-            applySpontaneousContainer.setVisibility(View.VISIBLE);
+
             editProfileCompany.setVisibility(View.GONE);
             editprofileBtn.setVisibility(View.GONE);
             deconnectionBtn.setVisibility(View.GONE);
@@ -190,6 +191,9 @@ public class fragment_user_company extends Fragment {
                         contactNameText = documentSnapshot.getString("name");
                         phoneNumText = documentSnapshot.getString("phoneNumber");
                         emailText = documentSnapshot.getString("email");
+                        if(documentSnapshot.contains("spontaneous") && documentSnapshot.getBoolean("spontaneous")) {
+                            applySpontaneousContainer.setVisibility(View.VISIBLE);
+                        }
                         TextView companyName = view.findViewById(R.id.companyName);
                         TextView subPlan = view.findViewById(R.id.subPlan);
                         TextView sirenNum = view.findViewById(R.id.sirenNum);
