@@ -45,6 +45,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ import java.util.Map;
 public class ActivityStat extends AppCompatActivity {
 
     Button backStatBtn;
-    BarChart barChart, barChartSignal;
+    BarChart barChart, barChartSignal, barChartBlocked, barChartSignalOffers;
 
     PieChart pieChart;
     RadarChart radarChart;
@@ -77,6 +78,8 @@ public class ActivityStat extends AppCompatActivity {
 
         barChart = findViewById(R.id.barChart);
         barChartSignal = findViewById(R.id.barChartSignal);
+        barChartBlocked = findViewById(R.id.barChartBlocked);
+        barChartSignalOffers = findViewById(R.id.barChartSignalOffers);
         pieChart = findViewById(R.id.pieChart);
         radarChart = findViewById(R.id.radarChart);
         setupPieChart();
@@ -147,6 +150,134 @@ public class ActivityStat extends AppCompatActivity {
                     }
                 });
 
+        db.collection("Blocked")
+                .whereGreaterThanOrEqualTo("date", getOneWeekAgo()) // Méthode pour obtenir la date il y a une semaine
+                .limit(50)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        HashMap<String, Integer> blockedByDay = new HashMap<>();
+                        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+
+                        // Initialiser les compteurs pour chaque jour de la semaine
+                        Calendar calendar = Calendar.getInstance();
+                        List<String> daysOfWeek = getDaysOfWeek();
+                        for (String day : daysOfWeek) {
+                            blockedByDay.put(day, 0);
+                        }
+
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                            Date blockDate = documentSnapshot.getDate("date");
+                            if (blockDate != null) {
+                                calendar.setTime(blockDate);
+                                String day = dayFormat.format(calendar.getTime());
+                                if (blockedByDay.containsKey(day)) {
+                                    int count = blockedByDay.get(day);
+                                    blockedByDay.put(day, count + 1);
+                                }
+                            }
+                        }
+
+                        ArrayList<BarEntry> barEntries = new ArrayList<>();
+                        int index = 0;
+                        for (String day : daysOfWeek) {
+                            int blockedCount = blockedByDay.get(day);
+                            barEntries.add(new BarEntry(index, blockedCount));
+                            index++;
+                        }
+
+                        BarDataSet dataSet = new BarDataSet(barEntries, "Blocked by Day");
+                        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                        dataSet.setValueTextColor(Color.BLACK);
+                        dataSet.setValueTextSize(12f);
+
+                        BarData barData = new BarData(dataSet);
+                        barData.setBarWidth(0.9f);
+
+                        barChartBlocked.setData(barData);
+                        barChartBlocked.invalidate();
+
+                        // Configurer les jours de la semaine en abscisse
+                        XAxis xAxis = barChartBlocked.getXAxis();
+                        xAxis.setValueFormatter(new IndexAxisValueFormatter(daysOfWeek));
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        xAxis.setGranularity(1f);
+                        xAxis.setLabelCount(daysOfWeek.size());
+                        xAxis.setDrawGridLines(false);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+
+        db.collection("SignaledOffers")
+                .whereGreaterThanOrEqualTo("signalDate", getOneWeekAgo())
+                .limit(50)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        HashMap<String, Integer> signaledOffersByDay = new HashMap<>();
+                        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+
+                        // Initialiser les compteurs pour chaque jour de la semaine
+                        Calendar calendar = Calendar.getInstance();
+                        List<String> daysOfWeek = getDaysOfWeek();
+                        for (String day : daysOfWeek) {
+                            signaledOffersByDay.put(day, 0);
+                        }
+
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                            Date signaledDate = documentSnapshot.getDate("signalDate");
+                            if (signaledDate != null) {
+                                calendar.setTime(signaledDate);
+                                String day = dayFormat.format(calendar.getTime());
+                                if (signaledOffersByDay.containsKey(day)) {
+                                    int count = signaledOffersByDay.get(day);
+                                    signaledOffersByDay.put(day, count + 1);
+                                }
+                            }
+                        }
+
+                        ArrayList<BarEntry> barEntries = new ArrayList<>();
+                        int index = 0;
+                        for (String day : daysOfWeek) {
+                            int signaledCount = signaledOffersByDay.get(day);
+                            barEntries.add(new BarEntry(index, signaledCount));
+                            index++;
+                        }
+
+                        BarDataSet dataSet = new BarDataSet(barEntries, "Signaled Offers by Day");
+                        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                        dataSet.setValueTextColor(Color.BLACK);
+                        dataSet.setValueTextSize(12f);
+
+                        BarData barData = new BarData(dataSet);
+                        barData.setBarWidth(0.9f);
+
+                        barChartSignalOffers.setData(barData);
+                        barChartSignalOffers.invalidate();
+
+                        // Configurer les jours de la semaine en abscisse
+                        XAxis xAxis = barChartSignalOffers.getXAxis();
+                        xAxis.setValueFormatter(new IndexAxisValueFormatter(daysOfWeek));
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        xAxis.setGranularity(1f);
+                        xAxis.setLabelCount(daysOfWeek.size());
+                        xAxis.setDrawGridLines(false);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Gérer l'échec de la récupération des données
+                    }
+                });
+
+
         db.collection("Offers")
                 .orderBy("postDate", Query.Direction.DESCENDING)
                 .whereGreaterThanOrEqualTo("postDate", getOneWeekAgo()) // Méthode pour obtenir la date il y a une semaine
@@ -212,6 +343,65 @@ public class ActivityStat extends AppCompatActivity {
                     }
                 });
 
+        db.collection("Messages")
+                .whereGreaterThanOrEqualTo("date", getOneWeekAgo()) // Méthode pour obtenir la date il y a une semaine
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        HashMap<String, Integer> messagesByDay = new HashMap<>();
+                        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+
+                        // Initialiser les compteurs pour chaque jour de la semaine
+                        List<String> daysOfWeek = getDaysOfWeek();
+                        for (String day : daysOfWeek) {
+                            messagesByDay.put(day, 0);
+                        }
+
+                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                            Date messageDate = documentSnapshot.getDate("date");
+                            if (messageDate != null) {
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.setTime(messageDate);
+                                String day = dayFormat.format(calendar.getTime());
+                                if (messagesByDay.containsKey(day)) {
+                                    int count = messagesByDay.get(day);
+                                    messagesByDay.put(day, count + 1);
+                                }
+                            }
+                        }
+
+                        ArrayList<RadarEntry> radarEntries = new ArrayList<>();
+                        ArrayList<String> labels = new ArrayList<>();
+
+                        for (String day : daysOfWeek) {
+                            int messageCount = messagesByDay.get(day);
+                            radarEntries.add(new RadarEntry(messageCount));
+                            labels.add(day);
+                        }
+
+                        RadarDataSet dataSet = new RadarDataSet(radarEntries, "Messages by Day");
+                        dataSet.setColor(Color.BLUE);
+                        dataSet.setDrawFilled(true);
+
+                        RadarData radarData = new RadarData(dataSet);
+                        radarData.setLabels(labels);
+
+                        radarChart.setData(radarData);
+                        radarChart.invalidate();
+
+                        // Configurer les labels avec le nom des jours de la semaine
+                        XAxis xAxis = radarChart.getXAxis();
+                        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Gérer l'échec de la récupération des données
+                    }
+                });
+
         db.collection("Offers")
                 .orderBy("postDate", Query.Direction.DESCENDING)
                 .limit(50)
@@ -262,38 +452,6 @@ public class ActivityStat extends AppCompatActivity {
                         // Gérer l'échec de la récupération des données
                     }
                 });
-
-//        ArrayList<BarEntry> visitors = new ArrayList<>();
-//        visitors.add(new BarEntry(2014, 420));
-//
-//        BarDataSet barDataSet = new BarDataSet(visitors, "Visiteurs");
-//        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-//        barDataSet.setValueTextColor(Color.BLACK);
-//        barDataSet.setValueTextSize(16f);
-//
-//        BarData barData = new BarData(barDataSet);
-//
-//        barChart.setFitBars(true);
-//        barChart.setData(barData);
-//        barChart.getDescription().setText("Histogramme de test");
-//        barChart.animateY(2000);
-
-//        ArrayList<RadarEntry> visitorsRadar = new ArrayList<>();
-//        visitorsRadar.add(new RadarEntry(420));
-//
-//        RadarDataSet radarDataSet = new RadarDataSet(visitorsRadar, "Visiteurs");
-//        radarDataSet.setColor(Color.RED);
-//        radarDataSet.setLineWidth(2f);
-//        radarDataSet.setValueTextColor(Color.RED);
-//        radarDataSet.setValueTextSize(14f);
-//
-//        RadarData radarData = new RadarData();
-//        radarData.addDataSet(radarDataSet);
-//        String[] labels = {"2015", "2016", "2017", "2018", "2019"};
-//        XAxis xAxis = radarChart.getXAxis();
-//        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-//
-//        radarChart.setData(radarData);
     }
 
     private void setupPieChart() {

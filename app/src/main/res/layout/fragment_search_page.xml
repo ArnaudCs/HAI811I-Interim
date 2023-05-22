@@ -456,8 +456,6 @@
                 </LinearLayout>
 
             </ScrollView>
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -466,6 +464,7 @@
             android:layout_height="0dp"
             android:background="@drawable/bottom2"
             android:orientation="vertical"
+            android:paddingTop="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/topDeckSearch">
 

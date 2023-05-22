@@ -47,6 +47,13 @@ public class SignaledOffersActivity extends AppCompatActivity {
         recycler = findViewById(R.id.signaledOffesView);
         signaledOffers = new ArrayList<>();
 
+        backSignaledOffersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         recycler = findViewById(R.id.signaledOffesView);
         db.collection("SignaledOffers")
                 .get()

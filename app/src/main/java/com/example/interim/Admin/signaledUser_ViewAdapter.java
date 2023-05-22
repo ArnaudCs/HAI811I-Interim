@@ -38,7 +38,7 @@ public class signaledUser_ViewAdapter extends RecyclerView.Adapter<signaledUser_
 
     Activity mActivity;
     String signaledId, signalerId, signaledMail;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     blockedUser_ViewHolder holder;

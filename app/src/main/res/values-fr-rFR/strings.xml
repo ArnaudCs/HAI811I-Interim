@@ -316,4 +316,10 @@
     <string name="incorrectWebsite">Site web incorrect</string>
     <string name="incorrectPhone">Numéro de téléphone incorrect</string>
     <string name="SpontaneousSetting">Candidatures spontanées</string>
+    <string name="signaledUsersPerDay">Utilisateurs signalés par jour (1 semaine)</string>
+    <string name="blockedUserPerDay">Utilisateurs blockés par jour (1 semaine)</string>
+    <string name="signaledOffersPerDay">Offres signalées par jour (1 semaine)</string>
+    <string name="offersPostedByPros">Nombre d\'offres postées par Company</string>
+    <string name="offersPerDay">Nombre d\'offres postée par jour</string>
+    <string name="messagePerDay">Message envoyés par jour (1 semaine)</string>
 </resources>

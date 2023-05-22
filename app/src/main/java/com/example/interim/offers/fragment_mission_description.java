@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.example.interim.AppActivity;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
+import com.example.interim.discussion.NewMessageConversationActivity;
 import com.example.interim.models.Offer;
 import com.example.interim.models.SignaledOffer;
 import com.example.interim.profile.CompanyProfileViewer;
@@ -49,6 +50,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.Constants;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -81,6 +83,9 @@ public class fragment_mission_description extends Fragment {
     String offerLocation;
     String offerCategory;
     String recruiterId;
+    String recruiterMail;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();;
 
     String companyNameText;
     String contactNameText;
@@ -286,6 +291,35 @@ public class fragment_mission_description extends Fragment {
                 getActivity().finish();
                 startActivity(intent);
 
+            }
+        });
+
+        contactCompanyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();;
+                db.collection("Pros")
+                        .document(recruiterId)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        recruiterMail = document.getString("email");
+                                        Intent newConversation = new Intent(getContext(), NewMessageConversationActivity.class);
+                                        newConversation.putExtra("mail", recruiterMail);
+                                        getContext().startActivity(newConversation);
+                                        getActivity().finish();
+                                    } else {
+                                        Log.e("TAG", "Document does not exist");
+                                    }
+                                } else {
+                                    Log.e("TAG", "Error getting document: ", task.getException());
+                                }
+                            }
+                        });
             }
         });
 
