@@ -3,11 +3,20 @@ package com.example.interim.models;
 import java.util.Date;
 
 public class Blocked {
+    private String blockId;
     private String blockedId;
     private String blockerId;
     private Date date;
     private String blockerMail;
     private String blockedMail;
+
+    public String getBlockId() {
+        return blockId;
+    }
+
+    public void setBlockId(String blockId) {
+        this.blockId = blockId;
+    }
 
     public Blocked(String blockedId, String blockerId, Date date, String blockedMail, String blockerMail) {
         this.blockedId = blockedId;

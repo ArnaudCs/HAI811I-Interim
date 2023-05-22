@@ -64,6 +64,7 @@ public class AdminManageUser extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Signal signalement = document.toObject(Signal.class);
+                                signalement.setSignalId(document.getId());
                                 signaled.add(signalement);
                             }
 
@@ -87,6 +88,7 @@ public class AdminManageUser extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Blocked block = document.toObject(Blocked.class);
+                                block.setBlockId(document.getId());
                                 blockedlist.add(block);
                             }
 
