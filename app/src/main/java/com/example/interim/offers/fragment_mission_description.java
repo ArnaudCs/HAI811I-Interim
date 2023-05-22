@@ -331,9 +331,15 @@ public class fragment_mission_description extends Fragment {
         seeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CompanyProfileViewer.class);
-                intent.putExtra("userId", recruiterId);
-                startActivity(intent);
+                if (recruiterId.equals(mAuth.getCurrentUser().getUid())) {
+                    Toast.makeText(getContext(), "You are the owner of this offer", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), CompanyProfileViewer.class);
+                    intent.putExtra("userId", recruiterId);
+                    startActivity(intent);
+                }
+
             }
         });
 

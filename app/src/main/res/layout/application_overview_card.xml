@@ -79,22 +79,6 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_weight="3">
-
-                                <Button
-                                    android:id="@+id/blockApplication"
-                                    android:layout_width="36dp"
-                                    android:layout_height="36dp"
-                                    android:backgroundTint="@color/white"
-                                    android:background="@drawable/baseline_block_24">
-
-                                </Button>
-
-                            </LinearLayout>
 
                         </LinearLayout>
 

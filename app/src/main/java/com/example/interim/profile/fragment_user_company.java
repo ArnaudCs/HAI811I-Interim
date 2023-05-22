@@ -88,52 +88,50 @@ public class fragment_user_company extends Fragment {
             return null;
         }
 
-        if(externalProfileView){
-
-        } else {
-            db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Boolean verified = documentSnapshot.getBoolean("verified");
-                            if(verified != null && !verified) {
-                                Intent mainActivity = new Intent(getActivity(), PhoneValidation.class);
-                                startActivity(mainActivity);
-                                getActivity().finish();
-                            }
-                            else {
-                                db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                if (documentSnapshot.exists()) {
-                                                    subPlanText = documentSnapshot.getString("plan");
-                                                    Date endDate = documentSnapshot.getDate("endDate");
-                                                    Date startDate = documentSnapshot.getDate("startDate");
-                                                    boolean isUnlimited = subPlanText.contains("One Time");
-
-                                                    if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date()))) {
-                                                        // User has an active subscription
-
-                                                    } else {
-                                                        // User does not have an active subscription
-                                                        Intent subscription = new Intent(getActivity(), PaymentAndSubscription.class);
-                                                        startActivity(subscription);
-                                                        getActivity().finish();
-                                                    }
-                                                } else {
-                                                    // User does not have a subscription
-                                                    Intent subscription = new Intent(getActivity(), PaymentAndSubscription.class);
-                                                    startActivity(subscription);
-                                                    getActivity().finish();
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    });
-
-        }
+//        if(!externalProfileView){
+//            db.collection("Pros").document(mAuth.getCurrentUser().getUid()).get()
+//                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                            Boolean verified = documentSnapshot.getBoolean("verified");
+//                            if(verified != null && !verified) {
+//                                Intent mainActivity = new Intent(getActivity(), PhoneValidation.class);
+//                                startActivity(mainActivity);
+//                                getActivity().finish();
+//                            }
+//                            else {
+//                                db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
+//                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                                            @Override
+//                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                                                if (documentSnapshot.exists()) {
+//                                                    subPlanText = documentSnapshot.getString("plan");
+//                                                    Date endDate = documentSnapshot.getDate("endDate");
+//                                                    Date startDate = documentSnapshot.getDate("startDate");
+//                                                    boolean isUnlimited = subPlanText.contains("One Time");
+//
+//                                                    if (isUnlimited || (endDate != null && endDate.after(new Date())) || (startDate != null && startDate.after(new Date()))) {
+//                                                        // User has an active subscription
+//
+//                                                    } else {
+//                                                        // User does not have an active subscription
+//                                                        Intent subscription = new Intent(getActivity(), PaymentAndSubscription.class);
+//                                                        startActivity(subscription);
+//                                                        getActivity().finish();
+//                                                    }
+//                                                } else {
+//                                                    // User does not have a subscription
+//                                                    Intent subscription = new Intent(getActivity(), PaymentAndSubscription.class);
+//                                                    startActivity(subscription);
+//                                                    getActivity().finish();
+//                                                }
+//                                            }
+//                                        });
+//                            }
+//                        }
+//                    });
+//
+//        }
 
         return inflater.inflate(R.layout.fragment_user_company, container, false);
     }
@@ -151,7 +149,11 @@ public class fragment_user_company extends Fragment {
         statsBtn = view.findViewById(R.id.statsBtn);
         applySpontaneous = view.findViewById(R.id.applySpontaneous);
         applySpontaneousContainer = view.findViewById(R.id.applySpontaneousContainer);
-
+        Bundle args = getArguments();
+        if (args != null) {
+            userId = args.getString("recruiterId");
+            externalProfileView = true;
+        }
         if (userId != null && mAuth.getCurrentUser().getUid() != userId){
             externalProfileView = true;
             favoriteBtnCompany.setVisibility(View.GONE);
@@ -201,9 +203,7 @@ public class fragment_user_company extends Fragment {
                         phoneNum.setText(phoneNumText);
                         email.setText(emailText);
 
-                        if(externalProfileView) {
-
-                        } else {
+                        if(!externalProfileView) {
                             db.collection("Subscriptions").document(mAuth.getCurrentUser().getUid()).get()
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
