@@ -21,8 +21,6 @@ public class CompanyProfileViewer extends AppCompatActivity {
             String userId = intent.getStringExtra("userId");
             if (userId != null) {
                 recruiterId = userId;
-                System.out.println("Récupération du recruiter depuis le viewer ---------------------------------" + recruiterId);
-
             }
         }
 
@@ -30,7 +28,6 @@ public class CompanyProfileViewer extends AppCompatActivity {
 
         Bundle args = new Bundle();
         args.putString("recruiterId", recruiterId);
-        System.out.println("Envoi du user id depuis l'activité viewer ---------------------------------" + recruiterId);
         fragment.setArguments(args);
 
         // Ajouter le fragment au conteneur de fragments

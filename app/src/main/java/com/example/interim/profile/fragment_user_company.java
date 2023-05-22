@@ -166,8 +166,6 @@ public class fragment_user_company extends Fragment {
             settingsBtn.setVisibility(View.GONE);
         }
 
-
-
         statsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,8 +243,10 @@ public class fragment_user_company extends Fragment {
         favoriteBtnCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent settings = new Intent(getActivity(), FavoritesCompanyActivity.class);
-                startActivity(settings);
+                Intent favorites = new Intent(getActivity(), FavoritesCompanyActivity.class);
+                String pro = "pro";
+                favorites.putExtra("pro", pro);
+                startActivity(favorites);
             }
         });
 

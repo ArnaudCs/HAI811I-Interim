@@ -393,34 +393,6 @@ public class fragment_post_offers extends Fragment {
                 downloadJsonTemplate();
             }
         });
-
-        formScrollContainer.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            private int scrollThreshold = 10;
-            private int scrolledDistance = 0;
-            private boolean isScrollingDown = false;
-
-            @Override
-            public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                int currentScrollPosition = scrollY;
-
-                if (scrolledDistance > scrollThreshold && isScrollingDown ) {
-                    // Hide BottomNavigationView
-                    bottomNav.animate().translationY(bottomNav.getHeight() + 100).setDuration(200);
-                    scrolledDistance = 0;
-                    isScrollingDown = false;
-                } else if (scrolledDistance < -scrollThreshold && !isScrollingDown) {
-                    // Show BottomNavigationView
-                    bottomNav.animate().translationY(0).setDuration(200);
-                    scrolledDistance = 0;
-                    isScrollingDown = true;
-                }
-
-                if ((isScrollingDown && scrollY > oldScrollY) || (!isScrollingDown && scrollY < oldScrollY)) {
-                    scrolledDistance += (scrollY - oldScrollY);
-                }
-            }
-        });
-
     }
 
     @Override

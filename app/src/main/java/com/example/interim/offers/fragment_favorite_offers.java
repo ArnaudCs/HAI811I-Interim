@@ -42,6 +42,8 @@ import java.util.Map;
 public class fragment_favorite_offers extends Fragment {
     RecyclerView favoriteContainer;
     FirebaseFirestore db;
+
+    Boolean isPro = false;
     public fragment_favorite_offers() {
         // Required empty public constructor
     }
@@ -62,6 +64,15 @@ public class fragment_favorite_offers extends Fragment {
             this.getActivity().finish();
             return;
         }
+
+        Bundle args = getArguments();
+        if (args != null) {
+            String pro = args.getString("pro");
+            if(pro.equals("pro")){
+                isPro = true;
+            }
+        }
+
         Button favoriteFilterBtn = view.findViewById(R.id.filterBtnFavorites);
         Button closeFilterFavorite = view.findViewById(R.id.closeFilterFavorites);
         Button filtersSearchBtn = view.findViewById(R.id.validateAndSearchFavoriteBtn);
@@ -185,9 +196,6 @@ public class fragment_favorite_offers extends Fragment {
         }
 
 
-
-
-
         favoriteContainer.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             private int scrollThreshold = 10;
             private int scrolledDistance = 0;
@@ -200,18 +208,24 @@ public class fragment_favorite_offers extends Fragment {
 
                 if (scrolledDistance > scrollThreshold && isScrollingDown) {
                     // Hide BottomNavigationView
-                    bottomNav.animate().translationY(bottomNav.getHeight() + 100).setDuration(200);
-                    scrolledDistance = 0;
-                    isScrollingDown = false;
+                    if(!isPro){
+                        bottomNav.animate().translationY(bottomNav.getHeight() + 100).setDuration(200);
+                        scrolledDistance = 0;
+                        isScrollingDown = false;
+                    }
+
                 } else if (scrolledDistance < -scrollThreshold && !isScrollingDown) {
                     // Show BottomNavigationView
-                    bottomNav.animate().translationY(0).setDuration(200);
-                    scrolledDistance = 0;
-                    isScrollingDown = true;
+                    if(!isPro){
+                        bottomNav.animate().translationY(0).setDuration(200);
+                        scrolledDistance = 0;
+                        isScrollingDown = true;
+                    }
                 }
-
                 if ((isScrollingDown && scrollY > oldScrollY) || (!isScrollingDown && scrollY < oldScrollY)) {
-                    scrolledDistance += (scrollY - oldScrollY);
+                    if(!isPro){
+                        scrolledDistance += (scrollY - oldScrollY);
+                    }
                 }
             }
         });
