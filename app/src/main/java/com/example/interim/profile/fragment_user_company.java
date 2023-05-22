@@ -147,6 +147,7 @@ public class fragment_user_company extends Fragment {
         editprofileBtn = view.findViewById(R.id.editProfileCompanyBtn);
         deconnectionBtn = view.findViewById(R.id.decoBtn);
         statsBtn = view.findViewById(R.id.statsBtn);
+        statsBtn.setVisibility(View.GONE);
         applySpontaneous = view.findViewById(R.id.applySpontaneous);
         applySpontaneousContainer = view.findViewById(R.id.applySpontaneousContainer);
         Bundle args = getArguments();
@@ -162,9 +163,10 @@ public class fragment_user_company extends Fragment {
             editProfileCompany.setVisibility(View.GONE);
             editprofileBtn.setVisibility(View.GONE);
             deconnectionBtn.setVisibility(View.GONE);
-            statsBtn.setVisibility(View.GONE);
             settingsBtn.setVisibility(View.GONE);
         }
+
+
 
         statsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,12 +213,17 @@ public class fragment_user_company extends Fragment {
                                             if (documentSnapshot.exists()) {
                                                 subPlanText = documentSnapshot.getString("plan");
                                                 subPlan.setText(subPlanText);
+                                                if((subPlanText.contains("Yearly") || subPlanText.contains("Unlimited"))) {
+                                                    statsBtn.setVisibility(View.VISIBLE);
+                                                }
                                             }
                                         }
                                     });
                         }
                     }
                 });
+
+
 
         backProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
