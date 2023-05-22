@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.interim.R;
+import com.example.interim.authentication.Registration;
 import com.example.interim.authentication.UserRegistrationActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +50,7 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class fragment_profile_edition extends Fragment {
 
@@ -264,10 +266,22 @@ public class fragment_profile_edition extends Fragment {
                         Toast.makeText(getActivity(), R.string.emptyFields, Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (!Patterns.EMAIL_ADDRESS.matcher(textMailModification.getText().toString()).matches() ||
-                            !Patterns.PHONE.matcher(textNumberModification.getText().toString()).matches() ||
-                            !Patterns.WEB_URL.matcher(textWebsiteModification.getText().toString()).matches()) {
-                        Toast.makeText(getActivity(), R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+
+                    if (!Patterns.EMAIL_ADDRESS.matcher(textMailModification.getText().toString()).matches()) {
+                        Toast.makeText(getActivity(), R.string.incorrectMail, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (!Patterns.PHONE.matcher(textNumberModification.getText().toString()).matches()) {
+                        Toast.makeText(getActivity(), R.string.incorrectPhone, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    final String regexWebUrl = "[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
+                    final Pattern pattern = Pattern.compile(regexWebUrl);
+
+                    if (!pattern.matcher(textWebsiteModification.getText().toString()).matches()) {
+                        Toast.makeText(getActivity(), R.string.incorrectWebsite, Toast.LENGTH_SHORT).show();
                         return;
                     }
                     // si au moins un champ du contact 2 est rempli, on s'assure qu'ils le soient tous (correctement)
@@ -281,9 +295,14 @@ public class fragment_profile_edition extends Fragment {
                             Toast.makeText(getActivity(), R.string.emptyFields, Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        if (!Patterns.PHONE.matcher(textContact2Number.getText().toString()).matches() ||
-                                !Patterns.EMAIL_ADDRESS.matcher(textContact2Email.getText().toString()).matches()) {
-                            Toast.makeText(getActivity(), R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+
+                        if (!Patterns.EMAIL_ADDRESS.matcher(textContact2Email.getText().toString()).matches()) {
+                            Toast.makeText(getActivity(), R.string.incorrectMail, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (!Patterns.PHONE.matcher(textContact2Number.getText().toString()).matches()) {
+                            Toast.makeText(getActivity(), R.string.incorrectPhone, Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }

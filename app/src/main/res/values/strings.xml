@@ -94,10 +94,10 @@
     <string name="secondSlideDescription">Start posting offers right after payment (All the functions are automatically activated)</string>
     <string name="thirdSlideDescription">All the tools needed to make a good appointment are included in every pack</string>
     <string name="startSlideBtn">Start</string>
-    <string name="title_activity_slides">SlidesActivity</string>
+    <string name="title_activity_slides" translatable="false">SlidesActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -299,9 +299,9 @@
     <string name="acceptedTitle">Application Accepted</string>
     <string name="declinedTitle">Application Declined</string>
     <string name="yourNotAdmin">You are not an admin</string>
-    <string name="signaledOffers">Signaled Offers</string>
+    <string name="signaledOffers">Signaled offers</string>
     <string name="offerSignaledToast">Signaled offer</string>
-    <string name="signalDialogTitle">You need to inter the reason</string>
+    <string name="signalDialogTitle">You need to enter a reason</string>
     <string name="warningOfferTitle">"Your offer named "</string>
     <string name="warningOfferText">" was recently reported by a user, please verify your information. After 10 reports, your offer will be deleted."</string>
     <string name="deleteOfferAdmin">Do you really want to delete this offer ?</string>
@@ -315,6 +315,9 @@
     <string name="blocked">Blocked User :</string>
     <string name="blockedBy">Blocked By :</string>
     <string name="blockUserDialog">Block User ?</string>
-    <string name="blockDialogText">Do you really want to block this user, you will not be able to contact him again , and the conversation will be closed?</string>
+    <string name="blockDialogText">Do you really want to block this user ? You will not be able to contact him again , and the conversation will be closed</string>
     <string name="blockedUserToast">User blocked</string>
+    <string name="incorrectMail">Incorrect e-mail address</string>
+    <string name="incorrectWebsite">Incorrect website</string>
+    <string name="incorrectPhone">Incorrect phone number</string>
 </resources>

@@ -95,18 +95,37 @@ public class Registration extends AppCompatActivity {
                             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(companyAddress)
                             && !TextUtils.isEmpty(website) && !TextUtils.isEmpty(password)) {
 
-                        if (!(Patterns.EMAIL_ADDRESS.matcher(email).matches() && Patterns.PHONE.matcher(phoneNumber).matches()
-                                && Patterns.WEB_URL.matcher(website).matches())) {
-                            Toast.makeText(Registration.this, R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+
+
+                        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                            Toast.makeText(Registration.this, R.string.incorrectMail, Toast.LENGTH_SHORT).show();
                             return;
                         }
+
+                        if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
+                            Toast.makeText(Registration.this, R.string.incorrectPhone, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        final String regexWebUrl = "[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
+                        final Pattern pattern = Pattern.compile(regexWebUrl);
+
+                        if (!pattern.matcher(website).matches()) {
+                            Toast.makeText(Registration.this, R.string.incorrectWebsite, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+
                         if (addContact.isChecked()) {
                             if (TextUtils.isEmpty(service) || TextUtils.isEmpty(subService) || TextUtils.isEmpty(contact2Name) || TextUtils.isEmpty(contact2Email) || TextUtils.isEmpty(contact2Phone)) {
                                 Toast.makeText(Registration.this, R.string.missingFieldsErroToast, Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            if (!Patterns.EMAIL_ADDRESS.matcher(contact2Email).matches() || !Patterns.PHONE.matcher(contact2Phone).matches()) {
-                                Toast.makeText(Registration.this, R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                            if (!Patterns.EMAIL_ADDRESS.matcher(contact2Email).matches()) {
+                                Toast.makeText(Registration.this, R.string.incorrectMail, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            if (!Patterns.PHONE.matcher(contact2Phone).matches()) {
+                                Toast.makeText(Registration.this, R.string.incorrectPhone, Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         }

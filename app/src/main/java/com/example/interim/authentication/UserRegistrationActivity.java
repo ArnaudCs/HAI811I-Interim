@@ -201,8 +201,12 @@ public class UserRegistrationActivity extends AppCompatActivity {
                 Toast.makeText(UserRegistrationActivity.this, R.string.emptyFields, Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (!Patterns.PHONE.matcher(phoneNumber.getText()).matches() || !Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
-                Toast.makeText(UserRegistrationActivity.this, R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+            if (!Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
+                Toast.makeText(UserRegistrationActivity.this, R.string.incorrectMail, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!Patterns.PHONE.matcher(phoneNumber.getText()).matches()) {
+                Toast.makeText(UserRegistrationActivity.this, R.string.incorrectPhone, Toast.LENGTH_SHORT).show();
                 return;
             }
 

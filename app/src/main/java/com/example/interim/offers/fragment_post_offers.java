@@ -31,6 +31,7 @@ import com.example.interim.CategoryRepository;
 import com.example.interim.GeocodingUtils;
 import com.example.interim.R;
 import com.example.interim.authentication.MainActivity;
+import com.example.interim.authentication.Registration;
 import com.example.interim.models.Offer;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,6 +62,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class fragment_post_offers extends Fragment {
     private static final int PICK_JSON_FILE_REQUEST_CODE = 1;
@@ -258,10 +260,14 @@ public class fragment_post_offers extends Fragment {
                     return;
                 }
 
-                if (!Patterns.WEB_URL.matcher(url).matches()) {
-                    Toast.makeText(getActivity(), R.string.incorrectFields, Toast.LENGTH_SHORT).show();
+                final String regexWebUrl = "[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
+                final Pattern pattern = Pattern.compile(regexWebUrl);
+
+                if (!pattern.matcher(url).matches()) {
+                    Toast.makeText(getActivity(), R.string.incorrectWebsite, Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 // Parse salary
                 int salaryMin = Integer.parseInt(salaryStr), salaryMax = Integer.parseInt(salaryStr);
                 if (!TextUtils.isEmpty(salaryStr)) {
