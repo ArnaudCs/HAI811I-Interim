@@ -1,4 +1,4 @@
-package com.example.interim.Utils;
+package com.example.interim.offers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -88,6 +88,7 @@ public class fragment_notification_center extends Fragment {
                                 Date date = document.getDate("notificationDate");
 
                                 Notification notification = new Notification(text, title, date, userId);
+                                notification.setNotificationId(document.getId());
                                 notifications.add(notification);
                             }
 

@@ -3,6 +3,7 @@ package com.example.interim.models;
 import java.util.Date;
 
 public class Notification {
+    private String notificationId;
     private String notificationText;
     private String notificationTitle;
     private Date notificationDate;
@@ -17,6 +18,14 @@ public class Notification {
         this.notificationTitle = notificationTitle;
         this.notificationDate = notificationDate;
         this.userId = userId;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
     }
 
     public String getUserId() {

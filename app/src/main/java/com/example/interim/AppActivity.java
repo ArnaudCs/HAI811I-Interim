@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-import com.example.interim.Utils.fragment_notification_center;
+import com.example.interim.offers.fragment_notification_center;
 import com.example.interim.discussion.fragment_message_menu;
 import com.example.interim.models.Offer;
 import com.example.interim.offers.fragment_favorite_offers;
