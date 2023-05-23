@@ -75,7 +75,8 @@ public class searchCard_ViewAdapter extends RecyclerView.Adapter<searchCard_View
         holder.jobUrl.setText(offers.get(position).getUrl());
         holder.jobSalary.setText(String.valueOf(offers.get(position).getSalaryMax()) + "€");
         holder.jobLocation.setText(offers.get(position).getLocation());
-        holder.postDate.setText(offers.get(position).getPostDate().toString());
+        String postDate = formatter.format(offers.get(position).getPostDate());
+        holder.postDate.setText(postDate);
         holder.jobKeywords.setText(offers.get(position).getKeywords());
 
         FirebaseFirestore db;
