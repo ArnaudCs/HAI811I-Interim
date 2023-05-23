@@ -67,6 +67,7 @@ public class fragment_message_discussion extends Fragment {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     RecyclerView recyclerView;
+    Boolean group = false;
     String senderId;
 
     Button deleteBtn, signalUserBtn, blockUserBtn;
@@ -139,6 +140,7 @@ public class fragment_message_discussion extends Fragment {
                                     List<DocumentReference> participants = (List<DocumentReference>) document.get("participants");
                                     if (participants != null) {
                                         if(participants.size() > 2) {
+                                            group = true;
                                             convName.setText(document.getString("groupName"));
                                         }
                                         else {
@@ -192,7 +194,7 @@ public class fragment_message_discussion extends Fragment {
                                                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                                                 layoutManager.setStackFromEnd(true);
                                                 recyclerView.setLayoutManager(layoutManager);
-                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages, group));
 
                                                 recyclerView.smoothScrollToPosition(messages.size());
                                                 startRefreshingMessages();
@@ -561,7 +563,7 @@ public class fragment_message_discussion extends Fragment {
                                             int position = recyclerView.getAdapter().getItemCount();
                                             recyclerView.getAdapter().notifyItemInserted(position);
                                             messages.add(message);
-                                            recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+                                            recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages, group));
                                             messageText.getText().clear();
                                         }
                                     });
