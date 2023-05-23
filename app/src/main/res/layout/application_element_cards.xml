@@ -226,17 +226,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:weightSum="6"
                     android:gravity="center">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:gravity="center"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2">
-
-                    </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="0dp"

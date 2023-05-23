@@ -327,4 +327,6 @@
     <string name="offersPostedByPros">Number Of Offers Posted By Pros</string>
     <string name="offersPerDay">Offers Posted Per Day</string>
     <string name="messagePerDay">Message Sent Per Day (Weekly)</string>
+    <string name="deleteApplicationTitle">Delete Application ?</string>
+    <string name="deleteApplication">Do you really want to delete this application ?</string>
 </resources>

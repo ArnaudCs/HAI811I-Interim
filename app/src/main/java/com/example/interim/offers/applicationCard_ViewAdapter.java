@@ -121,9 +121,9 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Confirmation");
-                builder.setMessage("Are you sure you want to delete this application?");
-                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                builder.setTitle(context.getString(R.string.deleteApplicationTitle));
+                builder.setMessage(context.getString(R.string.deleteApplication));
+                builder.setPositiveButton(context.getString(R.string.nextBtn), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String applicationId = holder.applicationId;
@@ -147,7 +147,7 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
                                 });
                     }
                 });
-                builder.setNegativeButton("Cancel", null);
+                builder.setNegativeButton(context.getString(R.string.cancelBtn), null);
 
                 AlertDialog dialog = builder.create();
                 dialog.show();

@@ -322,4 +322,6 @@
     <string name="offersPostedByPros">Nombre d\'offres postées par Company</string>
     <string name="offersPerDay">Nombre d\'offres postée par jour</string>
     <string name="messagePerDay">Message envoyés par jour (1 semaine)</string>
+    <string name="deleteApplicationTitle">Supprimer candidature ?</string>
+    <string name="deleteApplication">Voulez vous vraiment supprimer cette candidature ?</string>
 </resources>
