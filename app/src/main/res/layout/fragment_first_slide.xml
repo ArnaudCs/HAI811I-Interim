@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/slides"
+        android:backgroundTint="?colorOnPrimary"
         android:gravity="center"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
@@ -70,10 +71,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:text="@string/firstSlideDescription"
                     android:textAlignment="center"
                     android:textSize="22sp"
-                    android:textStyle="italic"></TextView>
+                    android:textStyle="italic" />
             </LinearLayout>
 
         </LinearLayout>

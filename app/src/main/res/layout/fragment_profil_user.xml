@@ -62,7 +62,7 @@
                     android:padding="10dp"
                     android:text="Utilisateur"
                     android:textSize="30sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
@@ -271,6 +271,7 @@
                             android:id="@+id/editProfileUserBtn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:backgroundTint="?colorOnPrimary"
                             android:background="@drawable/baseline_edit_24">
                         </Button>
 
@@ -304,6 +305,8 @@
                 android:id="@+id/settingsBtnUser"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                app:tint="?colorOnPrimary"
+                android:backgroundTint="?colorOnPrimary"
                 app:lottie_speed="4"
                 app:lottie_rawRes="@raw/settings">
 
@@ -323,7 +326,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/baseline_logout_24"
-                android:backgroundTint="#FFFFFF"
+                android:backgroundTint="?colorOnPrimary"
+                app:tint="?colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>

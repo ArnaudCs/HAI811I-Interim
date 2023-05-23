@@ -7,14 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_less_opaque">#CCFFFFFF</color>
     <color name="primary_orange">#FF8500</color>
     <color name="primary_red">#E5383B</color>
     <color name="secondary_red">#BA181B</color>
     <color name="unavailable">#BFBFBF</color>
     <color name="grey">#D1D1D1</color>
+    <color name="dark_grey">#80000000</color>
+    <color name="dark_darkgrey">#323232</color>
     <color name="waitingApplications" tools:ignore="MissingDefaultResource">#ff9e3d</color>
     <color name="acceptedApplication" tools:ignore="MissingDefaultResource">#80bf67</color>
     <color name="cards">#F4F4F4</color>
+    <color name="box">#EAEAEA</color>
     <color name="navBarUnpressed">#ff9d96</color>
     <color name="strokeError">#DC0303</color>
     <color name="messagebar">#f0f0f0</color>

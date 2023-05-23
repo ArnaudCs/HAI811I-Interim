@@ -22,8 +22,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/baseline_build_circle_24"
-            app:tint="@color/white"
-            android:backgroundTint="@color/white">
+            app:tint="?colorOnPrimary"
+            android:backgroundTint="?colorOnPrimary">
 
         </ImageView>
 
@@ -59,10 +59,10 @@
         android:layout_marginTop="30dp"
         android:text="@string/loginText"
         android:textAlignment="center"
-        android:textColor="@color/primary_red"
+        android:textColor="?colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/loginDeck"></TextView>
+        app:layout_constraintTop_toTopOf="@id/loginDeck" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -73,6 +73,8 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="40dp"
         android:hint="@string/Mail"
+        android:textColorHint="?hintTextColor"
+        app:placeholderTextColor="?placeholderTextColor"
         app:boxBackgroundColor="#FFFFFF"
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="@color/primary_red"
@@ -104,6 +106,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
         android:hint="@string/Password"
+        android:textColorHint="?hintTextColor"
+        app:placeholderTextColor="?placeholderTextColor"
         app:boxBackgroundColor="#FFFFFF"
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="@color/primary_red"

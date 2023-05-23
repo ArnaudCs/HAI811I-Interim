@@ -45,10 +45,9 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/white"
-                        android:foregroundTint="@color/white"
-                        android:src="@drawable/baseline_query_stats_24"
-                        app:tint="@color/white"></ImageView>
+                        android:backgroundTint="?colorOnPrimary"
+                        app:tint="?colorOnPrimary"
+                        android:src="@drawable/baseline_query_stats_24" />
 
                 </LinearLayout>
 
@@ -82,7 +81,7 @@
             android:paddingBottom="20dp"
             android:layout_marginTop="30dp"
             android:orientation="vertical"
-            android:background="@drawable/greybox">
+            android:background="?boxBackgroundMode">
 
             <TextView
                 android:id="@+id/companyName"
@@ -344,6 +343,8 @@
                             android:id="@+id/editProfileCompanyBtn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:backgroundTint="?colorOnPrimary"
+                            app:tint="?colorOnPrimary"
                             android:background="@drawable/baseline_edit_24">
                         </Button>
 
@@ -418,7 +419,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/baseline_logout_24"
-                android:backgroundTint="#FFFFFF"
+                android:backgroundTint="?colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
