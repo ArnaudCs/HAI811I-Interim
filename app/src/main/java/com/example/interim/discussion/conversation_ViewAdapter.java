@@ -54,7 +54,12 @@ public class conversation_ViewAdapter extends RecyclerView.Adapter<conversation_
     public void onBindViewHolder(@NonNull conversation_ViewHolder holder, int position) {
         this.holder = holder;
         holder.conversationId = conversations.get(position).getId();
-        holder.userName.setText(conversations.get(position).getContact());
+        if(conversations.get(position).getGroupName() != null) {
+            holder.userName.setText(conversations.get(position).getGroupName());
+        }
+        else {
+            holder.userName.setText(conversations.get(position).getContact());
+        }
         holder.lastMsg.setText(conversations.get(position).getLastMsg());
         participantId = conversations.get(position).getContactUid();
         StorageReference mStorageRef;

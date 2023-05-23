@@ -191,7 +191,9 @@ public class fragment_new_message_conversation extends Fragment {
             boolean conversationExists = false;
             for (DocumentSnapshot userConversation : userConversations) {
                 for (DocumentSnapshot contactConversation : contactConversations) {
-                    if (userConversation.getId().equals(contactConversation.getId())) {
+                    List<String> participants = (List<String>) userConversation.get("participants");
+                    int participantsSize = participants != null ? participants.size() : 0;
+                    if (userConversation.getId().equals(contactConversation.getId()) && participantsSize <= 2) {
                         conversationExists = true;
                         break;
                     }

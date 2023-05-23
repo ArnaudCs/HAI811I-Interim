@@ -7,7 +7,7 @@ public class Conversation {
     private String contact;
     private boolean unread;
 
-    private boolean groupConversation;
+    private String groupName;
 
     private String lastMsg;
 
@@ -31,12 +31,12 @@ public class Conversation {
         return contactUid;
     }
 
-    public boolean isGroupConversation() {
-        return groupConversation;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setGroupConversation(boolean groupConversation) {
-        this.groupConversation = groupConversation;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public void setContactUid(String contactUid) {

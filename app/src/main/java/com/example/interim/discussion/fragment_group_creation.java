@@ -1,7 +1,11 @@
 package com.example.interim.discussion;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +16,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.interim.R;
 import com.example.interim.Utils.onCollectionLoadedListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class fragment_group_creation extends Fragment {
     private float scale;
@@ -36,7 +55,6 @@ public class fragment_group_creation extends Fragment {
     TextInputEditText textMember1;
     private ConstraintLayout groupCreationCl;
     FirebaseFirestore db;
-    FirebaseAuth mAuth;
 
     Button backBtnGroupCreation;
     public fragment_group_creation() {
@@ -100,8 +118,81 @@ public class fragment_group_creation extends Fragment {
         createGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<String> members = memberAdapter.getMembersList();
+                if (members.size() == 0) {
+                    return;
+                }
 
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                CollectionReference usersCollection = db.collection("Users");
+                CollectionReference prosCollection = db.collection("Pros");
+
+                // Query Users collection
+                Query usersQuery = usersCollection.whereIn("email", members);
+                Task<QuerySnapshot> usersTask = usersQuery.get();
+
+                // Query Pros collection
+                Query prosQuery = prosCollection.whereIn("email", members);
+                Task<QuerySnapshot> prosTask = prosQuery.get();
+
+                // Combine both tasks
+                Task<List<QuerySnapshot>> combinedTask = Tasks.whenAllSuccess(usersTask, prosTask);
+
+                combinedTask.addOnSuccessListener(querySnapshots -> {
+                    QuerySnapshot usersSnapshot = querySnapshots.get(0);
+                    QuerySnapshot prosSnapshot = querySnapshots.get(1);
+                    ArrayList<DocumentReference> memberReferences = new ArrayList<>();
+
+                    // Process Users collection results
+                    for (QueryDocumentSnapshot userDocument : usersSnapshot) {
+                        memberReferences.add(userDocument.getReference());
+                    }
+
+                    // Process Pros collection results
+                    for (QueryDocumentSnapshot proDocument : prosSnapshot) {
+                        memberReferences.add(proDocument.getReference());
+                    }
+
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    memberReferences.add(db.collection("Users").document(mAuth.getCurrentUser().getUid()));
+
+                    Map<String, Object> groupData = new HashMap<>();
+                    groupData.put("members", memberReferences);
+                    groupData.put("creationDate", new Date());
+                    groupData.put("messages", new ArrayList<>());
+
+                    Map<String, Object> conversationData = new HashMap<>();
+                    conversationData.put("participants", memberReferences);
+                    conversationData.put("lastMessage", "");
+
+                    db.collection("Conversations").add(conversationData).addOnSuccessListener(documentReference -> {
+                        // Conversation document was successfully created
+                        String conversationId = documentReference.getId();
+                        documentReference.update("unRead", new ArrayList<>());
+                        documentReference.update("messages", new ArrayList<>());
+
+                        groupData.put("conversationId", conversationId);
+
+                        db.collection("Groups").add(groupData).addOnSuccessListener(groupDocumentReference -> {
+                            // Group document was successfully created
+                            String groupId = groupDocumentReference.getId();
+                            // Perform further operations with the group ID and conversation ID
+                            // ...
+                            Log.d(TAG, "New group created with ID: " + groupId + ", Conversation ID: " + conversationId);
+                        }).addOnFailureListener(e -> {
+                            // Failed to create the group document
+                            Log.e(TAG, "Error creating group document: " + e.getMessage());
+                        });
+                    }).addOnFailureListener(e -> {
+                        // Failed to create the conversation document
+                        Log.e(TAG, "Error creating conversation document: " + e.getMessage());
+                    });
+                }).addOnFailureListener(e -> {
+                    // Failed to retrieve Users or Pros collection
+                    Log.e("TAG", "Error retrieving collections: " + e.getMessage());
+                });
             }
+
         });
     }
     void loadCollections(final onCollectionLoadedListener listener){
