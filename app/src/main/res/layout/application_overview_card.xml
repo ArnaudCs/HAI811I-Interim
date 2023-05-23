@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/cards"
+            android:background="?boxBackgroundColor"
             android:orientation="vertical">
 
             <LinearLayout
@@ -50,10 +50,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="John Doe"
                                 android:textAlignment="textStart"
-                                android:textColor="@color/white"
+                                android:textColor="?colorOnPrimary"
                                 android:textSize="26sp"
                                 android:maxLength="35"
-                                android:textStyle="bold"></TextView>
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -73,7 +73,7 @@
                                     android:id="@+id/signalApplication"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
-                                    android:backgroundTint="@color/white"
+                                    android:backgroundTint="?colorOnPrimary"
                                     android:background="@drawable/baseline_report_gmailerrorred_24">
                                 </Button>
 
@@ -91,9 +91,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="john.doe@gmail.com"
-                        android:textColor="@color/white"
+                        android:textColor="?colorOnPrimary"
                         android:textSize="20dp"
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/applicantNumber"
@@ -101,12 +101,12 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/baseline_date_range_24"
                         android:drawablePadding="5dp"
-                        android:drawableTint="@color/white"
+                        android:drawableTint="?colorOnPrimary"
                         android:gravity="left|center"
                         android:paddingTop="10dp"
                         android:text="06 06 06 06 06"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"></TextView>
+                        android:textColor="?colorOnPrimary"
+                        android:textSize="20dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -127,8 +127,8 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/primary_red"
                     android:text="Web Developper"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"></TextView>
+                    android:textColor="?colorOnSecondary"
+                    android:textSize="16dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -149,8 +149,8 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/primary_red"
                     android:text="12/01/2023"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"></TextView>
+                    android:textColor="?colorOnSecondary"
+                    android:textSize="16dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -171,8 +171,8 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/primary_red"
                     android:text="Montpellier"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"></TextView>
+                    android:textColor="?colorOnSecondary"
+                    android:textSize="16dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -206,6 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/navigation_bar"
+                        android:backgroundTint="?colorOnPrimary"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:stateListAnimator="@null"
@@ -215,7 +216,7 @@
                         android:drawablePadding="10dp"
                         android:drawableEnd="@drawable/baseline_cloud_download_24"
                         android:textSize="14sp"
-                        android:textStyle="bold"></Button>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -230,6 +231,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/navigation_bar"
+                        android:backgroundTint="?colorOnPrimary"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:drawablePadding="10dp"
@@ -239,7 +241,7 @@
                         android:text="@string/cover"
                         android:textColor="@color/primary_red"
                         android:textSize="14sp"
-                        android:textStyle="bold"></Button>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -272,9 +274,9 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:background="@drawable/baseline_sms_24"
-                            android:backgroundTint="@color/white"
+                            android:backgroundTint="?colorOnPrimary"
                             android:paddingLeft="10dp"
-                            android:paddingRight="10dp"></ImageView>
+                            android:paddingRight="10dp" />
 
                     </LinearLayout>
 

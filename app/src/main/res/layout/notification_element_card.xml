@@ -25,7 +25,7 @@
                 android:buttonTint="@color/primary_red"
                 android:foregroundTint="@color/primary_red"
                 android:textColorHighlight="@color/primary_red"
-                android:textColorLink="@color/primary_red"></CheckBox>
+                android:textColorLink="@color/primary_red" />
 
         </LinearLayout>
 
@@ -34,6 +34,7 @@
             android:layout_width="0dp"
             android:paddingLeft="20dp"
             android:background="@drawable/messagebox"
+            android:backgroundTint="?boxBackgroundColor"
             android:weightSum="10"
             android:layout_marginTop="20dp"
             android:paddingBottom="10dp"
@@ -54,18 +55,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nouvelles Stats"
-                    android:textColor="@color/black"
+                    android:textColor="?colorOnSecondary"
                     android:textSize="20sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/notifDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="08/12/2023 - 18h11"
-                    android:textColor="@color/black"
+                    android:textColor="?colorOnSecondary"
                     android:textSize="14sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/notifText"
@@ -75,8 +76,8 @@
                     android:minLines="1"
                     android:maxLines="5"
                     android:text="Il faudrait que tu m'envoi le dernierrelevé test de ,otiifjvnvjnvjnvvnndfsjdnfsdjfndjvnsdjvsndcsdj"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"></TextView>
+                    android:textColor="?colorOnSecondary"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -97,7 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/baseline_delete_24"
-                        android:backgroundTint="@color/white"></ImageView>
+                        android:backgroundTint="?colorOnPrimary"></ImageView>
 
                 </LinearLayout>
 

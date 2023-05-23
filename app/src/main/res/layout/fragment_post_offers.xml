@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/postOffersPageTitle"
-                    android:textColor="@color/white"
+                    android:textColor="?colorOnPrimary"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="@id/layoutMain" />
@@ -112,17 +112,19 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="?colorOnPrimary"
                         android:layout_marginBottom="20dp"
                         android:textAlignment="center"
                         android:textSize="25sp"
                         android:textStyle="bold"
-                        android:text="@string/generalInformations"></TextView>
+                        android:text="@string/generalInformations" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutOfferName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColorHint="?hintTextColor"
+                        app:placeholderTextColor="?placeholderTextColor"
                         app:boxBackgroundColor="#FFFFFF"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="@color/primary_red"
@@ -146,6 +148,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?boxBackgroundColor"
                             android:hint="@string/offerTitle"
                             android:inputType="textCapSentences"
                             android:maxLength="35"
@@ -180,6 +183,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?boxBackgroundColor"
                             android:hint="@string/companyName"
                             android:inputType="textCapSentences"
                             android:maxLength="30"
@@ -214,6 +218,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?boxBackgroundColor"
                             android:hint="@string/salaryPrice"
                             android:inputType="numberSigned"
                             android:maxLength="5"
@@ -248,6 +253,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?boxBackgroundColor"
                             android:hint="@string/placeInput"
                             android:inputType="textCapSentences"
                             android:maxLength="30"
@@ -282,6 +288,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?boxBackgroundColor"
                             android:hint="@string/visitWebsite"
                             android:inputType="text"
                             android:maxLength="50"
@@ -316,6 +323,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?boxBackgroundColor"
                             android:hint="@string/offerTags"
                             android:inputType="textCapSentences"
                             android:maxLength="50"
@@ -350,6 +358,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?boxBackgroundColor"
                             android:hint="@string/labelTitle"
                             android:inputType="textCapSentences"
                             android:maxLength="30"
@@ -365,6 +374,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?boxBackgroundColor"
+                            android:textColorHint="?hintTextColor"
+                            app:placeholderTextColor="?placeholderTextColor"
                             android:layout_height="wrap_content">
 
                             <Spinner
@@ -372,7 +384,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="15dp"
-                                tools:ignore="TouchTargetSizeCheck"></Spinner>
+                                tools:ignore="TouchTargetSizeCheck" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -411,6 +423,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/navigation_bar"
+                                        android:backgroundTint="?boxBackgroundColor"
                                         android:hint="@string/startDateFilter"
                                         android:inputType="date"
                                         android:maxLength="12"
@@ -459,6 +472,7 @@
                                         android:textSize="14sp"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/navigation_bar"
+                                        android:backgroundTint="?boxBackgroundColor"
                                         android:hint="@string/endDateFilter"
                                         android:inputType="date" />
                                 </com.google.android.material.textfield.TextInputLayout>
@@ -549,6 +563,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/greybutton"
+                        android:backgroundTint="?boxBackgroundColor"
                         android:paddingLeft="32dp"
                         android:stateListAnimator="@null"
                         android:paddingRight="32dp"

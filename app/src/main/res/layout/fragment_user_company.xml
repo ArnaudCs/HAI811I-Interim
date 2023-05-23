@@ -381,6 +381,7 @@
                 app:lottie_speed="4"
                 android:layout_height="50dp"
                 android:visibility="visible"
+                app:lottie_colorFilter="?colorOnPrimary"
                 app:lottie_rawRes="@raw/settings">
 
             </com.airbnb.lottie.LottieAnimationView>

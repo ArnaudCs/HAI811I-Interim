@@ -25,7 +25,7 @@
                 android:buttonTint="@color/primary_red"
                 android:foregroundTint="@color/primary_red"
                 android:textColorHighlight="@color/primary_red"
-                android:textColorLink="@color/primary_red"></CheckBox>
+                android:textColorLink="@color/primary_red" />
 
         </LinearLayout>
 
@@ -60,7 +60,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"></ImageView>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -81,7 +81,7 @@
                     android:text="Florian"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/lastMsg"
@@ -91,7 +91,7 @@
                     android:maxLines="1"
                     android:text="Il faudrait que tu m'envoi le dernierrelevé"
                     android:textColor="@color/black"
-                    android:textSize="14sp"></TextView>
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -119,7 +119,7 @@
                     app:lottie_loop="true"
                     app:lottie_rawRes="@raw/newmessage"
                     android:layout_width="40dp"
-                    android:layout_height="40dp"></com.airbnb.lottie.LottieAnimationView>
+                    android:layout_height="40dp" />
 
             </LinearLayout>
 

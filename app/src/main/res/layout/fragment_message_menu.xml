@@ -56,7 +56,7 @@
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="@string/conversationPageTitle"
-                    android:textColor="@color/white"
+                    android:textColor="?colorOnPrimary"
                     android:textSize="22sp"
                     app:autoSizeTextType="uniform"
                     android:textStyle="bold"
@@ -75,7 +75,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/baseline_groups_2_24"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="?colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,7 +84,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/baseline_delete_24"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="?colorOnPrimary"
                     android:drawableTint="#FBFAFA"
                     android:visibility="gone"
                     android:foregroundTint="#FFFFFF"
@@ -133,11 +133,11 @@
                         android:background="@drawable/redbutton"
                         android:paddingLeft="18dp"
                         android:paddingRight="12dp"
-                        android:textColor="@color/white"
+                        android:textColor="?colorOnPrimary"
                         android:textStyle="bold"
                         android:textSize="12sp"
                         android:drawableEnd="@drawable/baseline_add_circle_24"
-                        android:drawableTint="@color/white"
+                        android:drawableTint="?colorOnPrimary"
                         android:drawablePadding="10dp"
                         android:text="@string/newConvBtn">
 

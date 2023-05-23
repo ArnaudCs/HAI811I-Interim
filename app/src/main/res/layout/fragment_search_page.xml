@@ -33,6 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     android:background="@drawable/navigation_bar"
+                    android:backgroundTint="?colorOnPrimary"
                     android:gravity="left">
 
                     <LinearLayout
@@ -55,7 +56,7 @@
                             android:inputType="textCapSentences"
                             android:maxLength="30"
                             android:singleLine="true"
-                            android:textColorHint="#838383"
+                            android:textColorHint="?placeholderTextColor"
                             android:textSize="18sp"
                             tools:ignore="TouchTargetSizeCheck" />
 
@@ -79,9 +80,9 @@
                                     android:layout_height="match_parent"
                                     android:drawableTint="@color/white"
                                     android:foregroundTint="@color/white"
-                                    android:backgroundTint="@color/white"
+                                    android:backgroundTint="?colorOnPrimary"
                                     android:background="@drawable/baseline_search_24"
-                                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
+                                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -101,16 +102,16 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/baseline_filter_list_24"
-                        android:backgroundTint="#FFFFFF"
-                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
+                        android:backgroundTint="?colorOnPrimary"
+                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                     <Button
                         android:id="@+id/closeFilter"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/baseline_keyboard_double_arrow_up_24"
-                        android:backgroundTint="#FFFFFF"
-                        android:visibility="gone"></Button>
+                        android:backgroundTint="?colorOnPrimary"
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -136,6 +137,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:background="@drawable/navigation_bar"
+                            android:backgroundTint="?colorOnPrimary"
                             android:layout_height="wrap_content">
 
                             <Spinner
@@ -143,7 +145,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="15dp"
-                                tools:ignore="TouchTargetSizeCheck"></Spinner>
+                                tools:ignore="TouchTargetSizeCheck" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -194,6 +196,7 @@
                                     android:paddingRight="10dp"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/navigation_bar"
+                                    android:backgroundTint="?colorOnPrimary"
                                     android:hint="@string/startDateFilter"
                                     android:inputType="date" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -237,6 +240,7 @@
                                     android:paddingRight="10dp"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/navigation_bar"
+                                    android:backgroundTint="?colorOnPrimary"
                                     android:hint="@string/endDateFilter"
                                     android:inputType="date" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -281,6 +285,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/navigation_bar"
+                                    android:backgroundTint="?colorOnPrimary"
                                     android:hint="@string/CityofSearch"
                                     android:inputType="textCapSentences"
                                     android:minLines="1"
@@ -305,9 +310,9 @@
                             android:paddingBottom="10dp"
                             android:text="@string/areaFilter"
                             android:textAlignment="center"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="24sp"
-                            android:textStyle="bold"></TextView>
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -323,9 +328,9 @@
                                 android:layout_height="wrap_content"
                                 android:max="5"
                                 android:progress="1"
-                                android:thumbTint="@color/white"
+                                android:thumbTint="?colorOnPrimary"
                                 android:thumb="@drawable/baseline_panorama_fish_eye_24"
-                                android:progressTint="@color/white"/>
+                                android:progressTint="?colorOnPrimary"/>
 
                         </LinearLayout>
                     </LinearLayout>
@@ -370,6 +375,7 @@
                                     android:textSize="14sp"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/navigation_bar"
+                                    android:backgroundTint="?colorOnPrimary"
                                     android:hint="@string/startPriceFilter"
                                     android:inputType="numberSigned" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -408,6 +414,7 @@
                                     android:maxLength="5"
                                     android:textSize="14sp"
                                     android:background="@drawable/navigation_bar"
+                                    android:backgroundTint="?colorOnPrimary"
                                     android:hint="@string/endPriceFilter"
                                     android:inputType="numberSigned" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -449,6 +456,7 @@
                             android:textStyle="bold"
                             android:stateListAnimator="@null"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="?colorOnPrimary"
                             android:background="@drawable/navigation_bar">
                         </Button>
 

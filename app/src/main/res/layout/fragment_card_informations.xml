@@ -51,7 +51,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutCardName"
@@ -230,8 +230,8 @@
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:text="@string/useThisCard"
-                android:textColor="@color/white"
-                android:textSize="20sp"></Button>
+                android:textColor="?colorOnPrimary"
+                android:textSize="20sp" />
 
         </LinearLayout>
 

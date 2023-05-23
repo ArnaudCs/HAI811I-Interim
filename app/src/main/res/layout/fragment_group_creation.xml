@@ -35,7 +35,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/baseline_arrow_circle_left_24"
-                android:backgroundTint="#FFFFFF"
+                android:backgroundTint="?colorOnPrimary"
                 android:drawableTint="#FBFAFA"
                 android:foregroundTint="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/groupCreation"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="?colorOnPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@id/layoutMain" />
@@ -176,6 +176,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/userRecycler"
                     android:layout_width="match_parent"
+                    android:backgroundTint="@color/primary_red"
                     android:layout_height="match_parent">
 
                 </androidx.recyclerview.widget.RecyclerView>
