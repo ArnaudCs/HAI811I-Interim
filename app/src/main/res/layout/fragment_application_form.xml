@@ -206,6 +206,10 @@
                             android:id="@+id/textApplicantBirth"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>

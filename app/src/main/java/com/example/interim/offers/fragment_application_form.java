@@ -2,6 +2,7 @@ package com.example.interim.offers;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,15 +13,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.interim.Utils.PDFClass;
 import com.example.interim.R;
+import com.example.interim.authentication.UserRegistrationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,7 +43,10 @@ import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class fragment_application_form extends Fragment {
@@ -60,6 +67,7 @@ public class fragment_application_form extends Fragment {
     Button uploadResume, uploadCoverLetter, coverLetterGeneratorBtn;
 
     TextView coverLetterDisplay, resumeDisplay;
+    private Calendar calendar;
 
     public fragment_application_form() {
         // Required empty public constructor
@@ -89,6 +97,33 @@ public class fragment_application_form extends Fragment {
         TextInputEditText textApplicantAdress = view.findViewById(R.id.textApplicantAdress);
         TextInputEditText textApplicantBirth = view.findViewById(R.id.textApplicantBirth);
         coverLetterGeneratorBtn = view.findViewById(R.id.coverLetterGeneratorBtn);
+
+        calendar = Calendar.getInstance();
+        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String dateFormat = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+                textApplicantBirth.setText(simpleDateFormat.format(calendar.getTime()));
+            }
+        };
+
+        textApplicantBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                Calendar maxDate = (Calendar) calendar.clone();
+                maxDate.set(Calendar.YEAR, year - 18);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, year - 18, month, day);
+                datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
 
         backBtnApplication.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,6 +257,14 @@ public class fragment_application_form extends Fragment {
                     String applicantMail = textApplicantMail.getText().toString();
                     String applicantAdress = textApplicantAdress.getText().toString();
                     String applicantBirth = textApplicantBirth.getText().toString();
+
+                    if (!Patterns.PHONE.matcher(applicantPhone).matches()) {
+                        Toast.makeText(getActivity(), R.string.incorrectPhone, Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (!Patterns.EMAIL_ADDRESS.matcher(applicantMail).matches()) {
+                        Toast.makeText(getActivity(), R.string.incorrectMail, Toast.LENGTH_SHORT).show();
+                    }
 
                     // Get Firestore instance and reference to "Applications" collection
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
