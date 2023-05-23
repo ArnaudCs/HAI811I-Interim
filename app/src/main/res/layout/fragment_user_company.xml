@@ -81,7 +81,7 @@
             android:paddingBottom="20dp"
             android:layout_marginTop="30dp"
             android:orientation="vertical"
-            android:background="?boxBackgroundMode">
+            android:background="@drawable/greybox">
 
             <TextView
                 android:id="@+id/companyName"
