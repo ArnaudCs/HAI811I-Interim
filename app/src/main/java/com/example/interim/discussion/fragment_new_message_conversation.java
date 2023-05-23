@@ -206,8 +206,8 @@ public class fragment_new_message_conversation extends Fragment {
                 Log.e(TAG, "Conversation already exists between the participants");
                 Toast.makeText(getContext(), "Conversation already exists", Toast.LENGTH_SHORT).show();
             } else {
-                // Create a new conversation
-                createNewConversation(db, userRef, contactRef);
+                // Check if the participants have blocked each other
+                checkBlockedUsers(db, userRef, contactRef);
             }
         }).addOnFailureListener(e -> {
             // Query failed
@@ -215,6 +215,36 @@ public class fragment_new_message_conversation extends Fragment {
         });
     }
 
+    private void checkBlockedUsers(FirebaseFirestore db, DocumentReference userRef, DocumentReference contactRef) {
+        CollectionReference blockedRef = db.collection("Blocked");
+        // Query for blocks where the user is the blocker and the contact is the blocked user
+        Query userBlocksQuery = blockedRef.whereEqualTo("blockerId", userRef.getId()).whereEqualTo("blockedId", contactRef.getId());
+
+        // Query for blocks where the user is the blocked user and the contact is the blocker
+        Query contactBlocksQuery = blockedRef.whereEqualTo("blockerId", contactRef.getId()).whereEqualTo("blockedId", userRef.getId());
+
+        Task<QuerySnapshot> userBlocksTask = userBlocksQuery.get();
+        Task<QuerySnapshot> contactBlocksTask = contactBlocksQuery.get();
+
+        Task<List<QuerySnapshot>> combinedTask = Tasks.whenAllSuccess(userBlocksTask, contactBlocksTask);
+
+        combinedTask.addOnSuccessListener(querySnapshots -> {
+            QuerySnapshot userBlocksSnapshot = querySnapshots.get(0);
+            QuerySnapshot contactBlocksSnapshot = querySnapshots.get(1);
+
+            if (!userBlocksSnapshot.isEmpty() || !contactBlocksSnapshot.isEmpty()) {
+                // Either the user has blocked the contact or the contact has blocked the user
+                Log.e(TAG, "Either the user has blocked the contact or the contact has blocked the user");
+                Toast.makeText(getContext(), "You cannot message this person", Toast.LENGTH_SHORT).show();
+            } else {
+                // Create a new conversation
+                createNewConversation(db, userRef, contactRef);
+            }
+        }).addOnFailureListener(e -> {
+            // Query failed
+            Log.e(TAG, "Error querying for blocked users", e);
+        });
+    }
 
     private void createNewConversation(FirebaseFirestore db, DocumentReference userRef, DocumentReference contactRef) {
         // Create new conversation document
