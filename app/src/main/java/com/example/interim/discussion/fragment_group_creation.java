@@ -170,6 +170,7 @@ public class fragment_group_creation extends Fragment {
                         String conversationId = documentReference.getId();
                         documentReference.update("unRead", new ArrayList<>());
                         documentReference.update("messages", new ArrayList<>());
+                        //documentReference.update("groupName", groupName.getText().toString());
 
                         groupData.put("conversationId", conversationId);
 
