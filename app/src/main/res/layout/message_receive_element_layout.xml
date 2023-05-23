@@ -54,7 +54,7 @@
                             android:id="@+id/text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="salut j'a sais pas dfn jnvdfj nffnd  b rb b f gbfg dfg    ds gbn    fksng k skng"
+                            android:text="..."
                             android:textSize="16sp">
 
                         </TextView>
