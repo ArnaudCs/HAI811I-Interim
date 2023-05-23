@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.interim.R;
+import com.example.interim.models.Blocked;
 import com.example.interim.models.Offer;
+import com.example.interim.models.Signal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,6 +49,11 @@ public class fragment_my_applications extends Fragment {
     RecyclerView recyclerViewAccepted;
     RecyclerView recyclerViewRejected;
     RecyclerView recyclerViewPending;
+
+    private Runnable mRunnable;
+    private boolean refreshing = false;
+
+    private Handler mHandler;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     LinearLayout acceptedContainer, pendingContainer, rejectedContainer;
@@ -179,6 +187,8 @@ public class fragment_my_applications extends Fragment {
                     });
         }
 
+        startRefreshing();
+
 
         backButtonApplications.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,5 +258,131 @@ public class fragment_my_applications extends Fragment {
                 rejectedContainer.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private void startRefreshing() {
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (userId != null) {
+                    db.collection("Applications")
+                            .whereEqualTo("applicantId", userId)
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot querySnapshot) {
+                                    ArrayList<String> pendingOfferIds = new ArrayList<>();
+                                    ArrayList<String> acceptedOfferIds = new ArrayList<>();
+                                    ArrayList<String> rejectedOfferIds = new ArrayList<>();
+                                    HashMap<Offer, Integer> pendingOffers = new HashMap<>();
+                                    HashMap<Offer, Integer> acceptedOffers = new HashMap<>();
+                                    HashMap<Offer, Integer> rejectedOffers = new HashMap<>();
+                                    List<String> pendingApplicationsIds = new ArrayList<>();
+                                    List<String> rejectedApplicationsIds = new ArrayList<>();
+                                    List<String> acceptedApplicationsIds = new ArrayList<>();
+                                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                        if (documentSnapshot.get("status",Integer.class) == 0) {
+                                            pendingOfferIds.add(documentSnapshot.getString("offerId"));
+                                            pendingApplicationsIds.add(documentSnapshot.getId());
+                                        } else if (documentSnapshot.get("status",Integer.class) == 1) {
+                                            rejectedOfferIds.add(documentSnapshot.getString("offerId"));
+                                            rejectedApplicationsIds.add(documentSnapshot.getId());
+                                        }
+                                        else {
+                                            acceptedOfferIds.add(documentSnapshot.getString("offerId"));
+                                            acceptedApplicationsIds.add(documentSnapshot.getId());
+                                        }
+                                    }
+                                    if(pendingOfferIds.size() > 0) {
+                                        db.collection("Offers")
+                                                .whereIn(FieldPath.documentId(), pendingOfferIds)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                                            Offer offer = documentSnapshot.toObject(Offer.class);
+                                                            pendingOffers.put(offer, 0);
+                                                        }
+                                                        recyclerViewPending.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                        recyclerViewPending.setAdapter(new applicationCard_ViewAdapter(getContext(), pendingOffers, pendingApplicationsIds));
+                                                    }
+                                                });
+                                    }
+                                    if (acceptedOfferIds.size() > 0) {
+                                        db.collection("Offers")
+                                                .whereIn(FieldPath.documentId(), acceptedOfferIds)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                                            Offer offer = documentSnapshot.toObject(Offer.class);
+                                                            acceptedOffers.put(offer, 2);
+                                                        }
+                                                        recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                        recyclerViewAccepted.setAdapter(new applicationCard_ViewAdapter(getContext(), acceptedOffers, acceptedApplicationsIds));
+                                                    }
+                                                });
+                                    }
+                                    if(rejectedOfferIds.size() > 0) {
+                                        db.collection("Offers")
+                                                .whereIn(FieldPath.documentId(), rejectedOfferIds)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                                        for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+
+                                                            Offer offer = documentSnapshot.toObject(Offer.class);
+                                                            rejectedOffers.put(offer,1);
+                                                        }
+                                                        recyclerViewRejected.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                        recyclerViewRejected.setAdapter(new applicationCard_ViewAdapter(getContext(), rejectedOffers, rejectedApplicationsIds));
+                                                    }
+                                                });
+                                    }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle the error
+                                }
+                            });
+                }
+
+                mHandler.postDelayed(this, 3000); // Refresh every 3 seconds
+            }
+        };
+
+        refreshing = true;
+        mHandler.post(mRunnable);
+    }
+    @Override
+    public void onPause() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null) {
+            super.onPause();
+            refreshing = false;
+            System.out.println("Arrêt du refresh des conversations");
+            mHandler.removeCallbacks(mRunnable);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            super.onResume();
+            refreshing = true;
+            System.out.println("Reprise du refresh des conversations");
+            mHandler.post(mRunnable);
+        }
+        super.onResume();
     }
 }

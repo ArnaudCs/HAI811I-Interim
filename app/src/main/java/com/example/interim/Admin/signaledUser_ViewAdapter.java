@@ -72,9 +72,9 @@ public class signaledUser_ViewAdapter extends RecyclerView.Adapter<signaledUser_
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Confirmation");
-                builder.setMessage("Are you sure you want to delete this alert?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setTitle(context.getString(R.string.signaledUserDeleteAlert));
+                builder.setMessage(context.getString(R.string.SignaledUserDeleteText));
+                builder.setPositiveButton(context.getString(R.string.nextBtn), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Delete the blocked item
@@ -89,7 +89,7 @@ public class signaledUser_ViewAdapter extends RecyclerView.Adapter<signaledUser_
                                 });
                     }
                 });
-                builder.setNegativeButton("No", null);
+                builder.setNegativeButton(context.getString(R.string.cancelBtn), null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
 

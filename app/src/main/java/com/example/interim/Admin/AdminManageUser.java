@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,11 @@ public class AdminManageUser extends AppCompatActivity {
     Button blockedUsersBtn, signaledUsersBtn, backUserManagerBtn;
     LinearLayout blockedContainer, signaledContainer;
 
+    private Runnable mRunnable;
+    private boolean refreshing = false;
+
+    private Handler mHandler;
+
     private signaledUser_ViewAdapter mAdapter;
     private blockedUser_ViewAdapter bAdapter;
     List<Signal> signaled;
@@ -43,7 +49,6 @@ public class AdminManageUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_manage_user);
-
         blockedUsersBtn = findViewById(R.id.blockedUsersBtn);
         signaledUsersBtn = findViewById(R.id.signaledUsersBtn);
         blockedContainer = findViewById(R.id.blockedContainer);
@@ -103,6 +108,8 @@ public class AdminManageUser extends AppCompatActivity {
                     }
                 });
 
+        startRefreshing();
+
         blockedUsersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,5 +149,84 @@ public class AdminManageUser extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void startRefreshing() {
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // Récupérer les signalements dans la table "Signaled"
+                db.collection("Signaled")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    signaled.clear(); // Effacer la liste actuelle de signalements
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Signal signalement = document.toObject(Signal.class);
+                                        signalement.setSignalId(document.getId());
+                                        signaled.add(signalement);
+                                    }
+                                    mAdapter.notifyDataSetChanged(); // Mettre à jour le RecyclerView des signalements
+                                } else {
+                                    Log.e("TAG", "Error getting signaled users: ", task.getException());
+                                }
+                            }
+                        });
+
+                // Récupérer les blocages dans la table "Blocked"
+                db.collection("Blocked")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    blockedlist.clear(); // Effacer la liste actuelle de blocages
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Blocked block = document.toObject(Blocked.class);
+                                        block.setBlockId(document.getId());
+                                        blockedlist.add(block);
+                                    }
+                                    bAdapter.notifyDataSetChanged(); // Mettre à jour le RecyclerView des blocages
+                                } else {
+                                    Log.e("TAG", "Error getting blocked users: ", task.getException());
+                                }
+                            }
+                        });
+
+                mHandler.postDelayed(this, 3000); // Programmer la prochaine exécution du Runnable après 3 secondes
+            }
+        };
+
+        refreshing = true;
+        mHandler.post(mRunnable);
+    }
+
+    @Override
+    public void onPause() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null) {
+            super.onPause();
+            refreshing = false;
+            System.out.println("Arrêt du refresh des conversations");
+            mHandler.removeCallbacks(mRunnable);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            super.onResume();
+            refreshing = true;
+            System.out.println("Reprise du refresh des conversations");
+            mHandler.post(mRunnable);
+        }
+        super.onResume();
     }
 }

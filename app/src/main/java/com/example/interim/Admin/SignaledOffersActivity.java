@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,11 @@ public class SignaledOffersActivity extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     RecyclerView recycler;
 
+    private Runnable mRunnable;
+    private boolean refreshing = false;
+
+    private Handler mHandler;
+
     Button backSignaledOffersBtn;
 
     @Override
@@ -46,6 +52,7 @@ public class SignaledOffersActivity extends AppCompatActivity {
         backSignaledOffersBtn = findViewById(R.id.backSignaledOffersBtn);
         recycler = findViewById(R.id.signaledOffesView);
         signaledOffers = new ArrayList<>();
+        startRefreshing();
 
         backSignaledOffersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +85,64 @@ public class SignaledOffersActivity extends AppCompatActivity {
                 });
 
         recycler.setLayoutManager(new LinearLayoutManager(SignaledOffersActivity.this));
+    }
+
+    private void startRefreshing() {
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // Récupérer les offres signalées dans la table "SignaledOffers"
+                db.collection("SignaledOffers")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    signaledOffers.clear(); // Effacer la liste actuelle d'offres signalées
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        SignaledOffer signOffer = document.toObject(SignaledOffer.class);
+                                        signaledOffers.add(signOffer);
+                                    }
+                                    mAdapter.notifyDataSetChanged(); // Mettre à jour le RecyclerView avec les nouvelles offres signalées
+                                } else {
+                                    Log.e("TAG", "Error getting signaled offers: ", task.getException());
+                                }
+                            }
+                        });
+
+                mHandler.postDelayed(this, 3000); // Programmer la prochaine exécution du Runnable après 3 secondes
+            }
+        };
+
+        refreshing = true;
+        mHandler.post(mRunnable);
+    }
+
+    @Override
+    public void onPause() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null) {
+            super.onPause();
+            refreshing = false;
+            System.out.println("Arrêt du refresh des conversations");
+            mHandler.removeCallbacks(mRunnable);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            super.onResume();
+            refreshing = true;
+            System.out.println("Reprise du refresh des conversations");
+            mHandler.post(mRunnable);
+        }
+        super.onResume();
     }
 
 }

@@ -117,6 +117,22 @@ public class applicationOverview_ViewAdapter extends RecyclerView.Adapter<applic
             holder.phoneContainer.setVisibility(View.GONE);
         }
 
+        db.collection("Offers")
+                .document(applicationId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                String jobTitle = document.getString("jobTitle");
+                                holder.jobTitle.setText(jobTitle);
+                            } else {Log.d("TAG", "Le document n'existe pas");}
+                        } else {Log.e("TAG", "Erreur lors de la récupération du document : ", task.getException());}
+                    }
+                });
+
         holder.downloadResumeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

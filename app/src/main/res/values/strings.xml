@@ -329,4 +329,6 @@
     <string name="messagePerDay">Message Sent Per Day (Weekly)</string>
     <string name="deleteApplicationTitle">Delete Application ?</string>
     <string name="deleteApplication">Do you really want to delete this application ?</string>
+    <string name="signaledUserDeleteAlert">Delete Report ?</string>
+    <string name="SignaledUserDeleteText">Do you really want to delete this report ?</string>
 </resources>

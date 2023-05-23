@@ -324,4 +324,6 @@
     <string name="messagePerDay">Message envoyés par jour (1 semaine)</string>
     <string name="deleteApplicationTitle">Supprimer candidature ?</string>
     <string name="deleteApplication">Voulez vous vraiment supprimer cette candidature ?</string>
+    <string name="signaledUserDeleteAlert">Supprimer Signalement ?</string>
+    <string name="SignaledUserDeleteText">Voulez vous vraiment supprimer ce signalement ?</string>
 </resources>
