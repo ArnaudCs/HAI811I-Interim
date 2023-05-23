@@ -63,7 +63,6 @@ public class applicationCard_ViewAdapter extends RecyclerView.Adapter<applicatio
     public void onBindViewHolder(@NonNull applicationCard_ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.jobId = offers.get(position).getId();
         holder.applicationId = applicationIds.get(position);
-        System.out.println("ID " + holder.applicationId);
         holder.jobTitle.setText(offers.get(position).getJobTitle());
         holder.companyName.setText(offers.get(position).getCompanyName());
         holder.jobCategory.setText(offers.get(position).getCategory());

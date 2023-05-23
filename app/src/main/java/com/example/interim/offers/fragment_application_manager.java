@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +20,21 @@ import android.widget.LinearLayout;
 
 import com.example.interim.R;
 import com.example.interim.models.Application;
+import com.example.interim.models.Notification;
 import com.example.interim.models.Offer;
 import com.example.interim.offers.applicationCard_ViewAdapter;
 import com.example.interim.offers.applicationOverview_ViewAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class fragment_application_manager extends Fragment {
 
@@ -42,6 +47,10 @@ public class fragment_application_manager extends Fragment {
     ArrayList<Offer> pendingOffers;
     ArrayList<Offer> acceptedOffers;
     ArrayList<Offer> rejectedOffers;
+
+    private Handler mHandler;
+    private Runnable mRunnable;
+    private boolean refreshing = false;
     RecyclerView pendingDisplay, acceptedDisplay, rejectedDisplay;
 
     public fragment_application_manager() {
@@ -78,6 +87,7 @@ public class fragment_application_manager extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        startRefreshing();
 
         pendingApplicationsBtn = view.findViewById(R.id.pendingApplicationsBtn);
         acceptedApplications = view.findViewById(R.id.acceptedApplications);
@@ -195,6 +205,86 @@ public class fragment_application_manager extends Fragment {
                 rejectedContainer.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private void startRefreshing() {
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (userId != null) {
+                    db.collection("Applications")
+                            .whereEqualTo("offerId", jobId)
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot querySnapshot) {
+                                    ArrayList<Application> pendingApp = new ArrayList<>();
+                                    ArrayList<Application> acceptedApp = new ArrayList<>();
+                                    ArrayList<Application> rejectedApp = new ArrayList<>();
+                                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                                        Application app = documentSnapshot.toObject(Application.class);
+                                        app.setId(documentSnapshot.getId());
+                                        int status = app.getStatus();
+                                        if (status == 0) {
+                                            pendingApp.add(app);
+                                        } else if (status == 1) {
+                                            rejectedApp.add(app);
+                                        } else if (status == 2) {
+                                            acceptedApp.add(app);
+                                        }
+                                    }
+                                    pendingDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    pendingDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), pendingApp, getActivity()));
+                                    rejectedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    rejectedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), rejectedApp, getActivity()));
+                                    acceptedDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    acceptedDisplay.setAdapter(new applicationOverview_ViewAdapter(getContext(), acceptedApp, getActivity()));
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle the error
+                                }
+                            });
+                }
+
+                // Programmer la prochaine exécution du Runnable après 2 secondes
+                mHandler.postDelayed(this, 2000);
+            }
+        };
+
+        refreshing = true;
+        mHandler.post(mRunnable);
+    }
+
+
+
+    @Override
+    public void onPause() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null) {
+            super.onPause();
+            refreshing = false;
+            System.out.println("Arrêt du refresh des conversations");
+            mHandler.removeCallbacks(mRunnable);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            super.onResume();
+            refreshing = true;
+            System.out.println("Reprise du refresh des conversations");
+            mHandler.post(mRunnable);
+        }
+        super.onResume();
     }
 
 }
