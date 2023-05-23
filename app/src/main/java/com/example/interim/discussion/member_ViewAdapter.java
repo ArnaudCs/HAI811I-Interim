@@ -89,4 +89,6 @@ public class member_ViewAdapter extends RecyclerView.Adapter<member_ViewHolder> 
             notifyDataSetChanged();
         }
     }
+
+    public ArrayList<String> getMembersList() {return membersList;}
 }

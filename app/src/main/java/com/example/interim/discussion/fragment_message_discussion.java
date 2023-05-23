@@ -138,7 +138,13 @@ public class fragment_message_discussion extends Fragment {
                                     List<String> messageIds = (List<String>) document.get("messages");
                                     List<DocumentReference> participants = (List<DocumentReference>) document.get("participants");
                                     if (participants != null) {
-                                        getParticipantsNames(participants, convName, userId);
+                                        if(participants.size() > 2) {
+                                            convName.setText(document.getString("groupName"));
+                                        }
+                                        else {
+                                            getParticipantsNames(participants, convName, userId);
+                                        }
+
                                         List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
                                         if (unReadRefs != null) {
                                             for (int i = unReadRefs.size() - 1; i >= 0; i--) {
@@ -602,7 +608,7 @@ public class fragment_message_discussion extends Fragment {
                         List<String> messageIds = (List<String>) document.get("messages");
 
                         // Get the list of messages using the message IDs
-                        if (messageIds != null) {
+                        if (messageIds.size() != 0) {
                             CollectionReference messagesRef = db.collection("Messages");
 
                             Query query = messagesRef.whereIn(FieldPath.documentId(), messageIds)
