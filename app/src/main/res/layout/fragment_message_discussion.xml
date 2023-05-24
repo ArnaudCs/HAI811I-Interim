@@ -36,7 +36,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/baseline_arrow_circle_left_24"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="?colorOnPrimary"
                     android:drawableTint="#FBFAFA"
                     android:foregroundTint="#FFFFFF"
                     app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Alexandre"
-                    android:textColor="@color/white"
+                    android:textColor="?colorOnPrimary"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="@id/layoutMain" />
@@ -73,7 +73,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/baseline_info_24"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="?colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,7 +82,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/baseline_keyboard_double_arrow_up_24"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="?colorOnPrimary"
                     android:drawableTint="#FBFAFA"
                     android:visibility="gone"
                     android:foregroundTint="#FFFFFF"
@@ -115,6 +115,7 @@
                     android:textStyle="bold"
                     android:textSize="12sp"
                     android:stateListAnimator="@null"
+                    android:backgroundTint="?colorOnPrimary"
                     android:background="@drawable/navigation_bar">
 
                 </Button>
@@ -135,6 +136,7 @@
                     android:textStyle="bold"
                     android:textSize="12sp"
                     android:stateListAnimator="@null"
+                    android:backgroundTint="?colorOnPrimary"
                     android:background="@drawable/navigation_bar">
 
                 </Button>
@@ -155,6 +157,7 @@
                     android:textStyle="bold"
                     android:textSize="12sp"
                     android:stateListAnimator="@null"
+                    android:backgroundTint="?colorOnPrimary"
                     android:background="@drawable/navigation_bar">
                 </Button>
 
@@ -218,6 +221,7 @@
                     android:maxLength="200"
                     android:textColorHint="#838383"
                     android:textSize="20sp"
+                    android:textColor="@color/black"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <LinearLayout
