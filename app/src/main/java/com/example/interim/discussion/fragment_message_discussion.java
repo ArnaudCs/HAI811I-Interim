@@ -589,51 +589,68 @@ public class fragment_message_discussion extends Fragment {
 
     private void getLastMessage() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference messagesRef = db.collection("Messages");
-
-        messagesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
+        conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    int numMessages = task.getResult().size();
-                    System.out.println("Nombre de messages dans la base de données : " + numMessages);
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        List<String> messageIds = (List<String>) document.get("messages");
 
-                    Query lastMessageQuery = messagesRef.orderBy("date", Query.Direction.DESCENDING).limit(1);
-                    lastMessageQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                List<DocumentSnapshot> documents = task.getResult().getDocuments();
-                                if (!documents.isEmpty()) {
-                                    DocumentSnapshot lastMessageDoc = documents.get(0);
-                                    String senderId = lastMessageDoc.getString("sender");
-                                    String text = lastMessageDoc.getString("text");
-                                    Date date = lastMessageDoc.getDate("date");
-                                    Message lastMessage = new Message(senderId, date, text);
+                        // Get the list of messages using the message IDs
+                        if (messageIds.size() != 0) {
+                            CollectionReference messagesRef = db.collection("Messages");
 
-                                    boolean isDuplicate = false;
-                                    for (Message message : messages) {
-                                        if (message.getmId() == lastMessage.getmId() &&
-                                                message.getDate().equals(lastMessage.getDate()) &&
-                                                message.getText().equals(lastMessage.getText())) {
-                                            isDuplicate = true;
-                                            break;
+                            Query query = messagesRef.whereIn(FieldPath.documentId(), messageIds)
+                                    .orderBy("date", Query.Direction.DESCENDING)
+                                    .limit(1);
+
+                            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                                        // Do something with the last message
+                                        if (!documents.isEmpty()) {
+                                            DocumentSnapshot lastMessageDoc = documents.get(0);
+                                            String senderId = lastMessageDoc.getString("sender");
+                                            String text = lastMessageDoc.getString("text");
+                                            Date date = lastMessageDoc.getDate("date");
+                                            Message lastMessage = new Message(senderId, date, text);
+
+                                            boolean isDuplicate = false;
+                                            for (Message message : messages) {
+                                                if (message.getmId() == lastMessage.getmId() &&
+                                                        message.getDate().equals(lastMessage.getDate()) &&
+                                                        message.getText().equals(lastMessage.getText())) {
+                                                    isDuplicate = true;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (!isDuplicate) {
+                                                messages.add(lastMessage);
+                                                int position = recyclerView.getAdapter().getItemCount();
+                                                recyclerView.getAdapter().notifyItemInserted(position);
+                                                recyclerView.smoothScrollToPosition(messages.size());
+                                            }
                                         }
                                     }
-
-                                    if (!isDuplicate) {
-                                        messages.add(lastMessage);
-                                        int position = recyclerView.getAdapter().getItemCount();
-                                        recyclerView.getAdapter().notifyItemInserted(position);
-                                        recyclerView.smoothScrollToPosition(messages.size());
-                                    }
                                 }
-                            }
+                            });
+                        } else {
+                            // There are no messages in the conversation
                         }
-                    });
+                    } else {
+                        // The conversation document does not exist
+                    }
+                } else {
+                    // Handle failure to retrieve the conversation document
                 }
             }
         });
+
     }
 
 
