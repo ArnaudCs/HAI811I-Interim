@@ -35,6 +35,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class fragment_profil_user extends Fragment {
 
@@ -102,7 +103,14 @@ public class fragment_profil_user extends Fragment {
                         phoneNumberTextView.setText(phoneNumber);
                         birthdate.setText(birth);
                         emailTextView.setText(email);
-                        savedOffers.setText("0" + getResources().getString(R.string.savedOffersDisplay));
+                        List<String> likedOffers = (List<String>) document.get("likedOffers");
+                        if (likedOffers != null) {
+                            int likedOffersSize = likedOffers.size();
+                            savedOffers.setText(String.valueOf(likedOffersSize) + getResources().getString(R.string.savedOffersDisplay));
+                        } else {
+                            savedOffers.setText("0 " +getResources().getString(R.string.savedOffersDisplay));
+                        }
+
                     }
                 }
             });
