@@ -33,7 +33,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="colorAccent">@color/primary_red</item>
         <!-- Customize your theme here. -->
-        <item name="placeholderTextColor">@color/white</item>
+        <item name="placeholderTextColor">@color/white_less_opaque</item>
         <item name="hintTextColor">@color/white_less_opaque</item>
         <item name="android:textColor">@color/white</item>
         <item name="boxBackgroundColor">@color/dark_darkgrey</item>

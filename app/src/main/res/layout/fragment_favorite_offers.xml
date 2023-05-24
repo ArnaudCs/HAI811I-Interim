@@ -37,7 +37,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/baseline_arrow_circle_left_24"
-                        android:backgroundTint="#FFFFFF"
+                        android:backgroundTint="?colorOnPrimary"
                         android:drawableTint="#FBFAFA"
                         android:foregroundTint="#FFFFFF"
                         app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +50,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
+                    android:backgroundTint="?colorOnPrimary"
                     android:background="@drawable/navigation_bar"
                     android:gravity="left">
 
@@ -70,22 +71,31 @@
                             android:maxLength="30"
                             android:background="@null"
                             android:hint="@string/searchFavorite"
-                            android:textColorHint="#838383"
+
+                            android:textColorHint="?placeholderTextColor"
                             android:textSize="18sp"
-                            tools:ignore="TouchTargetSizeCheck"></EditText>
+                            tools:ignore="TouchTargetSizeCheck" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="left|center">
-
+                            android:layout_marginRight="5dp"
+                            android:gravity="center">
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="5dp"
+                                android:orientation="vertical"
+                                android:background="@drawable/redbutton">
                             <Button
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/baseline_search_24"
-                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
-                        </LinearLayout>
+                                android:backgroundTint="?colorOnPrimary"
+                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            </LinearLayout>
+                            </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -100,16 +110,16 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/baseline_filter_list_24"
-                        android:backgroundTint="#FFFFFF"
-                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck"></Button>
+                        android:backgroundTint="?colorOnPrimary"
+                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                     <Button
                         android:id="@+id/closeFilterFavorites"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/baseline_keyboard_double_arrow_up_24"
-                        android:backgroundTint="#FFFFFF"
-                        android:visibility="gone"></Button>
+                        android:backgroundTint="?colorOnPrimary"
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -131,6 +141,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:background="@drawable/navigation_bar"
+                        android:backgroundTint="?colorOnPrimary"
                         android:layout_height="wrap_content">
 
                         <Spinner
@@ -181,6 +192,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
+                                android:backgroundTint="?colorOnPrimary"
                                 android:hint="@string/CityofSearch"
                                 android:inputType="text"
                                 android:minLines="1"
@@ -229,6 +241,7 @@
                                 android:maxLength="5"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/navigation_bar"
+                                android:backgroundTint="?colorOnPrimary"
                                 android:hint="@string/startPriceFilter"
                                 android:inputType="numberSigned" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -266,6 +279,7 @@
                                 android:layout_height="wrap_content"
                                 android:maxLength="5"
                                 android:background="@drawable/navigation_bar"
+                                android:backgroundTint="?colorOnPrimary"
                                 android:hint="@string/endPriceFilter"
                                 android:inputType="numberSigned" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -292,6 +306,7 @@
                         android:textStyle="bold"
                         android:stateListAnimator="@null"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="?colorOnPrimary"
                         android:background="@drawable/navigation_bar">
 
                     </Button>
