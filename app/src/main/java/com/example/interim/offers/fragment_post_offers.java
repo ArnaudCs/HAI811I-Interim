@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.interim.Utils.CategoryRepository;
@@ -66,6 +68,7 @@ public class fragment_post_offers extends Fragment {
     private Calendar today;
     private Calendar calendarStart;
     private Calendar calendarEnd;
+    private static final int REQUEST_WRITE_STORAGE = 1;
     CategoryRepository categoryMapInstance = new CategoryRepository();
 
     public fragment_post_offers() {
@@ -398,7 +401,6 @@ public class fragment_post_offers extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         if (requestCode == PICK_JSON_FILE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            // Récupérer l'URI du fichier sélectionné
             Uri fileUri = data.getData();
 
             try {
@@ -529,8 +531,7 @@ public class fragment_post_offers extends Fragment {
                                 });
                             }
 
-
-                            if (offerList.size() == offerList.size()) {
+                            if (offerList.size() == offersCount) {
                                 Intent celebrationActivity = new Intent(getActivity(), CelebrationActivity.class);
                                 startActivity(celebrationActivity);
                                 getActivity().finish();
@@ -669,7 +670,6 @@ public class fragment_post_offers extends Fragment {
         String folderPath = "jsontemplate/";
         StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(folderPath + fileName);
         File localFile = new File(Environment.getExternalStorageDirectory().getPath(), fileName);
-
         storageRef.getFile(localFile)
                 .addOnSuccessListener(taskSnapshot -> {
                     showDialog(getString(R.string.downloadedFileSuccess), getString(R.string.downloadSuccessText) + localFile.getPath());
