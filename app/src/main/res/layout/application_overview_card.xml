@@ -48,7 +48,7 @@
                                 android:id="@+id/applicantName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="John Doe"
+                                android:text=""
                                 android:textAlignment="textStart"
                                 android:textColor="?colorOnPrimary"
                                 android:textSize="26sp"
@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="john.doe@gmail.com"
+                        android:text=""
                         android:textColor="?colorOnPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -99,12 +99,12 @@
                         android:id="@+id/applicantNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/baseline_date_range_24"
+                        android:drawableStart="@drawable/baseline_phone_iphone_24"
                         android:drawablePadding="5dp"
                         android:drawableTint="?colorOnPrimary"
                         android:gravity="left|center"
                         android:paddingTop="10dp"
-                        android:text="06 06 06 06 06"
+                        android:text=""
                         android:textColor="?colorOnPrimary"
                         android:textSize="20dp" />
 
@@ -126,7 +126,7 @@
                     android:drawableStart="@drawable/baseline_tab_24"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/primary_red"
-                    android:text="Web Developper"
+                    android:text=""
                     android:textColor="?colorOnSecondary"
                     android:textSize="16dp" />
 
@@ -148,7 +148,7 @@
                     android:drawableStart="@drawable/baseline_access_time_24"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/primary_red"
-                    android:text="12/01/2023"
+                    android:text=""
                     android:textColor="?colorOnSecondary"
                     android:textSize="16dp" />
 
@@ -170,7 +170,7 @@
                     android:drawableStart="@drawable/baseline_pin_drop_24"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/primary_red"
-                    android:text="Montpellier"
+                    android:text=""
                     android:textColor="?colorOnSecondary"
                     android:textSize="16dp" />
 
