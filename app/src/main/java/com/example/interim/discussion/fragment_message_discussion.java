@@ -337,7 +337,6 @@ public class fragment_message_discussion extends Fragment {
                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                         Log.d(TAG, "Conversation deleted !");
                                                                         getActivity().finish();
-                                                                    }
                                                                         mHandler.removeCallbacks(mRunnable);                                                                    }
                                                                 });
                                                             }
