@@ -255,7 +255,6 @@ public class fragment_mission_description extends Fragment {
                 IMapController mapController = map.getController();
                 mapController.setCenter(startPoint);
                 mapController.setZoom(7.0);
-                System.out.println("Le point est --------------------" + startPoint);
                 ArrayList<OverlayItem> items = new ArrayList<>();
                 OverlayItem position = new OverlayItem("Lieu de l'offre", "", startPoint);
                 Drawable m = position.getMarker(0);

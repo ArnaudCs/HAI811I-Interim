@@ -52,7 +52,7 @@ public class fragment_group_creation extends Fragment {
 
     RecyclerView userRecycler;
 
-    TextInputEditText textMember1;
+    TextInputEditText textMember1, textGroupName;
     private ConstraintLayout groupCreationCl;
     FirebaseFirestore db;
 
@@ -76,6 +76,7 @@ public class fragment_group_creation extends Fragment {
         backBtnGroupCreation = view.findViewById(R.id.backBtnGroupCreation);
         userRecycler = view.findViewById(R.id.userRecycler);
         textMember1 = view.findViewById(R.id.textMember1);
+        textGroupName = view.findViewById(R.id.textGroupName);
 
         memberAdapter = new member_ViewAdapter(requireContext());
         memberAdapter.updateMembersList(null);
@@ -170,20 +171,22 @@ public class fragment_group_creation extends Fragment {
                         String conversationId = documentReference.getId();
                         documentReference.update("unRead", new ArrayList<>());
                         documentReference.update("messages", new ArrayList<>());
-                        //documentReference.update("groupName", groupName.getText().toString());
+                        documentReference.update("groupName", textGroupName.getText().toString());
 
                         groupData.put("conversationId", conversationId);
 
                         db.collection("Groups").add(groupData).addOnSuccessListener(groupDocumentReference -> {
-                            // Group document was successfully created
                             String groupId = groupDocumentReference.getId();
-                            // Perform further operations with the group ID and conversation ID
-                            // ...
                             Log.d(TAG, "New group created with ID: " + groupId + ", Conversation ID: " + conversationId);
                         }).addOnFailureListener(e -> {
                             // Failed to create the group document
                             Log.e(TAG, "Error creating group document: " + e.getMessage());
                         });
+
+                        Intent groupCreationCeleb = new Intent(getContext(), CelebrationGroupCreationActivity.class);
+                        getContext().startActivity(groupCreationCeleb);
+                        getActivity().finish();
+
                     }).addOnFailureListener(e -> {
                         // Failed to create the conversation document
                         Log.e(TAG, "Error creating conversation document: " + e.getMessage());

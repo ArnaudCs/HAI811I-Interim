@@ -331,4 +331,5 @@
     <string name="deleteApplication">Do you really want to delete this application ?</string>
     <string name="signaledUserDeleteAlert">Delete Report ?</string>
     <string name="SignaledUserDeleteText">Do you really want to delete this report ?</string>
+    <string name="groupName">Enter Group Name</string>
 </resources>

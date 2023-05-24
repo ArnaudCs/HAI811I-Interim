@@ -105,6 +105,44 @@
                 android:paddingBottom="30dp"
                 android:weightSum="6">
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutGroupName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/groupName"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/primary_red"
+                    app:boxStrokeErrorColor="@color/strokeError"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/primary_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:placeholderText="GroupName123"
+                    app:startIconDrawable="@drawable/baseline_groups_2_24"
+                    app:startIconTint="@color/primary_red"
+                    tools:layout_editor_absoluteY="374dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textGroupName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="30dp"
+                android:weightSum="6"
+                android:baselineAligned="false">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -115,7 +153,7 @@
                         android:id="@+id/layoutUser1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Mail User 1"
+                        android:hint="@string/participantMail"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="@color/primary_red"
                         app:boxStrokeErrorColor="@color/strokeError"
