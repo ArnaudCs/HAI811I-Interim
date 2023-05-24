@@ -31,6 +31,7 @@ import com.example.interim.R;
 import com.example.interim.models.Blocked;
 import com.example.interim.models.Message;
 import com.example.interim.models.Signal;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,6 +47,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -59,17 +61,15 @@ public class fragment_message_discussion extends Fragment {
     List<Message> messages;
     private boolean isRefreshing = false;
 
-
     private Handler mHandler;
 
     Message lastMessageUnread;
     private int numMessages;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     RecyclerView recyclerView;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Boolean group = false;
     String senderId;
-
     Button deleteBtn, signalUserBtn, blockUserBtn;
     private Runnable mRunnable;
     public fragment_message_discussion() {
@@ -88,12 +88,14 @@ public class fragment_message_discussion extends Fragment {
         super.onDestroyView();
         // Arrêter le rafraîchissement si l'état est en cours de rafraîchissement
         if (isRefreshing) {
-            stopRefreshingConversation();
+            mHandler.removeCallbacks(mRunnable);
         }
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         conversationId = DataHolder.getInstance().getConversationId();
         TextView convName = view.findViewById(R.id.convName);
         Button infosBtn = view.findViewById(R.id.infosBtn);
@@ -108,7 +110,6 @@ public class fragment_message_discussion extends Fragment {
         deleteBtn = view.findViewById(R.id.deleteBtn);
         signalUserBtn = view.findViewById(R.id.signalUserBtn);
         blockUserBtn = view.findViewById(R.id.blockUserBtn);
-
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -128,7 +129,6 @@ public class fragment_message_discussion extends Fragment {
                     } else {
                         type[0] = "Pros";
                     }
-
                     // Retrieve conversation using the updated type value
                     conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -337,8 +337,8 @@ public class fragment_message_discussion extends Fragment {
                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                         Log.d(TAG, "Conversation deleted !");
                                                                         getActivity().finish();
-                                                                        stopRefreshingConversation();
                                                                     }
+                                                                        mHandler.removeCallbacks(mRunnable);                                                                    }
                                                                 });
                                                             }
                                                         }
@@ -382,8 +382,7 @@ public class fragment_message_discussion extends Fragment {
                                                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                                                 Log.d(TAG, "Conversation deleted !");
                                                                                                 getActivity().finish();
-                                                                                                stopRefreshingConversation();
-                                                                                            }
+                                                                                                mHandler.removeCallbacks(mRunnable);                                                                                            }
                                                                                         });
                                                                                     }
                                                                                 }
@@ -417,7 +416,6 @@ public class fragment_message_discussion extends Fragment {
                 dialog.show();
             }
         });
-
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -454,7 +452,6 @@ public class fragment_message_discussion extends Fragment {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 Log.d(TAG, "Conversation deleted !");
                                                 getActivity().finish();
-                                                stopRefreshingConversation();
                                             }
                                         });
                                     }
@@ -478,7 +475,7 @@ public class fragment_message_discussion extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
-                stopRefreshingConversation();
+                mHandler.removeCallbacks(mRunnable);
             }
         });
 
@@ -525,48 +522,48 @@ public class fragment_message_discussion extends Fragment {
                                 DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
                                 conversationRef.update("lastMessage", text);
                                 conversationRef.update("messages", FieldValue.arrayUnion(messageRef))
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                    if (task.isSuccessful()) {
-                                                        DocumentSnapshot document = task.getResult();
-                                                        if (document.exists()) {
-                                                            List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
-                                                            List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
-                                                            if (unReadRefs == null) {
-                                                                unReadRefs = new ArrayList<>();
-                                                            }
-                                                            for (DocumentReference participantRef : participantsRefs) {
-                                                                String participantId = participantRef.getId();
-                                                                if (!participantId.equals(userId)) {
-                                                                    boolean userAlreadyRead = false;
-                                                                    for (DocumentReference unReadRef : unReadRefs) {
-                                                                        if (unReadRef.getId().equals(participantId)) {
-                                                                            userAlreadyRead = true;
-                                                                            break;
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
+                                                                List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
+                                                                if (unReadRefs == null) {
+                                                                    unReadRefs = new ArrayList<>();
+                                                                }
+                                                                for (DocumentReference participantRef : participantsRefs) {
+                                                                    String participantId = participantRef.getId();
+                                                                    if (!participantId.equals(userId)) {
+                                                                        boolean userAlreadyRead = false;
+                                                                        for (DocumentReference unReadRef : unReadRefs) {
+                                                                            if (unReadRef.getId().equals(participantId)) {
+                                                                                userAlreadyRead = true;
+                                                                                break;
+                                                                            }
                                                                         }
-                                                                    }
-                                                                    if (!userAlreadyRead) {
-                                                                        conversationRef.update("unRead", FieldValue.arrayUnion(participantRef));
+                                                                        if (!userAlreadyRead) {
+                                                                            conversationRef.update("unRead", FieldValue.arrayUnion(participantRef));
+                                                                        }
                                                                     }
                                                                 }
                                                             }
                                                         }
+
                                                     }
+                                                });
 
-                                                }
-                                            });
-
-                                            int position = recyclerView.getAdapter().getItemCount();
-                                            recyclerView.getAdapter().notifyItemInserted(position);
-                                            messages.add(message);
-                                            recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages, group));
-                                            messageText.getText().clear();
-                                        }
-                                    });
+                                                int position = recyclerView.getAdapter().getItemCount();
+                                                recyclerView.getAdapter().notifyItemInserted(position);
+                                                messages.add(message);
+                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages, false));
+                                                messageText.getText().clear();
+                                            }
+                                        });
                             }
                         });
             }
@@ -589,79 +586,55 @@ public class fragment_message_discussion extends Fragment {
         mHandler.post(mRunnable);
     }
 
-
-    private void stopRefreshingConversation() {
-        isRefreshing = false;
-        //System.out.println("Stopping du refresh");
-        mHandler.removeCallbacks(mRunnable);
-    }
-
     // Fonction pour actualiser les messages depuis la base de données
 
     private void getLastMessage() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
-        conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        CollectionReference messagesRef = db.collection("Messages");
+
+        messagesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        List<String> messageIds = (List<String>) document.get("messages");
+                    int numMessages = task.getResult().size();
+                    System.out.println("Nombre de messages dans la base de données : " + numMessages);
 
-                        // Get the list of messages using the message IDs
-                        if (messageIds.size() != 0) {
-                            CollectionReference messagesRef = db.collection("Messages");
+                    Query lastMessageQuery = messagesRef.orderBy("date", Query.Direction.DESCENDING).limit(1);
+                    lastMessageQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                                if (!documents.isEmpty()) {
+                                    DocumentSnapshot lastMessageDoc = documents.get(0);
+                                    String senderId = lastMessageDoc.getString("sender");
+                                    String text = lastMessageDoc.getString("text");
+                                    Date date = lastMessageDoc.getDate("date");
+                                    Message lastMessage = new Message(senderId, date, text);
 
-                            Query query = messagesRef.whereIn(FieldPath.documentId(), messageIds)
-                                    .orderBy("date", Query.Direction.DESCENDING)
-                                    .limit(1);
-
-                            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        List<DocumentSnapshot> documents = task.getResult().getDocuments();
-                                        // Do something with the last message
-                                        if (!documents.isEmpty()) {
-                                            DocumentSnapshot lastMessageDoc = documents.get(0);
-                                            String senderId = lastMessageDoc.getString("sender");
-                                            String text = lastMessageDoc.getString("text");
-                                            Date date = lastMessageDoc.getDate("date");
-                                            Message lastMessage = new Message(senderId, date, text);
-
-                                            boolean isDuplicate = false;
-                                            for (Message message : messages) {
-                                                if (message.getmId() == lastMessage.getmId() &&
-                                                        message.getDate().equals(lastMessage.getDate()) &&
-                                                        message.getText().equals(lastMessage.getText())) {
-                                                    isDuplicate = true;
-                                                    break;
-                                                }
-                                            }
-
-                                            if (!isDuplicate) {
-                                                messages.add(lastMessage);
-                                                int position = recyclerView.getAdapter().getItemCount();
-                                                recyclerView.getAdapter().notifyItemInserted(position);
-                                                recyclerView.smoothScrollToPosition(messages.size());
-                                            }
+                                    boolean isDuplicate = false;
+                                    for (Message message : messages) {
+                                        if (message.getmId() == lastMessage.getmId() &&
+                                                message.getDate().equals(lastMessage.getDate()) &&
+                                                message.getText().equals(lastMessage.getText())) {
+                                            isDuplicate = true;
+                                            break;
                                         }
                                     }
+
+                                    if (!isDuplicate) {
+                                        messages.add(lastMessage);
+                                        int position = recyclerView.getAdapter().getItemCount();
+                                        recyclerView.getAdapter().notifyItemInserted(position);
+                                        recyclerView.smoothScrollToPosition(messages.size());
+                                    }
                                 }
-                            });
-                        } else {
-                            // There are no messages in the conversation
+                            }
                         }
-                    } else {
-                        // The conversation document does not exist
-                    }
-                } else {
-                    // Handle failure to retrieve the conversation document
+                    });
                 }
             }
         });
-
     }
 
 
@@ -678,28 +651,22 @@ public class fragment_message_discussion extends Fragment {
                     if (documentSnapshot.exists()) {
                         String name = documentSnapshot.getString("name");
                         String uid = documentSnapshot.getId();
-                        if (!uid.equals(userId)) {
+                        if(!uid.equals(userId)) {
                             if (name != null) {
                                 sb.append(name);
                                 if (finalI < participants.size() - 1) {
                                     sb.append(", ");
                                 }
-
-
                                 // Remove trailing ", " if it exists
                                 if (sb.length() >= 2 && sb.substring(sb.length() - 2).equals(", ")) {
                                     sb.delete(sb.length() - 2, sb.length());
                                 }
-
-                                convName.setText(sb.toString());
                             }
                         }
                     }
                 }
             });
         }
-
-
     }
 
 
@@ -713,5 +680,4 @@ public class fragment_message_discussion extends Fragment {
         }
         return chunks;
     }
-
 }
