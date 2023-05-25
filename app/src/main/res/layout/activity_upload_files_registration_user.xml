@@ -39,6 +39,7 @@
             android:layout_margin="20dp"
             android:textSize="26dp"
             android:textStyle="bold"
+            android:textColor="?colorOnSecondary"
             android:text="@string/uploadYourFiles">
 
         </TextView>
@@ -74,7 +75,7 @@
                     android:textAlignment="center"
                     android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
+                    android:textColor="?colorOnPrimary"
                     android:text="@string/myResume">
 
                 </TextView>
@@ -97,7 +98,7 @@
                     android:textSize="18sp"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:textColor="@color/white"
+                    android:textColor="?colorOnPrimary"
                     android:text="@string/resumeNotFound">
                 </TextView>
 
@@ -124,6 +125,7 @@
                     android:drawableTint="@color/primary_red"
                     android:drawablePadding="10dp"
                     android:textSize="13sp"
+                    android:backgroundTint="?boxBackgroundColor"
                     android:background="@drawable/navigation_bar">
                 </Button>
 
@@ -163,7 +165,7 @@
                     android:textAlignment="center"
                     android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
+                    android:textColor="?colorOnPrimary"
                     android:text="@string/myCoverLetter">
 
                 </TextView>
@@ -186,7 +188,7 @@
                     android:textSize="18sp"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:textColor="@color/white"
+                    android:textColor="?colorOnPrimary"
                     android:text="@string/coverNotFound">
 
                 </TextView>
@@ -214,6 +216,7 @@
                     android:drawableTint="@color/primary_red"
                     android:drawablePadding="10dp"
                     android:textSize="13sp"
+                    android:backgroundTint="?boxBackgroundColor"
                     android:background="@drawable/navigation_bar">
                 </Button>
 
@@ -231,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/redbutton"
-                android:textColor="@color/white"
+                android:textColor="?colorOnPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:paddingLeft="20dp"
