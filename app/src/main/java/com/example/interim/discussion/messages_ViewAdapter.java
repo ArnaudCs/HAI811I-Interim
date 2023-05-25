@@ -31,7 +31,6 @@ public class messages_ViewAdapter extends RecyclerView.Adapter<messages_ViewHold
     String senderName;
     String senderId;
 
-    Boolean group = false;
     private static final int VIEW_TYPE_SENT = 0;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -44,10 +43,9 @@ public class messages_ViewAdapter extends RecyclerView.Adapter<messages_ViewHold
         return messages;
     }
 
-    public messages_ViewAdapter(Context context, List<Message> messages, Boolean group) {
+    public messages_ViewAdapter(Context context, List<Message> messages) {
         this.context = context;
         this.messages = messages;
-        this.group = group;
         this.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
@@ -70,48 +68,7 @@ public class messages_ViewAdapter extends RecyclerView.Adapter<messages_ViewHold
         String formattedDate = formatter.format(messages.get(position).getDate());
         senderId = messages.get(position).getSender();
         holder.date.setText(formattedDate);
-        if(group){
-            if(!messages.get(position).getSender().equals(userId)){
-                db.collection("Users").document(senderId).get().addOnCompleteListener(
-                        new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult();
-                                    if (document.exists()) {
-                                        senderName = document.getString("firstName");
-                                        holder.text.setText(senderName + " : " + messages.get(position).getText().toString());
-                                    }
-                                    else {
-                                        db.collection("Pros").document(senderId).get().addOnCompleteListener(
-                                                new OnCompleteListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                        if (task.isSuccessful()) {
-                                                            DocumentSnapshot document = task.getResult();
-                                                            if (document.exists()) {
-                                                                senderName = document.getString("companyName");
-                                                                holder.text.setText(senderName + " : " + messages.get(position).getText().toString());
-                                                            }
-                                                            else {
-                                                                Log.e(TAG, "Name not found ! ", task.getException());
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                        );
-                                    }
-                                }
-                            }
-                        }
-                );
-            } else {
-                holder.text.setText(messages.get(position).getText().toString());
-            }
-        } else {
-            holder.text.setText(messages.get(position).getText().toString());
-        }
-
+        holder.text.setText(messages.get(position).getText().toString());
     }
 
     @Override

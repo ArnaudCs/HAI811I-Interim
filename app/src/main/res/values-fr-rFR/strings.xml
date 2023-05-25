@@ -327,4 +327,5 @@
     <string name="signaledUserDeleteAlert">Supprimer Signalement ?</string>
     <string name="SignaledUserDeleteText">Voulez vous vraiment supprimer ce signalement ?</string>
     <string name="groupName">Nom du groupe</string>
+    <string name="entermessagetoast">Entrer un message</string>
 </resources>

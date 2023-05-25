@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,7 +69,6 @@ public class fragment_message_discussion extends Fragment {
 
     RecyclerView recyclerView;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    Boolean group = false;
     String senderId;
     Button deleteBtn, signalUserBtn, blockUserBtn;
     private Runnable mRunnable;
@@ -116,7 +116,7 @@ public class fragment_message_discussion extends Fragment {
 
         // Get the list of message IDs from the conversation document
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
-        convName.setText("Participant names");
+        convName.setText("Contact");
         final String[] type = new String[1];
         type[0] = "Users";
         db.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -140,7 +140,6 @@ public class fragment_message_discussion extends Fragment {
                                     List<DocumentReference> participants = (List<DocumentReference>) document.get("participants");
                                     if (participants != null) {
                                         if(participants.size() > 2) {
-                                            group = true;
                                             convName.setText(document.getString("groupName"));
                                         }
                                         else {
@@ -194,7 +193,7 @@ public class fragment_message_discussion extends Fragment {
                                                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                                                 layoutManager.setStackFromEnd(true);
                                                 recyclerView.setLayoutManager(layoutManager);
-                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages, group));
+                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
 
                                                 recyclerView.smoothScrollToPosition(messages.size());
                                                 startRefreshingMessages();
@@ -504,68 +503,72 @@ public class fragment_message_discussion extends Fragment {
         sendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMsg.playAnimation();
-                // Get the message text
-                String text = messageText.getText().toString();
+                if(!TextUtils.isEmpty(messageText.getText())){
+                    sendMsg.playAnimation();
+                    // Get the message text
+                    String text = messageText.getText().toString();
 
-                // Create a new Message object
-                Message message = new Message(userId, new Date(), text);
+                    // Create a new Message object
+                    Message message = new Message(userId, new Date(), text);
 
-                // Add the message to the Messages collection
-                db.collection("Messages").add(message)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference messageRef) {
-                                String messageId = messageRef.getId();
-                                // Add a reference to the message in the conversation document
-                                DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
-                                conversationRef.update("lastMessage", text);
-                                conversationRef.update("messages", FieldValue.arrayUnion(messageRef))
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                        if (task.isSuccessful()) {
-                                                            DocumentSnapshot document = task.getResult();
-                                                            if (document.exists()) {
-                                                                List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
-                                                                List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
-                                                                if (unReadRefs == null) {
-                                                                    unReadRefs = new ArrayList<>();
-                                                                }
-                                                                for (DocumentReference participantRef : participantsRefs) {
-                                                                    String participantId = participantRef.getId();
-                                                                    if (!participantId.equals(userId)) {
-                                                                        boolean userAlreadyRead = false;
-                                                                        for (DocumentReference unReadRef : unReadRefs) {
-                                                                            if (unReadRef.getId().equals(participantId)) {
-                                                                                userAlreadyRead = true;
-                                                                                break;
+                    // Add the message to the Messages collection
+                    db.collection("Messages").add(message)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference messageRef) {
+                                    String messageId = messageRef.getId();
+                                    // Add a reference to the message in the conversation document
+                                    DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
+                                    conversationRef.update("lastMessage", text);
+                                    conversationRef.update("messages", FieldValue.arrayUnion(messageRef))
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                            if (task.isSuccessful()) {
+                                                                DocumentSnapshot document = task.getResult();
+                                                                if (document.exists()) {
+                                                                    List<DocumentReference> participantsRefs = (List<DocumentReference>) document.get("participants");
+                                                                    List<DocumentReference> unReadRefs = (List<DocumentReference>) document.get("unRead");
+                                                                    if (unReadRefs == null) {
+                                                                        unReadRefs = new ArrayList<>();
+                                                                    }
+                                                                    for (DocumentReference participantRef : participantsRefs) {
+                                                                        String participantId = participantRef.getId();
+                                                                        if (!participantId.equals(userId)) {
+                                                                            boolean userAlreadyRead = false;
+                                                                            for (DocumentReference unReadRef : unReadRefs) {
+                                                                                if (unReadRef.getId().equals(participantId)) {
+                                                                                    userAlreadyRead = true;
+                                                                                    break;
+                                                                                }
                                                                             }
-                                                                        }
-                                                                        if (!userAlreadyRead) {
-                                                                            conversationRef.update("unRead", FieldValue.arrayUnion(participantRef));
+                                                                            if (!userAlreadyRead) {
+                                                                                conversationRef.update("unRead", FieldValue.arrayUnion(participantRef));
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
                                                             }
+
                                                         }
+                                                    });
 
-                                                    }
-                                                });
-
-                                                int position = recyclerView.getAdapter().getItemCount();
-                                                recyclerView.getAdapter().notifyItemInserted(position);
-                                                messages.add(message);
-                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages, false));
-                                                messageText.getText().clear();
-                                            }
-                                        });
-                            }
-                        });
-            }
+                                                    int position = recyclerView.getAdapter().getItemCount();
+                                                    recyclerView.getAdapter().notifyItemInserted(position);
+                                                    messages.add(message);
+                                                    recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+                                                    messageText.getText().clear();
+                                                }
+                                            });
+                                }
+                            });
+                    } else {
+                    Toast.makeText(getContext(), getString(R.string.entermessagetoast), Toast.LENGTH_SHORT).show();
+                }
+                }
         });
     }
 
@@ -579,7 +582,7 @@ public class fragment_message_discussion extends Fragment {
             public void run() {
                 getLastMessage();
                 //System.out.println("refresh");
-                mHandler.postDelayed(this, 3000); // Actualisation toutes les 3 secondes
+                mHandler.postDelayed(this, 6000); // Actualisation toutes les 3 secondes
             }
         };
         mHandler.post(mRunnable);
@@ -590,67 +593,73 @@ public class fragment_message_discussion extends Fragment {
     private void getLastMessage() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference conversationRef = db.collection("Conversations").document(conversationId);
+
         conversationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        List<String> messageIds = (List<String>) document.get("messages");
+                        List<DocumentReference> messageRefs = (List<DocumentReference>) document.get("messages");
 
-                        // Get the list of messages using the message IDs
-                        if (messageIds.size() != 0) {
-                            CollectionReference messagesRef = db.collection("Messages");
+                        if (messageRefs != null) {
+                            List<String> messageIds = new ArrayList<>();
+                            for (DocumentReference messageRef : messageRefs) {
+                                messageIds.add(messageRef.getId());
+                            }
 
-                            Query query = messagesRef.whereIn(FieldPath.documentId(), messageIds)
-                                    .orderBy("date", Query.Direction.DESCENDING)
-                                    .limit(1);
+                            System.out.println(messageIds.toString() + "Nb de messages " + messageIds.size());
 
-                            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        List<DocumentSnapshot> documents = task.getResult().getDocuments();
-                                        // Do something with the last message
-                                        if (!documents.isEmpty()) {
-                                            DocumentSnapshot lastMessageDoc = documents.get(0);
-                                            String senderId = lastMessageDoc.getString("sender");
-                                            String text = lastMessageDoc.getString("text");
-                                            Date date = lastMessageDoc.getDate("date");
-                                            Message lastMessage = new Message(senderId, date, text);
+                            db.collection("Messages")
+                                    .whereIn(FieldPath.documentId(), messageIds)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                List<Message> newMessages = new ArrayList<>(); // Liste pour stocker les nouveaux messages
 
-                                            boolean isDuplicate = false;
-                                            for (Message message : messages) {
-                                                if (message.getmId() == lastMessage.getmId() &&
-                                                        message.getDate().equals(lastMessage.getDate()) &&
-                                                        message.getText().equals(lastMessage.getText())) {
-                                                    isDuplicate = true;
-                                                    break;
+                                                for (QueryDocumentSnapshot messageDoc : task.getResult()) {
+                                                    String senderId = messageDoc.getString("sender");
+                                                    String text = messageDoc.getString("text");
+                                                    Date date = messageDoc.getDate("date");
+                                                    Message newMessage = new Message(senderId, date, text);
+                                                    newMessages.add(newMessage);
                                                 }
-                                            }
 
-                                            if (!isDuplicate) {
-                                                messages.add(lastMessage);
-                                                int position = recyclerView.getAdapter().getItemCount();
-                                                recyclerView.getAdapter().notifyItemInserted(position);
-                                                recyclerView.smoothScrollToPosition(messages.size());
+                                                // Vérification des doublons et ajout des nouveaux messages
+                                                for (Message newMessage : newMessages) {
+                                                    boolean isDuplicate = false;
+                                                    for (Message message : messages) {
+                                                        if (message.getmId() == newMessage.getmId() &&
+                                                                message.getDate().equals(newMessage.getDate()) &&
+                                                                message.getText().equals(newMessage.getText())) {
+                                                            isDuplicate = true;
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (!isDuplicate) {
+                                                        messages.add(newMessage);
+                                                    }
+                                                }
+
+                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+                                                recyclerView.getAdapter().notifyDataSetChanged();
+                                                recyclerView.smoothScrollToPosition(messages.size() - 1);
+                                            } else {
+                                                Log.e("Get Messages", "Error getting messages: " + task.getException());
                                             }
                                         }
-                                    }
-                                }
-                            });
-                        } else {
-                            // There are no messages in the conversation
+                                    });
                         }
-                    } else {
-                        // The conversation document does not exist
                     }
                 } else {
-                    // Handle failure to retrieve the conversation document
+                    // Échec de la récupération du document
+                    Log.e("Get Last Message", "Error getting document: " + task.getException());
                 }
             }
         });
-
     }
 
 
@@ -677,6 +686,7 @@ public class fragment_message_discussion extends Fragment {
                                 if (sb.length() >= 2 && sb.substring(sb.length() - 2).equals(", ")) {
                                     sb.delete(sb.length() - 2, sb.length());
                                 }
+                                convName.setText(sb);
                             }
                         }
                     }
