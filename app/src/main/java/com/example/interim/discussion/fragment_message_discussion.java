@@ -62,6 +62,8 @@ public class fragment_message_discussion extends Fragment {
     List<Message> messages;
     private boolean isRefreshing = false;
 
+    String SenderNumber;
+
     private Handler mHandler;
 
     Message lastMessageUnread;
@@ -69,7 +71,7 @@ public class fragment_message_discussion extends Fragment {
 
     RecyclerView recyclerView;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    String senderId;
+    String senderUid;
     Button deleteBtn, signalUserBtn, blockUserBtn;
     private Runnable mRunnable;
     public fragment_message_discussion() {
@@ -138,6 +140,14 @@ public class fragment_message_discussion extends Fragment {
                                 if (document.exists()) {
                                     List<String> messageIds = (List<String>) document.get("messages");
                                     List<DocumentReference> participants = (List<DocumentReference>) document.get("participants");
+                                    for (DocumentReference participantRef : participants) {
+                                        String participantId = participantRef.getId();
+                                        if (!participantId.equals(mAuth.getCurrentUser().getUid())) {
+                                            SenderNumber = participantId;
+                                            break;
+                                        }
+                                    }
+
                                     if (participants != null) {
                                         if(participants.size() > 2) {
                                             convName.setText(document.getString("groupName"));
@@ -176,10 +186,10 @@ public class fragment_message_discussion extends Fragment {
                                                 for (Object result : task.getResult()) {
                                                     QuerySnapshot querySnapshot = (QuerySnapshot) result;
                                                     for (QueryDocumentSnapshot document : querySnapshot) {
-                                                        senderId = document.getString("sender");
+                                                        senderUid = document.getString("sender");
                                                         String text = document.getString("text");
                                                         Date date = document.getDate("date");
-                                                        Message message = new Message(senderId, date, text);
+                                                        Message message = new Message(senderUid, date, text);
                                                         messages.add(message);
                                                     }
                                                 }
@@ -236,7 +246,7 @@ public class fragment_message_discussion extends Fragment {
                         String signalReason = input.getText().toString();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         Date today = new Date();
-                        db.collection("Users").document(senderId).get().addOnCompleteListener(
+                        db.collection("Users").document(SenderNumber).get().addOnCompleteListener(
                                 new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -244,11 +254,11 @@ public class fragment_message_discussion extends Fragment {
                                             DocumentSnapshot document = task.getResult();
                                             if (document.exists()) {
                                                 String email = document.getString("email");
-                                                Signal signal = new Signal(mAuth.getCurrentUser().getUid(), senderId, mAuth.getCurrentUser().getEmail(), email, signalReason, today);
+                                                Signal signal = new Signal(mAuth.getCurrentUser().getUid(), SenderNumber, mAuth.getCurrentUser().getEmail(), email, signalReason, today);
                                                 db.collection("Signaled").add(signal);
                                             }
                                             else {
-                                                db.collection("Pros").document(senderId).get().addOnCompleteListener(
+                                                db.collection("Pros").document(SenderNumber).get().addOnCompleteListener(
                                                         new OnCompleteListener<DocumentSnapshot>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -256,7 +266,7 @@ public class fragment_message_discussion extends Fragment {
                                                                     DocumentSnapshot document = task.getResult();
                                                                     if (document.exists()) {
                                                                         String email = document.getString("email");
-                                                                        Signal signal = new Signal(mAuth.getCurrentUser().getUid(), senderId, mAuth.getCurrentUser().getEmail(), email, signalReason, today);
+                                                                        Signal signal = new Signal(mAuth.getCurrentUser().getUid(), SenderNumber, mAuth.getCurrentUser().getEmail(), email, signalReason, today);
                                                                         db.collection("Signaled").add(signal);
                                                                     }
                                                                     else {
@@ -301,7 +311,7 @@ public class fragment_message_discussion extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Date today = new Date();
 
-                        db.collection("Users").document(senderId).get().addOnCompleteListener(
+                        db.collection("Users").document(SenderNumber).get().addOnCompleteListener(
                                 new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -309,7 +319,7 @@ public class fragment_message_discussion extends Fragment {
                                             DocumentSnapshot document = task.getResult();
                                             if (document.exists()) {
                                                 String email = document.getString("email");
-                                                Blocked blocked = new Blocked(senderId, mAuth.getCurrentUser().getUid(), today, email, mAuth.getCurrentUser().getEmail());
+                                                Blocked blocked = new Blocked(SenderNumber, mAuth.getCurrentUser().getUid(), today, email, mAuth.getCurrentUser().getEmail());
                                                 Toast.makeText(getContext(), getString(R.string.blockedUserToast), Toast.LENGTH_SHORT).show();
                                                 db.collection("Blocked").add(blocked);
                                                 db.collection("Conversations").document(conversationId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -345,7 +355,7 @@ public class fragment_message_discussion extends Fragment {
 
                                             }
                                             else {
-                                                db.collection("Pros").document(senderId).get().addOnCompleteListener(
+                                                db.collection("Pros").document(SenderNumber).get().addOnCompleteListener(
                                                         new OnCompleteListener<DocumentSnapshot>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -353,7 +363,7 @@ public class fragment_message_discussion extends Fragment {
                                                                     DocumentSnapshot document = task.getResult();
                                                                     if (document.exists()) {
                                                                         String email = document.getString("email");
-                                                                        Blocked blocked = new Blocked(senderId, mAuth.getCurrentUser().getUid(), today, email, mAuth.getCurrentUser().getEmail());
+                                                                        Blocked blocked = new Blocked(SenderNumber, mAuth.getCurrentUser().getUid(), today, email, mAuth.getCurrentUser().getEmail());
                                                                         Toast.makeText(getContext(), getString(R.string.blockedUserToast), Toast.LENGTH_SHORT).show();
                                                                         db.collection("Blocked").add(blocked);
                                                                         db.collection("Conversations").document(conversationId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

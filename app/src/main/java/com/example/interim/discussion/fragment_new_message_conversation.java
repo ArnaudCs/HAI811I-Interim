@@ -47,6 +47,8 @@ public class fragment_new_message_conversation extends Fragment {
 
     EditText firstMessageText;
 
+    Boolean noCelebration = false;
+
     String mail, message;
 
     public fragment_new_message_conversation() {
@@ -73,6 +75,7 @@ public class fragment_new_message_conversation extends Fragment {
             mail = args.getString("mail");
             message = args.getString("message");
             if (message != null) {
+                noCelebration = true;
                 firstMessageText.setText(message);
             }
             if(mail != null) {
@@ -281,13 +284,18 @@ public class fragment_new_message_conversation extends Fragment {
                     Log.w(TAG, "Error creating new conversation document", e);
                 });
 
-        fragment_successfull_new_conversation fragmentConversationCreation = new fragment_successfull_new_conversation();
+        if(noCelebration == false){
+            fragment_successfull_new_conversation fragmentConversationCreation = new fragment_successfull_new_conversation();
 
-        FragmentManager fragmentManager = getParentFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.newConversationContainer, fragmentConversationCreation)
-                .addToBackStack(null)
-                .commit();
+            FragmentManager fragmentManager = getParentFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.newConversationContainer, fragmentConversationCreation)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            getActivity().finish();
+        }
+
     }
 
 }

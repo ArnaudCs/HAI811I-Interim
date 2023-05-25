@@ -118,12 +118,11 @@ public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOff
         holder.sendWarning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String warningMessage = context.getString(R.string.warningOfferTitle) + jobTitle + context.getString(R.string.warningOfferText);
+                String warningMessage = context.getString(R.string.warningOfferTitle) + " " +  jobTitle + " " + context.getString(R.string.warningOfferText);
                 Intent newConversation = new Intent(context, NewMessageConversationActivity.class);
                 newConversation.putExtra("mail", companyMail);
                 newConversation.putExtra("message", warningMessage);
                 context.startActivity(newConversation);
-                mActivity.finish();
             }
         });
 
@@ -133,7 +132,6 @@ public class signaledOffers_ViewAdapter extends RecyclerView.Adapter<signaledOff
                 Intent newConversation = new Intent(context, NewMessageConversationActivity.class);
                 newConversation.putExtra("mail", companyMail);
                 context.startActivity(newConversation);
-                mActivity.finish();
             }
         });
 
