@@ -2,10 +2,12 @@ package com.example.interim.offers;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,6 +64,8 @@ public class fragment_my_applications extends Fragment {
     ArrayList<Offer> rejectedOffers;
 
     Button acceptedBtn, pendingBtn, rejectedBtn;
+    private int nightModeFlags;
+
 
     public fragment_my_applications() {
         // Required empty public constructor
@@ -89,6 +93,8 @@ public class fragment_my_applications extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button backButtonApplications = view.findViewById(R.id.backButtonApplications);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
         recyclerViewAccepted = view.findViewById(R.id.acceptedDisplay);
         recyclerViewPending = view.findViewById(R.id.pendingDisplay);
@@ -206,13 +212,21 @@ public class fragment_my_applications extends Fragment {
             public void onClick(View view) {
 
                 //Changement des couleurs des boutons
-                acceptedBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
-                acceptedBtn.setTextColor(getResources().getColor(R.color.white));
-
-                pendingBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                rejectedBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                pendingBtn.setTextColor(getResources().getColor(R.color.grey));
-                rejectedBtn.setTextColor(getResources().getColor(R.color.grey));
+                acceptedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.primary_red));
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    acceptedBtn.setTextColor(getResources().getColor(R.color.almost_black));
+                    pendingBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    rejectedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    pendingBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                    rejectedBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                }
+                else {
+                    acceptedBtn.setTextColor(getResources().getColor(R.color.white));
+                    pendingBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    rejectedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    pendingBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                    rejectedBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                }
 
                 //Affichage du recyclerView correspondant
                 acceptedContainer.setVisibility(View.VISIBLE);
@@ -225,13 +239,21 @@ public class fragment_my_applications extends Fragment {
             @Override
             public void onClick(View view) {
                 //Changement des couleurs des boutons
-                pendingBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
-                pendingBtn.setTextColor(getResources().getColor(R.color.white));
-
-                acceptedBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                rejectedBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                acceptedBtn.setTextColor(getResources().getColor(R.color.grey));
-                rejectedBtn.setTextColor(getResources().getColor(R.color.grey));
+                pendingBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.primary_red));
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    pendingBtn.setTextColor(getResources().getColor(R.color.almost_black));
+                    acceptedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    rejectedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    acceptedBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                    rejectedBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                }
+                else {
+                    pendingBtn.setTextColor(getResources().getColor(R.color.white));
+                    acceptedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    rejectedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    acceptedBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                    rejectedBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                }
 
                 //Affichage du recyclerView correspondant
                 acceptedContainer.setVisibility(View.GONE);
@@ -244,13 +266,21 @@ public class fragment_my_applications extends Fragment {
             @Override
             public void onClick(View view) {
                 //Changement des couleurs des boutons
-                rejectedBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
-                rejectedBtn.setTextColor(getResources().getColor(R.color.white));
-
-                pendingBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                acceptedBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                pendingBtn.setTextColor(getResources().getColor(R.color.grey));
-                acceptedBtn.setTextColor(getResources().getColor(R.color.grey));
+                rejectedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.primary_red));
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    rejectedBtn.setTextColor(getResources().getColor(R.color.almost_black));
+                    acceptedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    pendingBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    acceptedBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                    pendingBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                }
+                else {
+                    rejectedBtn.setTextColor(getResources().getColor(R.color.white));
+                    acceptedBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    pendingBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    acceptedBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                    pendingBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                }
 
                 //Affichage du recyclerView correspondant
                 acceptedContainer.setVisibility(View.GONE);

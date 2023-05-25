@@ -2,10 +2,12 @@ package com.example.interim.offers;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,6 +49,7 @@ public class fragment_application_manager extends Fragment {
     ArrayList<Offer> pendingOffers;
     ArrayList<Offer> acceptedOffers;
     ArrayList<Offer> rejectedOffers;
+    private int nightModeFlags;
 
     private Handler mHandler;
     private Runnable mRunnable;
@@ -88,6 +91,8 @@ public class fragment_application_manager extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         startRefreshing();
+
+        nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
         pendingApplicationsBtn = view.findViewById(R.id.pendingApplicationsBtn);
         acceptedApplications = view.findViewById(R.id.acceptedApplications);
@@ -153,13 +158,21 @@ public class fragment_application_manager extends Fragment {
             public void onClick(View view) {
 
                 //Changement des couleurs des boutons
-                acceptedApplications.setBackground(getResources().getDrawable(R.drawable.redbutton));
-                acceptedApplications.setTextColor(getResources().getColor(R.color.white));
-
-                pendingApplicationsBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                rejectedApplications.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.grey));
-                rejectedApplications.setTextColor(getResources().getColor(R.color.grey));
+                acceptedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.primary_red));
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    acceptedApplications.setTextColor(getResources().getColor(R.color.almost_black));
+                    pendingApplicationsBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    rejectedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                    rejectedApplications.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                }
+                else {
+                    acceptedApplications.setTextColor(getResources().getColor(R.color.white));
+                    rejectedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    pendingApplicationsBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                    rejectedApplications.setTextColor(getResources().getColor(R.color.dark_grey));
+                }
 
                 //Affichage du recyclerView correspondant
                 acceptedContainer.setVisibility(View.VISIBLE);
@@ -172,13 +185,21 @@ public class fragment_application_manager extends Fragment {
             @Override
             public void onClick(View view) {
                 //Changement des couleurs des boutons
-                pendingApplicationsBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
-                pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.white));
-
-                acceptedApplications.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                rejectedApplications.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                acceptedApplications.setTextColor(getResources().getColor(R.color.grey));
-                rejectedApplications.setTextColor(getResources().getColor(R.color.grey));
+                pendingApplicationsBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.primary_red));
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.almost_black));
+                    acceptedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    rejectedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    acceptedApplications.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                    rejectedApplications.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                }
+                else {
+                    pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.white));
+                    acceptedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    rejectedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    acceptedApplications.setTextColor(getResources().getColor(R.color.dark_grey));
+                    rejectedApplications.setTextColor(getResources().getColor(R.color.dark_grey));
+                }
 
                 //Affichage du recyclerView correspondant
                 acceptedContainer.setVisibility(View.GONE);
@@ -191,13 +212,21 @@ public class fragment_application_manager extends Fragment {
             @Override
             public void onClick(View view) {
                 //Changement des couleurs des boutons
-                rejectedApplications.setBackground(getResources().getDrawable(R.drawable.redbutton));
-                rejectedApplications.setTextColor(getResources().getColor(R.color.white));
-
-                pendingApplicationsBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                acceptedApplications.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.grey));
-                acceptedApplications.setTextColor(getResources().getColor(R.color.grey));
+                rejectedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.primary_red));
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    rejectedApplications.setTextColor(getResources().getColor(R.color.almost_black));
+                    pendingApplicationsBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    acceptedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.dark_darkgrey));
+                    pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                    acceptedApplications.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                }
+                else {
+                    rejectedApplications.setTextColor(getResources().getColor(R.color.white));
+                    pendingApplicationsBtn.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    acceptedApplications.setBackgroundTintList(ContextCompat.getColorStateList(getActivity(),R.color.box));
+                    pendingApplicationsBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                    acceptedApplications.setTextColor(getResources().getColor(R.color.dark_grey));
+                }
 
                 //Affichage du recyclerView correspondant
                 acceptedContainer.setVisibility(View.GONE);
