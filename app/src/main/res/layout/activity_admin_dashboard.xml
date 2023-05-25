@@ -54,7 +54,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:background="@color/cards">
+                                android:background="?cardBackgroundColor">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -92,6 +92,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/statsCardTitle"
                                         android:padding="10dp"
+                                        android:textColor="?colorOnSecondary"
                                         android:textAlignment="center"
                                         android:textSize="20sp"
                                         android:textStyle="bold">
@@ -118,8 +119,8 @@
                                         android:textStyle="bold"
                                         android:text="@string/seeMore"
                                         android:stateListAnimator="@null"
-                                        android:textColor="@color/white"
-                                        android:textSize="20sp"></Button>
+                                        android:textColor="?colorOnPrimary"
+                                        android:textSize="20sp" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -136,7 +137,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:background="@color/cards">
+                                android:background="?cardBackgroundColor">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -175,6 +176,7 @@
                                         android:text="@string/signaledOffers"
                                         android:padding="10dp"
                                         android:textAlignment="center"
+                                        android:textColor="?colorOnSecondary"
                                         android:textSize="20sp"
                                         android:textStyle="bold">
                                     </TextView>
@@ -199,8 +201,8 @@
                                         android:textStyle="bold"
                                         android:text="@string/seeMore"
                                         android:stateListAnimator="@null"
-                                        android:textColor="@color/white"
-                                        android:textSize="20sp"></Button>
+                                        android:textColor="?colorOnPrimary"
+                                        android:textSize="20sp" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -218,7 +220,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:background="@color/cards">
+                                android:background="?cardBackgroundColor">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -258,6 +260,7 @@
                                         android:textAlignment="center"
                                         android:padding="10dp"
                                         android:textSize="20sp"
+                                        android:textColor="?colorOnSecondary"
                                         android:textStyle="bold">
 
                                     </TextView>
@@ -282,8 +285,8 @@
                                         android:textStyle="bold"
                                         android:text="@string/manageBtn"
                                         android:stateListAnimator="@null"
-                                        android:textColor="@color/white"
-                                        android:textSize="20sp"></Button>
+                                        android:textColor="?colorOnPrimary"
+                                        android:textSize="20sp" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -341,7 +344,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/adminDashboardTitle"
-                android:textColor="@color/white"
+                android:textColor="?colorOnPrimary"
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textStyle="bold"
@@ -360,7 +363,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/baseline_logout_24"
-                android:backgroundTint="#FFFFFF"
+                android:backgroundTint="?colorOnPrimary"
                 android:drawableTint="#FBFAFA"
                 android:foregroundTint="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"

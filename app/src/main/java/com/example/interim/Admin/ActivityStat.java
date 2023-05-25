@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,10 +62,17 @@ public class ActivityStat extends AppCompatActivity {
     RadarChart radarChart;
 
     private DatabaseReference offersRef;
+    private int nightModeFlags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode &
+                Configuration.UI_MODE_NIGHT_MASK;
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES)
+            setTheme(R.style.ThemeDark_Interim);
+        else
+            setTheme(R.style.Theme_Interim);
         setContentView(R.layout.activity_stat);
 
         backStatBtn = findViewById(R.id.backStatBtn);
@@ -125,7 +133,21 @@ public class ActivityStat extends AppCompatActivity {
 
                         BarDataSet dataSet = new BarDataSet(barEntries, "Signals by Day");
                         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                        dataSet.setValueTextColor(Color.BLACK);
+                        barChartSignal.getDescription().setEnabled(false);
+                        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                            dataSet.setValueTextColor(Color.WHITE);
+                            barChartSignal.getLegend().setTextColor(Color.WHITE);
+                            barChartSignal.getAxisLeft().setTextColor(Color.WHITE);
+                            barChartSignal.getXAxis().setTextColor(Color.WHITE);
+                            barChartSignal.getAxisRight().setTextColor(Color.WHITE);
+                        }
+                        else {
+                            dataSet.setValueTextColor(Color.BLACK);
+                            barChartSignal.getLegend().setTextColor(Color.BLACK);
+                            barChartSignal.getAxisLeft().setTextColor(Color.BLACK);
+                            barChartSignal.getXAxis().setTextColor(Color.BLACK);
+                            barChartSignal.getAxisRight().setTextColor(Color.BLACK);
+                        }
                         dataSet.setValueTextSize(12f);
 
                         BarData barData = new BarData(dataSet);
@@ -189,7 +211,21 @@ public class ActivityStat extends AppCompatActivity {
 
                         BarDataSet dataSet = new BarDataSet(barEntries, "Blocked by Day");
                         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                        dataSet.setValueTextColor(Color.BLACK);
+                        barChartBlocked.getDescription().setEnabled(false);
+                        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                            dataSet.setValueTextColor(Color.WHITE);
+                            barChartBlocked.getLegend().setTextColor(Color.WHITE);
+                            barChartBlocked.getAxisLeft().setTextColor(Color.WHITE);
+                            barChartBlocked.getXAxis().setTextColor(Color.WHITE);
+                            barChartBlocked.getAxisRight().setTextColor(Color.WHITE);
+                        }
+                        else {
+                            dataSet.setValueTextColor(Color.BLACK);
+                            barChartBlocked.getLegend().setTextColor(Color.BLACK);
+                            barChartBlocked.getAxisLeft().setTextColor(Color.BLACK);
+                            barChartBlocked.getXAxis().setTextColor(Color.BLACK);
+                            barChartBlocked.getAxisRight().setTextColor(Color.BLACK);
+                        }
                         dataSet.setValueTextSize(12f);
 
                         BarData barData = new BarData(dataSet);
@@ -252,7 +288,21 @@ public class ActivityStat extends AppCompatActivity {
 
                         BarDataSet dataSet = new BarDataSet(barEntries, "Signaled Offers by Day");
                         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                        dataSet.setValueTextColor(Color.BLACK);
+                        barChartSignalOffers.getDescription().setEnabled(false);
+                        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                            dataSet.setValueTextColor(Color.WHITE);
+                            barChartSignalOffers.getLegend().setTextColor(Color.WHITE);
+                            barChartSignalOffers.getAxisLeft().setTextColor(Color.WHITE);
+                            barChartSignalOffers.getXAxis().setTextColor(Color.WHITE);
+                            barChartSignalOffers.getAxisRight().setTextColor(Color.WHITE);
+                        }
+                        else {
+                            dataSet.setValueTextColor(Color.BLACK);
+                            barChartSignalOffers.getLegend().setTextColor(Color.BLACK);
+                            barChartSignalOffers.getAxisLeft().setTextColor(Color.BLACK);
+                            barChartSignalOffers.getXAxis().setTextColor(Color.BLACK);
+                            barChartSignalOffers.getAxisRight().setTextColor(Color.BLACK);
+                        }
                         dataSet.setValueTextSize(12f);
 
                         BarData barData = new BarData(dataSet);
@@ -318,7 +368,21 @@ public class ActivityStat extends AppCompatActivity {
 
                         BarDataSet dataSet = new BarDataSet(barEntries, "Offers by Day");
                         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                        dataSet.setValueTextColor(Color.BLACK);
+                        barChart.getDescription().setEnabled(false);
+                        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                            dataSet.setValueTextColor(Color.WHITE);
+                            barChart.getLegend().setTextColor(Color.WHITE);
+                            barChart.getAxisLeft().setTextColor(Color.WHITE);
+                            barChart.getXAxis().setTextColor(Color.WHITE);
+                            barChart.getAxisRight().setTextColor(Color.WHITE);
+                        }
+                        else {
+                            dataSet.setValueTextColor(Color.BLACK);
+                            barChart.getLegend().setTextColor(Color.BLACK);
+                            barChart.getAxisLeft().setTextColor(Color.BLACK);
+                            barChart.getXAxis().setTextColor(Color.BLACK);
+                            barChart.getAxisRight().setTextColor(Color.BLACK);
+                        }
                         dataSet.setValueTextSize(12f);
 
                         BarData barData = new BarData(dataSet);
@@ -386,6 +450,19 @@ public class ActivityStat extends AppCompatActivity {
 
                         RadarData radarData = new RadarData(dataSet);
                         radarData.setLabels(labels);
+                        radarChart.getDescription().setEnabled(false);
+                        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                            dataSet.setValueTextColor(Color.WHITE);
+                            radarChart.getLegend().setTextColor(Color.WHITE);
+                            radarChart.getXAxis().setTextColor(Color.WHITE);
+                            radarChart.getYAxis().setTextColor(Color.WHITE);
+                        }
+                        else {
+                            dataSet.setValueTextColor(Color.BLACK);
+                            radarChart.getLegend().setTextColor(Color.BLACK);
+                            radarChart.getXAxis().setTextColor(Color.BLACK);
+                            radarChart.getYAxis().setTextColor(Color.BLACK);
+                        }
 
                         radarChart.setData(radarData);
                         radarChart.invalidate();
@@ -437,11 +514,14 @@ public class ActivityStat extends AppCompatActivity {
 
                         PieDataSet dataSet = new PieDataSet(pieEntries, "Recruiters");
                         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                        dataSet.setValueTextColor(Color.BLACK);
+                        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES)
+                            dataSet.setValueTextColor(Color.WHITE);
+                        else
+                            dataSet.setValueTextColor(Color.BLACK);
                         dataSet.setValueTextSize(12f);
 
                         PieData pieData = new PieData(dataSet);
-
+                        pieData.setValueTextColor(Color.WHITE);
                         pieChart.setData(pieData);
                         pieChart.invalidate();
                     }
@@ -462,7 +542,14 @@ public class ActivityStat extends AppCompatActivity {
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(Color.WHITE);
         pieChart.setTransparentCircleRadius(61f);
-        pieChart.setEntryLabelColor(Color.BLACK);
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+            pieChart.setEntryLabelColor(Color.WHITE);
+            pieChart.getLegend().setTextColor(Color.WHITE);
+        }
+        else {
+            pieChart.setEntryLabelColor(Color.BLACK);
+            pieChart.getLegend().setTextColor(Color.BLACK);
+        }
         pieChart.setEntryLabelTextSize(12f);
     }
 

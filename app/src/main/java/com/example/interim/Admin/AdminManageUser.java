@@ -2,9 +2,11 @@ package com.example.interim.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -48,6 +50,12 @@ public class AdminManageUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode &
+                Configuration.UI_MODE_NIGHT_MASK;
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES)
+            setTheme(R.style.ThemeDark_Interim);
+        else
+            setTheme(R.style.Theme_Interim);
         setContentView(R.layout.activity_admin_manage_user);
         blockedUsersBtn = findViewById(R.id.blockedUsersBtn);
         signaledUsersBtn = findViewById(R.id.signaledUsersBtn);
@@ -114,11 +122,17 @@ public class AdminManageUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Changement des couleurs des boutons
-                blockedUsersBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
-                blockedUsersBtn.setTextColor(getResources().getColor(R.color.white));
-
-                signaledUsersBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                signaledUsersBtn.setTextColor(getResources().getColor(R.color.grey));
+                blockedUsersBtn.setBackgroundTintList(ContextCompat.getColorStateList(AdminManageUser.this, R.color.primary_red));
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    blockedUsersBtn.setTextColor(getResources().getColor(R.color.almost_black));
+                    signaledUsersBtn.setBackgroundTintList(ContextCompat.getColorStateList(AdminManageUser.this, R.color.dark_darkgrey));
+                    signaledUsersBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                }
+                else {
+                    blockedUsersBtn.setTextColor(getResources().getColor(R.color.white));
+                    signaledUsersBtn.setBackgroundTintList(ContextCompat.getColorStateList(AdminManageUser.this, R.color.box));
+                    signaledUsersBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                }
 
                 //Affichage du recyclerView correspondant
                 blockedContainer.setVisibility(View.VISIBLE);
@@ -130,11 +144,17 @@ public class AdminManageUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Changement des couleurs des boutons
-                signaledUsersBtn.setBackground(getResources().getDrawable(R.drawable.redbutton));
-                signaledUsersBtn.setTextColor(getResources().getColor(R.color.white));
-
-                blockedUsersBtn.setBackground(getResources().getDrawable(R.drawable.greybutton));
-                blockedUsersBtn.setTextColor(getResources().getColor(R.color.grey));
+                signaledUsersBtn.setBackgroundTintList(ContextCompat.getColorStateList(AdminManageUser.this, R.color.primary_red));
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    signaledUsersBtn.setTextColor(getResources().getColor(R.color.almost_black));
+                    blockedUsersBtn.setBackgroundTintList(ContextCompat.getColorStateList(AdminManageUser.this, R.color.dark_darkgrey));
+                    blockedUsersBtn.setTextColor(getResources().getColor(R.color.white_less_opaque));
+                }
+                else {
+                    signaledUsersBtn.setTextColor(getResources().getColor(R.color.white));
+                    blockedUsersBtn.setBackgroundTintList(ContextCompat.getColorStateList(AdminManageUser.this, R.color.box));
+                    blockedUsersBtn.setTextColor(getResources().getColor(R.color.dark_grey));
+                }
 
                 //Affichage du recyclerView correspondant
                 blockedContainer.setVisibility(View.GONE);

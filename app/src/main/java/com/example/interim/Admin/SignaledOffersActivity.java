@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -48,6 +49,12 @@ public class SignaledOffersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode &
+                Configuration.UI_MODE_NIGHT_MASK;
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES)
+            setTheme(R.style.ThemeDark_Interim);
+        else
+            setTheme(R.style.Theme_Interim);
         setContentView(R.layout.activity_signaled_offers);
         backSignaledOffersBtn = findViewById(R.id.backSignaledOffersBtn);
         recycler = findViewById(R.id.signaledOffesView);
