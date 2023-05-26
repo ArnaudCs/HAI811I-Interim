@@ -620,48 +620,50 @@ public class fragment_message_discussion extends Fragment {
 
                             System.out.println(messageIds.toString() + "Nb de messages " + messageIds.size());
 
-                            db.collection("Messages")
-                                    .whereIn(FieldPath.documentId(), messageIds)
-                                    .get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                List<Message> newMessages = new ArrayList<>(); // Liste pour stocker les nouveaux messages
+                            if(!messageIds.isEmpty()){
+                                db.collection("Messages")
+                                        .whereIn(FieldPath.documentId(), messageIds)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    List<Message> newMessages = new ArrayList<>(); // Liste pour stocker les nouveaux messages
 
-                                                for (QueryDocumentSnapshot messageDoc : task.getResult()) {
-                                                    String senderId = messageDoc.getString("sender");
-                                                    String text = messageDoc.getString("text");
-                                                    Date date = messageDoc.getDate("date");
-                                                    Message newMessage = new Message(senderId, date, text);
-                                                    newMessages.add(newMessage);
-                                                }
+                                                    for (QueryDocumentSnapshot messageDoc : task.getResult()) {
+                                                        String senderId = messageDoc.getString("sender");
+                                                        String text = messageDoc.getString("text");
+                                                        Date date = messageDoc.getDate("date");
+                                                        Message newMessage = new Message(senderId, date, text);
+                                                        newMessages.add(newMessage);
+                                                    }
 
-                                                // Vérification des doublons et ajout des nouveaux messages
-                                                for (Message newMessage : newMessages) {
-                                                    boolean isDuplicate = false;
-                                                    for (Message message : messages) {
-                                                        if (message.getmId() == newMessage.getmId() &&
-                                                                message.getDate().equals(newMessage.getDate()) &&
-                                                                message.getText().equals(newMessage.getText())) {
-                                                            isDuplicate = true;
-                                                            break;
+                                                    // Vérification des doublons et ajout des nouveaux messages
+                                                    for (Message newMessage : newMessages) {
+                                                        boolean isDuplicate = false;
+                                                        for (Message message : messages) {
+                                                            if (message.getmId() == newMessage.getmId() &&
+                                                                    message.getDate().equals(newMessage.getDate()) &&
+                                                                    message.getText().equals(newMessage.getText())) {
+                                                                isDuplicate = true;
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        if (!isDuplicate) {
+                                                            messages.add(newMessage);
                                                         }
                                                     }
 
-                                                    if (!isDuplicate) {
-                                                        messages.add(newMessage);
-                                                    }
+                                                    recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
+                                                    recyclerView.getAdapter().notifyDataSetChanged();
+                                                    recyclerView.smoothScrollToPosition(messages.size() - 1);
+                                                } else {
+                                                    Log.e("Get Messages", "Error getting messages: " + task.getException());
                                                 }
-
-                                                recyclerView.setAdapter(new messages_ViewAdapter(getContext(), messages));
-                                                recyclerView.getAdapter().notifyDataSetChanged();
-                                                recyclerView.smoothScrollToPosition(messages.size() - 1);
-                                            } else {
-                                                Log.e("Get Messages", "Error getting messages: " + task.getException());
                                             }
-                                        }
-                                    });
+                                        });
+                            }
                         }
                     }
                 } else {
