@@ -51,7 +51,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/orderSummaryLayout"
@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:text="+ Monthly Subscription"
                 android:textSize="22sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/priceDisplay"
@@ -84,7 +84,7 @@
                 android:gravity="right"
                 android:text="20 $"
                 android:textSize="24sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <com.google.android.material.divider.MaterialDivider
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:layout_weight="2"></TextView>
+                android:layout_weight="2" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -125,7 +125,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:text="x1"
-                android:layout_weight="2"></TextView>
+                android:layout_weight="2" />
         </LinearLayout>
 
         <LinearLayout
@@ -148,7 +148,7 @@
                 android:paddingRight="32dp"
                 android:text="@string/payBtn"
                 android:textColor="@color/white"
-                android:textSize="20sp"></Button>
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -177,7 +177,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/baseline_arrow_circle_left_24"
-        android:backgroundTint="#FDFCFC"
+        android:backgroundTint="?colorOnPrimary"
         android:drawableTint="#FAF9F9"
         android:foregroundTint="#FAFAFA"
         app:layout_constraintStart_toStartOf="parent"

@@ -84,12 +84,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@drawable/navigation_bar"
+            android:backgroundTint="?colorOnPrimary"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
             android:stateListAnimator="@null"
             android:text="@string/fullNextBtn"
             android:textSize="20sp"
-            android:textStyle="bold"></Button>
+            android:textStyle="bold" />
 
     </LinearLayout>
 

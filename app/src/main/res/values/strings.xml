@@ -198,7 +198,7 @@
     <string name="myResume">Upload My Resume</string>
     <string name="myCoverLetter">Upload a Cover Letter</string>
     <string name="letsgoBtn">Let\'s go !</string>
-    <string name="onlineOfferCelebration">Congratulation, your offer is now online, go to the \"My Offers\" page to see and manage your online offers.</string>
+    <string name="onlineOfferCelebration">Congratulations, your offer is now online, go to the \"My Offers\" page to see and manage your online offers.</string>
     <string name="seeMyOffersBtn">See my offers</string>
     <string name="clearFiltersButton">Clear Filters</string>
     <string name="newConversationTitle">New Conversation</string>
@@ -333,4 +333,5 @@
     <string name="SignaledUserDeleteText">Do you really want to delete this report ?</string>
     <string name="groupName">Enter Group Name</string>
     <string name="entermessagetoast">Enter a message</string>
+    <string name="incorrectCard">Please enter a valid credit card number</string>
 </resources>

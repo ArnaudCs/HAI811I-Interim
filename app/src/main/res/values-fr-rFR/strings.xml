@@ -328,4 +328,5 @@
     <string name="SignaledUserDeleteText">Voulez vous vraiment supprimer ce signalement ?</string>
     <string name="groupName">Nom du groupe</string>
     <string name="entermessagetoast">Entrer un message</string>
+    <string name="incorrectCard">Veuillez entrer un numéro de carte de crédit valide</string>
 </resources>

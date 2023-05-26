@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +58,13 @@ public class PaymentAndSubscription extends AppCompatActivity {
                         Log.w(TAG, "Error getting subscription info", task.getException());
                     }
                 });
+
+        int nightModeFlags = getApplicationContext().getResources().getConfiguration().uiMode &
+                Configuration.UI_MODE_NIGHT_MASK;
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES)
+            setTheme(R.style.ThemeDark_Interim);
+        else
+            setTheme(R.style.Theme_Interim);
 
         setContentView(R.layout.activity_payment_and_subscription);
 

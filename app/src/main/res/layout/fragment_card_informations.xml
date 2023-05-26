@@ -7,6 +7,9 @@
     android:background="@color/primary_red"
     tools:context=".authentication.CardInformations">
 
+
+
+
     <ImageView
         android:id="@+id/person"
         android:layout_width="526dp"
@@ -150,6 +153,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:maxLength="5" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -245,7 +252,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/baseline_arrow_circle_left_24"
-        android:backgroundTint="#FDFCFC"
+        android:backgroundTint="?colorOnPrimary"
         android:drawableTint="#FAF9F9"
         android:foregroundTint="#FAFAFA"
         app:layout_constraintStart_toStartOf="parent"

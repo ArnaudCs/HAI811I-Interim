@@ -96,6 +96,7 @@
                         android:id="@+id/textStreet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLength="40"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -125,6 +126,7 @@
                     tools:ignore="MissingConstraints">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:maxLength="40"
                         android:id="@+id/textApt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -155,6 +157,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textCountry"
+                android:maxLength="40"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
@@ -199,6 +202,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textState"
+                        android:maxLength="40"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
@@ -296,7 +300,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/baseline_arrow_circle_left_24"
-        android:backgroundTint="#FAFAFA"
+        android:backgroundTint="?colorOnPrimary"
         android:drawableTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"

@@ -2,6 +2,8 @@ package com.example.interim.authentication;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.DatePickerDialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.example.interim.R;
@@ -26,7 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class CardInformations extends Fragment {
@@ -35,6 +41,8 @@ public class CardInformations extends Fragment {
     private FirebaseFirestore mFirestore;
     private String mUserEmail;
     private String mUserId;
+    private Calendar calendar;
+    private TextInputEditText cardExpiration;
 
     public CardInformations() {
         // Required empty public constructor
@@ -56,6 +64,39 @@ public class CardInformations extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+    private DatePickerDialog createDialogWithoutDateField() {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        DatePickerDialog dpd = new DatePickerDialog(getActivity(), (v, selectedYear, selectedMonth, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, selectedYear);
+            calendar.set(Calendar.MONTH, selectedMonth);
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/yy", Locale.getDefault());
+            String formattedDate = sdf.format(calendar.getTime());
+            cardExpiration.setText(formattedDate);
+        }, year, month, 1);
+        dpd.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        try {
+            java.lang.reflect.Field[] datePickerDialogFields = dpd.getClass().getDeclaredFields();
+            for (java.lang.reflect.Field datePickerDialogField : datePickerDialogFields) {
+                if (datePickerDialogField.getName().equals("mDatePicker")) {
+                    datePickerDialogField.setAccessible(true);
+                    DatePicker datePicker = (DatePicker) datePickerDialogField.get(dpd);
+                    java.lang.reflect.Field[] datePickerFields = datePickerDialogField.getType().getDeclaredFields();
+                    for (java.lang.reflect.Field datePickerField : datePickerFields) {
+                        Log.i("test", datePickerField.getName());
+                        if (datePickerField.getName().equals("mDatePicker")) {
+                            datePickerField.setAccessible(true);
+                            DatePicker dp = (DatePicker) datePickerField.get(dpd);
+                            ((ViewGroup) dp.getChildAt(0)).getChildAt(2).setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex) {
+        }
+        return dpd;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -65,7 +106,7 @@ public class CardInformations extends Fragment {
         TextInputEditText cardName = view.findViewById(R.id.textCardName);
         TextInputEditText cardNumber = view.findViewById(R.id.textCountry);
         TextInputEditText cardCVC = view.findViewById(R.id.textPostalCode);
-        TextInputEditText cardExpiration = view.findViewById(R.id.textState);
+        cardExpiration = view.findViewById(R.id.textState);
 
         CheckBox rememberCheck = view.findViewById(R.id.rememberCardCheck);
 
@@ -91,6 +132,10 @@ public class CardInformations extends Fragment {
                 public void onClick(View v) {
                     if (!TextUtils.isEmpty(cardName.getText()) && !TextUtils.isEmpty(cardNumber.getText()) && !TextUtils.isEmpty(cardCVC.getText())
                             && !TextUtils.isEmpty(cardExpiration.getText())) {
+                        if (cardNumber.getText().toString().length() != 19) {
+                            Toast.makeText(getActivity(), R.string.incorrectCard, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         fragment_payment_adress fragmentPaymentAdress = new fragment_payment_adress();
 
                         // Remplacer le fragment actuel par le nouveau fragment
@@ -118,26 +163,13 @@ public class CardInformations extends Fragment {
             });
         }
 
-        cardExpiration.addTextChangedListener(new TextWatcher() {
 
+
+        calendar = Calendar.getInstance();
+        cardExpiration.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String str = charSequence.toString();
-                if(str.length() == 2 && !str.contains("/")){
-                    str += "/";
-                    cardExpiration.setText(str);
-                    cardExpiration.setSelection(str.length());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+            public void onClick(View view) {
+                createDialogWithoutDateField().show();
             }
         });
 
