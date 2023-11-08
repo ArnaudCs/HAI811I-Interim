@@ -1,5 +1,5 @@
 <img src="./Banner/banner.png" alt="Bannière" style="width: 100%;">
-# <img src="app/src/main/icon-playstore.png"  width="50" height="50"> JOBRR 
+<img src="app/src/main/icon-playstore.png"  width="50" height="50"> JOBRR 
 
 ## HAI811I - Programmation mobile
 
